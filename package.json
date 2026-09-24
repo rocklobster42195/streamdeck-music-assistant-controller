@@ -41,7 +41,10 @@
         "ship:patch": "npm run check && npm run version:patch && npm run release",
         "ship:minor": "npm run check && npm run version:minor && npm run release",
         "ship:major": "npm run check && npm run version:major && npm run release",
-        "ship:beta": "npm run check && npm run version:beta && npm run release"
+        "ship:beta": "npm run check && npm run version:beta && npm run release",
+        "client:release:patch": "npm run check && node tools/release-client.mjs patch",
+        "client:release:minor": "npm run check && node tools/release-client.mjs minor",
+        "client:release:major": "npm run check && node tools/release-client.mjs major"
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.9",

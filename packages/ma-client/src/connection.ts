@@ -1,4 +1,4 @@
-import type { MaCommandArgs, MaCommandName, MaCommandResult } from './generated/commands.js';
+import { MA_API_VERSION, type MaCommandArgs, type MaCommandName, type MaCommandResult } from './generated/commands.js';
 import type { AuthUser, EventMap, EventName, MaEvent, Player, PlayerQueue, ServerInfo } from './types.js';
 
 /** Keys of T that are not optional. */
@@ -8,8 +8,8 @@ type RequiredKeys<T> = { [K in keyof T]-?: T extends Record<K, T[K]> ? K : never
 export type MaCallParams<C extends MaCommandName> =
     RequiredKeys<MaCommandArgs<C>> extends never ? [args?: MaCommandArgs<C>, options?: { timeoutMs?: number }] : [args: MaCommandArgs<C>, options?: { timeoutMs?: number }];
 
-/** Schema version this client was written against (MA server 2.10.4). */
-export const CLIENT_SCHEMA_VERSION = 65;
+/** Schema version this client's types were generated from (see MA_API_VERSION). */
+export const CLIENT_SCHEMA_VERSION: number = MA_API_VERSION.schema;
 
 /** Minimal WebSocket surface we need — satisfied by the browser/Node 22+ global and by the `ws` package. */
 export interface WebSocketLike {
@@ -113,6 +113,11 @@ export class MusicAssistantConnection {
 
     get isConnected(): boolean {
         return this._state === 'connected';
+    }
+
+    /** True when the server has a newer schema than the one the types were generated from (still compatible). */
+    get isServerNewer(): boolean {
+        return !!this.serverInfo && this.serverInfo.schema_version > CLIENT_SCHEMA_VERSION;
     }
 
     /** True when the server says it can no longer talk to a client of our schema version. */
@@ -229,6 +234,8 @@ export class MusicAssistantConnection {
             this.user = auth.user;
             if (this.isSchemaIncompatible) {
                 this.opts.logger?.warn(`[ma-client] server requires schema >= ${this.serverInfo?.min_supported_schema_version}, client has ${CLIENT_SCHEMA_VERSION}`);
+            } else if (this.isServerNewer) {
+                this.opts.logger?.debug(`[ma-client] server ${this.serverInfo?.server_version} (schema ${this.serverInfo?.schema_version}) is newer than the typed API (${MA_API_VERSION.server}); newer commands work via send()`);
             }
             const [players, queues] = await Promise.all([
                 this.send<Player[]>('players/all'),

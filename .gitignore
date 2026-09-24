@@ -27,3 +27,6 @@ sim-out/
 
 # Release packages (tools/release.mjs)
 release/
+
+# npm pack output
+*.tgz

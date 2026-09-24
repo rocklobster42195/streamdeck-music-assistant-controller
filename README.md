@@ -280,6 +280,8 @@ Each `ship:*` runs `npm run check` (build, tests, lint, validate), then `tools/b
 
 ### `music-assistant-client`
 
+The package has its own **[README](packages/ma-client/README.md)** and **[CHANGELOG](packages/ma-client/CHANGELOG.md)** and is released to npm separately: `npm run client:release:patch|minor|major` runs the checks, bumps its version, dates its changelog and pushes a `ma-client-v<version>` tag. The **Publish client** workflow then checks the tag and publishes to npm (repository secret `NPM_TOKEN`).
+
 The Music Assistant client is deliberately **independent of Stream Deck**. It handles token authentication, keeps player and queue state live from server events, reconnects with backoff, and offers typed convenience commands. It is planned to be published to npm once its API has settled.
 
 ```ts
@@ -307,9 +309,9 @@ On Node 20, pass a WebSocket implementation: `webSocketFactory: (url) => new Web
 
 ```ts
 const kitchen = ma.playerByName("Kitchen");
-const { albums } = await ma.search("Dark Side of the Moon", { mediaTypes: ["album"] });
-await ma.playMedia(kitchen!.player_id, albums[0].uri!, "replace");
-await ma.skipSeconds(kitchen!.player_id, 30);
+const { albums = [] } = await ma.search("Dark Side of the Moon", { mediaTypes: ["album"] });
+if (kitchen && albums[0]?.uri) await ma.playMedia(kitchen.player_id, albums[0].uri, "replace");
+if (kitchen) await ma.skipSeconds(kitchen.player_id, 30);
 ```
 
 **The whole API, typed.** Besides the convenience methods, `call()` reaches **every** Music Assistant command (310 in 2.10.4) with checked arguments and a typed result, and all data models are available as `MA.*`:

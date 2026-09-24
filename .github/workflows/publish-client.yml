@@ -1,0 +1,41 @@
+name: Publish client
+
+# Publishes music-assistant-client to npm for a ma-client-v<version> tag (see tools/release-client.mjs).
+# Needs the repository secret NPM_TOKEN (an npm automation token). Provenance is added once the repo is public.
+on:
+  push:
+    tags: ['ma-client-v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+      - run: npm run build -w music-assistant-client
+      - run: npm run typecheck -w music-assistant-client
+      - run: npx vitest run packages/ma-client tools/ma-api
+
+      - name: Check tag matches package version
+        run: |
+          V=$(node -p "require('./packages/ma-client/package.json').version")
+          if [ "ma-client-v$V" != "${GITHUB_REF_NAME}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match package version $V"; exit 1
+          fi
+
+      - name: Publish to npm
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then echo "::error::Repository secret NPM_TOKEN is not set"; exit 1; fi
+          npm publish -w music-assistant-client ${{ github.event.repository.private && ' ' || '--provenance' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
