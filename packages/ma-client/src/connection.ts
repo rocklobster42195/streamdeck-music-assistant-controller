@@ -360,7 +360,9 @@ export class MusicAssistantConnection {
                 const q = ev.object_id ? this.queues.get(ev.object_id) : undefined;
                 if (q && typeof ev.data === 'number') {
                     q.elapsed_time = ev.data;
-                    q.elapsed_time_last_updated = Date.now() / 1000;
+                    // On the server's clock, like the timestamps in queue_updated — mixing both clocks
+                    // shifted the extrapolated position by the clock offset depending on the last event
+                    q.elapsed_time_last_updated = this.serverNow();
                 }
                 break;
             }

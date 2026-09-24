@@ -168,6 +168,24 @@ describe('MusicAssistantClient', () => {
         expectTypeOf(client.libraryItems('podcast')).resolves.toEqualTypeOf<MA.Podcast[]>();
     });
 
+    it('measures the server clock and extrapolates positions on it, whatever event came last', async () => {
+        const skew = 5; // server clock 5 s ahead of ours
+        const client = makeClient('good', (msg, sock) =>
+            msg.command === 'time' ? sock.serverSend({ message_id: msg.message_id, result: Date.now() / 1000 + skew }) : happyServer(msg, sock),
+        );
+        client.start();
+        sockets[0].open();
+        await flush(); await flush(); await flush();
+        expect(client.clockOffset).toBeCloseTo(skew, 0);
+
+        // queue_updated carries a server timestamp …
+        sockets[0].serverSend({ event: 'queue_updated', object_id: 'RINCON_BATH', data: { ...QUEUE, state: 'playing', elapsed_time: 10, elapsed_time_last_updated: client.serverNow() } });
+        expect(currentElapsed(client.queues.get('RINCON_BATH')!, client.serverNow())).toBeCloseTo(10, 1);
+        // … queue_time_updated only the position: it must be stamped on the same clock
+        sockets[0].serverSend({ event: 'queue_time_updated', object_id: 'RINCON_BATH', data: 20 });
+        expect(currentElapsed(client.queues.get('RINCON_BATH')!, client.serverNow())).toBeCloseTo(20, 1);
+    });
+
     it('keeps the cache in sync from events and notifies listeners', async () => {
         const client = makeClient();
         client.start();

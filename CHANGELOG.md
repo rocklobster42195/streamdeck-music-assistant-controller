@@ -5,7 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Fixed
-- Playback positions (progress bars, lyrics, seeking) are extrapolated on the Music Assistant server's clock: `music-assistant-client` measures the offset on connect (`time` command, `clockOffset`, `serverNow()`). A local clock running ahead made lyrics appear early.
+- Playback positions (progress bars, lyrics, seeking) are extrapolated on the Music Assistant server's clock: `music-assistant-client` measures the offset on connect (`time` command, `clockOffset`, `serverNow()`). A local clock running ahead made lyrics appear early. Position-only updates (`queue_time_updated`) are stamped on the same clock, so the lyrics timing no longer jumps by the clock offset depending on which event came last.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
