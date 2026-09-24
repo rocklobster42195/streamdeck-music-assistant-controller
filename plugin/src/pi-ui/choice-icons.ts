@@ -1,6 +1,9 @@
 // MDI paths for <pi-choice data-options='[{"icon":"next",…}]'> tiles (same icons as on the keys).
 import {
     mdiAllInclusive,
+    mdiHelpCircleOutline,
+    mdiSpeaker,
+    mdiSpeakerMultiple,
     mdiBookshelf,
     mdiFolderOpenOutline,
     mdiServerNetwork,
@@ -44,6 +47,9 @@ const ICONS: Record<string, string> = {
     providers: mdiServerNetwork,
     library: mdiBookshelf,
     folderOpen: mdiFolderOpenOutline,
+    speaker: mdiSpeaker,
+    speakers: mdiSpeakerMultiple,
+    quiz: mdiHelpCircleOutline,
 };
 
 /** Read each <pi-choice data-options> and hand the parsed options (with icon paths) to the element. */

@@ -254,6 +254,66 @@
 					"Image": "imgs/actions/panorama-dial/key"
 				}
 			]
+		},
+		{
+			"Name": "Sleep Timer",
+			"UUID": "de.boriskemper.music-assistant-controller.sleep-timer-key",
+			"Icon": "imgs/actions/sleep-timer-key/icon",
+			"Tooltip": "Stop the music after 15, 30, 60 or 90 minutes.",
+			"PropertyInspectorPath": "ui/sleep-timer-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/sleep-timer-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Announcement",
+			"UUID": "de.boriskemper.music-assistant-controller.announce-key",
+			"Icon": "imgs/actions/announce-key/icon",
+			"Tooltip": "Speak a message on one or all speakers.",
+			"PropertyInspectorPath": "ui/announce-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/announce-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Source",
+			"UUID": "de.boriskemper.music-assistant-controller.source-key",
+			"Icon": "imgs/actions/source-key/icon",
+			"Tooltip": "Switch a speaker to an input like Line-in or TV.",
+			"PropertyInspectorPath": "ui/source-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/source-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Cast Dashboard",
+			"UUID": "de.boriskemper.music-assistant-controller.dashboard-key",
+			"Icon": "imgs/actions/dashboard-key/icon",
+			"Tooltip": "Show a Music Assistant dashboard on a TV or screen.",
+			"PropertyInspectorPath": "ui/dashboard-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/dashboard-key/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",

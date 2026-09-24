@@ -1,5 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
+import { AnnounceKey } from "./actions/announce-key";
 import { BrowserDial } from "./actions/browser-dial";
+import { DashboardKey } from "./actions/dashboard-key";
 import { GroupVolumeDial } from "./actions/group-volume-dial";
 import { LikeKey } from "./actions/like-key";
 import { PanoramaDial } from "./actions/panorama-dial";
@@ -9,10 +11,13 @@ import { PlayerKey } from "./actions/player-key";
 import { PlayPauseKey } from "./actions/play-pause-key";
 import { PlaybackControlKey } from "./actions/playback-control-key";
 import { QueueDial } from "./actions/queue-dial";
+import { SleepTimerKey } from "./actions/sleep-timer-key";
+import { SourceKey } from "./actions/source-key";
 import { TrackDial } from "./actions/track-dial";
 import { VolumeDial } from "./actions/volume-dial";
 import { VolumeKey } from "./actions/volume-key";
 import { maConnection } from "./ma/connection";
+import { registerOptionSources } from "./pi/options";
 import { piBridge } from "./pi/pi-bridge";
 
 streamDeck.logger.setLevel("info");
@@ -30,7 +35,12 @@ streamDeck.actions.registerAction(new PlayerDial());
 streamDeck.actions.registerAction(new QueueDial());
 streamDeck.actions.registerAction(new GroupVolumeDial());
 streamDeck.actions.registerAction(new PanoramaDial());
+streamDeck.actions.registerAction(new SleepTimerKey());
+streamDeck.actions.registerAction(new AnnounceKey());
+streamDeck.actions.registerAction(new SourceKey());
+streamDeck.actions.registerAction(new DashboardKey());
 piBridge.init();
+registerOptionSources();
 
 await streamDeck.connect();
 await maConnection.init();

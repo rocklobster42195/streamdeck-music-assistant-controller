@@ -3,7 +3,10 @@ import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { searchLibrary } from "../ma/library";
 import { listEffects } from "streamdeck-core";
-import type { ConnectionStatus, KeyPreview, PiPush, PiRequest, PlayerOption, PlayerState } from "./protocol";
+import type { ConnectionStatus, KeyPreview, OptionItem, PiPush, PiRequest, PlayerOption, PlayerState } from "./protocol";
+
+/** Provides a list for the PI; `params` come from the requesting component (e.g. a player id). */
+export type OptionsProvider = (params: Record<string, string>) => Promise<OptionItem[]> | OptionItem[];
 
 /**
  * Feeds the visible property inspector: connection status, player list and the live key preview.
@@ -13,6 +16,12 @@ class PiBridge {
     private visibleActionId: string | undefined;
     private readonly previews = new Map<string, KeyPreview>();
     private readonly lastSent = new Map<string, string>();
+    private readonly optionProviders = new Map<string, OptionsProvider>();
+
+    /** Make a named list available to PI components (`<mac-select source="…">`). */
+    registerOptions(source: string, provider: OptionsProvider): void {
+        this.optionProviders.set(source, provider);
+    }
     private pushTimer: ReturnType<typeof setTimeout> | undefined;
 
     init(): void {
@@ -47,6 +56,9 @@ class PiBridge {
             case "reconnect":
                 maConnection.reconnectNow();
                 break;
+            case "options":
+                void this.answerOptions(msg.requestId, msg.source, msg.params ?? {});
+                break;
             case "library-search":
                 void this.librarySearch(msg.requestId, msg.query, msg.filter);
                 break;
@@ -65,6 +77,18 @@ class PiBridge {
             reply = { event: "library-results", requestId, items: [], favorites: !query, error: String((e as Error)?.message ?? e) };
         }
         // Results are answers to a request — never deduplicated.
+        await streamDeck.ui.sendToPropertyInspector(reply as never);
+    }
+
+    private async answerOptions(requestId: number, source: string, params: Record<string, string>): Promise<void> {
+        let reply: PiPush;
+        try {
+            const provider = this.optionProviders.get(source);
+            if (!provider) throw new Error(`unknown option source "${source}"`);
+            reply = { event: "options-result", requestId, source, items: await provider(params) };
+        } catch (e) {
+            reply = { event: "options-result", requestId, source, items: [], error: String((e as Error)?.message ?? e) };
+        }
         await streamDeck.ui.sendToPropertyInspector(reply as never);
     }
 

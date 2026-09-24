@@ -1,6 +1,6 @@
 import { MusicAssistantConnection } from './connection.js';
 import { snapImageSize } from './images.js';
-import type { MediaItem, QueueItem, RepeatMode } from './types.js';
+import type { DashboardEndpoint, DashboardSession, DashboardType, MediaItem, QueueItem, RepeatMode } from './types.js';
 
 /**
  * Client for the Music Assistant WebSocket API: the connection (see connection.ts) plus typed
@@ -66,6 +66,45 @@ export class MusicAssistantClient extends MusicAssistantConnection {
     }
     setGroupMute(playerId: string, muted: boolean) {
         return this.send<null>('players/cmd/group_volume_mute', { player_id: playerId, muted });
+    }
+
+    /** Stop playback after `seconds`. Returns the expiry time (epoch seconds). */
+    setSleepTimer(playerId: string, seconds: number) {
+        return this.send<number>('players/sleep_timer/set', { player_id: playerId, seconds: Math.round(seconds) });
+    }
+    clearSleepTimer(playerId: string) {
+        return this.send<null>('players/sleep_timer/clear', { player_id: playerId });
+    }
+    /** Speak `message` (TTS) or play `url` as an announcement on a player. */
+    playAnnouncement(playerId: string, opts: { message?: string; url?: string; ttsEngine?: string; language?: string; volume?: number; preAnnounce?: boolean }) {
+        return this.send<null>('players/cmd/play_announcement', {
+            player_id: playerId,
+            ...(opts.message ? { message: opts.message } : {}),
+            ...(opts.url ? { url: opts.url } : {}),
+            ...(opts.ttsEngine ? { tts_engine: opts.ttsEngine } : {}),
+            ...(opts.language ? { language: opts.language } : {}),
+            ...(typeof opts.volume === 'number' ? { volume_level: Math.round(opts.volume) } : {}),
+            ...(typeof opts.preAnnounce === 'boolean' ? { pre_announce: opts.preAnnounce } : {}),
+        });
+    }
+    ttsEngines() {
+        return this.send<{ uid: string; name: string }[]>('players/tts_engines');
+    }
+    selectSource(playerId: string, source: string) {
+        return this.send<null>('players/cmd/select_source', { player_id: playerId, source });
+    }
+    /** Registered dashboard endpoints (e.g. a Chromecast TV). */
+    dashboards() {
+        return this.send<DashboardEndpoint[]>('dashboard/dashboards');
+    }
+    dashboardSessions() {
+        return this.send<DashboardSession[]>('dashboard/sessions');
+    }
+    showDashboard(dashboardId: string, dashboard: DashboardType, playerId?: string) {
+        return this.send<null>('dashboard/show', { dashboard_id: dashboardId, dashboard, ...(playerId ? { player_id: playerId } : {}) });
+    }
+    hideDashboard(dashboardId: string) {
+        return this.send<null>('dashboard/hide', { dashboard_id: dashboardId });
     }
 
     /** Fetch a media item by URI; provider URIs resolve to the library item when it exists. */

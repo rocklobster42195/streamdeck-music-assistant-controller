@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sleep Timer</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Sleep Timer"></mac-key-preview>
+  <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.sleep_help"></div>
+
+  <pi-section title="pi.sleep_steps">
+    <pi-field setting="steps" label="pi.sleep_steps_label" placeholder="pi.sleep_steps_placeholder" hint="pi.sleep_steps_hint"></pi-field>
+  </pi-section>
+
+  <pi-section title="pi.player" class="pi-needs-connection">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

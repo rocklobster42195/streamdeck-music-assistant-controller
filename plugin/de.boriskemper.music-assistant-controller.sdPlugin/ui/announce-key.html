@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Announcement</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Announcement"></mac-key-preview>
+
+  <pi-section title="pi.announce_message">
+    <pi-field setting="message" label="pi.announce_text" placeholder="pi.announce_placeholder"></pi-field>
+  </pi-section>
+
+  <pi-section title="pi.announce_voice" class="pi-needs-connection">
+    <mac-select setting="ttsEngine" source="tts-engines" placeholder="pi.announce_default_voice" empty="pi.announce_no_engines"></mac-select>
+  </pi-section>
+
+  <pi-section title="pi.announce_where">
+    <pi-choice setting="target" default="player" columns="2" data-options='[
+      {"value":"player","label":"pi.announce_one","icon":"speaker"},
+      {"value":"all","label":"pi.announce_all","icon":"speakers"}
+    ]'></pi-choice>
+  </pi-section>
+
+  <pi-section title="pi.display">
+    <pi-toggle setting="preAnnounce" label="pi.announce_chime" hint="pi.announce_chime_hint" data-default="true"></pi-toggle>
+    <pi-range setting="volume" min="0" max="100" step="5" default="0" unit="%" label="pi.announce_volume"></pi-range>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-i18n="pi.announce_volume_hint"></div>
+
+  <pi-section title="pi.player" class="pi-needs-connection" data-show-when="target=player" data-show-default="player">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

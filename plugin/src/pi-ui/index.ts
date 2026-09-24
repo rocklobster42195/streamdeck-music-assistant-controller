@@ -6,6 +6,7 @@ import { MacEffectSettings } from "./effect-settings";
 import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
+import { MacSelect } from "./select";
 import { initPiState } from "./state";
 
 initPiState();
@@ -19,6 +20,7 @@ sd.onReady(() => {
     customElements.define("mac-connection-card", MacConnectionCard);
     customElements.define("mac-item-picker", MacItemPicker);
     customElements.define("mac-effect-settings", MacEffectSettings);
+    customElements.define("mac-select", MacSelect);
     initChoiceOptions();
     initConditionalVisibility();
 

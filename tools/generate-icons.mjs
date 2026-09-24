@@ -23,6 +23,10 @@ const actions = {
     "queue-dial": mdi.mdiPlaylistPlay,
     "group-volume-dial": mdi.mdiSpeakerWireless,
     "panorama-dial": mdi.mdiCreation,
+    "sleep-timer-key": mdi.mdiSleep,
+    "announce-key": mdi.mdiBullhorn,
+    "source-key": mdi.mdiAudioInputRca,
+    "dashboard-key": mdi.mdiCast,
 };
 
 const listIcon = (d) => `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="#ffffff" d="${d}"/></svg>`;

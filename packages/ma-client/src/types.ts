@@ -72,8 +72,34 @@ export interface Player {
     current_media?: PlayerMedia | null;
     group_volume?: number | null;
     group_volume_muted?: boolean | null;
+    /** Epoch seconds when the sleep timer stops playback. */
     sleep_timer_expires_at?: number | null;
+    source_list?: PlayerSource[];
     hide_in_ui?: boolean;
+    [key: string]: unknown;
+}
+
+export interface PlayerSource {
+    id: string;
+    name: string;
+    /** Passive sources (e.g. AirPlay) become active on their own and can't be selected. */
+    passive?: boolean;
+    [key: string]: unknown;
+}
+
+export type DashboardType = 'now_playing' | 'party' | 'music_quiz' | (string & {});
+
+export interface DashboardEndpoint {
+    dashboard_id: string;
+    name: string;
+    supported_types: DashboardType[];
+    provider_domain_hint?: string;
+}
+
+export interface DashboardSession {
+    dashboard_id: string;
+    dashboard?: DashboardType;
+    player_id?: string | null;
     [key: string]: unknown;
 }
 

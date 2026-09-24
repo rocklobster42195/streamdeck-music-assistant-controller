@@ -44,8 +44,12 @@ export type LibraryItem = {
     thumbUrl?: string;
 };
 
+/** An entry of a list the plugin provides to the PI (TTS engines, sources, dashboard endpoints, …). */
+export type OptionItem = { value: string; label: string; sub?: string };
+
 /** PI → plugin */
 export type PiRequest =
+    | { event: "options"; requestId: number; source: string; params?: Record<string, string> }
     | { event: "pi-ready" }
     | { event: "reconnect" }
     /** Empty query = favorites. */
@@ -57,4 +61,5 @@ export type PiPush =
     | { event: "players"; players: PlayerOption[]; activePlayerId?: string }
     | { event: "preview"; preview: KeyPreview }
     | { event: "library-results"; requestId: number; items: LibraryItem[]; favorites: boolean; error?: string }
-    | { event: "effects"; effects: EffectInfo[] };
+    | { event: "effects"; effects: EffectInfo[] }
+    | { event: "options-result"; requestId: number; source: string; items: OptionItem[]; error?: string };

@@ -43,6 +43,10 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Queue**: scroll through the queue and jump to any track | Dial (SD+) | ✅ working |
 | **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) | ✅ working |
 | **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover | Dial (SD+) | ✅ working |
+| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key | ✅ working |
+| **Announcement**: speak a message on one or all speakers (TTS) | Key | ✅ working |
+| **Source**: switch a speaker to Line-in, TV or another input | Key | ✅ working |
+| **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key | ✅ working |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
@@ -141,6 +145,13 @@ Settings:
 
 Providers that can't be browsed are hidden automatically.
 
+### Sleep Timer, Announcement, Source, Cast Dashboard
+
+- **Sleep Timer:** Each press sets the next duration (default 15, 30, 60 and 90 minutes; configurable). After the last one, the timer switches off. While running, the key counts down the minutes left.
+- **Announcement:** Speaks your text on the chosen player or **on all players**, with an optional chime and its own volume. The voice comes from a TTS engine in Home Assistant or Music Assistant, which you pick in the settings.
+- **Source:** Switches a player to one of its inputs (e.g. Line-in on a Sonos Five, or TV). The key lights up while that input is active. Only inputs you can actually select are offered.
+- **Cast Dashboard:** Shows a Music Assistant dashboard ("Now playing", "Party" or "Music quiz") on a screen that Music Assistant knows, such as a Chromecast TV. Press again to take it down.
+
 ### Status on the keys
 
 When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MAC reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
@@ -176,7 +187,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 **Later:** audiobook and podcast resume · search · radio mode
 
-**Ideas:** sleep timer · party mode (guest QR code on a key) · announcements/TTS · source select · lyrics on the SD+ touch strip · ambient sounds · cast dashboard
+**Ideas:** party mode (guest QR code on a key) · lyrics on the SD+ touch strip · ambient sounds
 
 Have an idea? [Open an issue](../../issues).
 
