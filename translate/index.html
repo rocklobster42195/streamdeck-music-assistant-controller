@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MAC Translations</title>
+  <meta name="description" content="Translate MAC — Music Assistant Controller for Stream Deck — into your language." />
+  <link rel="stylesheet" href="../packages/streamdeck-core/styles/pi-theme.css" />
+  <link rel="stylesheet" href="translate.css" />
+  <script src="translate.js" defer></script>
+</head>
+
+<body>
+  <header class="tr-header">
+    <div class="tr-wrap">
+      <div class="tr-title">
+        <div>
+          <h1>MAC <span>·</span> <span data-t="title">Translations</span></h1>
+          <p class="pi-hint" data-t="intro">Translate the Stream Deck plugin into your language. Every text shows where it appears; drafts are kept in this browser.</p>
+        </div>
+        <div class="tr-actions">
+          <button type="button" class="pi-button" id="btn-reset" data-t="reset">Discard draft</button>
+          <button type="button" class="pi-button" id="btn-github" data-t="github">Propose on GitHub</button>
+          <button type="button" class="pi-button pi-button-primary" id="btn-download" data-t="download">Download JSON</button>
+        </div>
+      </div>
+
+      <div class="tr-controls">
+        <label class="tr-lang">
+          <span class="pi-field-label" data-t="from">From</span>
+          <select id="source" class="pi-input"></select>
+        </label>
+        <span class="tr-arrow" aria-hidden="true">→</span>
+        <label class="tr-lang">
+          <span class="pi-field-label" data-t="to">To</span>
+          <select id="target" class="pi-input"></select>
+        </label>
+        <div class="tr-progress" aria-live="polite">
+          <div class="tr-progress-bar"><div id="progress-fill"></div></div>
+          <span id="progress-text" class="pi-hint"></span>
+        </div>
+      </div>
+
+      <div class="tr-filters">
+        <div class="mac-chips" id="filters" role="group"></div>
+        <label class="tr-search">
+          <input id="search" type="search" class="pi-input" spellcheck="false" autocomplete="off" />
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main class="tr-wrap" id="list"></main>
+
+  <div class="tr-toast" id="toast" role="status" hidden></div>
+</body>
+
+</html>

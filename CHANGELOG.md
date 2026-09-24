@@ -5,6 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Translation page** (`translate/`, `npm run translate`): pick source and target language (new languages included), see where each text is used (scanned from code, PI pages and manifest), missing/outdated status (outdated via git blame), live key preview with a too-wide warning, placeholder check, draft in the browser, and export as JSON or a GitHub proposal. Dark theme with the PI design tokens.
 - **Sleep Timer** key: steps through durations (default 15/30/60/90 min, configurable) and counts down.
 - **Announcement** key: TTS message on one or all players, with a voice (TTS engine) picker, optional chime and volume.
 - **Source** key: select a player input (e.g. Line-in); lit while it is active; passive sources are hidden.

@@ -1,0 +1,4011 @@
+{
+ "localeDir": "plugin/de.boriskemper.music-assistant-controller.sdPlugin",
+ "supported": [
+  "en",
+  "de",
+  "es",
+  "fr",
+  "ja",
+  "ko",
+  "zh_CN",
+  "zh_TW"
+ ],
+ "languages": {
+  "de": {
+   "header": {
+    "Name": "Music Assistant Controller",
+    "Description": "Steuere Music Assistant mit deinem Stream Deck: jeder Lautsprecher, jeder Streamingdienst, ein Deck.",
+    "Category": "Music Assistant Controller"
+   },
+   "strings": {
+    "Play/Pause": "Play/Pause",
+    "Toggle play/pause with cover art.": "Schaltet zwischen Wiedergabe und Pause um, mit Albumcover.",
+    "Playback Control": "Wiedergabe-Steuerung",
+    "Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.": "Weiter, zurück, Zufall, Wiederholen, Crossfade oder „Don't stop the music“.",
+    "Volume": "Lautstärke",
+    "Volume up, down, mute or a preset.": "Lauter, leiser, stumm oder ein Preset.",
+    "Like": "Like",
+    "Add the current track to your favorites, or remove it.": "Aktuellen Titel zu den Favoriten hinzufügen oder entfernen.",
+    "Play Item": "Play Item",
+    "Play a playlist, album, radio station or podcast from your library.": "Spielt eine Playlist, ein Album, einen Radiosender oder Podcast aus deiner Bibliothek.",
+    "Track": "Track",
+    "Cover, title and progress on the display. Rotate to seek.": "Cover, Titel und Fortschritt auf dem Display. Drehen spult.",
+    "Volume on a dial, with mute and a preset.": "Lautstärke am Drehregler, mit Stumm und Preset.",
+    "Seek": "Spulen",
+    "Next track": "Nächster Titel",
+    "Play / pause": "Play / Pause",
+    "Mute": "Stumm",
+    "Preset (hold: save)": "Preset (halten: speichern)",
+    "Browser": "Browser",
+    "Browse all providers or your library with the dial and play what you find.": "Stöbere mit dem Drehregler durch alle Anbieter oder deine Bibliothek und spiel ab, was du findest.",
+    "Scroll": "Blättern",
+    "Open / play": "Öffnen / abspielen",
+    "Back (hold: start)": "Zurück (halten: Anfang)",
+    "Player": "Player",
+    "Make this room the active player — and bring the music along.": "Macht diesen Raum zum aktiven Player – und nimmt die Musik mit.",
+    "Active Player": "Aktiver Player",
+    "Choose the active player with the dial and bring the music there.": "Wähle den aktiven Player per Drehregler und hol die Musik dorthin.",
+    "Choose player": "Player wählen",
+    "Bring music here": "Musik hierher",
+    "Queue": "Warteschlange",
+    "Scroll through the queue and jump to any track.": "Blättere durch die Warteschlange und spring zu jedem Titel.",
+    "Scroll queue": "Warteschlange blättern",
+    "Play track": "Titel abspielen",
+    "Back to current": "Zurück zum aktuellen",
+    "Group Volume": "Gruppen-Lautstärke",
+    "Volume of the whole speaker group.": "Lautstärke der ganzen Lautsprecher-Gruppe.",
+    "Group volume": "Gruppen-Lautstärke",
+    "Mute group": "Gruppe stumm",
+    "Panorama": "Panorama",
+    "Ambient effects spanning neighbouring dials, tinted by the cover.": "Stimmungs-Effekte über benachbarte Dials hinweg, in den Farben des Covers.",
+    "Adjust effect": "Effekt anpassen",
+    "Effect action": "Effekt-Aktion",
+    "Interact": "Interagieren",
+    "Sleep Timer": "Sleep-Timer",
+    "Stop the music after 15, 30, 60 or 90 minutes.": "Stoppt die Musik nach 15, 30, 60 oder 90 Minuten.",
+    "Announcement": "Ansage",
+    "Speak a message on one or all speakers.": "Spricht eine Nachricht auf einem oder allen Lautsprechern.",
+    "Source": "Quelle",
+    "Switch a speaker to an input like Line-in or TV.": "Schaltet einen Lautsprecher auf einen Eingang wie Line-in oder TV.",
+    "Cast Dashboard": "Dashboard casten",
+    "Show a Music Assistant dashboard on a TV or screen.": "Zeigt ein Music-Assistant-Dashboard auf einem Fernseher oder Bildschirm.",
+    "key.setup": "Einrichten",
+    "key.offline": "Offline",
+    "key.auth_failed": "Token?",
+    "key.no_player": "Kein Player",
+    "key.choose_item": "Wählen",
+    "key.volume": "Lautstärke",
+    "key.muted": "Stumm",
+    "key.preset_saved": "Preset gespeichert: {volume}",
+    "key.nothing_playing": "Es läuft nichts",
+    "key.browse_providers": "Alle Anbieter",
+    "key.browse_library": "Bibliothek",
+    "key.browse_favorites": "Favoriten",
+    "key.browse_hint": "Drehen zum Stöbern",
+    "key.browse_loading": "Lädt…",
+    "key.browse_empty": "Leer",
+    "key.browse_unavailable": "Nicht durchsuchbar",
+    "key.active_player": "Aktiver Player",
+    "key.music_here": "Musik ist jetzt hier",
+    "key.queue": "Warteschlange",
+    "key.queue_empty": "Warteschlange leer",
+    "key.queue_now": "Läuft gerade",
+    "key.queue_next": "Als Nächstes",
+    "key.queue_played": "Gespielt",
+    "key.group": "Gruppe · {count} Räume",
+    "key.group_single": "Keine Gruppe",
+    "key.announce_setup": "Text?",
+    "key.choose_source": "Quelle?",
+    "key.choose_screen": "Bildschirm?",
+    "pi.player": "Player",
+    "pi.display": "Anzeige",
+    "pi.show_player_name": "Playername",
+    "pi.show_player_name_hint": "Name des Players auf der Taste",
+    "pi.show_progress": "Fortschritt",
+    "pi.show_progress_hint": "Balken in der Farbe des Covers",
+    "pi.help": "Hilfe & Feedback",
+    "pi.state_playing_on": "spielt auf {player}",
+    "pi.state_paused_on": "pausiert auf {player}",
+    "pi.state_idle_on": "bereit auf {player}",
+    "pi.nothing_playing": "Es läuft nichts",
+    "pi.preview_setup": "Verbinde unten Music Assistant.",
+    "pi.preview_auth_failed": "Keine Verbindung: Der Server hat den Token abgelehnt.",
+    "pi.preview_offline": "Keine Verbindung zu Music Assistant.",
+    "pi.preview_no_player": "Wähle einen Player.",
+    "pi.active_player_option": "Aktiver Player",
+    "pi.follows_now": "folgt gerade: {player} · {state}",
+    "pi.no_active_player": "noch kein aktiver Player gesetzt",
+    "pi.currently": "aktuell: {player}",
+    "pi.group_follow": "Folgen",
+    "pi.group_players": "Player",
+    "pi.choose_player": "Player wählen",
+    "pi.player_unavailable": "nicht verfügbar",
+    "pi.no_players": "Keine Player gefunden.",
+    "pi.state_playing": "spielt",
+    "pi.state_paused": "pausiert",
+    "pi.state_idle": "bereit",
+    "pi.state_offline": "offline",
+    "pi.connection": "Music Assistant",
+    "pi.connected": "Verbunden",
+    "pi.connecting": "Verbinde…",
+    "pi.offline": "Server nicht erreichbar",
+    "pi.auth_failed": "Anmeldung fehlgeschlagen",
+    "pi.setup_title": "Mit Music Assistant verbinden",
+    "pi.setup_sub": "Einmal verbinden, dann funktionieren alle MAC-Tasten.",
+    "pi.player_count": "{count} Player",
+    "pi.change": "Ändern",
+    "pi.done": "Fertig",
+    "pi.connect": "Verbinden",
+    "pi.reconnect": "Erneut verbinden",
+    "pi.server_url": "Server-Adresse",
+    "pi.server_url_placeholder": "192.168.1.10:8095",
+    "pi.server_url_hint": "IP deines Music-Assistant-Servers. Als Home-Assistant-Add-on: IP von Home Assistant, Port 8095.",
+    "pi.token": "Token",
+    "pi.token_placeholder": "Long-Lived-Token einfügen",
+    "pi.token_hint": "In Music Assistant: Einstellungen → Profil → Long-Lived-Token erstellen, z. B. „Stream Deck“.",
+    "pi.show_token": "Token anzeigen",
+    "pi.server_reachable": "Server erreichbar · Music Assistant {version}",
+    "pi.server_unreachable": "Keine Antwort von {url}",
+    "pi.token_rejected": "Token abgelehnt",
+    "pi.token_rejected_hint": "Prüfe, ob der Token vollständig kopiert wurde und in Music Assistant noch existiert. Einen neuen erstellst du unter Einstellungen → Profil.",
+    "pi.active_player": "Aktiver Player",
+    "pi.active_player_hint": "Gilt für alle MAC-Tasten. Tasten mit „Aktiver Player“ steuern diesen Player.",
+    "pi.command": "Funktion",
+    "pi.cmd_previous": "Zurück",
+    "pi.cmd_next": "Weiter",
+    "pi.cmd_shuffle": "Zufall",
+    "pi.cmd_repeat": "Wiederholen",
+    "pi.cmd_crossfade": "Crossfade",
+    "pi.cmd_dont_stop": "Don't stop the music",
+    "pi.cmd_skip_hint": "Ausgegraut, solange ein Live-Radiostream läuft – da gibt es nichts zu überspringen.",
+    "pi.cmd_repeat_hint": "Jeder Druck schaltet weiter: aus → alle → einer.",
+    "pi.cmd_dont_stop_hint": "Wenn die Warteschlange zu Ende ist, spielt Music Assistant ähnliche Musik weiter.",
+    "pi.volume_settings": "Einstellungen",
+    "pi.vol_down": "Leiser",
+    "pi.vol_up": "Lauter",
+    "pi.vol_mute": "Stumm",
+    "pi.vol_preset": "Preset",
+    "pi.vol_step": "Schritt pro Druck",
+    "pi.vol_preset_value": "Preset-Lautstärke",
+    "pi.like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn.",
+    "pi.item": "Inhalt",
+    "pi.item_search_placeholder": "In Music Assistant suchen…",
+    "pi.item_filter": "Typ",
+    "pi.item_loading": "Suche läuft…",
+    "pi.item_error": "Suche fehlgeschlagen",
+    "pi.item_favorites": "Deine Favoriten",
+    "pi.item_results": "Ergebnisse",
+    "pi.item_no_favorites": "Noch keine Favoriten – such oben nach etwas zum Abspielen.",
+    "pi.item_no_results": "Nichts gefunden.",
+    "pi.filter_all": "Alle",
+    "pi.filter_playlist": "Playlists",
+    "pi.filter_album": "Alben",
+    "pi.filter_radio": "Radio",
+    "pi.filter_podcast": "Podcasts",
+    "pi.filter_track": "Titel",
+    "pi.filter_audiobook": "Hörbücher",
+    "pi.type_playlist": "Playlist",
+    "pi.type_album": "Album",
+    "pi.type_radio": "Radio",
+    "pi.type_podcast": "Podcast",
+    "pi.type_track": "Titel",
+    "pi.type_artist": "Interpret",
+    "pi.type_audiobook": "Hörbuch",
+    "pi.play_mode": "Beim Drücken",
+    "pi.opt_replace": "Sofort abspielen",
+    "pi.opt_next": "Als Nächstes",
+    "pi.opt_add": "Anhängen",
+    "pi.opt_hint_replace": "Ersetzt die Warteschlange und spielt sofort.",
+    "pi.opt_hint_next": "Spielt nach dem aktuellen Titel.",
+    "pi.opt_hint_add": "Hängt es ans Ende der Warteschlange.",
+    "pi.show_item_name": "Name",
+    "pi.show_item_name_hint": "Name des Inhalts auf der Taste",
+    "pi.dial_controls": "Bedienung",
+    "pi.dial_volume_rotate": "Drehen: Lautstärke · Drücken: stumm · Tippen: Preset (halten speichert die aktuelle Lautstärke)",
+    "pi.dial_track_rotate": "Drehen: spulen · Drücken: nächster Titel · Tippen: Play / Pause",
+    "pi.dial_step": "Schritt pro Raste",
+    "pi.dial_seek_step": "Spulen pro Raste",
+    "pi.show_volume_text": "Lautstärke und Name",
+    "pi.show_volume_text_hint": "Zahl im Ring, Playername daneben",
+    "pi.align": "Position des Rings",
+    "pi.align_left": "Links",
+    "pi.align_center": "Mitte",
+    "pi.align_right": "Rechts",
+    "pi.browse_start": "Startpunkt",
+    "pi.browse_start_providers": "Alle Anbieter",
+    "pi.browse_start_library": "Bibliothek",
+    "pi.browse_folder": "Abspielbare Ordner",
+    "pi.browse_folder_open": "Öffnen",
+    "pi.browse_folder_play": "Abspielen",
+    "pi.browse_timeout": "Zurück zu „Jetzt läuft“ nach",
+    "pi.dial_browser_help": "Drehen: blättern · Drücken: Ordner öffnen / abspielen · Tippen: zurück (halten: zum Anfang)",
+    "pi.player_room": "Raum / Player",
+    "pi.transfer": "Musik mitnehmen",
+    "pi.transfer_hint": "Läuft auf dem bisherigen aktiven Player Musik, wandert sie hierher.",
+    "pi.show_cover": "Cover bei Wiedergabe",
+    "pi.show_cover_hint": "Zeigt, was in diesem Raum läuft",
+    "pi.player_key_help": "Drücken: Dieser Player wird zum aktiven Player – alle Tasten mit „Aktiver Player“ folgen.",
+    "pi.player_dial_help": "Drehen: aktiven Player wählen · Drücken: Musik von dort, wo sie läuft, hierher holen · Tippen: Play / Pause",
+    "pi.dial_queue_help": "Drehen: durch die Warteschlange blättern (startet beim aktuellen Titel) · Drücken: gewählten Titel abspielen · Tippen: zurück zum aktuellen Titel",
+    "pi.dial_group_help": "Drehen: Lautstärke der ganzen Gruppe · Drücken: Gruppe stumm · Tippen: Preset (halten speichert). Ohne Gruppe steuert der Dial den Player allein.",
+    "pi.queue_timeout": "Zurück zum aktuellen Titel nach",
+    "pi.show_title": "Titel",
+    "pi.show_title_hint": "Titel und Interpret laufen über die Taste",
+    "pi.background": "Hintergrund",
+    "pi.background_hint": "Benachbarte Dials mit demselben Effekt teilen sich eine durchgehende Szene.",
+    "pi.effect": "Effekt",
+    "pi.effect_none": "Keiner",
+    "pi.cover_color": "Cover-Farbe",
+    "pi.cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
+    "pi.panorama_help": "Drehen und Drücken verändern den Effekt (z. B. Tempo). Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
+    "pi.choose": "Wählen",
+    "pi.no_options": "Nichts verfügbar.",
+    "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibenden Minuten herunter.",
+    "pi.sleep_steps": "Dauern",
+    "pi.sleep_steps_label": "Minuten",
+    "pi.sleep_steps_placeholder": "15, 30, 60, 90",
+    "pi.sleep_steps_hint": "Minuten mit Komma getrennt – jeder Druck schaltet weiter.",
+    "pi.announce_message": "Nachricht",
+    "pi.announce_text": "Gesprochener Text",
+    "pi.announce_placeholder": "Das Essen ist fertig!",
+    "pi.announce_voice": "Stimme (TTS-Engine)",
+    "pi.announce_default_voice": "Standard von Music Assistant",
+    "pi.announce_no_engines": "Keine TTS-Engine gefunden – in Home Assistant oder Music Assistant einrichten.",
+    "pi.announce_where": "Wo",
+    "pi.announce_one": "Ein Player",
+    "pi.announce_all": "Alle Player",
+    "pi.announce_chime": "Gong vorab",
+    "pi.announce_chime_hint": "Ein kurzer Ton vor der Nachricht",
+    "pi.announce_volume": "Lautstärke",
+    "pi.announce_volume_hint": "Lautstärke 0 % behält die aktuelle Lautstärke jedes Lautsprechers.",
+    "pi.source_help": "Schaltet den Player auf diesen Eingang. Die Taste leuchtet, solange er aktiv ist.",
+    "pi.source": "Eingang",
+    "pi.choose_source": "Eingang wählen",
+    "pi.no_sources": "Dieser Player hat keine wählbaren Eingänge.",
+    "pi.dashboard_help": "Drücken zeigt das Dashboard auf dem Bildschirm, nochmal Drücken nimmt es wieder weg.",
+    "pi.dashboard_screen": "Bildschirm",
+    "pi.choose_screen": "Bildschirm wählen",
+    "pi.no_screens": "Kein Bildschirm gefunden. Chromecast-Geräte erscheinen hier, sobald Music Assistant sie kennt.",
+    "pi.dashboard_view": "Ansicht",
+    "pi.dashboard_now_playing": "Jetzt läuft",
+    "pi.dashboard_party": "Party",
+    "pi.dashboard_quiz": "Musik-Quiz",
+    "effect.particles.name": "Partikel",
+    "effect.particles.savedDensity": "Partikeldichte",
+    "effect.particles.savedSpeed": "Partikel-Tempo",
+    "effect.matrix-rain.name": "Matrix-Regen",
+    "effect.matrix-rain.color": "Farbe",
+    "effect.matrix-rain.savedDensity": "Regendichte",
+    "effect.boing-ball.name": "Boing-Ball",
+    "effect.boing-ball.primaryColor": "Hauptfarbe",
+    "effect.boing-ball.secondaryColor": "Zweitfarbe",
+    "effect.boing-ball.savedSpeed": "Ball-Tempo",
+    "effect.boing-globe.name": "Boing-Globus",
+    "effect.boing-globe.landColor": "Landfarbe",
+    "effect.boing-globe.oceanColor": "Meeresfarbe",
+    "effect.boing-globe.savedSpeed": "Drehtempo"
+   }
+  },
+  "en": {
+   "header": {
+    "Name": "Music Assistant Controller",
+    "Description": "Control Music Assistant from your Stream Deck: every speaker, every streaming service, one deck.",
+    "Category": "Music Assistant Controller"
+   },
+   "strings": {
+    "Play/Pause": "Play/Pause",
+    "Toggle play/pause with cover art.": "Toggle play/pause with cover art.",
+    "Playback Control": "Playback Control",
+    "Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.": "Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.",
+    "Volume": "Volume",
+    "Volume up, down, mute or a preset.": "Volume up, down, mute or a preset.",
+    "Like": "Like",
+    "Add the current track to your favorites, or remove it.": "Add the current track to your favorites, or remove it.",
+    "Play Item": "Play Item",
+    "Play a playlist, album, radio station or podcast from your library.": "Play a playlist, album, radio station or podcast from your library.",
+    "Track": "Track",
+    "Cover, title and progress on the display. Rotate to seek.": "Cover, title and progress on the display. Rotate to seek.",
+    "Volume on a dial, with mute and a preset.": "Volume on a dial, with mute and a preset.",
+    "Seek": "Seek",
+    "Next track": "Next track",
+    "Play / pause": "Play / pause",
+    "Mute": "Mute",
+    "Preset (hold: save)": "Preset (hold: save)",
+    "Browser": "Browser",
+    "Browse all providers or your library with the dial and play what you find.": "Browse all providers or your library with the dial and play what you find.",
+    "Scroll": "Scroll",
+    "Open / play": "Open / play",
+    "Back (hold: start)": "Back (hold: start)",
+    "Player": "Player",
+    "Make this room the active player — and bring the music along.": "Make this room the active player — and bring the music along.",
+    "Active Player": "Active Player",
+    "Choose the active player with the dial and bring the music there.": "Choose the active player with the dial and bring the music there.",
+    "Choose player": "Choose player",
+    "Bring music here": "Bring music here",
+    "Queue": "Queue",
+    "Scroll through the queue and jump to any track.": "Scroll through the queue and jump to any track.",
+    "Scroll queue": "Scroll queue",
+    "Play track": "Play track",
+    "Back to current": "Back to current",
+    "Group Volume": "Group Volume",
+    "Volume of the whole speaker group.": "Volume of the whole speaker group.",
+    "Group volume": "Group volume",
+    "Mute group": "Mute group",
+    "Panorama": "Panorama",
+    "Ambient effects spanning neighbouring dials, tinted by the cover.": "Ambient effects spanning neighbouring dials, tinted by the cover.",
+    "Adjust effect": "Adjust effect",
+    "Effect action": "Effect action",
+    "Interact": "Interact",
+    "Sleep Timer": "Sleep Timer",
+    "Stop the music after 15, 30, 60 or 90 minutes.": "Stop the music after 15, 30, 60 or 90 minutes.",
+    "Announcement": "Announcement",
+    "Speak a message on one or all speakers.": "Speak a message on one or all speakers.",
+    "Source": "Source",
+    "Switch a speaker to an input like Line-in or TV.": "Switch a speaker to an input like Line-in or TV.",
+    "Cast Dashboard": "Cast Dashboard",
+    "Show a Music Assistant dashboard on a TV or screen.": "Show a Music Assistant dashboard on a TV or screen.",
+    "key.setup": "Setup",
+    "key.offline": "Offline",
+    "key.auth_failed": "Token?",
+    "key.no_player": "No player",
+    "key.choose_item": "Choose",
+    "key.volume": "Volume",
+    "key.muted": "Muted",
+    "key.preset_saved": "Preset saved: {volume}",
+    "key.nothing_playing": "Nothing playing",
+    "key.browse_providers": "All providers",
+    "key.browse_library": "Library",
+    "key.browse_favorites": "Favorites",
+    "key.browse_hint": "Turn to browse",
+    "key.browse_loading": "Loading…",
+    "key.browse_empty": "Empty",
+    "key.browse_unavailable": "Can't be browsed",
+    "key.active_player": "Active player",
+    "key.music_here": "Music moved here",
+    "key.queue": "Queue",
+    "key.queue_empty": "Queue is empty",
+    "key.queue_now": "Now playing",
+    "key.queue_next": "Up next",
+    "key.queue_played": "Played",
+    "key.group": "Group · {count} rooms",
+    "key.group_single": "Not grouped",
+    "key.announce_setup": "Text?",
+    "key.choose_source": "Source?",
+    "key.choose_screen": "Screen?",
+    "pi.player": "Player",
+    "pi.display": "Display",
+    "pi.show_player_name": "Player name",
+    "pi.show_player_name_hint": "Player name on the key",
+    "pi.show_progress": "Progress",
+    "pi.show_progress_hint": "Bar in the color of the cover",
+    "pi.help": "Help & feedback",
+    "pi.state_playing_on": "playing on {player}",
+    "pi.state_paused_on": "paused on {player}",
+    "pi.state_idle_on": "ready on {player}",
+    "pi.nothing_playing": "Nothing playing",
+    "pi.preview_setup": "Connect Music Assistant below.",
+    "pi.preview_auth_failed": "No connection: the server rejected the token.",
+    "pi.preview_offline": "No connection to Music Assistant.",
+    "pi.preview_no_player": "Choose a player.",
+    "pi.active_player_option": "Active player",
+    "pi.follows_now": "now following: {player} · {state}",
+    "pi.no_active_player": "no active player set yet",
+    "pi.currently": "currently: {player}",
+    "pi.group_follow": "Follow",
+    "pi.group_players": "Players",
+    "pi.choose_player": "Choose player",
+    "pi.player_unavailable": "not available",
+    "pi.no_players": "No players found.",
+    "pi.state_playing": "playing",
+    "pi.state_paused": "paused",
+    "pi.state_idle": "ready",
+    "pi.state_offline": "offline",
+    "pi.connection": "Music Assistant",
+    "pi.connected": "Connected",
+    "pi.connecting": "Connecting…",
+    "pi.offline": "Server not reachable",
+    "pi.auth_failed": "Sign-in failed",
+    "pi.setup_title": "Connect to Music Assistant",
+    "pi.setup_sub": "Once — then every MAC key works.",
+    "pi.player_count": "{count} players",
+    "pi.change": "Change",
+    "pi.done": "Done",
+    "pi.connect": "Connect",
+    "pi.reconnect": "Connect again",
+    "pi.server_url": "Server address",
+    "pi.server_url_placeholder": "192.168.1.10:8095",
+    "pi.server_url_hint": "IP of your Music Assistant server. As a Home Assistant add-on: the IP of Home Assistant, port 8095.",
+    "pi.token": "Token",
+    "pi.token_placeholder": "Paste long-lived token",
+    "pi.token_hint": "In Music Assistant: Settings → Profile → create a long-lived token, e.g. “Stream Deck”.",
+    "pi.show_token": "Show token",
+    "pi.server_reachable": "Server reachable · Music Assistant {version}",
+    "pi.server_unreachable": "No answer from {url}",
+    "pi.token_rejected": "Token rejected",
+    "pi.token_rejected_hint": "Check that the token was copied completely and still exists in Music Assistant. You can create a new one under Settings → Profile.",
+    "pi.active_player": "Active player",
+    "pi.active_player_hint": "Applies to all MAC keys. Keys set to “Active player” control this player.",
+    "pi.command": "Function",
+    "pi.cmd_previous": "Previous",
+    "pi.cmd_next": "Next",
+    "pi.cmd_shuffle": "Shuffle",
+    "pi.cmd_repeat": "Repeat",
+    "pi.cmd_crossfade": "Crossfade",
+    "pi.cmd_dont_stop": "Don't stop the music",
+    "pi.cmd_skip_hint": "Dimmed while a live radio stream plays: there is nothing to skip.",
+    "pi.cmd_repeat_hint": "Each press cycles: off → all → one.",
+    "pi.cmd_dont_stop_hint": "When the queue ends, Music Assistant keeps playing similar music.",
+    "pi.volume_settings": "Settings",
+    "pi.vol_down": "Down",
+    "pi.vol_up": "Up",
+    "pi.vol_mute": "Mute",
+    "pi.vol_preset": "Preset",
+    "pi.vol_step": "Step per press",
+    "pi.vol_preset_value": "Preset volume",
+    "pi.like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it.",
+    "pi.item": "Item",
+    "pi.item_search_placeholder": "Search Music Assistant…",
+    "pi.item_filter": "Type",
+    "pi.item_loading": "Searching…",
+    "pi.item_error": "Search failed",
+    "pi.item_favorites": "Your favorites",
+    "pi.item_results": "Results",
+    "pi.item_no_favorites": "No favorites yet — search above for anything to play.",
+    "pi.item_no_results": "Nothing found.",
+    "pi.filter_all": "All",
+    "pi.filter_playlist": "Playlists",
+    "pi.filter_album": "Albums",
+    "pi.filter_radio": "Radio",
+    "pi.filter_podcast": "Podcasts",
+    "pi.filter_track": "Tracks",
+    "pi.filter_audiobook": "Audiobooks",
+    "pi.type_playlist": "Playlist",
+    "pi.type_album": "Album",
+    "pi.type_radio": "Radio",
+    "pi.type_podcast": "Podcast",
+    "pi.type_track": "Track",
+    "pi.type_artist": "Artist",
+    "pi.type_audiobook": "Audiobook",
+    "pi.play_mode": "When pressed",
+    "pi.opt_replace": "Play now",
+    "pi.opt_next": "Play next",
+    "pi.opt_add": "Add to queue",
+    "pi.opt_hint_replace": "Replaces the queue and starts playing right away.",
+    "pi.opt_hint_next": "Plays after the current track.",
+    "pi.opt_hint_add": "Adds to the end of the queue.",
+    "pi.show_item_name": "Name",
+    "pi.show_item_name_hint": "Name of the item on the key",
+    "pi.dial_controls": "Controls",
+    "pi.dial_volume_rotate": "Rotate: volume · Push: mute · Touch: preset (hold to save the current volume)",
+    "pi.dial_track_rotate": "Rotate: seek · Push: next track · Touch: play / pause",
+    "pi.dial_step": "Step per tick",
+    "pi.dial_seek_step": "Seek per tick",
+    "pi.show_volume_text": "Volume and name",
+    "pi.show_volume_text_hint": "Number in the ring, player name next to it",
+    "pi.align": "Ring position",
+    "pi.align_left": "Left",
+    "pi.align_center": "Center",
+    "pi.align_right": "Right",
+    "pi.browse_start": "Start at",
+    "pi.browse_start_providers": "All providers",
+    "pi.browse_start_library": "Library",
+    "pi.browse_folder": "Playable folders",
+    "pi.browse_folder_open": "Open",
+    "pi.browse_folder_play": "Play",
+    "pi.browse_timeout": "Back to “now playing” after",
+    "pi.dial_browser_help": "Rotate: scroll · Push: open folder / play · Touch: back (hold: back to start)",
+    "pi.player_room": "Room / player",
+    "pi.transfer": "Bring the music along",
+    "pi.transfer_hint": "If the previous active player is playing, the music moves here.",
+    "pi.show_cover": "Cover while playing",
+    "pi.show_cover_hint": "Shows what plays in this room",
+    "pi.player_key_help": "Press: this player becomes the active player — all keys set to “Active player” follow.",
+    "pi.player_dial_help": "Rotate: choose the active player · Push: bring the music here from wherever it plays · Touch: play / pause",
+    "pi.dial_queue_help": "Rotate: scroll the queue (starts at the current track) · Push: play the selected track · Touch: back to the current track",
+    "pi.dial_group_help": "Rotate: volume of the whole group · Push: mute the group · Touch: preset (hold to save). Without a group it controls the player alone.",
+    "pi.queue_timeout": "Back to the current track after",
+    "pi.show_title": "Title",
+    "pi.show_title_hint": "Title and artist scroll along the key",
+    "pi.background": "Background",
+    "pi.background_hint": "Neighbouring dials with the same effect share one continuous scene.",
+    "pi.effect": "Effect",
+    "pi.effect_none": "None",
+    "pi.cover_color": "Cover color",
+    "pi.cover_color_hint": "Tint the effect with the colors of what is playing",
+    "pi.panorama_help": "Rotate and push change the effect (e.g. speed). Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
+    "pi.choose": "Choose",
+    "pi.no_options": "Nothing available.",
+    "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the minutes left.",
+    "pi.sleep_steps": "Durations",
+    "pi.sleep_steps_label": "Minutes",
+    "pi.sleep_steps_placeholder": "15, 30, 60, 90",
+    "pi.sleep_steps_hint": "Comma-separated minutes, stepped through with each press.",
+    "pi.announce_message": "Message",
+    "pi.announce_text": "Text to speak",
+    "pi.announce_placeholder": "Dinner is ready!",
+    "pi.announce_voice": "Voice (TTS engine)",
+    "pi.announce_default_voice": "Music Assistant default",
+    "pi.announce_no_engines": "No TTS engine found — add one in Home Assistant or Music Assistant.",
+    "pi.announce_where": "Where",
+    "pi.announce_one": "One player",
+    "pi.announce_all": "All players",
+    "pi.announce_chime": "Chime first",
+    "pi.announce_chime_hint": "A short sound before the message",
+    "pi.announce_volume": "Volume",
+    "pi.announce_volume_hint": "Volume 0 % keeps each speaker's current volume.",
+    "pi.source_help": "Switches the player to this input. The key lights up while the input is active.",
+    "pi.source": "Input",
+    "pi.choose_source": "Choose input",
+    "pi.no_sources": "This player has no selectable inputs.",
+    "pi.dashboard_help": "Press to show the dashboard on the screen, press again to take it down.",
+    "pi.dashboard_screen": "Screen",
+    "pi.choose_screen": "Choose screen",
+    "pi.no_screens": "No screen found. Chromecast devices appear here once Music Assistant knows them.",
+    "pi.dashboard_view": "View",
+    "pi.dashboard_now_playing": "Now playing",
+    "pi.dashboard_party": "Party",
+    "pi.dashboard_quiz": "Music quiz",
+    "effect.particles.name": "Particles",
+    "effect.particles.savedDensity": "Particle density",
+    "effect.particles.savedSpeed": "Particle speed",
+    "effect.matrix-rain.name": "Matrix Rain",
+    "effect.matrix-rain.color": "Color",
+    "effect.matrix-rain.savedDensity": "Rain density",
+    "effect.boing-ball.name": "Boing Ball",
+    "effect.boing-ball.primaryColor": "Primary color",
+    "effect.boing-ball.secondaryColor": "Secondary color",
+    "effect.boing-ball.savedSpeed": "Ball speed",
+    "effect.boing-globe.name": "Boing Globe",
+    "effect.boing-globe.landColor": "Land color",
+    "effect.boing-globe.oceanColor": "Ocean color",
+    "effect.boing-globe.savedSpeed": "Drift speed"
+   }
+  }
+ },
+ "keys": [
+  {
+   "key": "Play/Pause",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Toggle play/pause with cover art.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Playback Control",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Volume",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    },
+    {
+     "label": "Volume",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Volume up, down, mute or a preset.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Like",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Like",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Add the current track to your favorites, or remove it.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Like",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Play Item",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Play a playlist, album, radio station or podcast from your library.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Track",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Cover, title and progress on the display. Rotate to seek.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Volume on a dial, with mute and a preset.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Seek",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Next track",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Play / pause",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    },
+    {
+     "label": "Active Player",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Mute",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Preset (hold: save)",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    },
+    {
+     "label": "Group Volume",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Browser",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Browse all providers or your library with the dial and play what you find.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Scroll",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Open / play",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Back (hold: start)",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Player",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Make this room the active player — and bring the music along.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Active Player",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Choose the active player with the dial and bring the music there.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Choose player",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Bring music here",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Queue",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Scroll through the queue and jump to any track.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Scroll queue",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Play track",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Back to current",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Group Volume",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Volume of the whole speaker group.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Group volume",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Mute group",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Panorama",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Ambient effects spanning neighbouring dials, tinted by the cover.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Adjust effect",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Effect action",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Interact",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "trigger",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Sleep Timer",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Stop the music after 15, 30, 60 or 90 minutes.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Announcement",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Speak a message on one or all speakers.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Source",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Source",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Switch a speaker to an input like Line-in or TV.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Source",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Cast Dashboard",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Show a Music Assistant dashboard on a TV or screen.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "key.setup",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-dial-action.ts"
+    },
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-key-action.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.offline",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-dial-action.ts"
+    },
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-key-action.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.auth_failed",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-dial-action.ts"
+    },
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-key-action.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.no_player",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-dial-action.ts"
+    },
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/actions/ma-key-action.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.choose_item",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "key",
+     "file": "plugin/src/actions/play-item-key.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.volume",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "dial",
+     "file": "plugin/src/actions/volume-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.muted",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "dial",
+     "file": "plugin/src/actions/group-volume-dial.ts"
+    },
+    {
+     "label": "Volume",
+     "where": "dial",
+     "file": "plugin/src/actions/volume-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.preset_saved",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "dial",
+     "file": "plugin/src/actions/volume-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.nothing_playing",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "Track",
+     "where": "dial",
+     "file": "plugin/src/actions/track-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_providers",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_library",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_favorites",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_hint",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_loading",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "Queue",
+     "where": "dial",
+     "file": "plugin/src/actions/queue-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_empty",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.browse_unavailable",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.active_player",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "dial",
+     "file": "plugin/src/actions/player-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.music_here",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "dial",
+     "file": "plugin/src/actions/player-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.queue",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "dial",
+     "file": "plugin/src/actions/queue-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.queue_empty",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "dial",
+     "file": "plugin/src/actions/queue-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.queue_now",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "dial",
+     "file": "plugin/src/actions/queue-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.queue_next",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "dial",
+     "file": "plugin/src/actions/queue-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.queue_played",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "dial",
+     "file": "plugin/src/actions/queue-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.group",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "dial",
+     "file": "plugin/src/actions/group-volume-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.group_single",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "dial",
+     "file": "plugin/src/actions/group-volume-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.announce_setup",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "key",
+     "file": "plugin/src/actions/announce-key.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.choose_source",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Source",
+     "where": "key",
+     "file": "plugin/src/actions/source-key.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.choose_screen",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "key",
+     "file": "plugin/src/actions/dashboard-key.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.player",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/i18n.ts"
+    },
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    },
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Like",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    },
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    },
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
+    },
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    },
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.display",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/section.ts"
+    },
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    },
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    },
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_player_name",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_player_name_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_progress",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/toggle.ts"
+    },
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_progress_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/toggle.ts"
+    },
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    },
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Like",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    },
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    },
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    },
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    },
+    {
+     "label": "Active Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
+    },
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
+    },
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    },
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_playing_on",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_paused_on",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_idle_on",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.nothing_playing",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.preview_setup",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.preview_auth_failed",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.preview_offline",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.preview_no_player",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/key-preview.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.active_player_option",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.follows_now",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.no_active_player",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.currently",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.group_follow",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.group_players",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.choose_player",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.player_unavailable",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.no_players",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_playing",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "dial",
+     "file": "plugin/src/actions/player-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_paused",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "dial",
+     "file": "plugin/src/actions/player-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_idle",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "dial",
+     "file": "plugin/src/actions/player-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.state_offline",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "dial",
+     "file": "plugin/src/actions/player-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/player-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.connection",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.connected",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.connecting",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.offline",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.auth_failed",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.setup_title",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.setup_sub",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.player_count",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.change",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.done",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.connect",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.reconnect",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.server_url",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.server_url_placeholder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.server_url_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.token",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.token_placeholder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.token_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_token",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "packages/streamdeck-core/src/pi/components/field.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.server_reachable",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.server_unreachable",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.token_rejected",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.token_rejected_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.active_player",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.active_player_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/connection-card.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.command",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_previous",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_next",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_shuffle",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_repeat",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_crossfade",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_dont_stop",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_skip_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_repeat_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_dont_stop_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.volume_settings",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_down",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_up",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_mute",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_preset",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_step",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_preset_value",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.like_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Like",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.item",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_search_placeholder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_filter",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_loading",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/select.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_error",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_favorites",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_results",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_no_favorites",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.item_no_results",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_all",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_playlist",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_album",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_radio",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_podcast",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_track",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.filter_audiobook",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_playlist",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_album",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_radio",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_podcast",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_track",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_artist",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.type_audiobook",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/item-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.play_mode",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.opt_replace",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.opt_next",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.opt_add",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.opt_hint_replace",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.opt_hint_next",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.opt_hint_add",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_item_name",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_item_name_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_controls",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_volume_rotate",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_track_rotate",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_step",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_seek_step",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_volume_text",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_volume_text_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.align",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.align_left",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.align_center",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.align_right",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_start",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_start_providers",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_start_library",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_folder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_folder_open",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_folder_play",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_timeout",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_browser_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.player_room",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.transfer",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.transfer_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_cover",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_cover_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.player_key_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.player_dial_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Active Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_queue_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dial_group_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.queue_timeout",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_title",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_title_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.background",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.background_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.effect",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.effect_none",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.cover_color",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.cover_color_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.panorama_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.choose",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/select.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.no_options",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/select.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_steps",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_steps_label",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_steps_placeholder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_steps_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_message",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_text",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_placeholder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_voice",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_default_voice",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_no_engines",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_where",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_one",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_all",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_chime",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_chime_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_volume",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_volume_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.source_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.source",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.choose_source",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.no_sources",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/select.ts"
+    },
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dashboard_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dashboard_screen",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.choose_screen",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.no_screens",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dashboard_view",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dashboard_now_playing",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dashboard_party",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.dashboard_quiz",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "effect.particles.name",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.particles.savedDensity",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.particles.savedSpeed",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.matrix-rain.name",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.matrix-rain.color",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.matrix-rain.savedDensity",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-ball.name",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-ball.primaryColor",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-ball.secondaryColor",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-ball.savedSpeed",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-globe.name",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-globe.landColor",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-globe.oceanColor",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "effect.boing-globe.savedSpeed",
+   "group": "effect",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    },
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  }
+ ],
+ "outdated": {
+  "de": []
+ }
+}

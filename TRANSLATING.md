@@ -2,7 +2,17 @@
 
 Thank you for helping! Each language in MAC is **one JSON file**. That file serves the Stream Deck action list, the texts on the keys and the settings panels (property inspectors).
 
-## Add a new language
+## The easy way: the translation page
+
+Open the **[translation page](translate/)** (run `npm run translate` locally, then go to http://localhost:5399/translate/):
+
+- Pick your language under **To**. `?to=fr` in the link preselects it. New languages are marked with ✚.
+- Every text shows **where it appears**, for example "Play/Pause · settings" or "Track · dial hint".
+- Texts shown on keys get a **live key preview** that warns when a text is too wide. Missing placeholders like `{player}` are flagged too.
+- **Missing** and **outdated** texts are marked. "Outdated" means the English text changed after the translation.
+- Your draft is saved in the browser. When you're done, use **Download JSON**, or **Propose on GitHub**, which copies the file and opens GitHub's editor for you.
+
+## By hand
 
 1. Copy `plugin/de.boriskemper.music-assistant-controller.sdPlugin/en.json` to a file with the two-letter code of your language. Stream Deck supports `de`, `en`, `es`, `fr`, `ja`, `ko`, `zh_CN` and `zh_TW`, so for French the file is `fr.json`.
 2. Translate the **values** only. Keep every key (the part left of the colon) unchanged.

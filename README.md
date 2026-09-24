@@ -195,7 +195,7 @@ Have an idea? [Open an issue](../../issues).
 
 ## Translations
 
-MAC ships in **English** and **German**. Each language is a **single JSON file**, so adding yours is easy. See [TRANSLATING.md](TRANSLATING.md).
+MAC ships in **English** and **German**. Each language is a **single JSON file**, so adding yours is easy. The **[translation page](translate/)** shows every text with where it appears, a live key preview and missing/outdated markers, and exports the finished file. See [TRANSLATING.md](TRANSLATING.md).
 
 ---
 
@@ -251,6 +251,7 @@ npm run sim:queue-group   # Queue dial (jump to a track) and Group Volume dial (
 node tools/sd-sim/motion.mjs sim-out   # frames over time: marquee on key and dial, gliding volume ring
 node tools/sd-sim/panorama.mjs sim-out # panorama effects across dials and as dial backgrounds
 npm run sim:all           # all of the above
+npm run translate         # translation page at http://localhost:5399/translate/ (rebuilds translate/data.json)
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots
 ```
