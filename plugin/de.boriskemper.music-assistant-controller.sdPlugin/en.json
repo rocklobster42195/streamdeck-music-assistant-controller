@@ -199,6 +199,8 @@
 			"dial_seek_step": "Seek per tick",
 			"show_volume_text": "Volume and name",
 			"show_volume_text_hint": "Number in the ring, player name next to it",
+			"ring_cover_color": "Ring in cover color",
+			"ring_cover_color_hint": "The ring takes the main color of what is playing",
 			"align": "Ring position",
 			"align_left": "Left",
 			"align_center": "Center",

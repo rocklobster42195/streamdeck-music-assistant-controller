@@ -17,7 +17,9 @@ export class MacSelect extends HTMLElement {
     private paramsKey = "";
     private offs: (() => void)[] = [];
     private readonly onDocClick = (e: MouseEvent) => {
-        if (this.open && !this.contains(e.target as Node)) this.setOpen(false);
+        // composedPath is fixed at dispatch: opening re-renders the button, so e.target may already be
+        // detached and contains() would wrongly report an outside click (the list closed again at once)
+        if (this.open && !e.composedPath().includes(this)) this.setOpen(false);
     };
 
     private get key(): string {

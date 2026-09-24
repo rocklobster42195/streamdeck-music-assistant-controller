@@ -2,7 +2,7 @@ import streamDeck, { action } from "@elgato/streamdeck";
 import { currentElapsed } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
-import { ICONS, rgb } from "../render/key-image";
+import { coverAccent, ICONS, rgb } from "../render/key-image";
 import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
 import { frames } from "../render/frames";
 import { formatTime, image, mdi, progressBar, stripImage, text } from "../render/strip";
@@ -39,7 +39,7 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
         if (!media) {
             return { image: stripImage([mdi(ICONS.note, 26, 26, 48, "#5a5a60"), text(96, 56, this.t("key.nothing_playing"), { size: 13, color: "#a4a4aa", maxWidth: 100 })]) };
         }
-        const accent = rgb(media.palette?.accent, "#6cc4ff");
+        const accent = rgb(coverAccent(media), "#6cc4ff");
         const cover = this.cover(id, ma, media);
         const parts: string[] = [];
 

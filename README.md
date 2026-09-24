@@ -35,7 +35,7 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Play / Pause**: cover art, live play state, optional progress bar and player name | Key |
 | **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key |
 | **Volume**: up · down · mute · preset | Key |
-| **Volume**: rotate to change, push to mute, touch for a preset | Dial (SD+) |
+| **Volume**: rotate to change, push to mute, touch for a preset; ring optionally in the cover color | Dial (SD+) |
 | **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) |
 | **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) |
 | **Player**: one key per room; makes it the active player and brings the music along | Key |

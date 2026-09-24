@@ -1,7 +1,7 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
-import { ACCENT, ICONS } from "../render/key-image";
+import { ICONS, ringColor } from "../render/key-image";
 import { glide } from "../render/glide";
 import { gauge, mdi, stripImage, text } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
@@ -10,6 +10,8 @@ import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
 type VolumeDialSettings = MaKeySettings & EffectSettings & {
+    /** Ring in the cover's accent color instead of MAC's blue. */
+    ringCoverColor?: boolean;
     /** Percent per tick. */
     step?: number;
     preset?: number;
@@ -40,7 +42,8 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
         const cx = align === "center" ? 100 : align === "right" ? 150 : 50;
         // The ring glides to the new volume; the number shows the target right away
         const shown = glide(`vol-${id}`, volume, () => this.render(id));
-        const parts = [...gauge(cx, 50, 34, shown / 100, muted ? "#5a5a60" : ACCENT)];
+        const accent = ringColor(settings.ringCoverColor, player.current_media);
+        const parts = [...gauge(cx, 50, 34, shown / 100, muted ? "#5a5a60" : accent)];
 
         // Inside the ring: the number (with text), a speaker icon (without), or the muted icon
         if (muted) parts.push(mdi(ICONS.volumeOff, cx - 16, 34, 32, MUTED));
@@ -54,7 +57,7 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
             parts.push(text(tx, 44, playerName, { size: 14, weight: "bold", maxWidth: 92, anchor }));
             parts.push(
                 saved
-                    ? text(tx, 64, this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))), { size: 12, color: ACCENT, maxWidth: 92, anchor })
+                    ? text(tx, 64, this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))), { size: 12, color: accent, maxWidth: 92, anchor })
                     : text(tx, 64, muted ? this.t("key.muted") : this.t("key.volume"), { size: 12, color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor }),
             );
         }

@@ -4,7 +4,11 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
+
 ### Added
+- Volume and Group Volume dials: **Ring in cover color** option.
 - Panorama dial: a **Player** setting (default: active player). The text, the lyrics, the cover color and the settings panel header follow that player; neighbouring Panorama dials share it.
 - Key titles now use Sonos Controller's fade effect (`TitleFader` in `streamdeck-core`): the band fades in, then the text while it starts scrolling; it scrolls in even 80 ms steps and fades out in reverse, then pauses. The Play/Pause key shows "Title [Artist]" as in Sonos Controller, in a slightly brighter color.
 - `music-assistant-client` is ready for npm: own README, CHANGELOG and LICENSE, package metadata, a clean ESM build without stale files, `isServerNewer`, and a separate release path (`npm run client:release:*`, `tools/release-client.mjs`, workflow **Publish client** on `ma-client-v*` tags). Checked by installing the packed tarball into a fresh project and compiling the README examples there.
@@ -42,6 +46,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.
 
 ### Changed
+- Cover colors (effects, progress bars, rings) skip MA's palette accent when it is too dark to see on black (grey-scale covers have a near-black accent) and use the palette's primary or on-dark color instead.
 - Scrolling text on the dials moves in whole ticks (2 px every 80 ms) instead of following the clock, which stuttered on hardware when frames arrived late. The shared frame ticker runs at 80 ms.
 - Simulator scenarios refuse to run when the test player is grouped or playing (`assertTestPlayerFree`, `SIM_FORCE=1` overrides).
 - `music-assistant-client`: `RepeatMode`, `PlaybackState`, `DashboardType` and `MediaType` now come from the generated models (strict unions instead of open strings). Results of the convenience methods use the generated models (e.g. `queueItems()` returns `MA.QueueItem[]`). The generator turns Python `**kwargs` into "extra arguments allowed" instead of a required `kwargs` parameter.

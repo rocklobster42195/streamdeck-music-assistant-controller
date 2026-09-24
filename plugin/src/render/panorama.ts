@@ -1,7 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
 import { effectRegistry, PanoramaEngine, setPanoramaLogger } from "streamdeck-core";
 import type { PlayerMedia } from "music-assistant-client";
-import { ACCENT, rgb } from "./key-image";
+import { ACCENT, coverAccent, rgb } from "./key-image";
 
 setPanoramaLogger(streamDeck.logger);
 
@@ -25,7 +25,7 @@ export function effectSettingsFor(settings: EffectSettings, effectId: string, me
     const def = effectRegistry.get(effectId);
     const out: Record<string, unknown> = {};
     for (const field of def?.settingsSchema ?? []) out[field.key] = settings[field.key] ?? field.default;
-    const accent = media?.palette?.accent;
+    const accent = coverAccent(media);
     if (settings.coverColor !== false && accent) {
         const color = rgbToHex(accent);
         out.color = color;

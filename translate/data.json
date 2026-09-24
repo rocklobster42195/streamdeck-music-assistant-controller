@@ -211,6 +211,8 @@
     "pi.dial_seek_step": "Spulen pro Raste",
     "pi.show_volume_text": "Lautstärke und Name",
     "pi.show_volume_text_hint": "Zahl im Ring, Playername daneben",
+    "pi.ring_cover_color": "Ring in Cover-Farbe",
+    "pi.ring_cover_color_hint": "Der Ring nimmt die Hauptfarbe dessen an, was gerade läuft",
     "pi.align": "Position des Rings",
     "pi.align_left": "Links",
     "pi.align_center": "Mitte",
@@ -502,6 +504,8 @@
     "pi.dial_seek_step": "Seek per tick",
     "pi.show_volume_text": "Volume and name",
     "pi.show_volume_text_hint": "Number in the ring, player name next to it",
+    "pi.ring_cover_color": "Ring in cover color",
+    "pi.ring_cover_color_hint": "The ring takes the main color of what is playing",
     "pi.align": "Ring position",
     "pi.align_left": "Left",
     "pi.align_center": "Center",
@@ -1672,6 +1676,11 @@
      "label": "Continue Listening",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    },
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
     },
     {
      "label": "Play Item",
@@ -3161,6 +3170,38 @@
    "key": "pi.show_volume_text_hint",
    "group": "pi",
    "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.ring_cover_color",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.ring_cover_color_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
     {
      "label": "Volume",
      "where": "settings",

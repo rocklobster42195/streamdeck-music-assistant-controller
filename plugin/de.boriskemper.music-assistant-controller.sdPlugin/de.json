@@ -199,6 +199,8 @@
 			"dial_seek_step": "Spulen pro Raste",
 			"show_volume_text": "Lautstärke und Name",
 			"show_volume_text_hint": "Zahl im Ring, Playername daneben",
+			"ring_cover_color": "Ring in Cover-Farbe",
+			"ring_cover_color_hint": "Der Ring nimmt die Hauptfarbe dessen an, was gerade läuft",
 			"align": "Position des Rings",
 			"align_left": "Links",
 			"align_center": "Mitte",
