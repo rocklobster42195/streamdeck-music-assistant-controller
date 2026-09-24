@@ -4,7 +4,10 @@ import {
     mdiHelpCircleOutline,
     mdiSpeaker,
     mdiSpeakerMultiple,
+    mdiBookOpenPageVariant,
     mdiBookshelf,
+    mdiHistory,
+    mdiPodcast,
     mdiCardTextOutline,
     mdiEyeOffOutline,
     mdiMicrophoneVariant,
@@ -56,6 +59,9 @@ const ICONS: Record<string, string> = {
     textOff: mdiEyeOffOutline,
     trackInfo: mdiCardTextOutline,
     lyrics: mdiMicrophoneVariant,
+    continueAny: mdiHistory,
+    audiobook: mdiBookOpenPageVariant,
+    podcast: mdiPodcast,
 };
 
 /** Read each <pi-choice data-options> and hand the parsed options (with icon paths) to the element. */

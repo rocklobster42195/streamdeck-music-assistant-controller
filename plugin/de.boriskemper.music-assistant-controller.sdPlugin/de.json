@@ -13,6 +13,8 @@
 		"Add the current track to your favorites, or remove it.": "Aktuellen Titel zu den Favoriten hinzufügen oder entfernen.",
 		"Play Item": "Play Item",
 		"Play a playlist, album, radio station or podcast from your library.": "Spielt eine Playlist, ein Album, einen Radiosender oder Podcast aus deiner Bibliothek.",
+		"Continue Listening": "Weiterhören",
+		"Resume your latest audiobook or podcast episode where you left off.": "Setzt dein zuletzt gehörtes Hörbuch oder die Podcast-Folge dort fort, wo du aufgehört hast.",
 		"Track": "Track",
 		"Cover, title and progress on the display. Rotate to seek.": "Cover, Titel und Fortschritt auf dem Display. Drehen spult.",
 		"Volume on a dial, with mute and a preset.": "Lautstärke am Drehregler, mit Stumm und Preset.",
@@ -67,6 +69,7 @@
 			"browse_providers": "Alle Anbieter",
 			"browse_library": "Bibliothek",
 			"browse_favorites": "Favoriten",
+			"browse_in_progress": "Weiterhören",
 			"browse_hint": "Drehen zum Stöbern",
 			"browse_loading": "Lädt…",
 			"browse_empty": "Leer",
@@ -82,7 +85,8 @@
 			"group_single": "Keine Gruppe",
 			"announce_setup": "Text?",
 			"choose_source": "Quelle?",
-			"choose_screen": "Bildschirm?"
+			"choose_screen": "Bildschirm?",
+			"nothing_to_continue": "Nichts angefangen"
 		},
 		"pi": {
 			"player": "Player",
@@ -264,7 +268,12 @@
 			"dashboard_view": "Ansicht",
 			"dashboard_now_playing": "Jetzt läuft",
 			"dashboard_party": "Party",
-			"dashboard_quiz": "Musik-Quiz"
+			"dashboard_quiz": "Musik-Quiz",
+			"continue_help": "Zeigt das Hörbuch oder die Podcast-Folge, die du zuletzt angefangen hast. Drücken setzt dort fort, wo du aufgehört hast, erneutes Drücken pausiert.",
+			"continue_kind": "Zeigen",
+			"continue_any": "Beides",
+			"continue_audiobooks": "Hörbücher",
+			"continue_podcasts": "Podcasts"
 		},
 		"effect": {
 			"particles": {

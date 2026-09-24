@@ -28,6 +28,8 @@
     "Add the current track to your favorites, or remove it.": "Aktuellen Titel zu den Favoriten hinzufügen oder entfernen.",
     "Play Item": "Play Item",
     "Play a playlist, album, radio station or podcast from your library.": "Spielt eine Playlist, ein Album, einen Radiosender oder Podcast aus deiner Bibliothek.",
+    "Continue Listening": "Weiterhören",
+    "Resume your latest audiobook or podcast episode where you left off.": "Setzt dein zuletzt gehörtes Hörbuch oder die Podcast-Folge dort fort, wo du aufgehört hast.",
     "Track": "Track",
     "Cover, title and progress on the display. Rotate to seek.": "Cover, Titel und Fortschritt auf dem Display. Drehen spult.",
     "Volume on a dial, with mute and a preset.": "Lautstärke am Drehregler, mit Stumm und Preset.",
@@ -81,6 +83,7 @@
     "key.browse_providers": "Alle Anbieter",
     "key.browse_library": "Bibliothek",
     "key.browse_favorites": "Favoriten",
+    "key.browse_in_progress": "Weiterhören",
     "key.browse_hint": "Drehen zum Stöbern",
     "key.browse_loading": "Lädt…",
     "key.browse_empty": "Leer",
@@ -97,6 +100,7 @@
     "key.announce_setup": "Text?",
     "key.choose_source": "Quelle?",
     "key.choose_screen": "Bildschirm?",
+    "key.nothing_to_continue": "Nichts angefangen",
     "pi.player": "Player",
     "pi.display": "Anzeige",
     "pi.show_player_name": "Playername",
@@ -277,6 +281,11 @@
     "pi.dashboard_now_playing": "Jetzt läuft",
     "pi.dashboard_party": "Party",
     "pi.dashboard_quiz": "Musik-Quiz",
+    "pi.continue_help": "Zeigt das Hörbuch oder die Podcast-Folge, die du zuletzt angefangen hast. Drücken setzt dort fort, wo du aufgehört hast, erneutes Drücken pausiert.",
+    "pi.continue_kind": "Zeigen",
+    "pi.continue_any": "Beides",
+    "pi.continue_audiobooks": "Hörbücher",
+    "pi.continue_podcasts": "Podcasts",
     "effect.particles.name": "Partikel",
     "effect.particles.savedDensity": "Partikeldichte",
     "effect.particles.savedSpeed": "Partikel-Tempo",
@@ -310,6 +319,8 @@
     "Add the current track to your favorites, or remove it.": "Add the current track to your favorites, or remove it.",
     "Play Item": "Play Item",
     "Play a playlist, album, radio station or podcast from your library.": "Play a playlist, album, radio station or podcast from your library.",
+    "Continue Listening": "Continue Listening",
+    "Resume your latest audiobook or podcast episode where you left off.": "Resume your latest audiobook or podcast episode where you left off.",
     "Track": "Track",
     "Cover, title and progress on the display. Rotate to seek.": "Cover, title and progress on the display. Rotate to seek.",
     "Volume on a dial, with mute and a preset.": "Volume on a dial, with mute and a preset.",
@@ -363,6 +374,7 @@
     "key.browse_providers": "All providers",
     "key.browse_library": "Library",
     "key.browse_favorites": "Favorites",
+    "key.browse_in_progress": "Continue listening",
     "key.browse_hint": "Turn to browse",
     "key.browse_loading": "Loading…",
     "key.browse_empty": "Empty",
@@ -379,6 +391,7 @@
     "key.announce_setup": "Text?",
     "key.choose_source": "Source?",
     "key.choose_screen": "Screen?",
+    "key.nothing_to_continue": "Nothing to continue",
     "pi.player": "Player",
     "pi.display": "Display",
     "pi.show_player_name": "Player name",
@@ -559,6 +572,11 @@
     "pi.dashboard_now_playing": "Now playing",
     "pi.dashboard_party": "Party",
     "pi.dashboard_quiz": "Music quiz",
+    "pi.continue_help": "Shows the audiobook or podcast episode you started most recently. Press to continue where you left off, press again to pause.",
+    "pi.continue_kind": "Show",
+    "pi.continue_any": "Both",
+    "pi.continue_audiobooks": "Audiobooks",
+    "pi.continue_podcasts": "Podcasts",
     "effect.particles.name": "Particles",
     "effect.particles.savedDensity": "Particle density",
     "effect.particles.savedSpeed": "Particle speed",
@@ -687,6 +705,28 @@
    "usedIn": [
     {
      "label": "Play Item",
+     "where": "tooltip",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Continue Listening",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "name",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
+    }
+   ]
+  },
+  {
+   "key": "Resume your latest audiobook or podcast episode where you left off.",
+   "group": "manifest",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
      "where": "tooltip",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/manifest.json"
     }
@@ -1316,6 +1356,17 @@
    ]
   },
   {
+   "key": "key.browse_in_progress",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "dial",
+     "file": "plugin/src/actions/browser-dial.ts"
+    }
+   ]
+  },
+  {
    "key": "key.browse_hint",
    "group": "key",
    "usedIn": [
@@ -1497,6 +1548,17 @@
    ]
   },
   {
+   "key": "key.nothing_to_continue",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "key",
+     "file": "plugin/src/actions/continue-key.ts"
+    }
+   ]
+  },
+  {
    "key": "pi.player",
    "group": "pi",
    "usedIn": [
@@ -1514,6 +1576,11 @@
      "label": "Browser",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
     },
     {
      "label": "Cast Dashboard",
@@ -1595,6 +1662,11 @@
      "label": "Announcement",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
     },
     {
      "label": "Play Item",
@@ -1695,6 +1767,11 @@
      "label": "Browser",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
     },
     {
      "label": "Cast Dashboard",
@@ -2962,6 +3039,11 @@
    "group": "pi",
    "usedIn": [
     {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    },
+    {
      "label": "Play Item",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
@@ -2972,6 +3054,11 @@
    "key": "pi.show_item_name_hint",
    "group": "pi",
    "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    },
     {
      "label": "Play Item",
      "where": "settings",
@@ -3868,6 +3955,61 @@
      "label": "Cast Dashboard",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.continue_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.continue_kind",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.continue_any",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.continue_audiobooks",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.continue_podcasts",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
     }
    ]
   },

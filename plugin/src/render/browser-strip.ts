@@ -1,5 +1,5 @@
 // Touch-strip layouts of the Browser dial (pure: data in, SVG data URI out).
-import { mdiChevronRight, mdiFolderMusic, mdiFolderOutline, mdiHeart, mdiWaveform } from "@mdi/js";
+import { mdiBookOpenPageVariant, mdiChevronRight, mdiFolderMusic, mdiFolderOutline, mdiHeart, mdiHistory, mdiWaveform } from "@mdi/js";
 import type { BrowseEntry } from "../ma/browser";
 import { ACCENT, ICONS } from "./key-image";
 import { image, mdi, stripImage, text, wrap } from "./strip";
@@ -64,7 +64,7 @@ export function browserStrip(d: BrowseStripData): string {
 }
 
 function entryIcon(entry: BrowseEntry): string {
-    if (entry.isFolder) return entry.mediaType === "favorites" ? mdiHeart : mdiFolderOutline;
+    if (entry.isFolder) return entry.mediaType === "favorites" ? mdiHeart : entry.mediaType === "in_progress" ? mdiHistory : mdiFolderOutline;
     switch (entry.mediaType) {
         case "radio":
             return ICONS.radio;
@@ -75,6 +75,8 @@ function entryIcon(entry: BrowseEntry): string {
         case "podcast":
         case "podcast_episode":
             return ICONS.podcast;
+        case "audiobook":
+            return mdiBookOpenPageVariant;
         case "sound_effect":
             return mdiWaveform;
         default:

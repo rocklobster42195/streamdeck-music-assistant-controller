@@ -35,6 +35,21 @@
 			]
 		},
 		{
+			"Name": "Continue Listening",
+			"UUID": "de.boriskemper.music-assistant-controller.continue-key",
+			"Icon": "imgs/actions/continue-key/icon",
+			"Tooltip": "Resume your latest audiobook or podcast episode where you left off.",
+			"PropertyInspectorPath": "ui/continue-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/continue-key/key"
+				}
+			]
+		},
+		{
 			"Name": "Playback Control",
 			"UUID": "de.boriskemper.music-assistant-controller.playback-control-key",
 			"Icon": "imgs/actions/playback-control-key/icon",

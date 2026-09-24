@@ -3,7 +3,10 @@ import type { LibraryMediaType } from "../../pi/protocol";
 import { type BrowseEntry, type BrowseSource, LIBRARY_ROOT, PROVIDERS_ROOT } from "./types";
 
 /** Library folder labels (translated by the caller). */
-export type LibraryLabels = Record<"favorites" | Exclude<LibraryMediaType, "artist">, string>;
+export type LibraryLabels = Record<"favorites" | "inProgress" | Exclude<LibraryMediaType, "artist">, string>;
+
+/** Virtual folder with started, unfinished audiobooks and podcast episodes. */
+export const IN_PROGRESS = "mac:in_progress";
 
 const LIBRARY_COMMANDS: Partial<Record<LibraryMediaType, string>> = {
     playlist: "music/playlists/library_items",
@@ -32,15 +35,17 @@ export class MaBrowseSource implements BrowseSource {
         if (!ma?.isConnected) throw new Error("not connected");
         if (path === LIBRARY_ROOT) return this.libraryRoot();
         if (path === "mac:favorites") return this.favorites(ma);
+        if (path === IN_PROGRESS) return ((await ma.send<MediaItem[]>("music/in_progress_items", { limit: 50 })) ?? []).map(toEntry);
         if (path.startsWith("mac:lib:")) return this.libraryItems(ma, path.slice("mac:lib:".length) as LibraryMediaType, false);
 
         const real = path === PROVIDERS_ROOT ? undefined : path;
         try {
             const items = await ma.send<MediaItem[]>("music/browse", real ? { path: real } : {});
-            return (items ?? [])
+            const entries = (items ?? [])
                 .filter((i) => i.name !== "..")
                 .map(toEntry)
                 .filter((e) => !(path === PROVIDERS_ROOT && e.path && this.unbrowsable.has(providerOf(e.path))));
+            return path === PROVIDERS_ROOT ? [this.inProgressFolder(), ...entries] : entries;
         } catch (e) {
             if (real) this.unbrowsable.add(providerOf(real));
             throw e;
@@ -51,9 +56,14 @@ export class MaBrowseSource implements BrowseSource {
         const l = this.labels();
         const folder = (name: string, path: string, mediaType: string): BrowseEntry => ({ name, path, mediaType, isFolder: true, playable: false });
         return [
+            this.inProgressFolder(),
             folder(l.favorites, "mac:favorites", "favorites"),
             ...(["playlist", "album", "radio", "podcast", "audiobook", "track"] as const).map((t) => folder(l[t], `mac:lib:${t}`, t)),
         ];
+    }
+
+    private inProgressFolder(): BrowseEntry {
+        return { name: this.labels().inProgress, path: IN_PROGRESS, mediaType: "in_progress", isFolder: true, playable: false };
     }
 
     private async favorites(ma: MusicAssistantClient): Promise<BrowseEntry[]> {
@@ -76,7 +86,8 @@ function providerOf(path: string): string {
 
 export function toEntry(item: MediaItem): BrowseEntry {
     const isFolder = item.media_type === "folder";
-    const image = item.metadata?.images?.find((i) => i.type === "thumb") ?? item.metadata?.images?.[0];
+    // Full items carry metadata.images; item mappings (e.g. in-progress lists) a single `image`
+    const image = item.metadata?.images?.find((i) => i.type === "thumb") ?? item.metadata?.images?.[0] ?? (item.image as { proxy_id?: string } | null | undefined);
     const artists = (item.artists as { name: string }[] | undefined)?.map((a) => a.name).filter(Boolean);
     return {
         name: item.name.trim(),

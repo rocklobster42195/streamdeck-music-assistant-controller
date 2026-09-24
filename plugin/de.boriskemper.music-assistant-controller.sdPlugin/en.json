@@ -13,6 +13,8 @@
 		"Add the current track to your favorites, or remove it.": "Add the current track to your favorites, or remove it.",
 		"Play Item": "Play Item",
 		"Play a playlist, album, radio station or podcast from your library.": "Play a playlist, album, radio station or podcast from your library.",
+		"Continue Listening": "Continue Listening",
+		"Resume your latest audiobook or podcast episode where you left off.": "Resume your latest audiobook or podcast episode where you left off.",
 		"Track": "Track",
 		"Cover, title and progress on the display. Rotate to seek.": "Cover, title and progress on the display. Rotate to seek.",
 		"Volume on a dial, with mute and a preset.": "Volume on a dial, with mute and a preset.",
@@ -67,6 +69,7 @@
 			"browse_providers": "All providers",
 			"browse_library": "Library",
 			"browse_favorites": "Favorites",
+			"browse_in_progress": "Continue listening",
 			"browse_hint": "Turn to browse",
 			"browse_loading": "Loading…",
 			"browse_empty": "Empty",
@@ -82,7 +85,8 @@
 			"group_single": "Not grouped",
 			"announce_setup": "Text?",
 			"choose_source": "Source?",
-			"choose_screen": "Screen?"
+			"choose_screen": "Screen?",
+			"nothing_to_continue": "Nothing to continue"
 		},
 		"pi": {
 			"player": "Player",
@@ -264,7 +268,12 @@
 			"dashboard_view": "View",
 			"dashboard_now_playing": "Now playing",
 			"dashboard_party": "Party",
-			"dashboard_quiz": "Music quiz"
+			"dashboard_quiz": "Music quiz",
+			"continue_help": "Shows the audiobook or podcast episode you started most recently. Press to continue where you left off, press again to pause.",
+			"continue_kind": "Show",
+			"continue_any": "Both",
+			"continue_audiobooks": "Audiobooks",
+			"continue_podcasts": "Podcasts"
 		},
 		"effect": {
 			"particles": {

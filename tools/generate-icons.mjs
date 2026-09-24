@@ -15,6 +15,7 @@ const actions = {
     "volume-key": mdi.mdiVolumeHigh,
     "like-key": mdi.mdiHeart,
     "play-item-key": mdi.mdiStar,
+    "continue-key": mdi.mdiBookOpenPageVariant,
     "track-dial": mdi.mdiMusicCircleOutline,
     "volume-dial": mdi.mdiKnob,
     "browser-dial": mdi.mdiFolderMusic,

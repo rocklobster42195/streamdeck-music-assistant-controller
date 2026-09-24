@@ -114,9 +114,10 @@ export function renderKeyImage(opts: KeyImageOptions): string {
         const inset = opts.cover ? 3 : 4;
         parts.push(`<rect x="${inset}" y="${inset}" width="${SIZE - 2 * inset}" height="${SIZE - 2 * inset}" rx="18" fill="none" stroke="${opts.active}" stroke-width="${opts.cover ? 6 : 3}" opacity="${opts.cover ? 1 : 0.7}"/>`);
         if (opts.cover && !opts.icon) {
-            // "Now playing" tag in the corner
-            parts.push(`<circle cx="${SIZE - 26}" cy="${SIZE - 26}" r="16" fill="${opts.active}"/>`);
-            parts.push(icon(mdiPlay, SIZE - 38, SIZE - 38, 24, "#0b1a26"));
+            // "Now playing" tag in the corner (top instead of bottom when a title band sits at the bottom)
+            const cy = opts.overlay ? 26 : SIZE - 26;
+            parts.push(`<circle cx="${SIZE - 26}" cy="${cy}" r="16" fill="${opts.active}"/>`);
+            parts.push(icon(mdiPlay, SIZE - 38, cy - 12, 24, "#0b1a26"));
         }
     }
 

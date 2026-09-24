@@ -5,6 +5,9 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Continue Listening** key: resumes the latest audiobook or podcast episode where you left off (MA keeps the position); a second press pauses. It shows the cover, a scrolling title and the progress, and can be limited to audiobooks or podcasts.
+- Browser dial: a **Continue listening** folder at the top.
+- The Play/Pause key's scrolling title is now a shared helper (`render/key-title.ts`). The "now playing" tag on cover keys moves to the top corner when a title band is shown.
 - **Panorama dial text**: show the **title** (fading on song changes, as in Sonos Controller) or **synced lyrics** over the effect. Lyrics come from Music Assistant's metadata providers (LRCLIB) and stretch across neighbouring Panorama dials. The next song's lyrics load ahead of time, there is a timing offset for speaker latency, and it falls back to title and artist when there are no lyrics.
 - `music-assistant-client`: `trackLyrics()`, `parseLrc()` and `lyricIndexAt()`. `streamdeck-core`: `PanoramaEngine.members()`.
 - **Release pipeline** with beta channel: `npm run ship:beta|patch|minor|major` bumps the version, tags, and creates the GitHub release (betas as pre-releases). The Release workflow attaches the versioned `.streamDeckPlugin`, and a CI workflow checks every push and pull request. Release packages leave out the Node debug port.

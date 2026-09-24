@@ -23,10 +23,12 @@ const check = (name, ok, detail = "") => {
     results.push(ok);
     console.log(`${ok ? "PASS" : "FAIL"}  ${name}${detail ? `  (${detail})` : ""}`);
 };
-// Index of an entry in a browse level as the dial shows it (".." entries are hidden there)
+// Index of an entry in a browse level as the dial shows it (".." entries are hidden there; the
+// provider root starts with MAC's own "Continue listening" folder)
 const indexIn = async (p, match) => {
     const items = ((await ma.send("music/browse", p ? { path: p } : {})) ?? []).filter((i) => i.name !== "..");
-    return items.findIndex((i) => match(i));
+    const i = items.findIndex((i) => match(i));
+    return p || i < 0 ? i : i + 1;
 };
 
 const sim = await startSim({ globalSettings: { maUrl: env.MA_URL, maToken: env.MA_TOKEN, activePlayerId: P } });
@@ -88,6 +90,8 @@ try {
     sim.rotate(dial, 1);
     await sim.sleep(2500);
     await sim.snapshot(out, "66-browser-library");
+    sim.rotate(dial, 1); // past "Continue listening"
+    await sim.sleep(300);
     sim.dialPress(dial); // Favorites
     await sim.sleep(2500);
     await sim.snapshot(out, "67-browser-favorites");

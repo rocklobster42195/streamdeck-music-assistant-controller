@@ -38,6 +38,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         () => maConnection.ma,
         () => ({
             favorites: this.t("key.browse_favorites"),
+            inProgress: this.t("key.browse_in_progress"),
             playlist: this.t("pi.filter_playlist"),
             album: this.t("pi.filter_album"),
             radio: this.t("pi.filter_radio"),

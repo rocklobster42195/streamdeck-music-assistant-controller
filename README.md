@@ -48,6 +48,7 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Source**: switch a speaker to Line-in, TV or another input | Key |
 | **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key |
+| **Continue Listening**: resume your latest audiobook or podcast episode where you left off | Key |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key |
 
 ### Play / Pause
@@ -68,6 +69,14 @@ The settings panel shows a **live preview of the key** together with what is pla
 One press plays **any item from Music Assistant**: a playlist, album, radio station, podcast, track or audiobook, from any of your streaming services or your own files. The key shows the item's cover. While that item is playing, the key gets a blue frame and a ▶ tag.
 
 The settings panel has a **library browser**. It opens on your favorites, and you can search across all your providers, with filters for playlists, albums, radio, podcasts, tracks and audiobooks, all shown with covers. Under **When pressed**, choose what happens: **Play now** (replaces the queue), **Play next** or **Add to queue**.
+
+### Continue Listening
+
+Picks up your **latest audiobook or podcast episode** where you left off, across all your players: Music Assistant remembers the position. The key shows the cover with the title scrolling along the bottom. Press to continue, press again to pause. While it plays, the key gets a blue frame and shows the progress.
+
+Settings: **Show** both, only audiobooks, or only podcasts · **Name** on the key on or off · **Player**.
+
+Audiobooks and podcasts come from Music Assistant's providers (for example Audiobookshelf, Audible, podcast feeds, or LibriVox via Internet Archive). A progress bar before you press appears when Music Assistant knows the position of the item, which is the case for items in your library.
 
 ### Playback Control
 
@@ -131,7 +140,7 @@ The **Track**, **Volume** and **Group Volume** dials can show an effect as their
 
 ### Browser dial *(Stream Deck + only)*
 
-Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
+Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The first folder, **Continue listening**, holds the audiobooks and podcast episodes you started. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
 
 | Input | Effect |
 |---|---|
@@ -187,8 +196,6 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 ---
 
 ## Roadmap
-
-**Next:** audiobook and podcast resume: continue where you left off with a single key.
 
 Have an idea? [Open an issue](../../issues/new/choose).
 
