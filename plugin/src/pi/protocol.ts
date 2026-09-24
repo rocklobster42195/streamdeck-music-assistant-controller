@@ -26,11 +26,31 @@ export type KeyPreview = {
     following?: boolean;
 };
 
+export type LibraryMediaType = "playlist" | "album" | "radio" | "podcast" | "track" | "artist" | "audiobook";
+export type LibraryFilter = "all" | LibraryMediaType;
+
+/** A playable item as shown in the PI's library browser. */
+export type LibraryItem = {
+    uri: string;
+    name: string;
+    subtitle?: string;
+    mediaType: LibraryMediaType | string;
+    /** MA image proxy id, stored in the key's settings to render its cover. */
+    imageProxyId?: string;
+    /** Absolute thumbnail URL for the PI list. */
+    thumbUrl?: string;
+};
+
 /** PI → plugin */
-export type PiRequest = { event: "pi-ready" } | { event: "reconnect" };
+export type PiRequest =
+    | { event: "pi-ready" }
+    | { event: "reconnect" }
+    /** Empty query = favorites. */
+    | { event: "library-search"; requestId: number; query: string; filter: LibraryFilter };
 
 /** Plugin → PI */
 export type PiPush =
     | { event: "status"; status: ConnectionStatus }
     | { event: "players"; players: PlayerOption[]; activePlayerId?: string }
-    | { event: "preview"; preview: KeyPreview };
+    | { event: "preview"; preview: KeyPreview }
+    | { event: "library-results"; requestId: number; items: LibraryItem[]; favorites: boolean; error?: string };

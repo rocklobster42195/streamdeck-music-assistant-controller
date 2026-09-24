@@ -1,5 +1,10 @@
 import {
+    mdiAlbum,
     mdiAllInclusive,
+    mdiPlaylistMusic,
+    mdiPodcast,
+    mdiRadio,
+    mdiStar,
     mdiHeart,
     mdiHeartOutline,
     mdiLanConnect,
@@ -51,6 +56,11 @@ export const ICONS = {
     volumeOff: mdiVolumeOff,
     volumeUp: mdiVolumePlus,
     volumeDown: mdiVolumeMinus,
+    star: mdiStar,
+    radio: mdiRadio,
+    playlist: mdiPlaylistMusic,
+    podcast: mdiPodcast,
+    album: mdiAlbum,
 };
 
 /** Accent for "on" states (matches the PI theme). */
@@ -77,9 +87,8 @@ export type KeyImageOptions = {
 export function renderKeyImage(opts: KeyImageOptions): string {
     const color = opts.color ?? "#e0e0e0";
     const parts: string[] = [`<rect width="${SIZE}" height="${SIZE}" fill="#101010"/>`];
-    if (opts.active) {
+    if (opts.active && !opts.cover) {
         parts.push(`<rect x="4" y="4" width="${SIZE - 8}" height="${SIZE - 8}" rx="18" fill="${opts.active}" opacity="0.14"/>`);
-        parts.push(`<rect x="4" y="4" width="${SIZE - 8}" height="${SIZE - 8}" rx="18" fill="none" stroke="${opts.active}" stroke-width="3" opacity="0.7"/>`);
     }
 
     if (opts.cover) {
@@ -92,6 +101,17 @@ export function renderKeyImage(opts: KeyImageOptions): string {
         }
     } else if (opts.icon) {
         parts.push(icon(opts.icon, 32, 32, 80, opts.dimmed ? "#777" : color));
+    }
+
+    if (opts.active) {
+        // Frame on top, so it also shows over cover art
+        const inset = opts.cover ? 3 : 4;
+        parts.push(`<rect x="${inset}" y="${inset}" width="${SIZE - 2 * inset}" height="${SIZE - 2 * inset}" rx="18" fill="none" stroke="${opts.active}" stroke-width="${opts.cover ? 6 : 3}" opacity="${opts.cover ? 1 : 0.7}"/>`);
+        if (opts.cover && !opts.icon) {
+            // "Now playing" tag in the corner
+            parts.push(`<circle cx="${SIZE - 26}" cy="${SIZE - 26}" r="16" fill="${opts.active}"/>`);
+            parts.push(icon(mdiPlay, SIZE - 38, SIZE - 38, 24, "#0b1a26"));
+        }
     }
 
     if (opts.badge) {

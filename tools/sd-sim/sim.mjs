@@ -41,6 +41,7 @@ export async function startSim({ globalSettings = {}, language = "de", verbose =
         piMessages: [],
     };
     const waiters = new Set();
+    const piListeners = new Set();
     const notify = () => {
         for (const w of [...waiters]) {
             if (!w.check()) continue;
@@ -116,6 +117,7 @@ export async function startSim({ globalSettings = {}, language = "de", verbose =
                 break;
             case "sendToPropertyInspector":
                 state.piMessages.push(msg.payload);
+                for (const fn of piListeners) fn(msg.payload);
                 break;
             case "logMessage":
                 if (verbose) console.log("[plugin log]", msg.payload?.message);
@@ -185,6 +187,12 @@ export async function startSim({ globalSettings = {}, language = "de", verbose =
         piSend(context, payloadToPlugin) {
             const slot = state.slots.get(context);
             send({ event: "sendToPlugin", action: slot.action, context, payload: payloadToPlugin });
+        },
+
+        /** Messages the plugin sends to the (open) property inspector. */
+        onPiMessage(fn) {
+            piListeners.add(fn);
+            return () => piListeners.delete(fn);
         },
 
         /** Resolve when `check()` returns true (re-evaluated on every plugin message), or reject after `timeoutMs`. */

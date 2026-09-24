@@ -11,11 +11,14 @@
 		"Volume up, down, mute or a preset.": "Lauter, leiser, stumm oder ein Preset.",
 		"Like": "Like",
 		"Add the current track to your favorites, or remove it.": "Aktuellen Titel zu den Favoriten hinzufügen oder entfernen.",
+		"Play Item": "Play Item",
+		"Play a playlist, album, radio station or podcast from your library.": "Spielt eine Playlist, ein Album, einen Radiosender oder Podcast aus deiner Bibliothek.",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
 			"auth_failed": "Token?",
-			"no_player": "Kein Player"
+			"no_player": "Kein Player",
+			"choose_item": "Wählen"
 		},
 		"pi": {
 			"player": "Player",
@@ -88,7 +91,39 @@
 			"vol_preset": "Preset",
 			"vol_step": "Schritt pro Druck",
 			"vol_preset_value": "Preset-Lautstärke",
-			"like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn."
+			"like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn.",
+			"item": "Inhalt",
+			"item_search_placeholder": "In Music Assistant suchen…",
+			"item_filter": "Typ",
+			"item_loading": "Suche läuft…",
+			"item_error": "Suche fehlgeschlagen",
+			"item_favorites": "Deine Favoriten",
+			"item_results": "Ergebnisse",
+			"item_no_favorites": "Noch keine Favoriten – such oben nach etwas zum Abspielen.",
+			"item_no_results": "Nichts gefunden.",
+			"filter_all": "Alle",
+			"filter_playlist": "Playlists",
+			"filter_album": "Alben",
+			"filter_radio": "Radio",
+			"filter_podcast": "Podcasts",
+			"filter_track": "Titel",
+			"filter_audiobook": "Hörbücher",
+			"type_playlist": "Playlist",
+			"type_album": "Album",
+			"type_radio": "Radio",
+			"type_podcast": "Podcast",
+			"type_track": "Titel",
+			"type_artist": "Interpret",
+			"type_audiobook": "Hörbuch",
+			"play_mode": "Beim Drücken",
+			"opt_replace": "Sofort abspielen",
+			"opt_next": "Als Nächstes",
+			"opt_add": "Anhängen",
+			"opt_hint_replace": "Ersetzt die Warteschlange und spielt sofort.",
+			"opt_hint_next": "Spielt nach dem aktuellen Titel.",
+			"opt_hint_add": "Hängt es ans Ende der Warteschlange.",
+			"show_item_name": "Name",
+			"show_item_name_hint": "Name des Inhalts auf der Taste"
 		}
 	}
 }

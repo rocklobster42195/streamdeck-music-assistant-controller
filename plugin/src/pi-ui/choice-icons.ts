@@ -1,6 +1,9 @@
 // MDI paths for <pi-choice data-options='[{"icon":"next",…}]'> tiles (same icons as on the keys).
 import {
     mdiAllInclusive,
+    mdiPlay,
+    mdiPlaylistPlus,
+    mdiSkipNextCircleOutline,
     mdiHeart,
     mdiRepeat,
     mdiShuffleVariant,
@@ -26,6 +29,9 @@ const ICONS: Record<string, string> = {
     volumeDown: mdiVolumeMinus,
     volumeOff: mdiVolumeOff,
     volumeMedium: mdiVolumeMedium,
+    playNow: mdiPlay,
+    playNext: mdiSkipNextCircleOutline,
+    addToQueue: mdiPlaylistPlus,
 };
 
 /** Read each <pi-choice data-options> and hand the parsed options (with icon paths) to the element. */

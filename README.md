@@ -9,7 +9,7 @@ Control **[Music Assistant](https://www.music-assistant.io/)** from your Stream 
 
 > **Disclaimer:** This is an independent, community-made plugin. It is not affiliated with, endorsed by, or officially connected to the Music Assistant project or Elgato in any way.
 
-> **Status:** MAC is in early development. Play/Pause, Playback Control, Volume and Like keys work. Play Item and the Stream Deck + dials are in progress. See the [roadmap](#roadmap).
+> **Status:** MAC is in early development. All MVP keys work: Play/Pause, Play Item, Playback Control, Volume and Like. The Stream Deck + dials are in progress. See the [roadmap](#roadmap).
 
 ---
 
@@ -37,7 +37,7 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Volume**: up · down · mute · preset | Key | ✅ working |
 | **Volume**: rotate to change, press to mute | Dial (SD+) | 🚧 MVP |
 | **Track Control**: cover, title and progress on the LCD, rotate to seek | Dial (SD+) | 🚧 MVP |
-| **Play Item**: play any playlist, album, radio station or podcast from your library | Key | 🚧 MVP |
+| **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
 ### Play / Pause
@@ -51,6 +51,12 @@ The settings panel shows a **live preview of the key** together with what is pla
 | Player | A specific player/group, or **Active player** (default) |
 | Player name | Show the player's name as the key title |
 | Progress | Thin progress bar at the bottom, tinted with the cover's accent color |
+
+### Play Item
+
+One press plays **any item from Music Assistant**: a playlist, album, radio station, podcast, track or audiobook, from any of your streaming services or your own files. The key shows the item's cover. While that item is playing, the key gets a blue frame and a ▶ tag.
+
+The settings panel has a **library browser**. It opens on your favorites, and you can search across all your providers, with filters for playlists, albums, radio, podcasts, tracks and audiobooks, all shown with covers. Under **When pressed**, choose what happens: **Play now** (replaces the queue), **Play next** or **Add to queue**.
 
 ### Playback Control
 
@@ -155,6 +161,9 @@ MAC adds `<mac-key-preview>`, `<mac-player-picker>` and `<mac-connection-card>` 
 npm run build
 npm run sim:play-pause    # end-to-end against your MA server (needs .env), snapshots in sim-out/
 npm run sim:keys          # playback control, like and volume keys: presses everything, checks MA, restores state
+npm run sim:play-item     # Play Item: search like the PI, choose, press, check it plays
+npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
+node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots
 ```
 
 For API experiments, create a `.env` file (it is gitignored) with `MA_URL=http://<host>:8095`, `MA_TOKEN=<token>` and `MA_TEST_PLAYER=<player_id>`. The simulator plays quietly on that player. `npm run probe` records raw API traffic.

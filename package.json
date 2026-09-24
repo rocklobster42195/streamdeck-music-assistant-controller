@@ -18,12 +18,15 @@
         "probe": "node tools/ma-probe.mjs",
         "pi:preview": "node tools/pi-preview.mjs",
         "sim:play-pause": "node tools/sd-sim/play-pause.mjs sim-out",
-        "sim:keys": "node tools/sd-sim/keys.mjs sim-out"
+        "sim:keys": "node tools/sd-sim/keys.mjs sim-out",
+        "pi:live": "node tools/sd-sim/pi-live.mjs",
+        "sim:play-item": "node tools/sd-sim/play-item.mjs sim-out"
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.9",
         "@types/node": "~20.15.0",
         "eslint": "^10.6.0",
+        "puppeteer-core": "^25.12.0",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.62.1",
         "vitest": "^4.1.10"

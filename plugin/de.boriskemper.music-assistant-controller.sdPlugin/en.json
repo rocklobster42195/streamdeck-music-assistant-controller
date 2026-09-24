@@ -11,11 +11,14 @@
 		"Volume up, down, mute or a preset.": "Volume up, down, mute or a preset.",
 		"Like": "Like",
 		"Add the current track to your favorites, or remove it.": "Add the current track to your favorites, or remove it.",
+		"Play Item": "Play Item",
+		"Play a playlist, album, radio station or podcast from your library.": "Play a playlist, album, radio station or podcast from your library.",
 		"key": {
 			"setup": "Setup",
 			"offline": "Offline",
 			"auth_failed": "Token?",
-			"no_player": "No player"
+			"no_player": "No player",
+			"choose_item": "Choose"
 		},
 		"pi": {
 			"player": "Player",
@@ -88,7 +91,39 @@
 			"vol_preset": "Preset",
 			"vol_step": "Step per press",
 			"vol_preset_value": "Preset volume",
-			"like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it."
+			"like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it.",
+			"item": "Item",
+			"item_search_placeholder": "Search Music Assistant…",
+			"item_filter": "Type",
+			"item_loading": "Searching…",
+			"item_error": "Search failed",
+			"item_favorites": "Your favorites",
+			"item_results": "Results",
+			"item_no_favorites": "No favorites yet — search above for anything to play.",
+			"item_no_results": "Nothing found.",
+			"filter_all": "All",
+			"filter_playlist": "Playlists",
+			"filter_album": "Albums",
+			"filter_radio": "Radio",
+			"filter_podcast": "Podcasts",
+			"filter_track": "Tracks",
+			"filter_audiobook": "Audiobooks",
+			"type_playlist": "Playlist",
+			"type_album": "Album",
+			"type_radio": "Radio",
+			"type_podcast": "Podcast",
+			"type_track": "Track",
+			"type_artist": "Artist",
+			"type_audiobook": "Audiobook",
+			"play_mode": "When pressed",
+			"opt_replace": "Play now",
+			"opt_next": "Play next",
+			"opt_add": "Add to queue",
+			"opt_hint_replace": "Replaces the queue and starts playing right away.",
+			"opt_hint_next": "Plays after the current track.",
+			"opt_hint_add": "Adds to the end of the queue.",
+			"show_item_name": "Name",
+			"show_item_name_hint": "Name of the item on the key"
 		}
 	}
 }

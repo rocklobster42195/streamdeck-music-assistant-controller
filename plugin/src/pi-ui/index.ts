@@ -2,6 +2,7 @@
 import { definePiComponents, initConditionalVisibility, sd, translateDom } from "streamdeck-core/pi";
 import { initChoiceOptions } from "./choice-icons";
 import { MacConnectionCard } from "./connection-card";
+import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
 import { initPiState } from "./state";
@@ -15,6 +16,7 @@ sd.onReady(() => {
     customElements.define("mac-player-picker", MacPlayerPicker);
     customElements.define("mac-key-preview", MacKeyPreview);
     customElements.define("mac-connection-card", MacConnectionCard);
+    customElements.define("mac-item-picker", MacItemPicker);
     initChoiceOptions();
     initConditionalVisibility();
 

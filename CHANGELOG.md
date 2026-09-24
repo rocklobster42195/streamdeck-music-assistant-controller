@@ -5,6 +5,9 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Play Item** key: plays any MA item (playlist, album, radio, podcast, track, audiobook) with its cover on the key. A blue frame and ▶ tag show while it plays, and a check mark confirms the press. Choose between play now, play next or add to queue.
+- PI library browser: favorites as the start page, search across all providers, type filters, results with covers.
+- Dev tools: live PI (`npm run pi:live`, the real plugin and MA behind a browser page) and `tools/screenshot.mjs` (puppeteer-core with the installed Chrome).
 - **Playback Control** key: previous, next, shuffle, repeat (off → all → one), crossfade and "Don't stop the music". Toggles show their state, and skipping is dimmed on live radio.
 - **Volume** key: down, up (adjustable step), mute and preset, showing the current volume.
 - **Like** key: toggles the current item in the MA favorites, with a filled heart when it already is one.

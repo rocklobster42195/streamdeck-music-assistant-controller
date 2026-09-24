@@ -32,3 +32,29 @@ mac-connection-card { display: flex; flex-direction: column; gap: 6px; }
 
 /* Short explanation under a section */
 .mac-cmd-hint { padding: 0 4px; margin-top: -6px; }
+
+/* Item picker (Play Item) */
+.mac-item-picker { display: flex; flex-direction: column; }
+.mac-item-selected { display: flex; align-items: center; gap: 12px; padding: 10px 12px; }
+.mac-item-thumb { width: 40px; height: 40px; border-radius: 6px; overflow: hidden; background: #333338; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.mac-item-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mac-item-thumb-lg { width: 56px; height: 56px; border-radius: 8px; }
+.mac-item-glyph { font-size: 16px; font-weight: 700; color: var(--pi-text-3); }
+.mac-browser { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px 12px; }
+.mac-item-selected:not([hidden]) + .mac-browser { border-top: 1px solid var(--pi-card-border); }
+.mac-search { position: relative; display: flex; align-items: center; }
+.mac-search svg { position: absolute; left: 10px; color: var(--pi-text-3); pointer-events: none; }
+.mac-search .pi-input { padding-left: 32px; width: 100%; }
+.mac-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.mac-chip { padding: 4px 10px; min-height: 28px; border-radius: 14px; background: var(--pi-control); border: 1px solid var(--pi-control-border); color: var(--pi-text-2); font-size: 12px; cursor: pointer; }
+.mac-chip[aria-pressed="true"] { background: var(--pi-selected); border-color: var(--pi-accent); color: var(--pi-text); }
+.mac-chip:focus-visible, .mac-result:focus-visible { outline: 2px solid var(--pi-accent); outline-offset: 2px; }
+.mac-results-head { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8a90; padding-top: 2px; }
+.mac-results { display: flex; flex-direction: column; gap: 2px; max-height: 300px; overflow-y: auto; margin: 0 -4px; }
+.mac-result { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 4px; background: transparent; border: none; border-radius: 8px; cursor: pointer; text-align: left; }
+.mac-result:hover { background: #34343a; }
+.mac-result[aria-selected="true"] { background: var(--pi-selected); }
+.mac-result-skeleton { pointer-events: none; }
+.mac-result-skeleton .pi-select-text span { display: block; height: 10px; border-radius: 5px; background: #333338; margin: 3px 0; width: 70%; }
+.mac-result-skeleton .pi-select-text span + span { width: 45%; }
+.mac-results-empty { padding: 8px 4px; }

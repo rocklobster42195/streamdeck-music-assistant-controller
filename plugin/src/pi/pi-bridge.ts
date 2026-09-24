@@ -1,6 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
+import { searchLibrary } from "../ma/library";
 import type { ConnectionStatus, KeyPreview, PiPush, PiRequest, PlayerOption, PlayerState } from "./protocol";
 
 /**
@@ -45,7 +46,25 @@ class PiBridge {
             case "reconnect":
                 maConnection.reconnectNow();
                 break;
+            case "library-search":
+                void this.librarySearch(msg.requestId, msg.query, msg.filter);
+                break;
         }
+    }
+
+    private async librarySearch(requestId: number, query: string, filter: Parameters<typeof searchLibrary>[2]): Promise<void> {
+        const ma = maConnection.ma;
+        let reply: PiPush;
+        try {
+            if (!ma?.isConnected) throw new Error("not connected");
+            const { items, favorites } = await searchLibrary(ma, query ?? "", filter ?? "all");
+            reply = { event: "library-results", requestId, items, favorites };
+        } catch (e) {
+            streamDeck.logger.warn("[pi] library search failed", e);
+            reply = { event: "library-results", requestId, items: [], favorites: !query, error: String((e as Error)?.message ?? e) };
+        }
+        // Results are answers to a request — never deduplicated.
+        await streamDeck.ui.sendToPropertyInspector(reply as never);
     }
 
     private schedulePush(): void {

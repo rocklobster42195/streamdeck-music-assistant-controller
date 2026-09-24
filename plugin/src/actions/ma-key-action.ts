@@ -28,7 +28,12 @@ export type PlayerContext<S> = {
     playerName: string;
 };
 
-export type KeyRender = { image: string; title?: string };
+export type KeyRender = {
+    image: string;
+    title?: string;
+    /** Override what the PI header shows (defaults: what the player is playing). */
+    preview?: Partial<Pick<KeyPreview, "track" | "state">>;
+};
 
 type Instance<S extends JsonObject> = { action: KeyAction<S>; settings: S; lastRender?: string };
 
@@ -50,8 +55,13 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
     /** Render the key for a connected player. */
     protected abstract renderPlayer(ctx: PlayerContext<S>): KeyRender;
 
-    /** Handle a key press for a connected player. Throwing shows the alert triangle. */
-    protected abstract press(ctx: PlayerContext<S>): Promise<void>;
+    /** Handle a key press for a connected player. Throwing shows the alert triangle; returning "ok" shows the check mark. */
+    protected abstract press(ctx: PlayerContext<S>): Promise<void | "ok">;
+
+    /** Translate a key from the plugin's locale files. */
+    protected t(key: string): string {
+        return streamDeck.i18n.t(key);
+    }
 
     override onWillAppear(ev: WillAppearEvent<S>): void {
         if (!ev.action.isKey()) return;
@@ -79,7 +89,7 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
             return;
         }
         try {
-            await this.press(ctx);
+            if ((await this.press(ctx)) === "ok") await ev.action.showOk();
         } catch (e) {
             streamDeck.logger.warn(`[${this.manifestId ?? "action"}] press failed`, e);
             await ev.action.showAlert();
@@ -112,6 +122,7 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
             track: [media?.title, media?.artist].filter(Boolean).join(" · ") || undefined,
             playerName: ctx?.playerName,
             following: !inst.settings.playerId,
+            ...out.preview,
         };
         piBridge.updatePreview(id, preview);
 

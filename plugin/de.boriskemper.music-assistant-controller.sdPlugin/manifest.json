@@ -20,6 +20,21 @@
 			]
 		},
 		{
+			"Name": "Play Item",
+			"UUID": "de.boriskemper.music-assistant-controller.play-item-key",
+			"Icon": "imgs/actions/play-item-key/icon",
+			"Tooltip": "Play a playlist, album, radio station or podcast from your library.",
+			"PropertyInspectorPath": "ui/play-item-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/play-item-key/key"
+				}
+			]
+		},
+		{
 			"Name": "Playback Control",
 			"UUID": "de.boriskemper.music-assistant-controller.playback-control-key",
 			"Icon": "imgs/actions/playback-control-key/icon",
