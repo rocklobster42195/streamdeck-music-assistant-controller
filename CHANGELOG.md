@@ -8,7 +8,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - **Sleep Timer** key: steps through durations (default 15/30/60/90 min, configurable) and counts down.
 - **Announcement** key: TTS message on one or all players, with a voice (TTS engine) picker, optional chime and volume.
 - **Source** key: select a player input (e.g. Line-in); lit while it is active; passive sources are hidden.
-- **Cast Dashboard** key: show or hide an MA dashboard (now playing / party / music quiz) on a registered screen.
+- **Cast Dashboard** key: show or hide an MA dashboard (now playing / party / music quiz) on a registered screen. It handles slow cold starts (60 s timeout), ignores extra presses while busy ("…"), and tolerates delayed session reports. Tested on an NVIDIA SHIELD.
 - PI: `<mac-select>`, a dropdown filled by the plugin (`PiBridge.registerOptions`) and used for TTS engines, player inputs and screens.
 - **Panorama dial** (SD+) with the sonos-controller effects: Particles, Matrix Rain, Boing Ball and Boing Globe. Neighbouring dials share one scene. Rotate and push go to the effect, and changes are saved. The effect can follow the cover color.
 - Effect **backgrounds** for the Track, Volume and Group Volume dials (dimmed under the content).

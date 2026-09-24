@@ -147,8 +147,8 @@ export class MusicAssistantConnection {
 
     // ---- raw commands ---------------------------------------------------------------------
 
-    /** Send any API command. Resolves with `result`, rejects with {@link MaApiError}. */
-    send<T = unknown>(command: string, args: Record<string, unknown> = {}): Promise<T> {
+    /** Send any API command. Resolves with `result`, rejects with {@link MaApiError}. `timeoutMs` overrides the default for slow commands. */
+    send<T = unknown>(command: string, args: Record<string, unknown> = {}, options: { timeoutMs?: number } = {}): Promise<T> {
         const ws = this.ws;
         if (!ws || ws.readyState !== 1) return Promise.reject(new Error(`Not connected (${command})`));
         const message_id = String(this.nextMessageId++);
@@ -156,7 +156,7 @@ export class MusicAssistantConnection {
             const timer = setTimeout(() => {
                 this.pending.delete(message_id);
                 reject(new Error(`Timeout waiting for ${command}`));
-            }, this.opts.requestTimeoutMs);
+            }, options.timeoutMs ?? this.opts.requestTimeoutMs);
             this.pending.set(message_id, { command, resolve, reject, timer });
             ws.send(JSON.stringify({ message_id, command, args }));
         });

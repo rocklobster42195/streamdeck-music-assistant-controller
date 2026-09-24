@@ -100,11 +100,12 @@ export class MusicAssistantClient extends MusicAssistantConnection {
     dashboardSessions() {
         return this.send<DashboardSession[]>('dashboard/sessions');
     }
+    /** Casting starts an app on the target (e.g. a Chromecast) — that can take well over 10 s. */
     showDashboard(dashboardId: string, dashboard: DashboardType, playerId?: string) {
-        return this.send<null>('dashboard/show', { dashboard_id: dashboardId, dashboard, ...(playerId ? { player_id: playerId } : {}) });
+        return this.send<null>('dashboard/show', { dashboard_id: dashboardId, dashboard, ...(playerId ? { player_id: playerId } : {}) }, { timeoutMs: 60_000 });
     }
     hideDashboard(dashboardId: string) {
-        return this.send<null>('dashboard/hide', { dashboard_id: dashboardId });
+        return this.send<null>('dashboard/hide', { dashboard_id: dashboardId }, { timeoutMs: 30_000 });
     }
 
     /** Fetch a media item by URI; provider URIs resolve to the library item when it exists. */

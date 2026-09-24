@@ -12,6 +12,8 @@ type DashboardSettings = MaKeySettings & {
 };
 
 const SESSION_POLL_MS = 30_000;
+/** MA lists a new/ended cast session only after a delay — don't overwrite our state before that. */
+const SESSION_GRACE_MS = 20_000;
 
 /**
  * Cast a Music Assistant dashboard (now playing, party, music quiz) to a screen such as a
@@ -21,6 +23,10 @@ const SESSION_POLL_MS = 30_000;
 export class DashboardKey extends MaKeyAction<DashboardSettings> {
     /** Endpoints that currently show a dashboard. */
     private active = new Set<string>();
+    /** Endpoints with a show/hide still running (casting can take many seconds). */
+    private readonly busy = new Set<string>();
+    /** When we last showed/hid something: MA reports sessions with a delay, so trust our own state for a while. */
+    private lastChangeAt = 0;
 
     constructor() {
         super();
@@ -35,27 +41,39 @@ export class DashboardKey extends MaKeyAction<DashboardSettings> {
     protected override renderPlayer({ settings }: PlayerContext<DashboardSettings>): KeyRender {
         if (!settings.dashboardId) return { image: renderKeyImage({ icon: mdiCast, dimmed: true }), title: this.t("key.choose_screen") };
         const on = this.active.has(settings.dashboardId);
-        return { image: renderKeyImage({ icon: on ? mdiCastConnected : mdiCast, color: on ? ACCENT : "#c8c8cc", active: on ? ACCENT : undefined }), title: settings.dashboardName ?? "" };
+        const busy = this.busy.has(settings.dashboardId);
+        return {
+            image: renderKeyImage({ icon: on ? mdiCastConnected : mdiCast, color: on ? ACCENT : "#c8c8cc", active: on ? ACCENT : undefined, dimmed: busy, badge: busy ? "…" : undefined }),
+            title: settings.dashboardName ?? "",
+        };
     }
 
-    protected override async press({ ma, player, settings }: PlayerContext<DashboardSettings>): Promise<"ok"> {
+    protected override async press({ ma, player, settings }: PlayerContext<DashboardSettings>): Promise<"ok" | void> {
         const id = settings.dashboardId;
         if (!id) throw new Error("no screen chosen");
-        if (this.active.has(id)) {
-            await ma.hideDashboard(id);
-            this.active.delete(id);
-        } else {
-            const type = settings.dashboard ?? "now_playing";
-            await ma.showDashboard(id, type, type === "now_playing" ? player.player_id : undefined);
-            this.active.add(id);
-        }
+        if (this.busy.has(id)) return; // still starting/stopping — a second press must not double it
+        this.busy.add(id);
         this.renderAll();
+        try {
+            if (this.active.has(id)) {
+                await ma.hideDashboard(id);
+                this.active.delete(id);
+            } else {
+                const type = settings.dashboard ?? "now_playing";
+                await ma.showDashboard(id, type, type === "now_playing" ? player.player_id : undefined);
+                this.active.add(id);
+            }
+        } finally {
+            this.busy.delete(id);
+            this.lastChangeAt = Date.now();
+            this.renderAll();
+        }
         return "ok";
     }
 
     private async refreshSessions(): Promise<void> {
         const ma = maConnection.ma;
-        if (!ma?.isConnected) return;
+        if (!ma?.isConnected || Date.now() - this.lastChangeAt < SESSION_GRACE_MS) return;
         this.polledOnce = true;
         try {
             const sessions = await ma.dashboardSessions();
