@@ -183,13 +183,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 ## Roadmap
 
-**MVP (first release):** ✅ Play/Pause · Playback Control (incl. crossfade and "Don't stop the music") · Volume key and dial · Track dial · Play Item · Like
-
-**v2:** ✅ **Browser dial** · ✅ **Player switcher** · ✅ **Queue transfer ("music follows me")** · ✅ **Queue dial** · ✅ **Group volume**
-
-**Later:** audiobook and podcast resume · search · radio mode
-
-**Ideas:** party mode (guest QR code on a key) · lyrics on the SD+ touch strip · ambient sounds
+**Next:** audiobook and podcast resume: continue where you left off with a single key.
 
 Have an idea? [Open an issue](../../issues/new/choose).
 
