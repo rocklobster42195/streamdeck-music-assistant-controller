@@ -1,0 +1,25 @@
+.env
+.env.*
+node_modules/
+# raw recordings from a live MA instance (personal data) - sanitize before committing
+docs/ma-api/fixtures/
+
+# Local assistant context (not part of the repo)
+CLAUDE.md
+
+# Build output
+**/dist/
+**/*.sdPlugin/bin/
+**/*.sdPlugin/logs/
+*.streamDeckPlugin
+**/*.sdPlugin/ui/locales.generated.js
+logs/
+
+# Editor / local
+.vscode/
+**/*.sdPlugin/ui/pi.js
+**/*.sdPlugin/ui/pi-theme.css
+
+# Local working notes and assistant config (not part of the repo)
+notes/
+.claude/

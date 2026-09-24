@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+	"Name": "Music Assistant Controller",
+	"Version": "0.1.0.0",
+	"Author": "Boris Kemper",
+	"Actions": [
+		{
+			"Name": "Play/Pause",
+			"UUID": "de.boriskemper.music-assistant-controller.play-pause-key",
+			"Icon": "imgs/actions/play-pause-key/icon",
+			"Tooltip": "Toggle play/pause with cover art.",
+			"PropertyInspectorPath": "ui/play-pause-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/play-pause-key/key"
+				}
+			]
+		}
+	],
+	"Category": "Music Assistant Controller",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "Control Music Assistant from your Stream Deck: every speaker, every streaming service, one deck.\nUnofficial community plugin, not affiliated with Music Assistant or Elgato.\n\nIcons by https://pictogrammers.com",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "6.9"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "de.boriskemper.music-assistant-controller"
+}

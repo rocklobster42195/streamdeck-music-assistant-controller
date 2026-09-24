@@ -1,0 +1,29 @@
+{
+    "name": "mac",
+    "private": true,
+    "description": "MAC — Music Assistant Controller for Elgato Stream Deck (monorepo)",
+    "license": "MIT",
+    "author": "Boris Kemper",
+    "type": "module",
+    "workspaces": [
+        "packages/ma-client",
+        "packages/streamdeck-core",
+        "plugin"
+    ],
+    "scripts": {
+        "build": "npm run build -w music-assistant-client -w streamdeck-core && npm run build -w mac-plugin",
+        "watch": "npm run build -w music-assistant-client -w streamdeck-core && npm run watch -w mac-plugin",
+        "test": "vitest run",
+        "lint": "eslint packages plugin/src",
+        "probe": "node tools/ma-probe.mjs",
+        "pi:preview": "node tools/pi-preview.mjs"
+    },
+    "devDependencies": {
+        "@tsconfig/node20": "^20.1.9",
+        "@types/node": "~20.15.0",
+        "eslint": "^10.6.0",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.62.1",
+        "vitest": "^4.1.10"
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "name": "music-assistant-client",
+    "version": "0.0.1",
+    "private": true,
+    "description": "TypeScript client for the Music Assistant WebSocket API — auth, live player/queue state, commands, auto-reconnect.",
+    "license": "MIT",
+    "author": "Boris Kemper",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "music-assistant",
+        "home-assistant",
+        "websocket",
+        "client"
+    ],
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "test": "vitest run",
+        "lint": "eslint src test"
+    },
+    "engines": {
+        "node": ">=20"
+    }
+}
