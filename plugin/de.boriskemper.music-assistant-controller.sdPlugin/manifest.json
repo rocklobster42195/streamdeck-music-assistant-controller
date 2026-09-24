@@ -185,6 +185,52 @@
 					"Image": "imgs/actions/player-dial/key"
 				}
 			]
+		},
+		{
+			"Name": "Queue",
+			"UUID": "de.boriskemper.music-assistant-controller.queue-dial",
+			"Icon": "imgs/actions/queue-dial/icon",
+			"Tooltip": "Scroll through the queue and jump to any track.",
+			"PropertyInspectorPath": "ui/queue-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Scroll queue",
+					"Push": "Play track",
+					"Touch": "Back to current"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/queue-dial/key"
+				}
+			]
+		},
+		{
+			"Name": "Group Volume",
+			"UUID": "de.boriskemper.music-assistant-controller.group-volume-dial",
+			"Icon": "imgs/actions/group-volume-dial/icon",
+			"Tooltip": "Volume of the whole speaker group.",
+			"PropertyInspectorPath": "ui/group-volume-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Group volume",
+					"Push": "Mute group",
+					"Touch": "Preset (hold: save)"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/group-volume-dial/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",

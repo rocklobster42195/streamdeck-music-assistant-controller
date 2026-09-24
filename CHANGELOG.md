@@ -5,6 +5,9 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Queue dial** (SD+): scroll the queue from the current track (covers, titles, artists, now playing / up next / played), push to jump, touch to return. Items load page by page.
+- **Group Volume dial** (SD+): volume and mute for the whole group (`group_volume`, `group_volume_mute`), with the group's rooms and a preset. It falls back to the single player when ungrouped.
+- `music-assistant-client`: `queueItems`, `playIndex`, `setGroupVolume`, `setGroupMute`, `groupPlayers`, `ungroup`.
 - **Player** key (one per room): makes its player the active player, with a blue frame and state dot. **Bring the music along** moves playback from the previous active player (music follows you).
 - **Active Player** dial: rotate to choose the active player (keys follow instantly, saving is throttled), push to bring the music here from wherever it plays, touch for play/pause.
 - **Browser dial** (SD+): browse all providers (via `music/browse`) or your library (favorites and per-type listings) with the dial. Rotate to scroll, push to open or play, touch to go back, hold to go to the start. It shows a breadcrumb, cover, position and a scroll indicator, returns to "now playing" after a timeout, resumes where you left off, and hides providers that can't be browsed.

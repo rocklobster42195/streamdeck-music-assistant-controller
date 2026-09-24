@@ -1,11 +1,13 @@
 import streamDeck from "@elgato/streamdeck";
 import { BrowserDial } from "./actions/browser-dial";
+import { GroupVolumeDial } from "./actions/group-volume-dial";
 import { LikeKey } from "./actions/like-key";
 import { PlayItemKey } from "./actions/play-item-key";
 import { PlayerDial } from "./actions/player-dial";
 import { PlayerKey } from "./actions/player-key";
 import { PlayPauseKey } from "./actions/play-pause-key";
 import { PlaybackControlKey } from "./actions/playback-control-key";
+import { QueueDial } from "./actions/queue-dial";
 import { TrackDial } from "./actions/track-dial";
 import { VolumeDial } from "./actions/volume-dial";
 import { VolumeKey } from "./actions/volume-key";
@@ -24,6 +26,8 @@ streamDeck.actions.registerAction(new TrackDial());
 streamDeck.actions.registerAction(new BrowserDial());
 streamDeck.actions.registerAction(new PlayerKey());
 streamDeck.actions.registerAction(new PlayerDial());
+streamDeck.actions.registerAction(new QueueDial());
+streamDeck.actions.registerAction(new GroupVolumeDial());
 piBridge.init();
 
 await streamDeck.connect();

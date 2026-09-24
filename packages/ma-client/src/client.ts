@@ -1,4 +1,4 @@
-import type { AuthUser, EventMap, EventName, MaEvent, MediaItem, Player, PlayerQueue, RepeatMode, ServerInfo } from './types.js';
+import type { AuthUser, EventMap, EventName, MaEvent, MediaItem, Player, PlayerQueue, QueueItem, RepeatMode, ServerInfo } from './types.js';
 
 /** Schema version this client was written against (MA server 2.10.4). */
 export const CLIENT_SCHEMA_VERSION = 65;
@@ -197,6 +197,28 @@ export class MusicAssistantClient {
     /** "Like": add the currently playing item to the MA favorites. */
     addCurrentlyPlayingToFavorites(playerId: string) {
         return this.send<null>('players/add_currently_playing_to_favorites', { player_id: playerId });
+    }
+
+    /** Queue items, paged. */
+    queueItems(queueId: string, limit = 50, offset = 0) {
+        return this.send<QueueItem[]>('player_queues/items', { queue_id: queueId, limit, offset });
+    }
+    /** Jump to (and play) the item at `index` — or with that queue_item_id — in the queue. */
+    playIndex(queueId: string, index: number | string) {
+        return this.send<null>('player_queues/play_index', { queue_id: queueId, index });
+    }
+    setGroupVolume(playerId: string, level: number) {
+        return this.send<null>('players/cmd/group_volume', { player_id: playerId, volume_level: Math.round(Math.min(100, Math.max(0, level))) });
+    }
+    /** Group `playerIds` with `targetPlayerId` as leader. */
+    groupPlayers(targetPlayerId: string, playerIds: string[]) {
+        return this.send<null>('players/cmd/set_members', { target_player: targetPlayerId, player_ids_to_add: playerIds });
+    }
+    ungroup(playerId: string) {
+        return this.send<null>('players/cmd/ungroup', { player_id: playerId });
+    }
+    setGroupMute(playerId: string, muted: boolean) {
+        return this.send<null>('players/cmd/group_volume_mute', { player_id: playerId, muted });
     }
 
     /** Fetch a media item by URI; provider URIs resolve to the library item when it exists. */

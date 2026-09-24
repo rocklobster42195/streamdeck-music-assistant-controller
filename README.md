@@ -40,6 +40,8 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) | ✅ working |
 | **Player**: one key per room; makes it the active player and brings the music along | Key | ✅ working |
 | **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) | ✅ working |
+| **Queue**: scroll through the queue and jump to any track | Dial (SD+) | ✅ working |
+| **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) | ✅ working |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
@@ -102,6 +104,14 @@ Shows the cover, the title (on up to two lines), the artist and a progress bar i
 
 The **Active Player** dial does the same with a turn. Rotate to choose the active player. **Push** brings the music here from wherever it is playing. **Touch** is play/pause.
 
+### Queue dial *(Stream Deck + only)*
+
+Rotate to scroll through the queue, starting at the current track. Each entry shows its cover, title and artist, plus **Now playing**, **Up next** or **Played**. **Push** plays the selected track, and **touch** jumps back to the current one. After a few seconds without input, the dial returns to the current track on its own.
+
+### Group Volume dial *(Stream Deck + only)*
+
+Controls the volume of the **whole group** the player belongs to, and shows the group's rooms ("Group · 2 rooms"). Rotate for volume, push to mute the group, touch for a preset (hold to save it). A player that isn't grouped is controlled on its own.
+
 ### Browser dial *(Stream Deck + only)*
 
 Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
@@ -154,7 +164,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 **MVP (first release):** ✅ Play/Pause · Playback Control (incl. crossfade and "Don't stop the music") · Volume key and dial · Track dial · Play Item · Like
 
-**v2:** ✅ **Browser dial** · ✅ **Player switcher** · ✅ **Queue transfer ("music follows me")** · Queue browser dial · Favorites/Library browser dial · Group volume
+**v2:** ✅ **Browser dial** · ✅ **Player switcher** · ✅ **Queue transfer ("music follows me")** · ✅ **Queue dial** · ✅ **Group volume**
 
 **Later:** Panorama effects across dials · audiobook and podcast resume · search · radio mode
 
@@ -218,6 +228,7 @@ npm run sim:play-item     # Play Item: search like the PI, choose, press, check 
 npm run sim:dials         # Volume and Track dials: turn, push, touch, check MA, restore
 npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → play a station, library start
 npm run sim:players       # Player key/dial: switch the active player; with MA_TRANSFER_PLAYER also music-follows-me
+npm run sim:queue-group   # Queue dial (jump to a track) and Group Volume dial (temporary group, restored afterwards)
 npm run sim:all           # all of the above
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots

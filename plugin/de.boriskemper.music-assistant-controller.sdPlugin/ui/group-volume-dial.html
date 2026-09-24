@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Group Volume</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Group Volume"></mac-key-preview>
+  <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.dial_group_help"></div>
+
+  <pi-section title="pi.dial_controls">
+    <pi-range setting="step" min="1" max="10" step="1" default="2" unit="%" label="pi.dial_step"></pi-range>
+    <pi-range setting="preset" min="0" max="100" step="1" default="20" unit="%" label="pi.vol_preset_value"></pi-range>
+  </pi-section>
+
+  <pi-section title="pi.player" class="pi-needs-connection">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

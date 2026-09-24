@@ -71,6 +71,7 @@ export interface Player {
     active_source?: string | null;
     current_media?: PlayerMedia | null;
     group_volume?: number | null;
+    group_volume_muted?: boolean | null;
     sleep_timer_expires_at?: number | null;
     hide_in_ui?: boolean;
     [key: string]: unknown;
@@ -98,6 +99,8 @@ export interface PlayerQueue {
 
 export interface QueueItem {
     queue_item_id: string;
+    /** Position in the queue (0-based). */
+    index?: number;
     name: string;
     duration?: number | null;
     media_item?: MediaItem | null;

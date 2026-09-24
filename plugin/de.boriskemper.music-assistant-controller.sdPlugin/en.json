@@ -32,6 +32,15 @@
 		"Choose the active player with the dial and bring the music there.": "Choose the active player with the dial and bring the music there.",
 		"Choose player": "Choose player",
 		"Bring music here": "Bring music here",
+		"Queue": "Queue",
+		"Scroll through the queue and jump to any track.": "Scroll through the queue and jump to any track.",
+		"Scroll queue": "Scroll queue",
+		"Play track": "Play track",
+		"Back to current": "Back to current",
+		"Group Volume": "Group Volume",
+		"Volume of the whole speaker group.": "Volume of the whole speaker group.",
+		"Group volume": "Group volume",
+		"Mute group": "Mute group",
 		"key": {
 			"setup": "Setup",
 			"offline": "Offline",
@@ -50,7 +59,14 @@
 			"browse_empty": "Empty",
 			"browse_unavailable": "Can't be browsed",
 			"active_player": "Active player",
-			"music_here": "Music moved here"
+			"music_here": "Music moved here",
+			"queue": "Queue",
+			"queue_empty": "Queue is empty",
+			"queue_now": "Now playing",
+			"queue_next": "Up next",
+			"queue_played": "Played",
+			"group": "Group · {count} rooms",
+			"group_single": "Not grouped"
 		},
 		"pi": {
 			"player": "Player",
@@ -181,7 +197,10 @@
 			"show_cover": "Cover while playing",
 			"show_cover_hint": "Shows what plays in this room",
 			"player_key_help": "Press: this player becomes the active player — all keys set to “Active player” follow.",
-			"player_dial_help": "Rotate: choose the active player · Push: bring the music here from wherever it plays · Touch: play / pause"
+			"player_dial_help": "Rotate: choose the active player · Push: bring the music here from wherever it plays · Touch: play / pause",
+			"dial_queue_help": "Rotate: scroll the queue (starts at the current track) · Push: play the selected track · Touch: back to the current track",
+			"dial_group_help": "Rotate: volume of the whole group · Push: mute the group · Touch: preset (hold to save). Without a group it controls the player alone.",
+			"queue_timeout": "Back to the current track after"
 		}
 	}
 }

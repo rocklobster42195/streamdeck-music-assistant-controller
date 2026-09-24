@@ -32,6 +32,15 @@
 		"Choose the active player with the dial and bring the music there.": "Wähle den aktiven Player per Drehregler und hol die Musik dorthin.",
 		"Choose player": "Player wählen",
 		"Bring music here": "Musik hierher",
+		"Queue": "Warteschlange",
+		"Scroll through the queue and jump to any track.": "Blättere durch die Warteschlange und spring zu jedem Titel.",
+		"Scroll queue": "Warteschlange blättern",
+		"Play track": "Titel abspielen",
+		"Back to current": "Zurück zum aktuellen",
+		"Group Volume": "Gruppen-Lautstärke",
+		"Volume of the whole speaker group.": "Lautstärke der ganzen Lautsprecher-Gruppe.",
+		"Group volume": "Gruppen-Lautstärke",
+		"Mute group": "Gruppe stumm",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
@@ -50,7 +59,14 @@
 			"browse_empty": "Leer",
 			"browse_unavailable": "Nicht durchsuchbar",
 			"active_player": "Aktiver Player",
-			"music_here": "Musik ist jetzt hier"
+			"music_here": "Musik ist jetzt hier",
+			"queue": "Warteschlange",
+			"queue_empty": "Warteschlange leer",
+			"queue_now": "Läuft gerade",
+			"queue_next": "Als Nächstes",
+			"queue_played": "Gespielt",
+			"group": "Gruppe · {count} Räume",
+			"group_single": "Keine Gruppe"
 		},
 		"pi": {
 			"player": "Player",
@@ -181,7 +197,10 @@
 			"show_cover": "Cover bei Wiedergabe",
 			"show_cover_hint": "Zeigt, was in diesem Raum läuft",
 			"player_key_help": "Drücken: Dieser Player wird zum aktiven Player – alle Tasten mit „Aktiver Player“ folgen.",
-			"player_dial_help": "Drehen: aktiven Player wählen · Drücken: Musik von dort, wo sie läuft, hierher holen · Tippen: Play / Pause"
+			"player_dial_help": "Drehen: aktiven Player wählen · Drücken: Musik von dort, wo sie läuft, hierher holen · Tippen: Play / Pause",
+			"dial_queue_help": "Drehen: durch die Warteschlange blättern (startet beim aktuellen Titel) · Drücken: gewählten Titel abspielen · Tippen: zurück zum aktuellen Titel",
+			"dial_group_help": "Drehen: Lautstärke der ganzen Gruppe · Drücken: Gruppe stumm · Tippen: Preset (halten speichert). Ohne Gruppe steuert der Dial den Player allein.",
+			"queue_timeout": "Zurück zum aktuellen Titel nach"
 		}
 	}
 }
