@@ -6,9 +6,10 @@ import { ACCENT, ICONS } from "../render/key-image";
 import { glide } from "../render/glide";
 import { gauge, mdi, stripImage, text } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
+import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
-type GroupVolumeDialSettings = MaKeySettings & {
+type GroupVolumeDialSettings = MaKeySettings & EffectSettings & {
     step?: number;
     preset?: number;
 };
@@ -23,7 +24,8 @@ const MUTED = "#ff8a8a";
 export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
     private readonly senders = new Map<string, LatestSender<number>>();
 
-    protected override renderPlayer({ id, player, settings }: PlayerContext<GroupVolumeDialSettings>): StripRender {
+    protected override renderPlayer(ctx: PlayerContext<GroupVolumeDialSettings>): StripRender {
+        const { id, player, settings } = ctx;
         const leader = groupLeader(player);
         const members = groupMembers(leader);
         const grouped = members.length > 1;
@@ -41,7 +43,7 @@ export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
         if (grouped) parts.push(text(100, 68, names.filter((n) => n !== (leader.display_name ?? leader.name)).join(", "), { size: 11, color: "#a4a4aa", maxWidth: 96 }));
         else if (muted) parts.push(text(100, 68, this.t("key.muted"), { size: 11, color: MUTED }));
         void settings;
-        return { image: stripImage(parts) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
     }
 
     protected override async rotate({ ma, player, settings }: PlayerContext<GroupVolumeDialSettings>, ticks: number): Promise<void> {

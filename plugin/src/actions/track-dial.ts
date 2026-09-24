@@ -7,9 +7,10 @@ import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
 import { frames } from "../render/frames";
 import { formatTime, image, mdi, progressBar, stripImage, text } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
+import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
-type TrackDialSettings = MaKeySettings & {
+type TrackDialSettings = MaKeySettings & EffectSettings & {
     /** Seconds per tick when seeking. */
     seekStep?: number;
 };
@@ -31,7 +32,8 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
         this.ticker = setInterval(() => this.instances.size && this.renderAll(), 1000);
     }
 
-    protected override renderPlayer({ id, ma, player, queue }: PlayerContext<TrackDialSettings>): StripRender {
+    protected override renderPlayer(ctx: PlayerContext<TrackDialSettings>): StripRender {
+        const { id, ma, player, queue } = ctx;
         const media = player.current_media;
         const playing = (queue?.state ?? player.playback_state) === "playing";
         if (!media) {
@@ -77,7 +79,7 @@ ${artist}`);
             parts.push(text(x, 90, formatTime(elapsed), { size: 10, color: "#a4a4aa" }));
             parts.push(text(x + w, 90, `-${formatTime(duration - elapsed)}`, { size: 10, color: "#a4a4aa", anchor: "end" }));
         }
-        return { image: stripImage(parts) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
     }
 
     private marqueeState(id: string, key: string): { key: string; startedAt: number } {

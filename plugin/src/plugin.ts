@@ -2,6 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import { BrowserDial } from "./actions/browser-dial";
 import { GroupVolumeDial } from "./actions/group-volume-dial";
 import { LikeKey } from "./actions/like-key";
+import { PanoramaDial } from "./actions/panorama-dial";
 import { PlayItemKey } from "./actions/play-item-key";
 import { PlayerDial } from "./actions/player-dial";
 import { PlayerKey } from "./actions/player-key";
@@ -28,6 +29,7 @@ streamDeck.actions.registerAction(new PlayerKey());
 streamDeck.actions.registerAction(new PlayerDial());
 streamDeck.actions.registerAction(new QueueDial());
 streamDeck.actions.registerAction(new GroupVolumeDial());
+streamDeck.actions.registerAction(new PanoramaDial());
 piBridge.init();
 
 await streamDeck.connect();

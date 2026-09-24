@@ -6,9 +6,10 @@ import { glide } from "../render/glide";
 import { gauge, mdi, stripImage, text } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
+import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
-type VolumeDialSettings = MaKeySettings & {
+type VolumeDialSettings = MaKeySettings & EffectSettings & {
     /** Percent per tick. */
     step?: number;
     preset?: number;
@@ -30,7 +31,8 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
     private readonly senders = new Map<string, LatestSender<number>>();
     private readonly savedUntil = new Map<string, number>();
 
-    protected override renderPlayer({ id, player, playerName, settings }: PlayerContext<VolumeDialSettings>): StripRender {
+    protected override renderPlayer(ctx: PlayerContext<VolumeDialSettings>): StripRender {
+        const { id, player, playerName, settings } = ctx;
         const volume = Math.round(player.volume_level ?? 0);
         const muted = !!player.volume_muted;
         const showText = settings.showText !== false;
@@ -56,7 +58,7 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
                     : text(tx, 64, muted ? this.t("key.muted") : this.t("key.volume"), { size: 12, color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor }),
             );
         }
-        return { image: stripImage(parts) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
     }
 
     protected override async rotate({ ma, player, settings }: PlayerContext<VolumeDialSettings>, ticks: number): Promise<void> {

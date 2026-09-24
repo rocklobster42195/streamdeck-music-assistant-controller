@@ -231,6 +231,29 @@
 					"Image": "imgs/actions/group-volume-dial/key"
 				}
 			]
+		},
+		{
+			"Name": "Panorama",
+			"UUID": "de.boriskemper.music-assistant-controller.panorama-dial",
+			"Icon": "imgs/actions/panorama-dial/icon",
+			"Tooltip": "Ambient effects spanning neighbouring dials, tinted by the cover.",
+			"PropertyInspectorPath": "ui/panorama-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Adjust effect",
+					"Push": "Effect action",
+					"Touch": "Interact"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/panorama-dial/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",

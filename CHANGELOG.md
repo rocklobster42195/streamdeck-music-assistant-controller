@@ -5,6 +5,10 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Panorama dial** (SD+) with the sonos-controller effects: Particles, Matrix Rain, Boing Ball and Boing Globe. Neighbouring dials share one scene. Rotate and push go to the effect, and changes are saved. The effect can follow the cover color.
+- Effect **backgrounds** for the Track, Volume and Group Volume dials (dimmed under the content).
+- PI: effect picker with fields generated from the effect's schema (`<mac-effect-settings>`) and a new `<pi-color>` component.
+- `streamdeck-core`: panorama engine, orchestrator and effects (ported from sonos-controller).
 - Scrolling text (marquee): the Track dial scrolls long titles and artists, and the Play/Pause key can show a scrolling title (new **Title** option).
 - The volume rings (Volume and Group Volume dials) glide smoothly to new values.
 - `streamdeck-core` render helpers: Arial text metrics (ported from sonos-controller) with `truncateToWidth` and `wrapToWidth`, a time-based `marqueeSvg`, `AnimatedValue`, and `FrameTicker`. Text is now cut and wrapped by measured width instead of an estimate.

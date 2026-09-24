@@ -1,5 +1,6 @@
 // Latest data pushed by the plugin, shared by all MAC PI components.
 import { sd } from "streamdeck-core/pi";
+import type { EffectInfo } from "streamdeck-core";
 import type { ConnectionStatus, KeyPreview, PiPush, PlayerOption } from "../pi/protocol";
 
 type Listener = () => void;
@@ -9,6 +10,7 @@ export const piState = {
     players: [] as PlayerOption[],
     activePlayerId: undefined as string | undefined,
     preview: undefined as KeyPreview | undefined,
+    effects: [] as EffectInfo[],
 };
 
 const listeners = new Set<Listener>();
@@ -25,6 +27,7 @@ export function initPiState(): void {
             piState.players = msg.players;
             piState.activePlayerId = msg.activePlayerId;
         } else if (msg?.event === "preview") piState.preview = msg.preview;
+        else if (msg?.event === "effects") piState.effects = msg.effects;
         else return;
         for (const fn of listeners) fn();
     });

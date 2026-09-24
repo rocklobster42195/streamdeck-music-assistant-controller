@@ -42,6 +42,7 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) | ✅ working |
 | **Queue**: scroll through the queue and jump to any track | Dial (SD+) | ✅ working |
 | **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) | ✅ working |
+| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover | Dial (SD+) | ✅ working |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
@@ -113,6 +114,12 @@ Rotate to scroll through the queue, starting at the current track. Each entry sh
 
 Controls the volume of the **whole group** the player belongs to, and shows the group's rooms ("Group · 2 rooms"). Rotate for volume, push to mute the group, touch for a preset (hold to save it). A player that isn't grouped is controlled on its own.
 
+### Panorama dial and effect backgrounds *(Stream Deck + only)*
+
+Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing Globe**. Neighbouring dials with the same effect share **one continuous scene** across the touch strip. Rotating or pushing a Panorama dial changes the effect, for example its speed, and the dial remembers the change. With **Cover color** on, the effect takes the colors of what is playing.
+
+The **Track**, **Volume** and **Group Volume** dials can show an effect as their **background** (dimmed, so the text stays readable). Put them next to Panorama dials with the same effect, and the scene runs underneath everything.
+
 ### Browser dial *(Stream Deck + only)*
 
 Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
@@ -167,7 +174,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 **v2:** ✅ **Browser dial** · ✅ **Player switcher** · ✅ **Queue transfer ("music follows me")** · ✅ **Queue dial** · ✅ **Group volume**
 
-**Later:** Panorama effects across dials · audiobook and podcast resume · search · radio mode
+**Later:** audiobook and podcast resume · search · radio mode
 
 **Ideas:** sleep timer · party mode (guest QR code on a key) · announcements/TTS · source select · lyrics on the SD+ touch strip · ambient sounds · cast dashboard
 
@@ -231,6 +238,7 @@ npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → p
 npm run sim:players       # Player key/dial: switch the active player; with MA_TRANSFER_PLAYER also music-follows-me
 npm run sim:queue-group   # Queue dial (jump to a track) and Group Volume dial (temporary group, restored afterwards)
 node tools/sd-sim/motion.mjs sim-out   # frames over time: marquee on key and dial, gliding volume ring
+node tools/sd-sim/panorama.mjs sim-out # panorama effects across dials and as dial backgrounds
 npm run sim:all           # all of the above
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots

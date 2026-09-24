@@ -15,12 +15,13 @@ import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { getCachedCover, loadCover } from "../render/cover-cache";
 import { ICONS } from "../render/key-image";
+import { effectSettingsFor, panorama, SCRIM, type EffectSettings } from "../render/panorama";
 import { mdi, stripImage, text } from "../render/strip";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type StripRender = { image: string; preview?: Partial<Pick<KeyPreview, "track" | "state">> };
 
-type Instance<S extends JsonObject> = { action: DialAction<S>; settings: S; lastRender?: string };
+type Instance<S extends JsonObject> = { action: DialAction<S>; settings: S; lastRender?: string; deviceId: string; column: number };
 
 /**
  * Base class for MAC dials (Stream Deck +). Mirrors MaKeyAction: instances, not-ready states,
@@ -48,12 +49,14 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
 
     override onWillAppear(ev: WillAppearEvent<S>): void {
         if (!ev.action.isDial()) return;
-        this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings });
+        const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
+        this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
         this.render(ev.action.id);
     }
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
         this.instances.delete(ev.action.id);
+        panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
     }
 
@@ -75,6 +78,25 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
 
     override async onTouchTap(ev: TouchTapEvent<S>): Promise<void> {
         await this.run(ev.action.id, ev.payload.settings, (ctx) => this.touch(ctx, ev.payload.hold));
+    }
+
+    /**
+     * Panorama background for dials that offer one (`background` setting): joins/updates/leaves
+     * the shared effect and returns the SVG to draw under the content ('' when none).
+     */
+    protected backdrop(ctx: PlayerContext<S>): string {
+        const inst = this.instances.get(ctx.id);
+        const settings = ctx.settings as EffectSettings;
+        const effectId = settings.background;
+        if (!inst || !effectId) {
+            panorama.leave(ctx.id);
+            return "";
+        }
+        const effectSettings = effectSettingsFor(settings, effectId, ctx.player.current_media);
+        panorama.join(ctx.id, inst.deviceId, inst.column, effectId, effectSettings, () => this.render(ctx.id));
+        panorama.updateSettings(ctx.id, effectSettings);
+        const slice = panorama.renderSlice(ctx.id);
+        return slice ? slice + SCRIM : "";
     }
 
     /** Persist settings from the plugin side (e.g. "hold to save preset"). */

@@ -64,3 +64,9 @@ mac-connection-card { display: flex; flex-direction: column; gap: 6px; }
 .mac-preview-dial .mac-preview-key { width: 100%; height: auto; aspect-ratio: 2 / 1; border-radius: 10px; }
 .mac-preview-dial .mac-preview-key img { width: 100%; height: 100%; }
 .mac-dial-help { margin-top: -4px; }
+
+/* Effect settings: tiles, then the effect's own fields */
+.mac-effect-settings { display: flex; flex-direction: column; }
+.mac-effect-fields { display: flex; flex-direction: column; }
+.mac-effect-fields > * + * { border-top: 1px solid var(--pi-card-border); }
+.mac-effect-fields:not(:empty) { border-top: 1px solid var(--pi-card-border); }

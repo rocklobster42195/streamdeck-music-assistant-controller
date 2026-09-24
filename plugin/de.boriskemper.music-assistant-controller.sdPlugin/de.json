@@ -41,6 +41,11 @@
 		"Volume of the whole speaker group.": "Lautstärke der ganzen Lautsprecher-Gruppe.",
 		"Group volume": "Gruppen-Lautstärke",
 		"Mute group": "Gruppe stumm",
+		"Panorama": "Panorama",
+		"Ambient effects spanning neighbouring dials, tinted by the cover.": "Stimmungs-Effekte über benachbarte Dials hinweg, in den Farben des Covers.",
+		"Adjust effect": "Effekt anpassen",
+		"Effect action": "Effekt-Aktion",
+		"Interact": "Interagieren",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
@@ -202,7 +207,38 @@
 			"dial_group_help": "Drehen: Lautstärke der ganzen Gruppe · Drücken: Gruppe stumm · Tippen: Preset (halten speichert). Ohne Gruppe steuert der Dial den Player allein.",
 			"queue_timeout": "Zurück zum aktuellen Titel nach",
 			"show_title": "Titel",
-			"show_title_hint": "Titel und Interpret laufen über die Taste"
+			"show_title_hint": "Titel und Interpret laufen über die Taste",
+			"background": "Hintergrund",
+			"background_hint": "Benachbarte Dials mit demselben Effekt teilen sich eine durchgehende Szene.",
+			"effect": "Effekt",
+			"effect_none": "Keiner",
+			"cover_color": "Cover-Farbe",
+			"cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
+			"panorama_help": "Drehen und Drücken verändern den Effekt (z. B. Tempo). Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen."
+		},
+		"effect": {
+			"particles": {
+				"name": "Partikel",
+				"savedDensity": "Partikeldichte",
+				"savedSpeed": "Partikel-Tempo"
+			},
+			"matrix-rain": {
+				"name": "Matrix-Regen",
+				"color": "Farbe",
+				"savedDensity": "Regendichte"
+			},
+			"boing-ball": {
+				"name": "Boing-Ball",
+				"primaryColor": "Hauptfarbe",
+				"secondaryColor": "Zweitfarbe",
+				"savedSpeed": "Ball-Tempo"
+			},
+			"boing-globe": {
+				"name": "Boing-Globus",
+				"landColor": "Landfarbe",
+				"oceanColor": "Meeresfarbe",
+				"savedSpeed": "Drehtempo"
+			}
 		}
 	}
 }

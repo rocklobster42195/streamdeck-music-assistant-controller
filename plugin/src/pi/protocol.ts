@@ -1,4 +1,5 @@
 // Messages between the plugin and its property inspectors (shared by both sides).
+import type { EffectInfo } from "streamdeck-core";
 
 export type PlayerState = "playing" | "paused" | "idle" | "offline";
 
@@ -55,4 +56,5 @@ export type PiPush =
     | { event: "status"; status: ConnectionStatus }
     | { event: "players"; players: PlayerOption[]; activePlayerId?: string }
     | { event: "preview"; preview: KeyPreview }
-    | { event: "library-results"; requestId: number; items: LibraryItem[]; favorites: boolean; error?: string };
+    | { event: "library-results"; requestId: number; items: LibraryItem[]; favorites: boolean; error?: string }
+    | { event: "effects"; effects: EffectInfo[] };

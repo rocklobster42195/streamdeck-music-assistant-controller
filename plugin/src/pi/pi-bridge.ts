@@ -2,6 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { searchLibrary } from "../ma/library";
+import { listEffects } from "streamdeck-core";
 import type { ConnectionStatus, KeyPreview, PiPush, PiRequest, PlayerOption, PlayerState } from "./protocol";
 
 /**
@@ -80,6 +81,7 @@ class PiBridge {
         if (!this.visibleActionId) return;
         void this.send({ event: "status", status: connectionStatus() });
         void this.send({ event: "players", players: playerOptions(), activePlayerId: maConnection.globalSettings.activePlayerId });
+        void this.send({ event: "effects", effects: listEffects() });
         const preview = this.previews.get(this.visibleActionId);
         if (preview) void this.send({ event: "preview", preview });
     }
