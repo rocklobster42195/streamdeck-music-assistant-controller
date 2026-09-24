@@ -46,7 +46,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.
 
 ### Changed
-- Volume and Group Volume dials with an effect background darken only behind the number and the text, not the whole strip.
+- Dials with an effect background (Track, Volume, Group Volume) darken only behind the number and each line of text, not the whole strip.
 - Cover colors (effects, progress bars, rings) skip MA's palette accent when it is too dark to see on black (grey-scale covers have a near-black accent) and use the palette's primary or on-dark color instead.
 - Scrolling text on the dials moves in whole ticks (2 px every 80 ms) instead of following the clock, which stuttered on hardware when frames arrived late. The shared frame ticker runs at 80 ms.
 - Simulator scenarios refuse to run when the test player is grouped or playing (`assertTestPlayerFree`, `SIM_FORCE=1` overrides).

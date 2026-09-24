@@ -5,7 +5,7 @@ import { LatestSender } from "../ma/latest-sender";
 import { coverAccent, ICONS, rgb } from "../render/key-image";
 import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
 import { frames } from "../render/frames";
-import { formatTime, image, mdi, progressBar, stripImage, text } from "../render/strip";
+import { formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -70,6 +70,10 @@ ${artist}`);
             frames.stop(`track-${id}`);
         }
 
+        // On an effect background, darken only behind each line of text (the cover hides the left half anyway)
+        const lineW = (value: string, size: number, bold = false) => (marqueeNeeded(value, size, w) ? w : Math.min(w, textWidth(value, size, { bold })));
+        let scrim = scrimBox(x - 5, 13, lineW(title, 14, true) + 10, 21) + (artist ? scrimBox(x - 5, 36, lineW(artist, 11) + 10, 16) : "");
+
         const duration = media.duration ?? 0;
         if (media.media_type === "radio" || !duration) {
             parts.push(`<rect x="${x}" y="70" width="38" height="18" rx="4" fill="${accent}"/>`, text(x + 19, 83, "LIVE", { size: 11, weight: "bold", color: "#0b0b0c", anchor: "middle" }));
@@ -78,8 +82,9 @@ ${artist}`);
             parts.push(...progressBar(x, 68, w, elapsed / duration, accent));
             parts.push(text(x, 90, formatTime(elapsed), { size: 10, color: "#a4a4aa" }));
             parts.push(text(x + w, 90, `-${formatTime(duration - elapsed)}`, { size: 10, color: "#a4a4aa", anchor: "end" }));
+            scrim += scrimBox(x - 5, 62, w + 10, 32);
         }
-        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }
 
     private marqueeState(id: string, key: string): { key: string; startedAt: number } {
