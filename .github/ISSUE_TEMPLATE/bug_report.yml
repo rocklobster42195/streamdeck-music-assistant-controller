@@ -1,0 +1,103 @@
+name: Bug report
+description: Something in MAC doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this! MAC is an independent project, so please report MAC problems here, not to Music Assistant.
+        ⚠️ **Never post your Music Assistant token.** Remove it, along with private IPs and names, from logs and screenshots.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Before you start
+      options:
+        - label: I'm using the latest MAC version.
+          required: true
+        - label: I searched the existing issues and this isn't a duplicate.
+          required: true
+        - label: The same thing works in the Music Assistant web UI (so it's likely a MAC problem).
+
+  - type: dropdown
+    id: action
+    attributes:
+      label: Affected action
+      multiple: true
+      options:
+        - Play/Pause
+        - Play Item
+        - Playback Control
+        - Volume (key)
+        - Like
+        - Sleep Timer
+        - Announcement
+        - Source
+        - Cast Dashboard
+        - Player (key)
+        - Volume (dial)
+        - Track (dial)
+        - Browser (dial)
+        - Active Player (dial)
+        - Queue (dial)
+        - Group Volume (dial)
+        - Panorama (dial)
+        - Settings panel / connection
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Put a Track dial on the Stream Deck +
+        2. Select player "Kitchen"
+        3. Rotate the dial…
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Plugin log
+      description: |
+        Windows: `%APPDATA%\Elgato\StreamDeck\Plugins\de.boriskemper.music-assistant-controller.sdPlugin\logs\`
+        macOS: `~/Library/Application Support/com.elgato.StreamDeck/Plugins/de.boriskemper.music-assistant-controller.sdPlugin/logs/`
+        Paste the relevant part (around the time of the problem). **Remove your token.**
+      render: text
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - MAC version:
+        - Stream Deck app version:
+        - Stream Deck model (e.g. Stream Deck +, MK.2, XL):
+        - Music Assistant version (and Home Assistant add-on or standalone):
+        - Player types involved (e.g. Sonos, AirPlay, Chromecast, Snapcast):
+        - OS (Windows/macOS and version):
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or video
+      description: A photo of the key or touch strip often says more than words.

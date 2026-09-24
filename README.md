@@ -189,7 +189,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 **Ideas:** party mode (guest QR code on a key) · lyrics on the SD+ touch strip · ambient sounds
 
-Have an idea? [Open an issue](../../issues).
+Have an idea? [Open an issue](../../issues/new/choose).
 
 ---
 
@@ -272,6 +272,12 @@ await ma.playPause("RINCON_…");
 ```
 
 On Node 20, pass a WebSocket implementation: `webSocketFactory: (url) => new WebSocket(url)` from the [`ws`](https://www.npmjs.com/package/ws) package.
+
+---
+
+## Contributing
+
+Bug reports, ideas, translations, code and new panorama effects are all welcome. **[CONTRIBUTING.md](CONTRIBUTING.md)** explains how to report a bug well, set up the dev environment, test without a Stream Deck (simulator and PI preview), and open a pull request. For effects, see **[CONTRIBUTING_EFFECTS.md](CONTRIBUTING_EFFECTS.md)**.
 
 ---
 

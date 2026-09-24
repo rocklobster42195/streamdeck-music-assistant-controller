@@ -32,3 +32,5 @@ npm run build        # bundles all language files for the settings panels
 ```
 
 Then set your Stream Deck app or OS language to your language and restart Stream Deck.
+
+For other ways to help (bug reports, code, effects), see [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & ideas (Discussions)
+    url: https://github.com/rocklobster42195/streamdeck-music-assistant-controller/discussions
+    about: Ask a question or share an idea before it becomes a request.
+  - name: README / setup guide
+    url: https://github.com/rocklobster42195/streamdeck-music-assistant-controller#readme
+    about: Installation, connecting to Music Assistant, and all actions explained.
+  - name: Music Assistant itself
+    url: https://github.com/music-assistant/support/issues
+    about: Problems that also happen in the Music Assistant web UI belong there.

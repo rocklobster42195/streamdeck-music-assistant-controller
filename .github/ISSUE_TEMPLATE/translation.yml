@@ -1,0 +1,33 @@
+name: Translation
+description: Offer a new language or fix a translation
+labels: [translation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The easiest way is the translation page (see [TRANSLATING.md](https://github.com/rocklobster42195/streamdeck-music-assistant-controller/blob/main/TRANSLATING.md)). It exports the finished locale file, which you can attach here or send as a pull request.
+
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      placeholder: e.g. French (fr)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is it?
+      options:
+        - A new language (file attached)
+        - Fixes to an existing language
+        - I'd like to translate, please help me get started
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Attach the JSON file, or list the keys and your suggested texts.
