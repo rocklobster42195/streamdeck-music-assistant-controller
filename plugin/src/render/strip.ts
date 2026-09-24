@@ -1,5 +1,7 @@
 // Stream Deck + touch-strip segments: 200×100 SVG, sent as the "full-canvas" pixmap of layouts/canvas.json.
-// Text uses Arial (renders reliably on the device; see sonos-controller's dials).
+// Text uses Arial (renders reliably on the device; see sonos-controller's dials) and is measured
+// with real Arial glyph widths from streamdeck-core.
+import { truncateToWidth, wrapToWidth } from "streamdeck-core";
 
 export const STRIP_W = 200;
 export const STRIP_H = 100;
@@ -13,35 +15,14 @@ export function escapeXml(s: string): string {
     return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
-/** Cut text to roughly fit `maxWidth` px at `fontSize` (Arial averages ~0.55em per glyph). */
-export function fit(text: string, maxWidth: number, fontSize: number): string {
-    const max = Math.max(1, Math.floor(maxWidth / (fontSize * 0.55)));
-    const t = text.trim();
-    return t.length <= max ? t : `${t.slice(0, Math.max(1, max - 1)).trimEnd()}…`;
+/** Cut text to fit `maxWidth` px at `fontSize` (real Arial glyph widths). */
+export function fit(value: string, maxWidth: number, fontSize: number): string {
+    return truncateToWidth(value.trim(), fontSize, maxWidth);
 }
 
-/** Split text into at most `maxLines` lines that fit `maxWidth`; the last line gets an ellipsis if needed. */
+/** Split text into at most `maxLines` lines that fit `maxWidth` (measured); the last line gets an ellipsis if needed. */
 export function wrap(value: string, maxWidth: number, fontSize: number, maxLines = 2): string[] {
-    const perLine = Math.max(1, Math.floor(maxWidth / (fontSize * 0.55)));
-    const words = value.trim().split(/\s+/);
-    const lines: string[] = [];
-    let line = "";
-    for (let i = 0; i < words.length; i++) {
-        const w = words[i];
-        const next = line ? `${line} ${w}` : w;
-        if (next.length <= perLine) {
-            line = next;
-            continue;
-        }
-        if (line) lines.push(line);
-        line = w;
-        if (lines.length === maxLines - 1) {
-            // Last allowed line: take the rest and cut it
-            return [...lines, fit([line, ...words.slice(i + 1)].join(" "), maxWidth, fontSize)];
-        }
-    }
-    if (line) lines.push(fit(line, maxWidth, fontSize));
-    return lines.slice(0, maxLines);
+    return wrapToWidth(value, fontSize, maxWidth, maxLines);
 }
 
 export function text(x: number, y: number, value: string, opts: { size?: number; color?: string; weight?: "bold" | "normal"; anchor?: "start" | "middle" | "end"; maxWidth?: number } = {}): string {

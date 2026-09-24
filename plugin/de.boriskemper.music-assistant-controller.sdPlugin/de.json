@@ -200,7 +200,9 @@
 			"player_dial_help": "Drehen: aktiven Player wählen · Drücken: Musik von dort, wo sie läuft, hierher holen · Tippen: Play / Pause",
 			"dial_queue_help": "Drehen: durch die Warteschlange blättern (startet beim aktuellen Titel) · Drücken: gewählten Titel abspielen · Tippen: zurück zum aktuellen Titel",
 			"dial_group_help": "Drehen: Lautstärke der ganzen Gruppe · Drücken: Gruppe stumm · Tippen: Preset (halten speichert). Ohne Gruppe steuert der Dial den Player allein.",
-			"queue_timeout": "Zurück zum aktuellen Titel nach"
+			"queue_timeout": "Zurück zum aktuellen Titel nach",
+			"show_title": "Titel",
+			"show_title_hint": "Titel und Interpret laufen über die Taste"
 		}
 	}
 }

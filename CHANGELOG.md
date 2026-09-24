@@ -5,6 +5,9 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- Scrolling text (marquee): the Track dial scrolls long titles and artists, and the Play/Pause key can show a scrolling title (new **Title** option).
+- The volume rings (Volume and Group Volume dials) glide smoothly to new values.
+- `streamdeck-core` render helpers: Arial text metrics (ported from sonos-controller) with `truncateToWidth` and `wrapToWidth`, a time-based `marqueeSvg`, `AnimatedValue`, and `FrameTicker`. Text is now cut and wrapped by measured width instead of an estimate.
 - **Queue dial** (SD+): scroll the queue from the current track (covers, titles, artists, now playing / up next / played), push to jump, touch to return. Items load page by page.
 - **Group Volume dial** (SD+): volume and mute for the whole group (`group_volume`, `group_volume_mute`), with the group's rooms and a preset. It falls back to the single player when ungrouped.
 - `music-assistant-client`: `queueItems`, `playIndex`, `setGroupVolume`, `setGroupMute`, `groupPlayers`, `ungroup`.

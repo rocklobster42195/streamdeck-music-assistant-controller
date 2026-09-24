@@ -84,6 +84,8 @@ export type KeyImageOptions = {
     active?: string;
     /** Small status dot in the top-right corner (e.g. a player's playback state). */
     statusDot?: string;
+    /** Extra SVG drawn on top of everything (e.g. a scrolling title). */
+    overlay?: string;
     /** Small caption at the top (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
     badge?: string;
 };
@@ -131,6 +133,8 @@ export function renderKeyImage(opts: KeyImageOptions): string {
         parts.push(`<rect y="${SIZE - 6}" width="${SIZE}" height="6" fill="#000" opacity="0.5"/>`);
         parts.push(`<rect y="${SIZE - 6}" width="${w}" height="6" fill="${opts.progressColor ?? color}"/>`);
     }
+
+    if (opts.overlay) parts.push(opts.overlay);
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">${parts.join("")}</svg>`;
     return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;

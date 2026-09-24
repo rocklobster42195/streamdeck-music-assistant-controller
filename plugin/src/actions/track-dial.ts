@@ -3,7 +3,9 @@ import { currentElapsed } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
 import { ICONS, rgb } from "../render/key-image";
-import { formatTime, image, mdi, progressBar, stripImage, text, wrap } from "../render/strip";
+import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
+import { frames } from "../render/frames";
+import { formatTime, image, mdi, progressBar, stripImage, text } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
@@ -20,6 +22,8 @@ type TrackDialSettings = MaKeySettings & {
 export class TrackDial extends MaDialAction<TrackDialSettings> {
     private readonly seekers = new Map<string, LatestSender<number>>();
     private ticker: ReturnType<typeof setInterval> | undefined;
+    /** When the current title started scrolling, per dial (reset when the title changes). */
+    private readonly marquee = new Map<string, { key: string; startedAt: number }>();
 
     constructor() {
         super();
@@ -45,10 +49,24 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
         // Right: title, artist, progress
         const x = 108;
         const w = 86;
-        // Title on up to two lines, artist below (one line)
-        const title = wrap(media.title ?? media.uri, w, 13, 2);
-        title.forEach((line, i) => parts.push(text(x, 20 + i * 15, line, { size: 13, weight: "bold" })));
-        parts.push(text(x, 20 + title.length * 15 + 2, media.artist ?? media.album ?? "", { size: 11, color: "#a4a4aa", maxWidth: w }));
+        // Title and artist: one line each, scrolling when too long (like sonos-controller's track dial)
+        const title = media.title ?? media.uri;
+        const artist = media.artist ?? media.album ?? "";
+        const m = this.marqueeState(id, `${title}
+${artist}`);
+        const now = Date.now();
+        parts.push(marqueeSvg({ id: `t${id}`, text: title, x, y: 28, width: w, fontSize: 14, weight: "bold", startedAt: m.startedAt, now, speed: 30 }));
+        parts.push(marqueeSvg({ id: `a${id}`, text: artist, x, y: 47, width: w, fontSize: 11, color: "#a4a4aa", startedAt: m.startedAt + 400, now, speed: 30 }));
+        if (marqueeNeeded(title, 14, w) || marqueeNeeded(artist, 11, w)) {
+            // Keep redrawing while the text scrolls and this dial still shows this media
+            frames.run(`track-${id}`, () => {
+                if (!this.instances.has(id) || this.marquee.get(id)?.key !== m.key) return false;
+                this.render(id);
+                return true;
+            });
+        } else {
+            frames.stop(`track-${id}`);
+        }
 
         const duration = media.duration ?? 0;
         if (media.media_type === "radio" || !duration) {
@@ -60,6 +78,14 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
             parts.push(text(x + w, 90, `-${formatTime(duration - elapsed)}`, { size: 10, color: "#a4a4aa", anchor: "end" }));
         }
         return { image: stripImage(parts) };
+    }
+
+    private marqueeState(id: string, key: string): { key: string; startedAt: number } {
+        const cur = this.marquee.get(id);
+        if (cur?.key === key) return cur;
+        const next = { key, startedAt: Date.now() };
+        this.marquee.set(id, next);
+        return next;
     }
 
     protected override async rotate({ ma, player, queue, settings }: PlayerContext<TrackDialSettings>, ticks: number): Promise<void> {

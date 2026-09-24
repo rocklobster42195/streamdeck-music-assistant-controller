@@ -200,7 +200,9 @@
 			"player_dial_help": "Rotate: choose the active player · Push: bring the music here from wherever it plays · Touch: play / pause",
 			"dial_queue_help": "Rotate: scroll the queue (starts at the current track) · Push: play the selected track · Touch: back to the current track",
 			"dial_group_help": "Rotate: volume of the whole group · Push: mute the group · Touch: preset (hold to save). Without a group it controls the player alone.",
-			"queue_timeout": "Back to the current track after"
+			"queue_timeout": "Back to the current track after",
+			"show_title": "Title",
+			"show_title_hint": "Title and artist scroll along the key"
 		}
 	}
 }

@@ -55,6 +55,7 @@ The settings panel shows a **live preview of the key** together with what is pla
 |---|---|
 | Player | A specific player/group, or **Active player** (default) |
 | Player name | Show the player's name as the key title |
+| Title | Title and artist scroll along the bottom of the key |
 | Progress | Thin progress bar at the bottom, tinted with the cover's accent color |
 
 ### Play Item
@@ -77,7 +78,7 @@ Adds the current track or station to your Music Assistant **favorites**. The hea
 
 ### Volume dial *(Stream Deck + only)*
 
-A ring shows the volume, with the number inside and the player's name next to it.
+A ring shows the volume, with the number inside and the player's name next to it. The ring glides smoothly to each new value.
 
 | Input | Effect |
 |---|---|
@@ -90,7 +91,7 @@ Settings: show or hide the text (volume and name), and where the ring sits (left
 
 ### Track dial *(Stream Deck + only)*
 
-Shows the cover, the title (on up to two lines), the artist and a progress bar in the cover's accent color. Live radio shows **LIVE** instead of a progress bar.
+Shows the cover, the title and the artist (scrolling when they are too long), and a progress bar in the cover's accent color. Live radio shows **LIVE** instead of a progress bar.
 
 | Input | Effect |
 |---|---|
@@ -229,6 +230,7 @@ npm run sim:dials         # Volume and Track dials: turn, push, touch, check MA,
 npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → play a station, library start
 npm run sim:players       # Player key/dial: switch the active player; with MA_TRANSFER_PLAYER also music-follows-me
 npm run sim:queue-group   # Queue dial (jump to a track) and Group Volume dial (temporary group, restored afterwards)
+node tools/sd-sim/motion.mjs sim-out   # frames over time: marquee on key and dial, gliding volume ring
 npm run sim:all           # all of the above
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots

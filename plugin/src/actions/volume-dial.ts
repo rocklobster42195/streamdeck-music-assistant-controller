@@ -2,6 +2,7 @@ import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
 import { ACCENT, ICONS } from "../render/key-image";
+import { glide } from "../render/glide";
 import { gauge, mdi, stripImage, text } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
@@ -35,7 +36,9 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
         const showText = settings.showText !== false;
         const align = settings.align ?? "left";
         const cx = align === "center" ? 100 : align === "right" ? 150 : 50;
-        const parts = [...gauge(cx, 50, 34, volume / 100, muted ? "#5a5a60" : ACCENT)];
+        // The ring glides to the new volume; the number shows the target right away
+        const shown = glide(`vol-${id}`, volume, () => this.render(id));
+        const parts = [...gauge(cx, 50, 34, shown / 100, muted ? "#5a5a60" : ACCENT)];
 
         // Inside the ring: the number (with text), a speaker icon (without), or the muted icon
         if (muted) parts.push(mdi(ICONS.volumeOff, cx - 16, 34, 32, MUTED));
