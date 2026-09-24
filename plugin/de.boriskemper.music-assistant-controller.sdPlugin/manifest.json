@@ -147,6 +147,44 @@
 					"Image": "imgs/actions/browser-dial/key"
 				}
 			]
+		},
+		{
+			"Name": "Player",
+			"UUID": "de.boriskemper.music-assistant-controller.player-key",
+			"Icon": "imgs/actions/player-key/icon",
+			"Tooltip": "Make this room the active player — and bring the music along.",
+			"PropertyInspectorPath": "ui/player-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/player-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Active Player",
+			"UUID": "de.boriskemper.music-assistant-controller.player-dial",
+			"Icon": "imgs/actions/player-dial/icon",
+			"Tooltip": "Choose the active player with the dial and bring the music there.",
+			"PropertyInspectorPath": "ui/player-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Choose player",
+					"Push": "Bring music here",
+					"Touch": "Play / pause"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/player-dial/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",

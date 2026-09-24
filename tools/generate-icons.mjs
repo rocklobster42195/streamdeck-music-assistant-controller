@@ -18,6 +18,8 @@ const actions = {
     "track-dial": mdi.mdiMusicCircleOutline,
     "volume-dial": mdi.mdiKnob,
     "browser-dial": mdi.mdiFolderMusic,
+    "player-key": mdi.mdiSpeaker,
+    "player-dial": mdi.mdiSpeakerMultiple,
 };
 
 const listIcon = (d) => `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="#ffffff" d="${d}"/></svg>`;

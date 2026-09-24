@@ -53,6 +53,12 @@ class MaConnection {
         this.applySettings(await streamDeck.settings.getGlobalSettings<GlobalSettings>());
     }
 
+    /** Show `playerId` as active right away without persisting it yet (see {@link setActivePlayer}). */
+    previewActivePlayer(playerId: string): void {
+        this.settings = { ...this.settings, activePlayerId: playerId };
+        this.emit();
+    }
+
     async setActivePlayer(playerId: string): Promise<void> {
         const next = { ...this.settings, activePlayerId: playerId };
         await streamDeck.settings.setGlobalSettings(next);

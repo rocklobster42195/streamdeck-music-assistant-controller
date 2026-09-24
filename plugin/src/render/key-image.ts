@@ -19,6 +19,7 @@ import {
     mdiShuffleVariant,
     mdiSkipNext,
     mdiSkipPrevious,
+    mdiSpeaker,
     mdiSpeakerOff,
     mdiTransition,
     mdiVolumeHigh,
@@ -57,6 +58,7 @@ export const ICONS = {
     volumeUp: mdiVolumePlus,
     volumeDown: mdiVolumeMinus,
     star: mdiStar,
+    speaker: mdiSpeaker,
     radio: mdiRadio,
     playlist: mdiPlaylistMusic,
     podcast: mdiPodcast,
@@ -80,6 +82,8 @@ export type KeyImageOptions = {
     progressColor?: string;
     /** Highlight the key as "on" (tinted background + ring in this color). */
     active?: string;
+    /** Small status dot in the top-right corner (e.g. a player's playback state). */
+    statusDot?: string;
     /** Small caption at the top (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
     badge?: string;
 };
@@ -112,6 +116,10 @@ export function renderKeyImage(opts: KeyImageOptions): string {
             parts.push(`<circle cx="${SIZE - 26}" cy="${SIZE - 26}" r="16" fill="${opts.active}"/>`);
             parts.push(icon(mdiPlay, SIZE - 38, SIZE - 38, 24, "#0b1a26"));
         }
+    }
+
+    if (opts.statusDot) {
+        parts.push(`<circle cx="${SIZE - 26}" cy="26" r="9" fill="#101010"/>`, `<circle cx="${SIZE - 26}" cy="26" r="6" fill="${opts.statusDot}"/>`);
     }
 
     if (opts.badge) {

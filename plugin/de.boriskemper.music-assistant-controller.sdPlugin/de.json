@@ -26,6 +26,12 @@
 		"Scroll": "Blättern",
 		"Open / play": "Öffnen / abspielen",
 		"Back (hold: start)": "Zurück (halten: Anfang)",
+		"Player": "Player",
+		"Make this room the active player — and bring the music along.": "Macht diesen Raum zum aktiven Player – und nimmt die Musik mit.",
+		"Active Player": "Aktiver Player",
+		"Choose the active player with the dial and bring the music there.": "Wähle den aktiven Player per Drehregler und hol die Musik dorthin.",
+		"Choose player": "Player wählen",
+		"Bring music here": "Musik hierher",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
@@ -42,7 +48,9 @@
 			"browse_hint": "Drehen zum Stöbern",
 			"browse_loading": "Lädt…",
 			"browse_empty": "Leer",
-			"browse_unavailable": "Nicht durchsuchbar"
+			"browse_unavailable": "Nicht durchsuchbar",
+			"active_player": "Aktiver Player",
+			"music_here": "Musik ist jetzt hier"
 		},
 		"pi": {
 			"player": "Player",
@@ -166,7 +174,14 @@
 			"browse_folder_open": "Öffnen",
 			"browse_folder_play": "Abspielen",
 			"browse_timeout": "Zurück zu „Jetzt läuft“ nach",
-			"dial_browser_help": "Drehen: blättern · Drücken: Ordner öffnen / abspielen · Tippen: zurück (halten: zum Anfang)"
+			"dial_browser_help": "Drehen: blättern · Drücken: Ordner öffnen / abspielen · Tippen: zurück (halten: zum Anfang)",
+			"player_room": "Raum / Player",
+			"transfer": "Musik mitnehmen",
+			"transfer_hint": "Läuft auf dem bisherigen aktiven Player Musik, wandert sie hierher.",
+			"show_cover": "Cover bei Wiedergabe",
+			"show_cover_hint": "Zeigt, was in diesem Raum läuft",
+			"player_key_help": "Drücken: Dieser Player wird zum aktiven Player – alle Tasten mit „Aktiver Player“ folgen.",
+			"player_dial_help": "Drehen: aktiven Player wählen · Drücken: Musik von dort, wo sie läuft, hierher holen · Tippen: Play / Pause"
 		}
 	}
 }

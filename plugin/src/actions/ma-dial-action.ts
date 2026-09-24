@@ -29,6 +29,9 @@ type Instance<S extends JsonObject> = { action: DialAction<S>; settings: S; last
 export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAction<S> {
     protected readonly instances = new Map<string, Instance<S>>();
 
+    /** false = the action is bound to its own player setting and never falls back to the active player. */
+    protected readonly followsActivePlayer: boolean = true;
+
     constructor() {
         super();
         maConnection.onChange(() => this.renderAll());
@@ -118,7 +121,8 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     protected playerContext(id: string, settings: S): PlayerContext<S> | undefined {
         const ma = maConnection.ma;
         if (!maConnection.loaded || !ma?.isConnected) return undefined;
-        const player = maConnection.player(maConnection.resolvePlayerId(settings.playerId));
+        // Most actions follow the active player when none is set; bound ones (e.g. a room key) never do.
+        const player = maConnection.player(this.followsActivePlayer ? maConnection.resolvePlayerId(settings.playerId) : settings.playerId || undefined);
         if (!player) return undefined;
         return { id, settings, ma, player, queue: maConnection.queueFor(player), playerName: player.display_name ?? player.name };
     }

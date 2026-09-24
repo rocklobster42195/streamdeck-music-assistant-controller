@@ -26,6 +26,12 @@
 		"Scroll": "Scroll",
 		"Open / play": "Open / play",
 		"Back (hold: start)": "Back (hold: start)",
+		"Player": "Player",
+		"Make this room the active player — and bring the music along.": "Make this room the active player — and bring the music along.",
+		"Active Player": "Active Player",
+		"Choose the active player with the dial and bring the music there.": "Choose the active player with the dial and bring the music there.",
+		"Choose player": "Choose player",
+		"Bring music here": "Bring music here",
 		"key": {
 			"setup": "Setup",
 			"offline": "Offline",
@@ -42,7 +48,9 @@
 			"browse_hint": "Turn to browse",
 			"browse_loading": "Loading…",
 			"browse_empty": "Empty",
-			"browse_unavailable": "Can't be browsed"
+			"browse_unavailable": "Can't be browsed",
+			"active_player": "Active player",
+			"music_here": "Music moved here"
 		},
 		"pi": {
 			"player": "Player",
@@ -166,7 +174,14 @@
 			"browse_folder_open": "Open",
 			"browse_folder_play": "Play",
 			"browse_timeout": "Back to “now playing” after",
-			"dial_browser_help": "Rotate: scroll · Push: open folder / play · Touch: back (hold: back to start)"
+			"dial_browser_help": "Rotate: scroll · Push: open folder / play · Touch: back (hold: back to start)",
+			"player_room": "Room / player",
+			"transfer": "Bring the music along",
+			"transfer_hint": "If the previous active player is playing, the music moves here.",
+			"show_cover": "Cover while playing",
+			"show_cover_hint": "Shows what plays in this room",
+			"player_key_help": "Press: this player becomes the active player — all keys set to “Active player” follow.",
+			"player_dial_help": "Rotate: choose the active player · Push: bring the music here from wherever it plays · Touch: play / pause"
 		}
 	}
 }

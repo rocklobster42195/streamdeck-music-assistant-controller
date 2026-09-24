@@ -38,6 +38,8 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Volume**: rotate to change, push to mute, touch for a preset | Dial (SD+) | ✅ working |
 | **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) | ✅ working |
 | **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) | ✅ working |
+| **Player**: one key per room; makes it the active player and brings the music along | Key | ✅ working |
+| **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) | ✅ working |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
@@ -94,6 +96,12 @@ Shows the cover, the title (on up to two lines), the artist and a progress bar i
 | Push | Next track |
 | Touch | Play / pause |
 
+### Player (room key) and Active Player dial
+
+**Music follows you.** Put one **Player** key per room on your deck. Pressing it makes that room the **active player**, and every key and dial set to "Active player" now controls it. With **Bring the music along** (on by default), whatever the previous active player was playing moves to this room too. The active room's key has a blue frame, and a dot shows its state (playing, paused, ready, offline).
+
+The **Active Player** dial does the same with a turn. Rotate to choose the active player. **Push** brings the music here from wherever it is playing. **Touch** is play/pause.
+
 ### Browser dial *(Stream Deck + only)*
 
 Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
@@ -146,7 +154,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 **MVP (first release):** ✅ Play/Pause · Playback Control (incl. crossfade and "Don't stop the music") · Volume key and dial · Track dial · Play Item · Like
 
-**v2:** ✅ **Browser dial** · Queue browser dial · Favorites/Library browser dial · Group volume · **Queue transfer** ("music follows me") · **Player switcher** (change the active player from the deck)
+**v2:** ✅ **Browser dial** · ✅ **Player switcher** · ✅ **Queue transfer ("music follows me")** · Queue browser dial · Favorites/Library browser dial · Group volume
 
 **Later:** Panorama effects across dials · audiobook and podcast resume · search · radio mode
 
@@ -209,6 +217,7 @@ npm run sim:keys          # playback control, like and volume keys: presses ever
 npm run sim:play-item     # Play Item: search like the PI, choose, press, check it plays
 npm run sim:dials         # Volume and Track dials: turn, push, touch, check MA, restore
 npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → play a station, library start
+npm run sim:players       # Player key/dial: switch the active player; with MA_TRANSFER_PLAYER also music-follows-me
 npm run sim:all           # all of the above
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots
