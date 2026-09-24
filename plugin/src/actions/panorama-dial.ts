@@ -29,6 +29,8 @@ type PanoramaDialSettings = EffectSettings &
 type Instance = { action: DialAction<PanoramaDialSettings>; settings: PanoramaDialSettings; deviceId: string; column: number; previewAt?: number };
 
 const PREVIEW_EVERY_MS = 1000;
+/** Default lyrics lead: the line shows up a moment before it is sung (felt right on hardware). */
+const LYRICS_LEAD_S = 0.5;
 
 /**
  * An ambient effect across neighbouring dials (particles, matrix rain, boing ball, boing globe) —
@@ -120,7 +122,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const run = this.run(id);
         // The first dial of the run that shows text decides (a freshly added neighbour defaults to "off")
         const lead = run.ids.map((i) => this.instances.get(i)?.settings).find((s) => s?.text && s.text !== "off");
-        const text = lead ? this.overlay.render(run.ids[0], { width: run.ids.length * STRIP_W, offset: run.index * STRIP_W }, lead.text!, Number(lead.lyricsOffset ?? 0), maConnection.resolvePlayerId(lead.playerId)) : "";
+        const text = lead ? this.overlay.render(run.ids[0], { width: run.ids.length * STRIP_W, offset: run.index * STRIP_W }, lead.text!, Number(lead.lyricsOffset ?? LYRICS_LEAD_S), maConnection.resolvePlayerId(lead.playerId)) : "";
         const image = stripImage([text], "#000", panorama.renderSlice(id));
         void inst.action.setFeedback({ "full-canvas": image });
         // The PI preview doesn't need every frame

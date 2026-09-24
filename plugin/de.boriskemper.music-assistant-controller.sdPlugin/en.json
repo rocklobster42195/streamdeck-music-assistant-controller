@@ -238,7 +238,7 @@
 			"overlay_lyrics": "Lyrics",
 			"overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
 			"lyrics_offset": "Timing",
-			"lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. Lyrics running ahead of the music? Move the timing to the left.",
+			"lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing left or right.",
 			"choose": "Choose",
 			"no_options": "Nothing available.",
 			"sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the minutes left.",

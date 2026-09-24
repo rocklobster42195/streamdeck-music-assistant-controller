@@ -238,7 +238,7 @@
 			"overlay_lyrics": "Lyrics",
 			"overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
 			"lyrics_offset": "Timing",
-			"lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Laufen die Lyrics der Musik voraus? Timing nach links schieben.",
+			"lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing nach links oder rechts schieben.",
 			"choose": "Wählen",
 			"no_options": "Nichts verfügbar.",
 			"sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibenden Minuten herunter.",

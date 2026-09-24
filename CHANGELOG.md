@@ -48,7 +48,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 
 ### Changed
 - Dials with an effect background (Track, Volume, Group Volume, and the lyrics on the Panorama dial) darken only behind the number and each line of text, not the whole strip.
-- Lyrics timing range widened to −10 … +5 s.
+- Lyrics timing range widened to −10 … +5 s, default +0.5 s (the line appears just before it is sung).
 - Lyrics look: plain white text without the outline, long lines split into even halves at full size (breaks after punctuation preferred; `balanceLines` in `streamdeck-core`) instead of a smaller font, and a larger, brighter next line.
 - Cover colors (effects, progress bars, rings) skip MA's palette accent when it is too dark to see on black (grey-scale covers have a near-black accent) and use the palette's primary or on-dark color instead.
 - Scrolling text on the dials moves in whole ticks (2 px every 80 ms) instead of following the clock, which stuttered on hardware when frames arrived late. The shared frame ticker runs at 80 ms.
