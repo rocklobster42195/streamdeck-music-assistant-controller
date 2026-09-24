@@ -283,7 +283,8 @@ export class MusicAssistantClient {
             this.reconnectDelay = this.opts.reconnectInitialDelayMs;
             this.setState('connected');
         } catch (e) {
-            if (e instanceof MaApiError && e.code === ERROR_AUTH_REQUIRED) {
+            // Any rejection of the auth command means the token is bad (20 = required, 23 = invalid/expired).
+            if (e instanceof MaApiError && e.command === 'auth') {
                 this.opts.logger?.error('[ma-client] authentication failed — check the token');
                 this.setState('auth_failed');
                 this.ws?.close();

@@ -133,7 +133,16 @@ The settings panels do not use `sdpi-components`. They are built on a small, fra
 
 MAC adds `<mac-key-preview>`, `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
 
-For API experiments, create a `.env` file (it is gitignored) with `MA_URL=http://<host>:8095` and `MA_TOKEN=<token>`. Then run `npm run probe`.
+### Testing without hardware
+
+`tools/sd-sim/` is a **Stream Deck simulator**. It runs the real `bin/plugin.js` against a fake Stream Deck app over the plugin WebSocket protocol, places actions on a virtual Stream Deck +, presses keys and turns dials. It records everything the plugin sends back (images, titles, feedback, alerts, PI messages) and renders the deck to PNG.
+
+```bash
+npm run build
+npm run sim:play-pause    # end-to-end against your MA server (needs .env), snapshots in sim-out/
+```
+
+For API experiments, create a `.env` file (it is gitignored) with `MA_URL=http://<host>:8095`, `MA_TOKEN=<token>` and `MA_TEST_PLAYER=<player_id>`. The simulator plays quietly on that player. `npm run probe` records raw API traffic.
 
 ### `music-assistant-client`
 

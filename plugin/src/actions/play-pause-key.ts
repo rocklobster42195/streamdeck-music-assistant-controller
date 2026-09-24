@@ -7,7 +7,7 @@ import streamDeck, {
     type WillAppearEvent,
     type WillDisappearEvent,
 } from "@elgato/streamdeck";
-import { currentElapsed, type PlaybackState } from "music-assistant-client";
+import { currentElapsed } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
@@ -25,12 +25,9 @@ type Instance = {
     action: KeyAction<PlayPauseSettings>;
     settings: PlayPauseSettings;
     lastRender?: string;
-    /** Optimistic state shown right after a key press until the server confirms. */
-    optimistic?: { state: PlaybackState; until: number };
 };
 
 const COVER_SIZE = 160;
-const OPTIMISTIC_MS = 2000;
 
 @action({ UUID: "de.boriskemper.music-assistant-controller.play-pause-key" })
 export class PlayPauseKey extends SingletonAction<PlayPauseSettings> {
@@ -69,17 +66,15 @@ export class PlayPauseKey extends SingletonAction<PlayPauseSettings> {
             await ev.action.showAlert();
             return;
         }
-        // Flip immediately — fast command sequences are coalesced server-side, so we can't wait for events.
-        const wasPlaying = (inst.optimistic?.state ?? queue.state) === "playing";
-        inst.optimistic = { state: wasPlaying ? "paused" : "playing", until: Date.now() + OPTIMISTIC_MS };
-        this.render(ev.action.id);
+        // Flip immediately on every key of this queue; the server confirms via events.
+        const wasPlaying = maConnection.playbackState(queue) === "playing";
+        maConnection.setOptimisticState(queue.queue_id, wasPlaying ? "paused" : "playing");
         try {
             await ma.playPause(queue.queue_id);
         } catch (e) {
             streamDeck.logger.warn("[play-pause] command failed", e);
-            inst.optimistic = undefined;
+            maConnection.clearOptimisticState(queue.queue_id);
             await ev.action.showAlert();
-            this.render(ev.action.id);
         }
     }
 
@@ -102,7 +97,11 @@ export class PlayPauseKey extends SingletonAction<PlayPauseSettings> {
         const player = maConnection.player(maConnection.resolvePlayerId(settings.playerId));
         const playerName = player ? (player.display_name ?? player.name) : undefined;
 
-        if (!maConnection.globalSettings.maUrl || !maConnection.globalSettings.maToken) {
+        if (!maConnection.loaded) {
+            // Global settings not there yet (plugin just started): neutral, no text.
+            image = renderKeyImage({ icon: ICONS.connecting, dimmed: true });
+            state = "offline";
+        } else if (!maConnection.globalSettings.maUrl || !maConnection.globalSettings.maToken) {
             image = renderKeyImage({ icon: ICONS.connecting, dimmed: true });
             title = t("key.setup");
             state = "setup";
@@ -120,8 +119,7 @@ export class PlayPauseKey extends SingletonAction<PlayPauseSettings> {
             state = "no_player";
         } else {
             const queue = maConnection.queueFor(player);
-            if (inst.optimistic && inst.optimistic.until < Date.now()) inst.optimistic = undefined;
-            const playbackState = inst.optimistic?.state ?? queue?.state ?? player.playback_state;
+            const playbackState = queue ? maConnection.playbackState(queue) : player.playback_state;
             const playing = playbackState === "playing";
             state = playing ? "playing" : playbackState === "paused" ? "paused" : "idle";
             const media = player.current_media;

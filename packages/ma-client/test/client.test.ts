@@ -39,7 +39,8 @@ function happyServer(msg: any, sock: FakeSocket) {
     switch (msg.command) {
         case 'auth': return msg.args?.token === 'good'
             ? reply({ authenticated: true, user: { user_id: 'u1', username: 'boris', role: 'admin' } })
-            : sock.serverSend({ message_id: msg.message_id, error_code: 20, details: 'Authentication failed' });
+            // Real server answer for an invalid token (2.10.4)
+            : sock.serverSend({ message_id: msg.message_id, error_code: 23, details: 'The access token is invalid or has expired.' });
         case 'players/all': return reply([PLAYER]);
         case 'player_queues/all': return reply([QUEUE]);
         case 'broken': return sock.serverSend({ message_id: msg.message_id, error_code: 12, details: 'Invalid or unsupported command.' });

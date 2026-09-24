@@ -16,7 +16,8 @@
         "test": "vitest run",
         "lint": "eslint packages plugin/src",
         "probe": "node tools/ma-probe.mjs",
-        "pi:preview": "node tools/pi-preview.mjs"
+        "pi:preview": "node tools/pi-preview.mjs",
+        "sim:play-pause": "node tools/sd-sim/play-pause.mjs sim-out"
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.9",

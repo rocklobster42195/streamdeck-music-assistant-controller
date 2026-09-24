@@ -1,5 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
-import { MusicAssistantClient, type ConnectionState, type Player, type PlayerQueue, type WebSocketLike } from "music-assistant-client";
+import { MusicAssistantClient, type ConnectionState, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike } from "music-assistant-client";
 import WebSocket from "ws";
 
 /** Plugin-wide settings, shared by all actions (Stream Deck global settings). */
@@ -24,6 +24,14 @@ class MaConnection {
     private settings: GlobalSettings = {};
     private readonly listeners = new Set<Listener>();
     private unsubscribers: (() => void)[] = [];
+    private settingsLoaded = false;
+    /** Optimistic playback state per queue, shown right after a key press until the server confirms. */
+    private readonly optimistic = new Map<string, { state: PlaybackState; until: number }>();
+
+    /** False until the global settings arrived — render a neutral "loading" state until then. */
+    get loaded(): boolean {
+        return this.settingsLoaded;
+    }
 
     get ma(): MusicAssistantClient | undefined {
         return this.client;
@@ -82,6 +90,29 @@ class MaConnection {
         return undefined;
     }
 
+    /**
+     * Show `state` for a queue right away, on every key that uses it. Fast command sequences are
+     * coalesced server-side, so keys can't wait for the confirming event.
+     */
+    setOptimisticState(queueId: string, state: PlaybackState, ms = 2000): void {
+        this.optimistic.set(queueId, { state, until: Date.now() + ms });
+        this.emit();
+        setTimeout(() => this.emit(), ms + 50);
+    }
+
+    clearOptimisticState(queueId: string): void {
+        this.optimistic.delete(queueId);
+        this.emit();
+    }
+
+    /** The queue's playback state, preferring a recent optimistic one. */
+    playbackState(queue: PlayerQueue): PlaybackState {
+        const o = this.optimistic.get(queue.queue_id);
+        if (o && o.until > Date.now()) return o.state;
+        this.optimistic.delete(queue.queue_id);
+        return queue.state;
+    }
+
     /** Players suitable for pickers: enabled and not hidden, sorted by name. */
     selectablePlayers(): Player[] {
         return [...(this.client?.players.values() ?? [])]
@@ -92,6 +123,7 @@ class MaConnection {
     private applySettings(settings: GlobalSettings): void {
         const prev = this.settings;
         this.settings = settings ?? {};
+        this.settingsLoaded = true;
         const connectionChanged = prev.maUrl !== this.settings.maUrl || prev.maToken !== this.settings.maToken || !this.client;
         if (connectionChanged) this.reconnect();
         this.emit();
