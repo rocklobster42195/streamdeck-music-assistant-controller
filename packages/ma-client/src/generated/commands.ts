@@ -1204,9 +1204,10 @@ export interface MaCommands {
             summary?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics). See `MediaControllerBase.library_items` for the full semantics. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.Album[];
     };
@@ -1389,9 +1390,10 @@ export interface MaCommands {
             summary?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics). See `MediaControllerBase.library_items` for the full semantics. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.Artist[];
     };
@@ -1576,9 +1578,10 @@ export interface MaCommands {
             collapse_collections?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics). See `MediaControllerBase.library_items` for the full semantics. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.Audiobook[] | (M.Audiobook | M.MediaCollection)[];
     };
@@ -1829,9 +1832,10 @@ export interface MaCommands {
             content_type?: string;
             /** When True (default), return slim summary items containing only the fields needed for a list view. Set to False to get fully hydrated items. */
             summary?: boolean;
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.Genre[];
     };
@@ -2306,9 +2310,10 @@ export interface MaCommands {
             collapse_collections?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics), regardless of whether that mapping is itself in that provider's own library. This is independent of `provider`, which instead requires the *matched* mapping to be in-library. None applies no filter; an explicit empty list, or a list with no currently loaded/allowed instance, returns no items. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.MediaItemType[] | (M.MediaItemType | M.MediaCollection)[];
     };
@@ -2443,9 +2448,10 @@ export interface MaCommands {
             summary?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics). See `MediaControllerBase.library_items` for the full semantics. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.Podcast[];
     };
@@ -2613,9 +2619,10 @@ export interface MaCommands {
             collapse_collections?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics), regardless of whether that mapping is itself in that provider's own library. This is independent of `provider`, which instead requires the *matched* mapping to be in-library. None applies no filter; an explicit empty list, or a list with no currently loaded/allowed instance, returns no items. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.MediaItemType[] | (M.MediaItemType | M.MediaCollection)[];
     };
@@ -2885,9 +2892,10 @@ export interface MaCommands {
             summary?: boolean;
             /** Restrict results to items with a provider mapping reachable through one of these provider instance ids (OR semantics). See `MediaControllerBase.library_items` for the full semantics. */
             reachable_via?: string[];
-            kwargs: unknown;
             /** Optional user_id or username of the user to execute this command on behalf of. Requires the users.impersonate scope when targeting another user. */
             user?: string;
+            /** Further filters the server passes on (Python **kwargs). */
+            [key: string]: unknown;
         };
         result: M.Track[];
     };

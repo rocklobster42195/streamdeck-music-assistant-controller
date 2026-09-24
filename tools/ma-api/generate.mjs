@@ -95,7 +95,11 @@ const commandEntries = commands
     .slice()
     .sort((a, b) => a.command.localeCompare(b.command))
     .map((c) => {
-        const args = c.parameters.map((p) => `${doc(p.description, "            ")}            ${key(p.name)}${p.required ? "" : "?"}: ${toTs(p.type, resolve)};`).join("\n");
+        // Python **kwargs shows up as a required "kwargs" parameter: it really means "any extra arguments"
+        const params = c.parameters.filter((p) => p.name !== "kwargs");
+        const lines = params.map((p) => `${doc(p.description, "            ")}            ${key(p.name)}${p.required ? "" : "?"}: ${toTs(p.type, resolve)};`);
+        if (params.length < c.parameters.length) lines.push("            /** Further filters the server passes on (Python **kwargs). */\n            [key: string]: unknown;");
+        const args = lines.join("\n");
         const result = toTs(c.return_type, resolve);
         const notes = [c.summary, c.description && c.description !== c.summary ? `\n${c.description}` : "", c.required_scope ? `\n@scope ${c.required_scope}` : ""].join("");
         return `${doc(notes, "    ")}    ${JSON.stringify(c.command)}: {\n        args: {${args ? `\n${args}\n        ` : ""}};\n        result: ${result};\n    };`;

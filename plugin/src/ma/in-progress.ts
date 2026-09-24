@@ -74,8 +74,8 @@ class InProgressList {
             await Promise.all(
                 list.slice(0, DETAILS_FOR).map(async (item) => {
                     const full = await ma.itemByUri(item.uri).catch(() => undefined);
-                    const pos = full?.resume_position_ms as number | null | undefined;
-                    const duration = full?.duration as number | null | undefined;
+                    const pos = full && "resume_position_ms" in full ? full.resume_position_ms : undefined;
+                    const duration = full && "duration" in full ? full.duration : undefined;
                     if (pos && duration) item.progress = Math.min(1, pos / 1000 / duration);
                 }),
             );

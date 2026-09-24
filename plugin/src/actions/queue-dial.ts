@@ -1,6 +1,8 @@
 import { action } from "@elgato/streamdeck";
 import { mdiPlaylistPlay } from "@mdi/js";
-import type { QueueItem } from "music-assistant-client";
+import type { MA } from "music-assistant-client";
+
+type QueueItem = MA.QueueItem;
 import { maConnection } from "../ma/connection";
 import { PagedList } from "../ma/paged-list";
 import { getCachedCover, loadCover } from "../render/cover-cache";

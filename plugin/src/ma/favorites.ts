@@ -1,7 +1,8 @@
 import streamDeck from "@elgato/streamdeck";
+import type { MA } from "music-assistant-client";
 import { maConnection } from "./connection";
 
-type FavoriteInfo = { favorite: boolean; mediaType: string; libraryItemId?: string };
+type FavoriteInfo = { favorite: boolean; mediaType: MA.MediaType; libraryItemId?: string };
 
 /**
  * Favorite status per media URI, looked up lazily via `music/item_by_uri` (provider URIs resolve to
@@ -36,7 +37,7 @@ class FavoriteCache {
         try {
             const item = await ma.itemByUri(uri);
             this.cache.set(uri, {
-                favorite: !!item?.favorite,
+                favorite: !!item && "favorite" in item && !!item.favorite,
                 mediaType: item?.media_type ?? "track",
                 libraryItemId: item?.provider === "library" ? String(item.item_id) : undefined,
             });

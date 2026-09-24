@@ -19,6 +19,6 @@ export function registerOptionSources(): void {
     piBridge.registerOptions("dashboards", async () => {
         const ma = maConnection.ma;
         if (!ma?.isConnected) return [];
-        return (await ma.dashboards()).map((d) => ({ value: d.dashboard_id, label: d.name, sub: d.provider_domain_hint }));
+        return (await ma.dashboards()).map((d) => ({ value: d.dashboard_id, label: d.name, sub: d.provider_domain_hint ?? undefined }));
     });
 }

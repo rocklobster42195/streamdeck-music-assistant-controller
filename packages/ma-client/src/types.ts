@@ -22,8 +22,9 @@ export interface AuthUser {
     avatar_url?: string;
 }
 
-export type PlaybackState = 'idle' | 'paused' | 'playing' | (string & {});
-export type RepeatMode = 'off' | 'one' | 'all' | (string & {});
+// Enums come from the generated models (the server's own docs), so both layers agree
+import type { DashboardType, MediaType, PlaybackState, RepeatMode } from './generated/models.js';
+export type { DashboardType, MediaType, PlaybackState, RepeatMode };
 
 /** RGB triplets computed by MA from the current artwork. */
 export interface MediaPalette {
@@ -37,7 +38,7 @@ export interface MediaPalette {
 
 export interface PlayerMedia {
     uri: string;
-    media_type: string;
+    media_type: MediaType;
     title?: string | null;
     artist?: string | null;
     album?: string | null;
@@ -87,7 +88,6 @@ export interface PlayerSource {
     [key: string]: unknown;
 }
 
-export type DashboardType = 'now_playing' | 'party' | 'music_quiz' | (string & {});
 
 export interface DashboardEndpoint {
     dashboard_id: string;
@@ -148,7 +148,7 @@ export interface MediaItem {
     provider: string;
     name: string;
     uri: string;
-    media_type: string;
+    media_type: MediaType;
     favorite?: boolean;
     metadata?: { images?: MediaItemImage[] | null; [key: string]: unknown };
     [key: string]: unknown;

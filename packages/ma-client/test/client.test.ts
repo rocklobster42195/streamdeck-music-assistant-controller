@@ -121,6 +121,53 @@ describe('MusicAssistantClient', () => {
         expect(MA_API_VERSION.schema).toBe(65);
     });
 
+    it('convenience commands send the right command and arguments', async () => {
+        const client = makeClient();
+        client.start();
+        sockets[0].open();
+        await flush(); await flush();
+
+        const ref = { item_id: '42', provider: 'library' };
+        const cases: [() => Promise<unknown>, string, Record<string, unknown>][] = [
+            [() => client.skipSeconds('q', -30), 'player_queues/skip', { queue_id: 'q', seconds: -30 }],
+            [() => client.setPlaybackSpeed('q', 1.5), 'player_queues/set_playback_speed', { queue_id: 'q', speed: 1.5 }],
+            [() => client.clearQueue('q'), 'player_queues/clear', { queue_id: 'q' }],
+            [() => client.removeQueueItem('q', 3), 'player_queues/delete_item', { queue_id: 'q', item_id_or_index: 3 }],
+            [() => client.moveQueueItem('q', 'qi', -1), 'player_queues/move_item', { queue_id: 'q', queue_item_id: 'qi', pos_shift: -1 }],
+            [() => client.saveQueueAsPlaylist('q', 'Party'), 'player_queues/save_as_playlist', { queue_id: 'q', name: 'Party' }],
+            [() => client.setPower('p', false), 'players/cmd/power', { player_id: 'p', powered: false }],
+            [() => client.ungroupMany(['a', 'b']), 'players/cmd/ungroup_many', { player_ids: ['a', 'b'] }],
+            [() => client.sleepTimer('p'), 'players/sleep_timer/get', { player_id: 'p' }],
+            [() => client.search('holmes', { mediaTypes: ['audiobook'], limit: 5 }), 'music/search', { search_query: 'holmes', media_types: ['audiobook'], limit: 5 }],
+            [() => client.browse(), 'music/browse', {}],
+            [() => client.libraryItems('album', { search: 'live', favorite: true, orderBy: 'random' }), 'music/albums/library_items', { search: 'live', favorite: true, order_by: 'random' }],
+            [() => client.albumTracks(ref), 'music/albums/album_tracks', { item_id: '42', provider_instance_id_or_domain: 'library' }],
+            [() => client.podcastEpisodes(ref), 'music/podcasts/podcast_episodes', { item_id: '42', provider_instance_id_or_domain: 'library' }],
+            [() => client.inProgressItems(10), 'music/in_progress_items', { limit: 10 }],
+            [() => client.recentlyPlayed({ mediaTypes: ['track'] }), 'music/recently_played_items', { media_types: ['track'] }],
+            [() => client.addToPlaylist(7, ['library://track/1']), 'music/playlists/add_playlist_tracks', { db_playlist_id: 7, uris: ['library://track/1'] }],
+            [() => client.partyAddToQueue('library://track/1', true), 'party/add_to_queue', { uri: 'library://track/1', boost: true }],
+            [() => client.partyUrl(), 'party/url', {}],
+        ];
+        for (const [run, command, args] of cases) {
+            await run();
+            expect(sockets[0].sent.at(-1), command).toEqual(expect.objectContaining({ command, args }));
+        }
+    });
+
+    it('finds players by name in the live cache', async () => {
+        const client = makeClient();
+        client.start();
+        sockets[0].open();
+        await flush(); await flush();
+        expect(client.playerByName('bathroom')?.player_id).toBe('RINCON_BATH');
+        expect(client.playerByName(' Bathroom ')?.player_id).toBe('RINCON_BATH');
+        expect(client.playerByName('Kitchen')).toBeUndefined();
+        // library listings take any extra filter the server knows (Python **kwargs)
+        expectTypeOf(client.call('music/tracks/library_items', { limit: 1, provider: 'library', explicit: true })).resolves.toEqualTypeOf<MA.Track[]>();
+        expectTypeOf(client.libraryItems('podcast')).resolves.toEqualTypeOf<MA.Podcast[]>();
+    });
+
     it('keeps the cache in sync from events and notifies listeners', async () => {
         const client = makeClient();
         client.start();

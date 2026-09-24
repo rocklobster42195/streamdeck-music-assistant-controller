@@ -5,6 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- `music-assistant-client`: about 30 new convenience methods: search, browse, library listings, album/playlist/podcast tracks, recommendations, listening history (`inProgressItems`, `markPlayed`, `markUnplayed`), queue editing (`clearQueue`, `removeQueueItem`, `moveQueueItem`, `saveQueueAsPlaylist`), `skipSeconds`, `setPlaybackSpeed`, `playerByName`, power, playlists and party mode. All commands now go through the typed `call()`, so their arguments are checked against the API docs. The client is split into `commands/playback.ts`, `library.ts` and `extras.ts`.
 - `music-assistant-client`: the **complete API, typed**. All 127 data models (`MA.Track`, `MA.Player`, …) and all 310 commands with their arguments and results are generated from Music Assistant's own API docs (`npm run gen:api`, `tools/ma-api/`). The new `call(command, args)` checks both at compile time. CI now also typechecks the client and verifies that the generated files are current.
 - **Continue Listening** key: resumes the latest audiobook or podcast episode where you left off (MA keeps the position); a second press pauses. It shows the cover, a scrolling title and the progress, and can be limited to audiobooks or podcasts.
 - Browser dial: a **Continue listening** folder at the top.
@@ -38,6 +39,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.
 
 ### Changed
+- `music-assistant-client`: `RepeatMode`, `PlaybackState`, `DashboardType` and `MediaType` now come from the generated models (strict unions instead of open strings). Results of the convenience methods use the generated models (e.g. `queueItems()` returns `MA.QueueItem[]`). The generator turns Python `**kwargs` into "extra arguments allowed" instead of a required `kwargs` parameter.
 - Optimistic state is dropped as soon as the server confirms it, so changes made elsewhere (MA app, other controllers) show up immediately.
 - **Play Item** key: plays any MA item (playlist, album, radio, podcast, track, audiobook) with its cover on the key. A blue frame and ▶ tag show while it plays, and a check mark confirms the press. Choose between play now, play next or add to queue.
 - PI library browser: favorites as the start page, search across all providers, type filters, results with covers.

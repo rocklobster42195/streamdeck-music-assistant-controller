@@ -1,4 +1,5 @@
 export * from './client.js';
+export type { AnyMediaItem, ItemRef, LibraryQuery, LibraryType } from './commands/library.js';
 export * from './connection.js';
 export * from './images.js';
 export * from './lyrics.js';

@@ -293,6 +293,25 @@ await ma.playPause("RINCON_…");
 
 On Node 20, pass a WebSocket implementation: `webSocketFactory: (url) => new WebSocket(url)` from the [`ws`](https://www.npmjs.com/package/ws) package.
 
+**Convenience methods** cover what automations and remote controls typically need:
+
+| Area | Methods |
+|---|---|
+| Playback | `playPause` `play` `pause` `stopPlayback` `next` `previous` `seek` `skipSeconds` `setShuffle` `setRepeat` `setCrossfade` `setAutoplay` `setPlaybackSpeed` `playMedia` `transferQueue` |
+| Queue | `queueItems` `playIndex` `clearQueue` `removeQueueItem` `moveQueueItem` `saveQueueAsPlaylist` |
+| Players and groups | `playerByName` `setPower` `setVolume` `volumeUp` `volumeDown` `setMute` `selectSource` `groupPlayers` `ungroup` `ungroupMany` `setGroupVolume` `setGroupMute` `setSleepTimer` `sleepTimer` `clearSleepTimer` |
+| Library | `search` `browse` `libraryItems` `itemByUri` `albumTracks` `playlistTracks` `artistTopTracks` `podcastEpisodes` `recommendations` `addToLibrary` `removeFromLibrary` `addFavorite` `removeFavorite` `addCurrentlyPlayingToFavorites` |
+| Listening history | `recentlyPlayed` `inProgressItems` `markPlayed` `markUnplayed` |
+| Playlists | `createPlaylist` `addToPlaylist` `removeFromPlaylist` |
+| Extras | `trackLyrics` `playAnnouncement` `ttsEngines` `dashboards` `showDashboard` `hideDashboard` `partyUrl` `partyAddToQueue` `partyBoost` `partySkip` |
+
+```ts
+const kitchen = ma.playerByName("Kitchen");
+const { albums } = await ma.search("Dark Side of the Moon", { mediaTypes: ["album"] });
+await ma.playMedia(kitchen!.player_id, albums[0].uri!, "replace");
+await ma.skipSeconds(kitchen!.player_id, 30);
+```
+
 **The whole API, typed.** Besides the convenience methods, `call()` reaches **every** Music Assistant command (310 in 2.10.4) with checked arguments and a typed result, and all data models are available as `MA.*`:
 
 ```ts
