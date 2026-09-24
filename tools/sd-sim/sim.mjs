@@ -42,7 +42,11 @@ export async function startSim({ globalSettings = {}, language = "de", verbose =
     };
     const waiters = new Set();
     const notify = () => {
-        for (const w of [...waiters]) if (w.check()) (waiters.delete(w), w.resolve());
+        for (const w of [...waiters]) {
+            if (!w.check()) continue;
+            waiters.delete(w);
+            w.resolve();
+        }
     };
 
     let socket;
