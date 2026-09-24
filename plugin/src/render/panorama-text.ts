@@ -1,7 +1,7 @@
 // Text over the panorama effect: "title & artist" (ported from sonos-controller's
 // PanoramaEffectsDial overlay) or synced lyrics. Neighbouring text dials form one "run": text is
 // laid out across the whole run and every display draws its own 200 px window of it.
-import { measureArialWidth } from "streamdeck-core";
+import { balanceLines, measureArialWidth } from "streamdeck-core";
 import { escapeXml, fit, wrap } from "./strip";
 
 /** A run of neighbouring text dials: total width, and where this display sits in it. */
@@ -36,27 +36,42 @@ export function trackOverlay(run: TextRun, info: TrackInfo, prev?: TrackInfo, t 
     return inRun(run, parts);
 }
 
+const SUNG = 22;
+const NEXT = 16;
+const NEXT_COLOR = "#d4d4d8";
+
 /**
- * The sung line (large, wrapped to two lines when needed) and the next one (small, dimmed),
- * centered across the run. While `t` < 1 the previous line fades out and the new one slides in.
- * An empty line (instrumental gap, or before the first line) shows a note.
+ * The sung line (large; long lines are split into even halves at full size) and the next one
+ * (smaller, a little dimmer), centered across the run. While `t` < 1 the previous line fades out
+ * and the new one slides in. An empty line (instrumental gap, before the first line) shows a note.
  */
 export function lyricsOverlay(run: TextRun, current: string, next: string, previous: string | undefined, t = 1): string {
     const cx = run.width / 2;
     const max = run.width - 16;
+    const layout = sungLayout(current, max);
     const parts: string[] = [];
-    if (previous !== undefined && t < 1) parts.push(...sungLine(cx, max, previous, 1 - t, -6 * t));
-    parts.push(...sungLine(cx, max, current, t, 8 * (1 - t)));
-    if (next) parts.push(backed(cx, 88, fit(next, max, 13), 13, "#a4a4aa", "normal", 1));
+    if (previous !== undefined && t < 1) parts.push(...sungLines(cx, sungLayout(previous, max), 1 - t, -6 * t));
+    parts.push(...sungLines(cx, layout, t, 8 * (1 - t)));
+    // The next line sits below the sung block (left out when the sung line needs three rows)
+    if (next && layout.lines.length < 3) parts.push(backed(cx, layout.lines.length > 1 ? 90 : 82, fit(next, max, NEXT), NEXT, NEXT_COLOR, "normal", 1));
     return inRun(run, parts);
 }
 
-function sungLine(cx: number, max: number, value: string, opacity: number, dy: number): string[] {
-    if (!value) return [label(cx, 52 + dy, "♪", 24, "#8a8a90", "normal", "middle", opacity)];
-    if (measureArialWidth(value, 22) <= max) return [backed(cx, 50 + dy, value, 22, "#ffffff", "bold", opacity)];
-    const lines = wrap(value, max, 17, 2);
-    const top = lines.length > 1 ? 36 : 48;
-    return lines.map((l, i) => backed(cx, top + i * 21 + dy, l, 17, "#ffffff", "bold", opacity));
+type SungLayout = { lines: string[]; size: number; top: number; gap: number };
+
+/** One line, two even lines, or — only if that's not enough — three smaller lines. */
+function sungLayout(value: string, max: number): SungLayout {
+    if (!value) return { lines: [], size: SUNG, top: 0, gap: 0 };
+    const two = balanceLines(value, SUNG, max, 2, true);
+    if (two?.length === 1) return { lines: two, size: SUNG, top: 48, gap: 0 };
+    if (two) return { lines: two, size: SUNG, top: 32, gap: 26 };
+    const three = balanceLines(value, 18, max, 3, true) ?? wrap(value, max, 18, 3);
+    return { lines: three, size: 18, top: 26, gap: 23 };
+}
+
+function sungLines(cx: number, layout: SungLayout, opacity: number, dy: number): string[] {
+    if (!layout.lines.length) return [label(cx, 54 + dy, "♪", 26, "#b0b0b6", "normal", "middle", opacity)];
+    return layout.lines.map((l, i) => backed(cx, layout.top + i * layout.gap + dy, l, layout.size, "#ffffff", "bold", opacity));
 }
 
 /** A centered line on its own dark box, so the effect stays bright around the text. */
@@ -67,11 +82,11 @@ function backed(cx: number, y: number, value: string, size: number, color: strin
     return box + label(cx, y, value, size, color, weight, "middle", opacity);
 }
 
-/** A text line with a dark outline, so it stays readable on any effect. */
+/** A plain text line (no outline — it made the text look washed out on hardware). */
 function label(x: number, y: number, value: string, size: number, color: string, weight: string, anchor: "start" | "middle" | "end", opacity: number): string {
     if (!value || opacity <= 0) return "";
     const o = opacity < 1 ? ` opacity="${opacity.toFixed(2)}"` : "";
-    return `<text x="${x}" y="${y.toFixed(1)}" fill="${color}" font-family="Arial,sans-serif" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" stroke="#000" stroke-opacity="0.7" stroke-width="3" stroke-linejoin="round" paint-order="stroke"${o}>${escapeXml(value)}</text>`;
+    return `<text x="${x}" y="${y.toFixed(1)}" fill="${color}" font-family="Arial,sans-serif" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}"${o}>${escapeXml(value)}</text>`;
 }
 
 /** Run coordinates → this display: shift left by its offset (the SVG viewport clips the rest). */
