@@ -84,7 +84,11 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
      * Panorama background for dials that offer one (`background` setting): joins/updates/leaves
      * the shared effect and returns the SVG to draw under the content ('' when none).
      */
-    protected backdrop(ctx: PlayerContext<S>): string {
+    /**
+     * The panorama effect under this dial, plus a darkening layer so text stays readable: the whole
+     * strip by default, or only `scrim` (e.g. behind the text) when the dial passes one.
+     */
+    protected backdrop(ctx: PlayerContext<S>, scrim?: string): string {
         const inst = this.instances.get(ctx.id);
         const settings = ctx.settings as EffectSettings;
         const effectId = settings.background;
@@ -96,7 +100,7 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         panorama.join(ctx.id, inst.deviceId, inst.column, effectId, effectSettings, () => this.render(ctx.id));
         panorama.updateSettings(ctx.id, effectSettings);
         const slice = panorama.renderSlice(ctx.id);
-        return slice ? slice + SCRIM : "";
+        return slice ? slice + (scrim ?? SCRIM) : "";
     }
 
     /** Persist settings from the plugin side (e.g. "hold to save preset"). */

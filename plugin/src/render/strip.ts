@@ -1,7 +1,7 @@
 // Stream Deck + touch-strip segments: 200×100 SVG, sent as the "full-canvas" pixmap of layouts/canvas.json.
 // Text uses Arial (renders reliably on the device; see sonos-controller's dials) and is measured
 // with real Arial glyph widths from streamdeck-core.
-import { truncateToWidth, wrapToWidth } from "streamdeck-core";
+import { measureArialWidth, truncateToWidth, wrapToWidth } from "streamdeck-core";
 
 export const STRIP_W = 200;
 export const STRIP_H = 100;
@@ -24,6 +24,22 @@ export function fit(value: string, maxWidth: number, fontSize: number): string {
 /** Split text into at most `maxLines` lines that fit `maxWidth` (measured); the last line gets an ellipsis if needed. */
 export function wrap(value: string, maxWidth: number, fontSize: number, maxLines = 2): string[] {
     return wrapToWidth(value, fontSize, maxWidth, maxLines);
+}
+
+/** Width a text() call will take (fitted to `maxWidth`; bold measured a little wider). */
+export function textWidth(value: string, size: number, opts: { bold?: boolean; maxWidth?: number } = {}): number {
+    const shown = opts.maxWidth ? fit(value, opts.maxWidth, size) : value;
+    return measureArialWidth(shown, size) * (opts.bold ? 1.07 : 1);
+}
+
+/** On an effect background: darken only behind a ring's center … */
+export function scrimDisc(cx: number, cy: number, r: number): string {
+    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#000" opacity="0.5"/>`;
+}
+
+/** … and behind a block of text (x/y = top-left, sized to the text plus padding). */
+export function scrimBox(x: number, y: number, w: number, h: number): string {
+    return `<rect x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="${h}" rx="8" fill="#000" opacity="0.5"/>`;
 }
 
 export function text(x: number, y: number, value: string, opts: { size?: number; color?: string; weight?: "bold" | "normal"; anchor?: "start" | "middle" | "end"; maxWidth?: number } = {}): string {

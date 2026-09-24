@@ -3,7 +3,7 @@ import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
 import { ICONS, ringColor } from "../render/key-image";
 import { glide } from "../render/glide";
-import { gauge, mdi, stripImage, text } from "../render/strip";
+import { gauge, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
 import type { EffectSettings } from "../render/panorama";
@@ -50,10 +50,15 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
         else if (showText) parts.push(text(cx, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
         else parts.push(mdi(volumeIcon(volume), cx - 12, 38, 24, "#8a8a90"));
 
+        // On an effect background, darken only behind the number and the text (not the whole strip)
+        let scrim = scrimDisc(cx, 50, 30);
         if (showText && align !== "center") {
             const saved = (this.savedUntil.get(id) ?? 0) > Date.now();
             const anchor = align === "right" ? "end" : "start";
             const tx = align === "right" ? 96 : 100;
+            const label = saved ? this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))) : muted ? this.t("key.muted") : this.t("key.volume");
+            const w = Math.max(textWidth(playerName, 14, { bold: true, maxWidth: 92 }), textWidth(label, 12, { maxWidth: 92 })) + 12;
+            scrim += scrimBox(anchor === "end" ? tx + 6 - w : tx - 6, 27, w, 44);
             parts.push(text(tx, 44, playerName, { size: 14, weight: "bold", maxWidth: 92, anchor }));
             parts.push(
                 saved
@@ -61,7 +66,7 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
                     : text(tx, 64, muted ? this.t("key.muted") : this.t("key.volume"), { size: 12, color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor }),
             );
         }
-        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }
 
     protected override async rotate({ ma, player, settings }: PlayerContext<VolumeDialSettings>, ticks: number): Promise<void> {

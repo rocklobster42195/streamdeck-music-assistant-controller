@@ -4,7 +4,7 @@ import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
 import { ICONS, ringColor } from "../render/key-image";
 import { glide } from "../render/glide";
-import { gauge, mdi, stripImage, text } from "../render/strip";
+import { gauge, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -40,12 +40,17 @@ export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
         else parts.push(text(50, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
 
         const names = members.map((m) => m.display_name ?? m.name);
-        parts.push(text(100, 30, grouped ? this.t("key.group").replace("{count}", String(members.length)) : this.t("key.group_single"), { size: 10, color: "#8a8a90", maxWidth: 96 }));
-        parts.push(text(100, 50, leader.display_name ?? leader.name, { size: 14, weight: "bold", maxWidth: 96 }));
-        if (grouped) parts.push(text(100, 68, names.filter((n) => n !== (leader.display_name ?? leader.name)).join(", "), { size: 11, color: "#a4a4aa", maxWidth: 96 }));
-        else if (muted) parts.push(text(100, 68, this.t("key.muted"), { size: 11, color: MUTED }));
+        const header = grouped ? this.t("key.group").replace("{count}", String(members.length)) : this.t("key.group_single");
+        const leaderName = leader.display_name ?? leader.name;
+        const footer = grouped ? names.filter((n) => n !== leaderName).join(", ") : muted ? this.t("key.muted") : "";
+        parts.push(text(100, 30, header, { size: 10, color: "#8a8a90", maxWidth: 96 }));
+        parts.push(text(100, 50, leaderName, { size: 14, weight: "bold", maxWidth: 96 }));
+        if (footer) parts.push(text(100, 68, footer, { size: 11, color: grouped ? "#a4a4aa" : MUTED, maxWidth: 96 }));
+        // On an effect background, darken only behind the number and the text (not the whole strip)
+        const w = Math.max(textWidth(header, 10, { maxWidth: 96 }), textWidth(leaderName, 14, { bold: true, maxWidth: 96 }), footer ? textWidth(footer, 11, { maxWidth: 96 }) : 0) + 12;
+        const scrim = scrimDisc(50, 50, 30) + scrimBox(94, 18, w, footer ? 56 : 38);
         void settings;
-        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }
 
     protected override async rotate({ ma, player, settings }: PlayerContext<GroupVolumeDialSettings>, ticks: number): Promise<void> {
