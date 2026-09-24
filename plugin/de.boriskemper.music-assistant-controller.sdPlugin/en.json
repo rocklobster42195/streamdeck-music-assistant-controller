@@ -234,7 +234,7 @@
 			"overlay_off": "Off",
 			"overlay_track": "Title",
 			"overlay_lyrics": "Lyrics",
-			"overlay_hint": "Shows what the active player plays. Neighbouring Panorama dials share one line across their displays.",
+			"overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
 			"lyrics_offset": "Timing",
 			"lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. Lyrics running ahead of the music? Move the timing to the left.",
 			"choose": "Choose",

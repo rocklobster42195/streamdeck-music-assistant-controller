@@ -3,8 +3,8 @@ import { FrameTicker, TitleFader } from "streamdeck-core";
 /** Key titles tick on their own 80 ms clock, like sonos-controller's play/pause key. */
 const titleFrames = new FrameTicker(80);
 
-/** sonos-controller's title color on the play/pause key. */
-const TITLE_COLOR = "#cccccc";
+/** Title color — brighter than sonos-controller's #cccccc, which read too dark on hardware. */
+const TITLE_COLOR = "#f2f2f2";
 
 /**
  * The title band at the bottom of a key (sonos-controller's TitleAnimator effect): the band fades

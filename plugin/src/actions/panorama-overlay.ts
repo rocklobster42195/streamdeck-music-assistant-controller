@@ -10,7 +10,7 @@ type Shown = { key: string; kind: "track"; title: string; artist: string } | { k
 type RunState = { shown: Shown; previous?: Shown; changedAt: number };
 
 /**
- * Text over the panorama for the active player: title & artist, or the synced lyrics line (falling
+ * Text over the panorama for a player: title & artist, or the synced lyrics line (falling
  * back to title & artist while lyrics load or when there are none). Keeps per-run state so a change
  * crossfades on every display of the run at the same moment.
  */
@@ -18,9 +18,9 @@ export class PanoramaOverlay {
     private readonly runs = new Map<string, RunState>();
 
     /** SVG fragment for one display of run `runKey` ('' = no text). */
-    render(runKey: string, run: TextRun, mode: OverlayMode, lyricsOffset: number, now = Date.now()): string {
+    render(runKey: string, run: TextRun, mode: OverlayMode, lyricsOffset: number, playerId: string | undefined, now = Date.now()): string {
         if (mode === "off") return "";
-        const player = maConnection.player(maConnection.globalSettings.activePlayerId);
+        const player = maConnection.player(playerId);
         const media = player?.current_media;
         if (!media) {
             this.runs.delete(runKey);

@@ -23,6 +23,8 @@ type PanoramaDialSettings = EffectSettings &
         text?: OverlayMode;
         /** Seconds added to the playback position for lyrics (speaker latency). */
         lyricsOffset?: number;
+        /** Player whose music tints the effect and fills the text; "" = active player. */
+        playerId?: string;
     };
 type Instance = { action: DialAction<PanoramaDialSettings>; settings: PanoramaDialSettings; deviceId: string; column: number; previewAt?: number };
 
@@ -67,7 +69,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!inst) return;
         const before = inst.settings;
         inst.settings = ev.payload.settings;
-        if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset) this.shareText(ev.action.id);
+        if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset || before.playerId !== inst.settings.playerId) this.shareText(ev.action.id);
         this.join(ev.action.id);
         this.pushSettings(ev.action.id);
     }
@@ -91,9 +93,14 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         return inst.settings.background || DEFAULT_EFFECT_ID;
     }
 
+    /** The chosen player, or the active one. */
+    private playerId(inst: Instance): string | undefined {
+        return maConnection.resolvePlayerId(inst.settings.playerId);
+    }
+
     private effectSettings(inst: Instance): Record<string, unknown> {
-        const active = maConnection.player(maConnection.globalSettings.activePlayerId);
-        return effectSettingsFor(inst.settings, this.effectId(inst), active?.current_media);
+        const player = maConnection.player(this.playerId(inst));
+        return effectSettingsFor(inst.settings, this.effectId(inst), player?.current_media);
     }
 
     private join(id: string): void {
@@ -113,16 +120,25 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const run = this.run(id);
         // The first dial of the run that shows text decides (a freshly added neighbour defaults to "off")
         const lead = run.ids.map((i) => this.instances.get(i)?.settings).find((s) => s?.text && s.text !== "off");
-        const text = lead ? this.overlay.render(run.ids[0], { width: run.ids.length * STRIP_W, offset: run.index * STRIP_W }, lead.text!, Number(lead.lyricsOffset ?? 0)) : "";
+        const text = lead ? this.overlay.render(run.ids[0], { width: run.ids.length * STRIP_W, offset: run.index * STRIP_W }, lead.text!, Number(lead.lyricsOffset ?? 0), maConnection.resolvePlayerId(lead.playerId)) : "";
         const image = stripImage([text], "#000", panorama.renderSlice(id));
         void inst.action.setFeedback({ "full-canvas": image });
         // The PI preview doesn't need every frame
         const now = Date.now();
         if (!inst.previewAt || now - inst.previewAt > PREVIEW_EVERY_MS) {
             inst.previewAt = now;
-            const effectId = this.effectId(inst);
-            const name = streamDeck.i18n.t(`effect.${effectId}.name`);
-            piBridge.updatePreview(id, { image, kind: "dial", state: "idle", track: name.startsWith("effect.") ? effectId : name });
+            // PI header: the chosen player and what it plays (like the other dials)
+            const player = maConnection.player(this.playerId(inst));
+            const s = player && (maConnection.queueFor(player)?.state ?? player.playback_state);
+            const media = player?.current_media;
+            piBridge.updatePreview(id, {
+                image,
+                kind: "dial",
+                state: s === "playing" ? "playing" : s === "paused" ? "paused" : "idle",
+                track: [media?.title, media?.artist].filter(Boolean).join(" · ") || undefined,
+                playerName: player ? (player.display_name ?? player.name) : undefined,
+                following: !inst.settings.playerId,
+            });
         }
     }
 
@@ -143,14 +159,15 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         return { ids, index: at - first };
     }
 
-    /** A text setting changed on one dial: the rest of its run follows. */
+    /** A text or player setting changed on one dial: the rest of its run follows. */
     private shareText(id: string): void {
         const source = this.instances.get(id);
         if (!source) return;
         for (const other of this.run(id).ids) {
             const inst = this.instances.get(other);
-            if (!inst || other === id || (inst.settings.text === source.settings.text && inst.settings.lyricsOffset === source.settings.lyricsOffset)) continue;
-            inst.settings = { ...inst.settings, text: source.settings.text, lyricsOffset: source.settings.lyricsOffset };
+            const same = inst?.settings.text === source.settings.text && inst?.settings.lyricsOffset === source.settings.lyricsOffset && inst?.settings.playerId === source.settings.playerId;
+            if (!inst || other === id || same) continue;
+            inst.settings = { ...inst.settings, text: source.settings.text, lyricsOffset: source.settings.lyricsOffset, playerId: source.settings.playerId };
             inst.action.setSettings(inst.settings).catch((e) => streamDeck.logger.warn("[panorama] text sync failed", e));
         }
     }

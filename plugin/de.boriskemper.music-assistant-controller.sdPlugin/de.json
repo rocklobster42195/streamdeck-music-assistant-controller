@@ -234,7 +234,7 @@
 			"overlay_off": "Aus",
 			"overlay_track": "Titel",
 			"overlay_lyrics": "Lyrics",
-			"overlay_hint": "Zeigt, was der aktive Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
+			"overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
 			"lyrics_offset": "Timing",
 			"lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Laufen die Lyrics der Musik voraus? Timing nach links schieben.",
 			"choose": "Wählen",

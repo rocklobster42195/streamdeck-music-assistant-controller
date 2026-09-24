@@ -246,7 +246,7 @@
     "pi.overlay_off": "Aus",
     "pi.overlay_track": "Titel",
     "pi.overlay_lyrics": "Lyrics",
-    "pi.overlay_hint": "Zeigt, was der aktive Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
+    "pi.overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Laufen die Lyrics der Musik voraus? Timing nach links schieben.",
     "pi.choose": "Wählen",
@@ -537,7 +537,7 @@
     "pi.overlay_off": "Off",
     "pi.overlay_track": "Title",
     "pi.overlay_lyrics": "Lyrics",
-    "pi.overlay_hint": "Shows what the active player plays. Neighbouring Panorama dials share one line across their displays.",
+    "pi.overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. Lyrics running ahead of the music? Move the timing to the left.",
     "pi.choose": "Choose",
@@ -1596,6 +1596,11 @@
      "label": "Like",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    },
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
     },
     {
      "label": "Play Item",
@@ -4018,11 +4023,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4033,11 +4033,6 @@
    "key": "effect.particles.savedDensity",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
@@ -4050,11 +4045,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4065,11 +4055,6 @@
    "key": "effect.matrix-rain.name",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
@@ -4082,11 +4067,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4097,11 +4077,6 @@
    "key": "effect.matrix-rain.savedDensity",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
@@ -4114,11 +4089,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4129,11 +4099,6 @@
    "key": "effect.boing-ball.primaryColor",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
@@ -4146,11 +4111,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4161,11 +4121,6 @@
    "key": "effect.boing-ball.savedSpeed",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
@@ -4178,11 +4133,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4193,11 +4143,6 @@
    "key": "effect.boing-globe.landColor",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
@@ -4210,11 +4155,6 @@
    "group": "effect",
    "usedIn": [
     {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
-    {
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
@@ -4225,11 +4165,6 @@
    "key": "effect.boing-globe.savedSpeed",
    "group": "effect",
    "usedIn": [
-    {
-     "label": "Panorama",
-     "where": "dial",
-     "file": "plugin/src/actions/panorama-dial.ts"
-    },
     {
      "label": "*",
      "where": "settings",
