@@ -2,7 +2,7 @@
 // PanoramaEffectsDial overlay) or synced lyrics. Neighbouring text dials form one "run": text is
 // laid out across the whole run and every display draws its own 200 px window of it.
 import { measureArialWidth } from "streamdeck-core";
-import { escapeXml, fit, STRIP_W, wrap } from "./strip";
+import { escapeXml, fit, wrap } from "./strip";
 
 /** A run of neighbouring text dials: total width, and where this display sits in it. */
 export type TextRun = { width: number; offset: number };
@@ -44,19 +44,27 @@ export function trackOverlay(run: TextRun, info: TrackInfo, prev?: TrackInfo, t 
 export function lyricsOverlay(run: TextRun, current: string, next: string, previous: string | undefined, t = 1): string {
     const cx = run.width / 2;
     const max = run.width - 16;
-    const parts = [`<rect x="${run.offset}" width="${STRIP_W}" height="100" fill="#000" opacity="0.35"/>`];
+    const parts: string[] = [];
     if (previous !== undefined && t < 1) parts.push(...sungLine(cx, max, previous, 1 - t, -6 * t));
     parts.push(...sungLine(cx, max, current, t, 8 * (1 - t)));
-    if (next) parts.push(label(cx, 88, fit(next, max, 13), 13, "#a4a4aa", "normal", "middle", 1));
+    if (next) parts.push(backed(cx, 88, fit(next, max, 13), 13, "#a4a4aa", "normal", 1));
     return inRun(run, parts);
 }
 
 function sungLine(cx: number, max: number, value: string, opacity: number, dy: number): string[] {
     if (!value) return [label(cx, 52 + dy, "♪", 24, "#8a8a90", "normal", "middle", opacity)];
-    if (measureArialWidth(value, 22) <= max) return [label(cx, 50 + dy, value, 22, "#ffffff", "bold", "middle", opacity)];
+    if (measureArialWidth(value, 22) <= max) return [backed(cx, 50 + dy, value, 22, "#ffffff", "bold", opacity)];
     const lines = wrap(value, max, 17, 2);
     const top = lines.length > 1 ? 36 : 48;
-    return lines.map((l, i) => label(cx, top + i * 21 + dy, l, 17, "#ffffff", "bold", "middle", opacity));
+    return lines.map((l, i) => backed(cx, top + i * 21 + dy, l, 17, "#ffffff", "bold", opacity));
+}
+
+/** A centered line on its own dark box, so the effect stays bright around the text. */
+function backed(cx: number, y: number, value: string, size: number, color: string, weight: string, opacity: number): string {
+    if (!value || opacity <= 0) return "";
+    const w = measureArialWidth(value, size) * (weight === "bold" ? 1.07 : 1) + 16;
+    const box = `<rect x="${(cx - w / 2).toFixed(1)}" y="${(y - size - 2).toFixed(1)}" width="${w.toFixed(1)}" height="${size + 8}" rx="8" fill="#000" opacity="${(0.5 * opacity).toFixed(2)}"/>`;
+    return box + label(cx, y, value, size, color, weight, "middle", opacity);
 }
 
 /** A text line with a dark outline, so it stays readable on any effect. */

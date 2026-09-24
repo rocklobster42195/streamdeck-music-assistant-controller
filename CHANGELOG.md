@@ -5,6 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Fixed
+- Playback positions (progress bars, lyrics, seeking) are extrapolated on the Music Assistant server's clock: `music-assistant-client` measures the offset on connect (`time` command, `clockOffset`, `serverNow()`). A local clock running ahead made lyrics appear early.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
@@ -46,7 +47,8 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.
 
 ### Changed
-- Dials with an effect background (Track, Volume, Group Volume) darken only behind the number and each line of text, not the whole strip.
+- Dials with an effect background (Track, Volume, Group Volume, and the lyrics on the Panorama dial) darken only behind the number and each line of text, not the whole strip.
+- Lyrics timing range widened to −10 … +5 s.
 - Cover colors (effects, progress bars, rings) skip MA's palette accent when it is too dark to see on black (grey-scale covers have a near-black accent) and use the palette's primary or on-dark color instead.
 - Scrolling text on the dials moves in whole ticks (2 px every 80 ms) instead of following the clock, which stuttered on hardware when frames arrived late. The shared frame ticker runs at 80 ms.
 - Simulator scenarios refuse to run when the test player is grouped or playing (`assertTestPlayerFree`, `SIM_FORCE=1` overrides).

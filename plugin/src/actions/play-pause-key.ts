@@ -1,5 +1,4 @@
 import { action } from "@elgato/streamdeck";
-import { currentElapsed } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { coverAccent, ICONS, renderKeyImage, rgb } from "../render/key-image";
 import { KeyTitleFader } from "../render/key-title";
@@ -23,7 +22,7 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
         const cover = this.cover(id, ma, media);
 
         let progress: number | undefined;
-        if (settings.showProgress && queue && media?.duration) progress = currentElapsed(queue) / media.duration;
+        if (settings.showProgress && queue && media?.duration) progress = maConnection.elapsed(queue) / media.duration;
 
         return {
             image: renderKeyImage({

@@ -1,4 +1,4 @@
-import { currentElapsed, lyricIndexAt } from "music-assistant-client";
+import { lyricIndexAt } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { lyrics } from "../ma/lyrics";
 import { fadeProgress, lyricsOverlay, trackOverlay, type TextRun } from "../render/panorama-text";
@@ -31,7 +31,7 @@ export class PanoramaOverlay {
         let next = "";
         const state = mode === "lyrics" && queue?.current_item?.media_item?.uri === media.uri ? lyrics.forQueue(queue) : undefined;
         if (state?.status === "ok" && queue) {
-            const i = lyricIndexAt(state.lines, currentElapsed(queue, now / 1000) + lyricsOffset);
+            const i = lyricIndexAt(state.lines, maConnection.elapsed(queue) + lyricsOffset);
             shown = { key: `l:${media.uri}#${i}`, kind: "lyrics", current: i >= 0 ? state.lines[i].text : "" };
             next = state.lines[i + 1]?.text ?? "";
         }

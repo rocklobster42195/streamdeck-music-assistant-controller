@@ -74,6 +74,8 @@ export class MusicAssistantConnection {
     readonly players = new Map<string, Player>();
     readonly queues = new Map<string, PlayerQueue>();
     serverInfo: ServerInfo | undefined;
+    /** Server clock minus local clock, in seconds (measured on connect with `time`). */
+    clockOffset = 0;
     user: AuthUser | undefined;
 
     private _state: ConnectionState = 'stopped';
@@ -232,6 +234,7 @@ export class MusicAssistantConnection {
             const auth = await this.send<{ authenticated: boolean; user?: AuthUser }>('auth', { token: this.opts.token });
             if (!auth?.authenticated) throw new MaApiError(ERROR_AUTH_REQUIRED, 'not authenticated', 'auth');
             this.user = auth.user;
+            await this.measureClock();
             if (this.isSchemaIncompatible) {
                 this.opts.logger?.warn(`[ma-client] server requires schema >= ${this.serverInfo?.min_supported_schema_version}, client has ${CLIENT_SCHEMA_VERSION}`);
             } else if (this.isServerNewer) {
@@ -306,6 +309,27 @@ export class MusicAssistantConnection {
         if (msg.server_id && msg.schema_version !== undefined) {
             this.serverInfo = msg as ServerInfo;
         }
+    }
+
+    /**
+     * Server timestamps (e.g. `elapsed_time_last_updated`) are on the server's clock; a local clock
+     * that is a few seconds off would shift every extrapolated position (the server docs of `time`
+     * recommend exactly this comparison). Older servers without `time` keep offset 0.
+     */
+    private async measureClock(): Promise<void> {
+        try {
+            const t0 = Date.now();
+            const server = await this.send<number>('time');
+            const t1 = Date.now();
+            if (typeof server === 'number') this.clockOffset = server - (t0 + t1) / 2000;
+        } catch {
+            this.clockOffset = 0;
+        }
+    }
+
+    /** "Now" on the server's clock, in seconds — use it with `currentElapsed(queue, ma.serverNow())`. */
+    serverNow(): number {
+        return Date.now() / 1000 + this.clockOffset;
     }
 
     private finishRequest(id: string): void {

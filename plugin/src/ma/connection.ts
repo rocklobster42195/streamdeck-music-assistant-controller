@@ -1,5 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
-import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike } from "music-assistant-client";
+import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike, currentElapsed } from "music-assistant-client";
 import WebSocket from "ws";
 import { OptimisticStore } from "./optimistic";
 
@@ -86,6 +86,11 @@ class MaConnection {
     /** Resolve an action's player setting to a concrete player id. */
     resolvePlayerId(playerSetting: string | undefined): string | undefined {
         return playerSetting || this.settings.activePlayerId || undefined;
+    }
+
+    /** Current position of a queue in seconds, extrapolated on the server's clock. */
+    elapsed(queue: PlayerQueue): number {
+        return currentElapsed(queue, this.client?.serverNow() ?? Date.now() / 1000);
     }
 
     /** A player as the keys should show it (with optimistic overrides applied). */

@@ -1,5 +1,4 @@
 import streamDeck, { action } from "@elgato/streamdeck";
-import { currentElapsed } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
 import { coverAccent, ICONS, rgb } from "../render/key-image";
@@ -78,7 +77,7 @@ ${artist}`);
         if (media.media_type === "radio" || !duration) {
             parts.push(`<rect x="${x}" y="70" width="38" height="18" rx="4" fill="${accent}"/>`, text(x + 19, 83, "LIVE", { size: 11, weight: "bold", color: "#0b0b0c", anchor: "middle" }));
         } else {
-            const elapsed = queue ? currentElapsed(queue) : 0;
+            const elapsed = queue ? maConnection.elapsed(queue) : 0;
             parts.push(...progressBar(x, 68, w, elapsed / duration, accent));
             parts.push(text(x, 90, formatTime(elapsed), { size: 10, color: "#a4a4aa" }));
             parts.push(text(x + w, 90, `-${formatTime(duration - elapsed)}`, { size: 10, color: "#a4a4aa", anchor: "end" }));
@@ -99,7 +98,7 @@ ${artist}`);
         const duration = player.current_media?.duration ?? 0;
         if (!queue || !duration || player.current_media?.media_type === "radio") return;
         const step = Math.max(1, Math.min(60, settings.seekStep ?? 10));
-        const target = Math.round(Math.min(duration - 1, Math.max(0, currentElapsed(queue) + ticks * step)));
+        const target = Math.round(Math.min(duration - 1, Math.max(0, maConnection.elapsed(queue) + ticks * step)));
         maConnection.patchQueue(queue.queue_id, { elapsed_time: target, elapsed_time_last_updated: Date.now() / 1000 }, 2500);
         this.seeker(queue.queue_id, ma).push(target);
     }

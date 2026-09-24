@@ -1,6 +1,6 @@
 import { action } from "@elgato/streamdeck";
+import { maConnection } from "../ma/connection";
 import { mdiBookOpenPageVariant } from "@mdi/js";
-import { currentElapsed } from "music-assistant-client";
 import { inProgress, type InProgressItem, type InProgressKind } from "../ma/in-progress";
 import { getCachedCover, loadCover } from "../render/cover-cache";
 import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
@@ -87,7 +87,7 @@ export class ContinueKey extends MaKeyAction<ContinueSettings> {
         return {
             item,
             playing: queue.state === "playing",
-            progress: duration ? Math.min(1, currentElapsed(queue) / duration) : undefined,
+            progress: duration ? Math.min(1, maConnection.elapsed(queue) / duration) : undefined,
         };
     }
 }
