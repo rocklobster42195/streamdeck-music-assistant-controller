@@ -67,6 +67,8 @@ try {
         sim.press(keyB);
         await until(() => ma.queues.get(B)?.state === "playing", 20000).catch(() => {});
         check("music follows: B plays after pressing B", ma.queues.get(B)?.state === "playing");
+        // MA stops the source shortly after starting the target
+        await until(() => ma.queues.get(A)?.state !== "playing", 5000).catch(() => {});
         check("…and A stopped", ma.queues.get(A)?.state !== "playing", ma.queues.get(A)?.state);
         check("…and B is the active player", sim.state.globalSettings.activePlayerId === B);
         await sim.sleep(1500);
