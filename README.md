@@ -30,25 +30,25 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 
 ## Actions
 
-| Action | Controller | Status |
-|---|---|---|
-| **Play / Pause**: cover art, live play state, optional progress bar and player name | Key | ✅ working |
-| **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key | ✅ working |
-| **Volume**: up · down · mute · preset | Key | ✅ working |
-| **Volume**: rotate to change, push to mute, touch for a preset | Dial (SD+) | ✅ working |
-| **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) | ✅ working |
-| **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) | ✅ working |
-| **Player**: one key per room; makes it the active player and brings the music along | Key | ✅ working |
-| **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) | ✅ working |
-| **Queue**: scroll through the queue and jump to any track | Dial (SD+) | ✅ working |
-| **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) | ✅ working |
-| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover | Dial (SD+) | ✅ working |
-| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key | ✅ working |
-| **Announcement**: speak a message on one or all speakers (TTS) | Key | ✅ working |
-| **Source**: switch a speaker to Line-in, TV or another input | Key | ✅ working |
-| **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key | ✅ working |
-| **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
-| **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
+| Action | Controller |
+|---|---|
+| **Play / Pause**: cover art, live play state, optional progress bar and player name | Key |
+| **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key |
+| **Volume**: up · down · mute · preset | Key |
+| **Volume**: rotate to change, push to mute, touch for a preset | Dial (SD+) |
+| **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) |
+| **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) |
+| **Player**: one key per room; makes it the active player and brings the music along | Key |
+| **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) |
+| **Queue**: scroll through the queue and jump to any track | Dial (SD+) |
+| **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) |
+| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover | Dial (SD+) |
+| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key |
+| **Announcement**: speak a message on one or all speakers (TTS) | Key |
+| **Source**: switch a speaker to Line-in, TV or another input | Key |
+| **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
+| **Play Item**: play any playlist, album, radio station or podcast from your library | Key |
+| **Like**: add the current track to your favorites; the heart fills when it already is one | Key |
 
 ### Play / Pause
 
