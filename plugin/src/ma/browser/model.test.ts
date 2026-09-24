@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type BrowseEntry, BrowserModel, type BrowseSource, toEntry } from "./browser";
+import { type BrowseEntry, BrowserModel, type BrowseSource, toEntry } from "./index";
 
 const folder = (name: string, path: string): BrowseEntry => ({ name, path, mediaType: "folder", isFolder: true, playable: false });
 const station = (name: string): BrowseEntry => ({ name, uri: `radio://${name}`, mediaType: "radio", isFolder: false, playable: true });

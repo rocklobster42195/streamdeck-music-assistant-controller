@@ -1,10 +1,9 @@
 import { action } from "@elgato/streamdeck";
-import { mdiChevronRight, mdiFolderMusic, mdiFolderOutline, mdiHeart, mdiWaveform } from "@mdi/js";
 import { type BrowseEntry, BrowserModel, LIBRARY_ROOT, MaBrowseSource, PROVIDERS_ROOT } from "../ma/browser";
 import { maConnection } from "../ma/connection";
 import { getCachedCover, loadCover } from "../render/cover-cache";
-import { ACCENT, ICONS } from "../render/key-image";
-import { image, mdi, stripImage, text, wrap } from "../render/strip";
+import { browserIdleStrip, browserStrip } from "../render/browser-strip";
+import { ACCENT } from "../render/key-image";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
@@ -148,64 +147,28 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         st.model.error = undefined;
     }
 
-    // ---- rendering ------------------------------------------------------------------------------
+    // ---- rendering (layouts in render/browser-strip.ts) ----------------------------------------------
 
     private renderIdle({ id, ma, player }: PlayerContext<BrowserDialSettings>, flash: State["flash"]): string {
         const media = player.current_media;
-        const cover = this.cover(id, ma, media);
-        const parts: string[] = [];
-        if (cover) parts.push(image(cover, 8, 18, 64, 64));
-        else parts.push(`<rect x="8" y="18" width="64" height="64" rx="6" fill="#1d1d20"/>`, mdi(mdiFolderMusic, 20, 30, 40, "#6c6c72"));
-        const title = flash?.text ?? media?.title ?? this.t("key.nothing_playing");
-        wrap(title, 112, 13, 2).forEach((line, i) => parts.push(text(82, 40 + i * 16, line, { size: 13, weight: "bold", color: flash?.color ?? "#ffffff" })));
-        parts.push(text(82, 78, this.t("key.browse_hint"), { size: 11, color: "#8a8a90", maxWidth: 112 }));
-        return stripImage(parts);
+        return browserIdleStrip({ cover: this.cover(id, ma, media), title: media?.title ?? this.t("key.nothing_playing"), flash, hint: this.t("key.browse_hint") });
     }
 
     private renderBrowse(id: string, st: State, flash: State["flash"]): string {
         const m = st.model;
-        const parts: string[] = [];
-        // Breadcrumb: the last two levels
-        const crumbs = m.breadcrumb;
-        const shown = crumbs.length > 2 ? ["…", ...crumbs.slice(-2)] : crumbs;
-        parts.push(text(8, 14, shown.join(" › "), { size: 10, color: "#8a8a90", maxWidth: 184 }));
-
-        if (flash) {
-            parts.push(text(100, 60, flash.text, { size: 13, weight: "bold", color: flash.color, anchor: "middle", maxWidth: 184 }));
-            return stripImage(parts);
-        }
-        if (m.loading) {
-            parts.push(text(100, 60, this.t("key.browse_loading"), { size: 13, color: "#a4a4aa", anchor: "middle" }));
-            return stripImage(parts);
-        }
         const entry = m.current;
-        if (!entry) {
-            parts.push(text(100, 60, this.t("key.browse_empty"), { size: 13, color: "#a4a4aa", anchor: "middle" }));
-            return stripImage(parts);
-        }
-
-        // Thumbnail or type icon
-        const thumb = this.thumb(id, entry);
-        if (thumb) parts.push(image(thumb, 8, 24, 56, 56));
-        else parts.push(`<rect x="8" y="24" width="56" height="56" rx="6" fill="#1d1d20"/>`, mdi(entryIcon(entry), 20, 36, 32, entry.isFolder ? ACCENT : "#8a8a90"));
-
-        // Name (2 lines) and subtitle
-        const lines = wrap(entry.name, 112, 13, 2);
-        lines.forEach((line, i) => parts.push(text(72, 40 + i * 15, line, { size: 13, weight: "bold" })));
-        const sub = entry.subtitle ?? (entry.isFolder ? "" : this.t(`pi.type_${entry.mediaType}`).replace(/^pi\.type_.*/, ""));
-        if (sub) parts.push(text(72, 40 + lines.length * 15 + 2, sub, { size: 11, color: "#a4a4aa", maxWidth: 104 }));
-
-        // Position and "has more inside" chevron
-        const { index, total } = m.position;
-        parts.push(text(192, 94, `${index} / ${total}`, { size: 10, color: "#8a8a90", anchor: "end" }));
-        if (entry.isFolder) parts.push(mdi(mdiChevronRight, 176, 42, 20, "#8a8a90"));
-        // Scroll indicator on the right edge
-        if (total > 1) {
-            const h = Math.max(8, 70 / total);
-            const y = 22 + ((70 - h) * (index - 1)) / (total - 1);
-            parts.push(`<rect x="196" y="22" width="2" height="70" rx="1" fill="#2c2c30"/>`, `<rect x="196" y="${y.toFixed(1)}" width="2" height="${h.toFixed(1)}" rx="1" fill="#6c6c72"/>`);
-        }
-        return stripImage(parts);
+        const typeLabel = entry && !entry.isFolder ? this.t(`pi.type_${entry.mediaType}`) : "";
+        return browserStrip({
+            breadcrumb: m.breadcrumb,
+            flash,
+            loading: m.loading,
+            entry,
+            thumb: entry ? this.thumb(id, entry) : undefined,
+            position: m.position,
+            // Unknown media types have no translation — then show nothing rather than the raw key
+            subtitle: typeLabel.startsWith("pi.") ? undefined : typeLabel,
+            texts: { loading: this.t("key.browse_loading"), empty: this.t("key.browse_empty") },
+        });
     }
 
     private thumb(id: string, entry: BrowseEntry): string | undefined {
@@ -215,24 +178,5 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         const hit = getCachedCover(url);
         if (!hit) void loadCover(url).then((c) => c && this.render(id));
         return hit;
-    }
-}
-
-function entryIcon(entry: BrowseEntry): string {
-    if (entry.isFolder) return entry.mediaType === "favorites" ? mdiHeart : mdiFolderOutline;
-    switch (entry.mediaType) {
-        case "radio":
-            return ICONS.radio;
-        case "playlist":
-            return ICONS.playlist;
-        case "album":
-            return ICONS.album;
-        case "podcast":
-        case "podcast_episode":
-            return ICONS.podcast;
-        case "sound_effect":
-            return mdiWaveform;
-        default:
-            return ICONS.note;
     }
 }
