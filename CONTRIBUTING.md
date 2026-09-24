@@ -95,7 +95,7 @@ Before you open a pull request for a change that affects what users see, check i
    ```bash
    npm run build && npm test && npm run lint && npm run validate -w mac-plugin
    ```
-4. Open the PR and fill in the template. For visual changes, attach **screenshots from the simulator** (`sim-out/`) or the PI preview.
+4. Open the PR and fill in the template. The CI workflow runs the same checks. For visual changes, attach **screenshots from the simulator** (`sim-out/`) or the PI preview.
 
 Changes to `packages/streamdeck-core` also affect the Sonos Controller. Mention in the PR if something there changes behavior.
 

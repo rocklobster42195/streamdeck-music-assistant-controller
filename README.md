@@ -166,6 +166,8 @@ When a key can't do its job, it tells you: **Setup** means connection details ar
 
 ## Setup
 
+**Install:** download the `.streamDeckPlugin` file from the [latest release](../../releases/latest) and double-click it. **Beta builds** for testing new features are published as [pre-releases](../../releases); they install the same way and are replaced by the next stable release.
+
 1. In Music Assistant, open **Settings → Profile** and create a **long-lived token**. Name it, for example, "Stream Deck".
 2. Drag any MAC action onto your Stream Deck. Its settings panel guides you through two steps:
    - **Server address**: the address of your Music Assistant server, e.g. `192.168.1.10` or `192.168.1.10:8095`. Port `8095` is used when you leave it out.
@@ -257,6 +259,18 @@ node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>
 ```
 
 For API experiments, create a `.env` file (it is gitignored) with `MA_URL=http://<host>:8095`, `MA_TOKEN=<token>` and `MA_TEST_PLAYER=<player_id>`. The simulator plays quietly on that player. `npm run probe` records raw API traffic.
+
+### Releases
+
+Versions live in the plugin manifest (`A.B.C.D`, where `D` is the beta build number). Tags are semver: `v0.2.0`, or `v0.2.0-beta.1`.
+
+```bash
+npm run ship:beta     # check → next beta (0.2.1-beta.1, then -beta.2, …) → GitHub pre-release
+npm run ship:patch    # check → release; while in beta, this promotes the beta line to stable
+npm run ship:minor    # / ship:major
+```
+
+Each `ship:*` runs `npm run check` (build, tests, lint, validate), then `tools/bump-version.mjs` (manifest version, CHANGELOG `[Unreleased]` → version section for stable releases, commit and tag), then `tools/release.mjs` (push and GitHub release; betas as pre-releases). The **Release** workflow builds the plugin from the tag and attaches `de.boriskemper.music-assistant-controller-<tag>.streamDeckPlugin`. Stable releases are also packed locally into `release/` for the Elgato Marketplace upload, which has no beta channel. Release packages leave out the Node debug port (`tools/pack.mjs`). If only the publish step fails, fix it and re-run `npm run release`. The **CI** workflow runs the same checks on every push and pull request.
 
 ### `music-assistant-client`
 

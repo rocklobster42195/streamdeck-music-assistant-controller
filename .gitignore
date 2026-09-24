@@ -24,3 +24,6 @@ logs/
 notes/
 .claude/
 sim-out/
+
+# Release packages (tools/release.mjs)
+release/
