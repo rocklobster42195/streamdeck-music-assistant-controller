@@ -26,7 +26,8 @@
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "test": "vitest run",
-        "lint": "eslint src test"
+        "lint": "eslint src test",
+        "typecheck": "tsc -p tsconfig.json"
     },
     "engines": {
         "node": ">=20"

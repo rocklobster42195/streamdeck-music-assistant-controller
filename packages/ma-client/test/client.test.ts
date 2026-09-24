@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MaApiError, MusicAssistantClient, currentElapsed, snapImageSize, type WebSocketLike } from '../src/index.js';
+import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
+import { MA_API_VERSION, MaApiError, MusicAssistantClient, currentElapsed, snapImageSize, type MA, type WebSocketLike } from '../src/index.js';
 
 // Minimal fixtures shaped like real server 2.10.4 payloads (see docs/ma-api/).
 const SERVER_INFO = {
@@ -94,6 +94,31 @@ describe('MusicAssistantClient', () => {
         await vi.runAllTimersAsync();
         expect(client.state).toBe('auth_failed');
         expect(sockets).toHaveLength(1);
+    });
+
+    it('call() sends any API command with typed args and result', async () => {
+        const client = makeClient();
+        client.start();
+        sockets[0].open();
+        await flush(); await flush();
+
+        const result = client.call('players/get', { player_id: 'RINCON_BATH' });
+        await flush();
+        expect(sockets[0].sent.at(-1)).toMatchObject({ command: 'players/get', args: { player_id: 'RINCON_BATH' } });
+        await expect(result).resolves.toBeNull(); // the fake server answers null to unknown commands
+        await expect(client.call('player_queues/all')).resolves.toEqual([QUEUE]); // no required args → args optional
+
+        // Types (checked by `npm run typecheck -w music-assistant-client`)
+        expectTypeOf(result).resolves.toEqualTypeOf<MA.Player>();
+        expectTypeOf(client.call('music/search', { search_query: 'x' })).resolves.toEqualTypeOf<MA.SearchResults>();
+        expectTypeOf<MA.Track['media_type']>().toEqualTypeOf<MA.MediaType | undefined>();
+        // @ts-expect-error missing required argument
+        void client.call('players/get', {}).catch(() => {});
+        // @ts-expect-error unknown command
+        void client.call('players/nope').catch(() => {});
+        // @ts-expect-error wrong argument type
+        void client.call('player_queues/seek', { queue_id: 'q', position: 'soon' }).catch(() => {});
+        expect(MA_API_VERSION.schema).toBe(65);
     });
 
     it('keeps the cache in sync from events and notifies listeners', async () => {

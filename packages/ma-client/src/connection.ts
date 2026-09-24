@@ -1,4 +1,12 @@
+import type { MaCommandArgs, MaCommandName, MaCommandResult } from './generated/commands.js';
 import type { AuthUser, EventMap, EventName, MaEvent, Player, PlayerQueue, ServerInfo } from './types.js';
+
+/** Keys of T that are not optional. */
+type RequiredKeys<T> = { [K in keyof T]-?: T extends Record<K, T[K]> ? K : never }[keyof T];
+
+/** Arguments of {@link MusicAssistantConnection.call}: `args` may be left out when no argument is required. */
+export type MaCallParams<C extends MaCommandName> =
+    RequiredKeys<MaCommandArgs<C>> extends never ? [args?: MaCommandArgs<C>, options?: { timeoutMs?: number }] : [args: MaCommandArgs<C>, options?: { timeoutMs?: number }];
 
 /** Schema version this client was written against (MA server 2.10.4). */
 export const CLIENT_SCHEMA_VERSION = 65;
@@ -160,6 +168,14 @@ export class MusicAssistantConnection {
             this.pending.set(message_id, { command, resolve, reject, timer });
             ws.send(JSON.stringify({ message_id, command, args }));
         });
+    }
+
+    /**
+     * Typed {@link send} for every command of the API (generated from the server's own docs):
+     * arguments and result are checked, e.g. `call("players/get", { player_id })` → `MA.Player`.
+     */
+    call<C extends MaCommandName>(command: C, ...[args, options]: MaCallParams<C>): Promise<MaCommandResult<C>> {
+        return this.send<MaCommandResult<C>>(command, (args ?? {}) as Record<string, unknown>, options);
     }
 
     // ---- internals ----------------------------------------------------------------------------

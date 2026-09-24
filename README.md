@@ -293,6 +293,18 @@ await ma.playPause("RINCON_…");
 
 On Node 20, pass a WebSocket implementation: `webSocketFactory: (url) => new WebSocket(url)` from the [`ws`](https://www.npmjs.com/package/ws) package.
 
+**The whole API, typed.** Besides the convenience methods, `call()` reaches **every** Music Assistant command (310 in 2.10.4) with checked arguments and a typed result, and all data models are available as `MA.*`:
+
+```ts
+import type { MA } from "music-assistant-client";
+
+const results = await ma.call("music/search", { search_query: "Sherlock Holmes", media_types: ["audiobook"] });
+const books: MA.Audiobook[] = results.audiobooks;
+await ma.call("player_queues/set_playback_speed", { queue_id: "RINCON_…", speed: 1.25 }); // typo in a name or type → compile error
+```
+
+These types are generated from the server's own API docs (`docs/ma-api/openapi-*.json` and `commands-*.json`) by `npm run gen:api` (`tools/ma-api/`). For a new Music Assistant version, save `/api-docs/openapi.json`, `/api-docs/commands.json` and `/info` from the server into `docs/ma-api/` and regenerate. CI fails if the generated files don't match the docs. Note that the server also sends a few undocumented compatibility fields (for example `Player.display_name`); the hand-written state types (`Player`, `PlayerQueue`, …) include the ones MAC uses.
+
 ---
 
 ## Contributing

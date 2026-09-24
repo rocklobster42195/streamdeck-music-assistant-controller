@@ -5,6 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- `music-assistant-client`: the **complete API, typed**. All 127 data models (`MA.Track`, `MA.Player`, …) and all 310 commands with their arguments and results are generated from Music Assistant's own API docs (`npm run gen:api`, `tools/ma-api/`). The new `call(command, args)` checks both at compile time. CI now also typechecks the client and verifies that the generated files are current.
 - **Continue Listening** key: resumes the latest audiobook or podcast episode where you left off (MA keeps the position); a second press pauses. It shows the cover, a scrolling title and the progress, and can be limited to audiobooks or podcasts.
 - Browser dial: a **Continue listening** folder at the top.
 - The Play/Pause key's scrolling title is now a shared helper (`render/key-title.ts`). The "now playing" tag on cover keys moves to the top corner when a title band is shown.
