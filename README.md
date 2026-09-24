@@ -9,7 +9,7 @@ Control **[Music Assistant](https://www.music-assistant.io/)** from your Stream 
 
 > **Disclaimer:** This is an independent, community-made plugin. It is not affiliated with, endorsed by, or officially connected to the Music Assistant project or Elgato in any way.
 
-> **Status:** MAC is in early development. All MVP keys work: Play/Pause, Play Item, Playback Control, Volume and Like. The Stream Deck + dials are in progress. See the [roadmap](#roadmap).
+> **Status:** MAC is in early development. All MVP actions work (Play/Pause, Play Item, Playback Control, Volume, Like, plus the Volume and Track dials on Stream Deck +) and are tested end-to-end against a live Music Assistant server. They have not been tested on hardware yet. See the [roadmap](#roadmap).
 
 ---
 
@@ -35,8 +35,8 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Play / Pause**: cover art, live play state, optional progress bar and player name | Key | ✅ working |
 | **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key | ✅ working |
 | **Volume**: up · down · mute · preset | Key | ✅ working |
-| **Volume**: rotate to change, press to mute | Dial (SD+) | 🚧 MVP |
-| **Track Control**: cover, title and progress on the LCD, rotate to seek | Dial (SD+) | 🚧 MVP |
+| **Volume**: rotate to change, push to mute, touch for a preset | Dial (SD+) | ✅ working |
+| **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) | ✅ working |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
@@ -70,6 +70,29 @@ One key per function: **previous, next, shuffle, repeat, crossfade** or **"Don't
 
 Adds the current track or station to your Music Assistant **favorites**. The heart is filled when it already is a favorite, and pressing again removes it. Music Assistant also uses a heart for favorites.
 
+### Volume dial *(Stream Deck + only)*
+
+A ring shows the volume, with the number inside and the player's name next to it.
+
+| Input | Effect |
+|---|---|
+| Rotate | Volume (step per tick adjustable, 1–10 %) |
+| Push | Mute / unmute |
+| Touch | Recall the preset volume |
+| Touch and hold | Save the current volume as the preset |
+
+Settings: show or hide the text (volume and name), and where the ring sits (left, center or right).
+
+### Track dial *(Stream Deck + only)*
+
+Shows the cover, the title (on up to two lines), the artist and a progress bar in the cover's accent color. Live radio shows **LIVE** instead of a progress bar.
+
+| Input | Effect |
+|---|---|
+| Rotate | Seek (seconds per tick adjustable) |
+| Push | Next track |
+| Touch | Play / pause |
+
 ### Status on the keys
 
 When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MAC reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
@@ -99,9 +122,9 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 ## Roadmap
 
-**MVP (first release):** Play/Pause · Playback Control (incl. crossfade and "Don't stop the music") · Volume key and dial · Track dial · Play Item · Like
+**MVP (first release):** ✅ Play/Pause · Playback Control (incl. crossfade and "Don't stop the music") · Volume key and dial · Track dial · Play Item · Like
 
-**v2:** Queue browser dial · Favorites/Library browser dial · Group volume · **Queue transfer** ("music follows me") · **Player switcher** (change the active player from the deck)
+**v2:** **Browser dial** (browse every provider with the dial: rotate to scroll, push to open or play, touch to go back) · Queue browser dial · Favorites/Library browser dial · Group volume · **Queue transfer** ("music follows me") · **Player switcher** (change the active player from the deck)
 
 **Later:** Panorama effects across dials · audiobook and podcast resume · search · radio mode
 
@@ -162,6 +185,7 @@ npm run build
 npm run sim:play-pause    # end-to-end against your MA server (needs .env), snapshots in sim-out/
 npm run sim:keys          # playback control, like and volume keys: presses everything, checks MA, restores state
 npm run sim:play-item     # Play Item: search like the PI, choose, press, check it plays
+npm run sim:dials         # Volume and Track dials: turn, push, touch, check MA, restore
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots
 ```

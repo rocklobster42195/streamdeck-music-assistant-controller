@@ -29,6 +29,15 @@ describe("OptimisticStore", () => {
         expect(q).toEqual({ state: "playing", shuffle_enabled: false });
     });
 
+    it("drops a patch once the server confirms it, so later outside changes show", () => {
+        const store = new OptimisticStore<Q>(() => 0);
+        store.set("q", { volume: 6 }, 2000);
+        expect(store.apply("q", { state: "x", shuffle_enabled: false, volume: 5 }).volume).toBe(6);
+        expect(store.apply("q", { state: "x", shuffle_enabled: false, volume: 6 }).volume).toBe(6);
+        // confirmed → gone; a later change from elsewhere is visible right away
+        expect(store.apply("q", { state: "x", shuffle_enabled: false, volume: 7 }).volume).toBe(7);
+    });
+
     it("clears single fields or everything", () => {
         const store = new OptimisticStore<Q>(() => 0);
         const q: Q = { state: "idle", shuffle_enabled: false, volume: 10 };

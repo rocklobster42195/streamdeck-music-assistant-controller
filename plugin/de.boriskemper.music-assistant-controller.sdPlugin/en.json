@@ -13,12 +13,24 @@
 		"Add the current track to your favorites, or remove it.": "Add the current track to your favorites, or remove it.",
 		"Play Item": "Play Item",
 		"Play a playlist, album, radio station or podcast from your library.": "Play a playlist, album, radio station or podcast from your library.",
+		"Track": "Track",
+		"Cover, title and progress on the display. Rotate to seek.": "Cover, title and progress on the display. Rotate to seek.",
+		"Volume on a dial, with mute and a preset.": "Volume on a dial, with mute and a preset.",
+		"Seek": "Seek",
+		"Next track": "Next track",
+		"Play / pause": "Play / pause",
+		"Mute": "Mute",
+		"Preset (hold: save)": "Preset (hold: save)",
 		"key": {
 			"setup": "Setup",
 			"offline": "Offline",
 			"auth_failed": "Token?",
 			"no_player": "No player",
-			"choose_item": "Choose"
+			"choose_item": "Choose",
+			"volume": "Volume",
+			"muted": "Muted",
+			"preset_saved": "Preset saved: {volume}",
+			"nothing_playing": "Nothing playing"
 		},
 		"pi": {
 			"player": "Player",
@@ -123,7 +135,18 @@
 			"opt_hint_next": "Plays after the current track.",
 			"opt_hint_add": "Adds to the end of the queue.",
 			"show_item_name": "Name",
-			"show_item_name_hint": "Name of the item on the key"
+			"show_item_name_hint": "Name of the item on the key",
+			"dial_controls": "Controls",
+			"dial_volume_rotate": "Rotate: volume · Push: mute · Touch: preset (hold to save the current volume)",
+			"dial_track_rotate": "Rotate: seek · Push: next track · Touch: play / pause",
+			"dial_step": "Step per tick",
+			"dial_seek_step": "Seek per tick",
+			"show_volume_text": "Volume and name",
+			"show_volume_text_hint": "Number in the ring, player name next to it",
+			"align": "Ring position",
+			"align_left": "Left",
+			"align_center": "Center",
+			"align_right": "Right"
 		}
 	}
 }

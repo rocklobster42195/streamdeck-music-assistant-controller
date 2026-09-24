@@ -18,6 +18,8 @@ export type KeyPreviewState = "playing" | "paused" | "idle" | "setup" | "offline
 
 export type KeyPreview = {
     image: string;
+    /** "dial" = 200×100 touch-strip segment instead of a square key. */
+    kind?: "key" | "dial";
     state: KeyPreviewState;
     /** "Title · Artist" of what is playing. */
     track?: string;

@@ -58,3 +58,9 @@ mac-connection-card { display: flex; flex-direction: column; gap: 6px; }
 .mac-result-skeleton .pi-select-text span { display: block; height: 10px; border-radius: 5px; background: #333338; margin: 3px 0; width: 70%; }
 .mac-result-skeleton .pi-select-text span + span { width: 45%; }
 .mac-results-empty { padding: 8px 4px; }
+
+/* Dial preview: a 200×100 touch-strip segment instead of a square key */
+.mac-preview-dial { flex-direction: column; align-items: stretch; }
+.mac-preview-dial .mac-preview-key { width: 100%; height: auto; aspect-ratio: 2 / 1; border-radius: 10px; }
+.mac-preview-dial .mac-preview-key img { width: 100%; height: 100%; }
+.mac-dial-help { margin-top: -4px; }

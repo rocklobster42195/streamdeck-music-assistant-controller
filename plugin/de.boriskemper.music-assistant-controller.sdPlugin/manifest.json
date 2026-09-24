@@ -78,6 +78,52 @@
 					"Image": "imgs/actions/like-key/key"
 				}
 			]
+		},
+		{
+			"Name": "Track",
+			"UUID": "de.boriskemper.music-assistant-controller.track-dial",
+			"Icon": "imgs/actions/track-dial/icon",
+			"Tooltip": "Cover, title and progress on the display. Rotate to seek.",
+			"PropertyInspectorPath": "ui/track-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Seek",
+					"Push": "Next track",
+					"Touch": "Play / pause"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/track-dial/key"
+				}
+			]
+		},
+		{
+			"Name": "Volume",
+			"UUID": "de.boriskemper.music-assistant-controller.volume-dial",
+			"Icon": "imgs/actions/volume-dial/icon",
+			"Tooltip": "Volume on a dial, with mute and a preset.",
+			"PropertyInspectorPath": "ui/volume-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Volume",
+					"Push": "Mute",
+					"Touch": "Preset (hold: save)"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/volume-dial/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",

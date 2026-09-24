@@ -222,7 +222,8 @@ export async function startSim({ globalSettings = {}, language = "de", verbose =
             }
             const encoders = [...state.slots.values()].some((s) => s.controller === "Encoder");
             const deckPath = path.join(dir, `${name}.png`);
-            await sharp({ create: { width: 4 * (KEY + 24) + 12, height: encoders ? 2 * (KEY + 24) + 24 + 100 + 24 : 2 * (KEY + 24) + 12, channels: 4, background: "#0b0b0c" } })
+            const width = Math.max(4 * (KEY + 24) + 12, encoders ? 4 * 200 + 24 : 0);
+            await sharp({ create: { width, height: encoders ? 2 * (KEY + 24) + 24 + 100 + 24 : 2 * (KEY + 24) + 12, channels: 4, background: "#0b0b0c" } })
                 .composite(layers)
                 .png()
                 .toFile(deckPath);

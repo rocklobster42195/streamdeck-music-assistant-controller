@@ -3,7 +3,8 @@
  *
  * MA coalesces fast command sequences and only reports the end state, so a key that waits for the
  * confirming event feels laggy or skips steps. Instead we patch the fields we just changed for a
- * moment; every reader sees the patched object until the patch expires or is cleared.
+ * moment; every reader sees the patched object until the patch expires, is cleared, or the server
+ * reports the same value (confirmed) — after that, changes made elsewhere show up immediately.
  */
 export class OptimisticStore<T extends object> {
     private readonly patches = new Map<string, Map<keyof T, { value: unknown; until: number }>>();
@@ -30,7 +31,7 @@ export class OptimisticStore<T extends object> {
         const now = this.now();
         let result: T | undefined;
         for (const [key, p] of fields) {
-            if (p.until <= now) {
+            if (p.until <= now || Object.is(obj[key], p.value)) {
                 fields.delete(key);
                 continue;
             }

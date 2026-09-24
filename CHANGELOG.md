@@ -5,6 +5,12 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Volume dial** (SD+): a ring with the volume inside. Rotate for volume (only the final value is sent), push to mute, touch to recall the preset, touch and hold to save it. Text can be shown or hidden, and the ring placed left, center or right.
+- **Track dial** (SD+): cover, two-line title, artist, and progress in the cover's accent color (LIVE for radio). Rotate to seek, push for the next track, touch for play/pause.
+- Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.
+
+### Changed
+- Optimistic state is dropped as soon as the server confirms it, so changes made elsewhere (MA app, other controllers) show up immediately.
 - **Play Item** key: plays any MA item (playlist, album, radio, podcast, track, audiobook) with its cover on the key. A blue frame and ▶ tag show while it plays, and a check mark confirms the press. Choose between play now, play next or add to queue.
 - PI library browser: favorites as the start page, search across all providers, type filters, results with covers.
 - Dev tools: live PI (`npm run pi:live`, the real plugin and MA behind a browser page) and `tools/screenshot.mjs` (puppeteer-core with the installed Chrome).

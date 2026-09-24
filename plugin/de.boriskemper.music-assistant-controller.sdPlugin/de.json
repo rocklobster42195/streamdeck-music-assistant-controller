@@ -13,12 +13,24 @@
 		"Add the current track to your favorites, or remove it.": "Aktuellen Titel zu den Favoriten hinzufügen oder entfernen.",
 		"Play Item": "Play Item",
 		"Play a playlist, album, radio station or podcast from your library.": "Spielt eine Playlist, ein Album, einen Radiosender oder Podcast aus deiner Bibliothek.",
+		"Track": "Track",
+		"Cover, title and progress on the display. Rotate to seek.": "Cover, Titel und Fortschritt auf dem Display. Drehen spult.",
+		"Volume on a dial, with mute and a preset.": "Lautstärke am Drehregler, mit Stumm und Preset.",
+		"Seek": "Spulen",
+		"Next track": "Nächster Titel",
+		"Play / pause": "Play / Pause",
+		"Mute": "Stumm",
+		"Preset (hold: save)": "Preset (halten: speichern)",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
 			"auth_failed": "Token?",
 			"no_player": "Kein Player",
-			"choose_item": "Wählen"
+			"choose_item": "Wählen",
+			"volume": "Lautstärke",
+			"muted": "Stumm",
+			"preset_saved": "Preset gespeichert: {volume}",
+			"nothing_playing": "Es läuft nichts"
 		},
 		"pi": {
 			"player": "Player",
@@ -123,7 +135,18 @@
 			"opt_hint_next": "Spielt nach dem aktuellen Titel.",
 			"opt_hint_add": "Hängt es ans Ende der Warteschlange.",
 			"show_item_name": "Name",
-			"show_item_name_hint": "Name des Inhalts auf der Taste"
+			"show_item_name_hint": "Name des Inhalts auf der Taste",
+			"dial_controls": "Bedienung",
+			"dial_volume_rotate": "Drehen: Lautstärke · Drücken: stumm · Tippen: Preset (halten speichert die aktuelle Lautstärke)",
+			"dial_track_rotate": "Drehen: spulen · Drücken: nächster Titel · Tippen: Play / Pause",
+			"dial_step": "Schritt pro Raste",
+			"dial_seek_step": "Spulen pro Raste",
+			"show_volume_text": "Lautstärke und Name",
+			"show_volume_text_hint": "Zahl im Ring, Playername daneben",
+			"align": "Position des Rings",
+			"align_left": "Links",
+			"align_center": "Mitte",
+			"align_right": "Rechts"
 		}
 	}
 }

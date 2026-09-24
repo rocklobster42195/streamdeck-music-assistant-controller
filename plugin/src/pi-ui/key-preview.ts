@@ -29,6 +29,7 @@ export class MacKeyPreview extends HTMLElement {
         const state = this.querySelector<HTMLElement>(".mac-preview-state")!;
         img.hidden = !p;
         if (p) img.src = p.image;
+        this.classList.toggle("mac-preview-dial", p?.kind === "dial");
 
         const name = p?.playerName ?? "";
         switch (p?.state) {
