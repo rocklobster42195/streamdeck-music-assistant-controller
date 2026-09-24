@@ -21,6 +21,11 @@
 		"Play / pause": "Play / Pause",
 		"Mute": "Stumm",
 		"Preset (hold: save)": "Preset (halten: speichern)",
+		"Browser": "Browser",
+		"Browse all providers or your library with the dial and play what you find.": "Stöbere mit dem Drehregler durch alle Anbieter oder deine Bibliothek und spiel ab, was du findest.",
+		"Scroll": "Blättern",
+		"Open / play": "Öffnen / abspielen",
+		"Back (hold: start)": "Zurück (halten: Anfang)",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
@@ -30,7 +35,14 @@
 			"volume": "Lautstärke",
 			"muted": "Stumm",
 			"preset_saved": "Preset gespeichert: {volume}",
-			"nothing_playing": "Es läuft nichts"
+			"nothing_playing": "Es läuft nichts",
+			"browse_providers": "Alle Anbieter",
+			"browse_library": "Bibliothek",
+			"browse_favorites": "Favoriten",
+			"browse_hint": "Drehen zum Stöbern",
+			"browse_loading": "Lädt…",
+			"browse_empty": "Leer",
+			"browse_unavailable": "Nicht durchsuchbar"
 		},
 		"pi": {
 			"player": "Player",
@@ -146,7 +158,15 @@
 			"align": "Position des Rings",
 			"align_left": "Links",
 			"align_center": "Mitte",
-			"align_right": "Rechts"
+			"align_right": "Rechts",
+			"browse_start": "Startpunkt",
+			"browse_start_providers": "Alle Anbieter",
+			"browse_start_library": "Bibliothek",
+			"browse_folder": "Abspielbare Ordner",
+			"browse_folder_open": "Öffnen",
+			"browse_folder_play": "Abspielen",
+			"browse_timeout": "Zurück zu „Jetzt läuft“ nach",
+			"dial_browser_help": "Drehen: blättern · Drücken: Ordner öffnen / abspielen · Tippen: zurück (halten: zum Anfang)"
 		}
 	}
 }

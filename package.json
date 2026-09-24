@@ -22,7 +22,8 @@
         "pi:live": "node tools/sd-sim/pi-live.mjs",
         "sim:play-item": "node tools/sd-sim/play-item.mjs sim-out",
         "sim:dials": "node tools/sd-sim/dials.mjs sim-out",
-        "sim:all": "npm run sim:play-pause && npm run sim:keys && npm run sim:play-item && npm run sim:dials"
+        "sim:all": "npm run sim:play-pause && npm run sim:keys && npm run sim:play-item && npm run sim:dials && npm run sim:browser",
+        "sim:browser": "node tools/sd-sim/browser.mjs sim-out"
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.9",

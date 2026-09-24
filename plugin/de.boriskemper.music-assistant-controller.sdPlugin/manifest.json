@@ -124,6 +124,29 @@
 					"Image": "imgs/actions/volume-dial/key"
 				}
 			]
+		},
+		{
+			"Name": "Browser",
+			"UUID": "de.boriskemper.music-assistant-controller.browser-dial",
+			"Icon": "imgs/actions/browser-dial/icon",
+			"Tooltip": "Browse all providers or your library with the dial and play what you find.",
+			"PropertyInspectorPath": "ui/browser-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Scroll",
+					"Push": "Open / play",
+					"Touch": "Back (hold: start)"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/browser-dial/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",

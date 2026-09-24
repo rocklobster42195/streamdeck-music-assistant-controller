@@ -21,6 +21,11 @@
 		"Play / pause": "Play / pause",
 		"Mute": "Mute",
 		"Preset (hold: save)": "Preset (hold: save)",
+		"Browser": "Browser",
+		"Browse all providers or your library with the dial and play what you find.": "Browse all providers or your library with the dial and play what you find.",
+		"Scroll": "Scroll",
+		"Open / play": "Open / play",
+		"Back (hold: start)": "Back (hold: start)",
 		"key": {
 			"setup": "Setup",
 			"offline": "Offline",
@@ -30,7 +35,14 @@
 			"volume": "Volume",
 			"muted": "Muted",
 			"preset_saved": "Preset saved: {volume}",
-			"nothing_playing": "Nothing playing"
+			"nothing_playing": "Nothing playing",
+			"browse_providers": "All providers",
+			"browse_library": "Library",
+			"browse_favorites": "Favorites",
+			"browse_hint": "Turn to browse",
+			"browse_loading": "Loading…",
+			"browse_empty": "Empty",
+			"browse_unavailable": "Can't be browsed"
 		},
 		"pi": {
 			"player": "Player",
@@ -146,7 +158,15 @@
 			"align": "Ring position",
 			"align_left": "Left",
 			"align_center": "Center",
-			"align_right": "Right"
+			"align_right": "Right",
+			"browse_start": "Start at",
+			"browse_start_providers": "All providers",
+			"browse_start_library": "Library",
+			"browse_folder": "Playable folders",
+			"browse_folder_open": "Open",
+			"browse_folder_play": "Play",
+			"browse_timeout": "Back to “now playing” after",
+			"dial_browser_help": "Rotate: scroll · Push: open folder / play · Touch: back (hold: back to start)"
 		}
 	}
 }

@@ -1,4 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
+import { BrowserDial } from "./actions/browser-dial";
 import { LikeKey } from "./actions/like-key";
 import { PlayItemKey } from "./actions/play-item-key";
 import { PlayPauseKey } from "./actions/play-pause-key";
@@ -18,6 +19,7 @@ streamDeck.actions.registerAction(new LikeKey());
 streamDeck.actions.registerAction(new PlayItemKey());
 streamDeck.actions.registerAction(new VolumeDial());
 streamDeck.actions.registerAction(new TrackDial());
+streamDeck.actions.registerAction(new BrowserDial());
 piBridge.init();
 
 await streamDeck.connect();

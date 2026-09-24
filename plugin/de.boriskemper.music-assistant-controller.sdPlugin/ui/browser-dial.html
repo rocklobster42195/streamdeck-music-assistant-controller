@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Browser dial</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Browser"></mac-key-preview>
+  <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.dial_browser_help"></div>
+
+  <pi-section title="pi.browse_start">
+    <pi-choice setting="start" default="providers" columns="2" data-options='[
+      {"value":"providers","label":"pi.browse_start_providers","icon":"providers"},
+      {"value":"library","label":"pi.browse_start_library","icon":"library"}
+    ]'></pi-choice>
+  </pi-section>
+
+  <pi-section title="pi.play_mode">
+    <pi-choice setting="option" default="replace" columns="3" data-options='[
+      {"value":"replace","label":"pi.opt_replace","icon":"playNow"},
+      {"value":"next","label":"pi.opt_next","icon":"playNext"},
+      {"value":"add","label":"pi.opt_add","icon":"addToQueue"}
+    ]'></pi-choice>
+  </pi-section>
+
+  <pi-section title="pi.browse_folder">
+    <pi-choice setting="folderAction" default="open" columns="2" data-options='[
+      {"value":"open","label":"pi.browse_folder_open","icon":"folderOpen"},
+      {"value":"play","label":"pi.browse_folder_play","icon":"playNow"}
+    ]'></pi-choice>
+    <pi-range setting="timeout" min="5" max="120" step="5" default="20" unit=" s" label="pi.browse_timeout"></pi-range>
+  </pi-section>
+
+  <pi-section title="pi.player" class="pi-needs-connection">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

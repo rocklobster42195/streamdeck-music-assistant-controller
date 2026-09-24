@@ -1,6 +1,9 @@
 // MDI paths for <pi-choice data-options='[{"icon":"next",…}]'> tiles (same icons as on the keys).
 import {
     mdiAllInclusive,
+    mdiBookshelf,
+    mdiFolderOpenOutline,
+    mdiServerNetwork,
     mdiFormatAlignCenter,
     mdiFormatAlignLeft,
     mdiFormatAlignRight,
@@ -38,6 +41,9 @@ const ICONS: Record<string, string> = {
     alignLeft: mdiFormatAlignLeft,
     alignCenter: mdiFormatAlignCenter,
     alignRight: mdiFormatAlignRight,
+    providers: mdiServerNetwork,
+    library: mdiBookshelf,
+    folderOpen: mdiFolderOpenOutline,
 };
 
 /** Read each <pi-choice data-options> and hand the parsed options (with icon paths) to the element. */

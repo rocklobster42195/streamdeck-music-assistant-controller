@@ -5,6 +5,8 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Browser dial** (SD+): browse all providers (via `music/browse`) or your library (favorites and per-type listings) with the dial. Rotate to scroll, push to open or play, touch to go back, hold to go to the start. It shows a breadcrumb, cover, position and a scroll indicator, returns to "now playing" after a timeout, resumes where you left off, and hides providers that can't be browsed.
+- `BrowserModel` / `MaBrowseSource`: navigation logic without Stream Deck, unit tested.
 - **Volume dial** (SD+): a ring with the volume inside. Rotate for volume (only the final value is sent), push to mute, touch to recall the preset, touch and hold to save it. Text can be shown or hidden, and the ring placed left, center or right.
 - **Track dial** (SD+): cover, two-line title, artist, and progress in the cover's accent color (LIVE for radio). Rotate to seek, push for the next track, touch for play/pause.
 - Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.

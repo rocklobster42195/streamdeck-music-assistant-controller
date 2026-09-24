@@ -37,6 +37,7 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Volume**: up · down · mute · preset | Key | ✅ working |
 | **Volume**: rotate to change, push to mute, touch for a preset | Dial (SD+) | ✅ working |
 | **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) | ✅ working |
+| **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) | ✅ working |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | ✅ working |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
@@ -93,6 +94,27 @@ Shows the cover, the title (on up to two lines), the artist and a progress bar i
 | Push | Next track |
 | Touch | Play / pause |
 
+### Browser dial *(Stream Deck + only)*
+
+Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
+
+| Input | Effect |
+|---|---|
+| Rotate | Scroll through the entries |
+| Push | Open a folder, or play the entry |
+| Touch | One level back |
+| Touch and hold | Back to the start |
+
+When idle, the dial shows what is playing. The first turn continues browsing where you left off. After a configurable time without input it returns to "now playing".
+
+Settings:
+- **Start at**: all providers, or your library (favorites, playlists, albums, radio, podcasts, audiobooks, tracks)
+- **When pressed**: play now, play next or add to queue
+- **Playable folders**: open them or play them
+- **Timeout**: seconds without input before returning to "now playing"
+
+Providers that can't be browsed are hidden automatically.
+
 ### Status on the keys
 
 When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MAC reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
@@ -124,7 +146,7 @@ The connection settings are shared by all MAC keys, so you only enter them once.
 
 **MVP (first release):** ✅ Play/Pause · Playback Control (incl. crossfade and "Don't stop the music") · Volume key and dial · Track dial · Play Item · Like
 
-**v2:** **Browser dial** (browse every provider with the dial: rotate to scroll, push to open or play, touch to go back) · Queue browser dial · Favorites/Library browser dial · Group volume · **Queue transfer** ("music follows me") · **Player switcher** (change the active player from the deck)
+**v2:** ✅ **Browser dial** · Queue browser dial · Favorites/Library browser dial · Group volume · **Queue transfer** ("music follows me") · **Player switcher** (change the active player from the deck)
 
 **Later:** Panorama effects across dials · audiobook and podcast resume · search · radio mode
 
@@ -186,6 +208,8 @@ npm run sim:play-pause    # end-to-end against your MA server (needs .env), snap
 npm run sim:keys          # playback control, like and volume keys: presses everything, checks MA, restores state
 npm run sim:play-item     # Play Item: search like the PI, choose, press, check it plays
 npm run sim:dials         # Volume and Track dials: turn, push, touch, check MA, restore
+npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → play a station, library start
+npm run sim:all           # all of the above
 npm run pi:live           # a PI page in your browser, wired to the REAL plugin and your MA (http://localhost:5299)
 node tools/screenshot.mjs <url> <out.png> [--type "<sel>=<text>"] [--click <sel>]   # reliable PI screenshots
 ```
