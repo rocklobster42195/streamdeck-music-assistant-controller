@@ -4,7 +4,7 @@
 //   node tools/sd-sim/dials.mjs [outDir]
 import path from "node:path";
 import { createRequire } from "node:module";
-import { readEnv, startSim } from "./sim.mjs";
+import { assertTestPlayerFree, readEnv, startSim } from "./sim.mjs";
 
 const env = readEnv();
 const out = path.resolve(process.argv[2] ?? "sim-out");
@@ -16,6 +16,7 @@ const { MusicAssistantClient, currentElapsed } = await import("../../packages/ma
 const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
 ma.start();
 await until(() => ma.isConnected, 10000);
+assertTestPlayerFree(ma, P);
 const player = () => ma.players.get(P);
 const q = () => ma.queues.get(P);
 const before = { volume: player()?.volume_level, muted: player()?.volume_muted };

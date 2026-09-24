@@ -29,6 +29,22 @@ export function readEnv() {
     );
 }
 
+/**
+ * Refuse to test on a player someone is using: grouped with other rooms (commands would reach
+ * them too) or playing right now. Set SIM_FORCE=1 to override deliberately.
+ */
+export function assertTestPlayerFree(ma, playerId) {
+    if (process.env.SIM_FORCE === "1") return;
+    const p = ma.players.get(playerId);
+    if (!p) throw new Error(`test player ${playerId} not found`);
+    const grouped = p.synced_to || p.active_group || (p.group_members?.length ?? 0) > 1;
+    const busy = p.playback_state === "playing";
+    if (grouped || busy) {
+        console.error(`ABORT: test player "${p.display_name ?? p.name}" is ${grouped ? "grouped with other players" : "playing"} — someone may be listening. Nothing was changed. (SIM_FORCE=1 overrides.)`);
+        process.exit(2);
+    }
+}
+
 export async function startSim({ globalSettings = {}, language = "de", verbose = false } = {}) {
     const wss = new WebSocketServer({ port: 0 });
     await new Promise((r) => wss.once("listening", r));

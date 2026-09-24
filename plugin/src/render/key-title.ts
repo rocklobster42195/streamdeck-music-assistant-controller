@@ -1,42 +1,47 @@
-import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
-import { frames } from "./frames";
+import { FrameTicker, TitleFader } from "streamdeck-core";
 
-const TITLE_W = 128;
-const TITLE_SIZE = 19;
+/** Key titles tick on their own 80 ms clock, like sonos-controller's play/pause key. */
+const titleFrames = new FrameTicker(80);
+
+/** sonos-controller's title color on the play/pause key. */
+const TITLE_COLOR = "#cccccc";
 
 /**
- * A title in a dark band at the bottom of a key, scrolling when it doesn't fit (Stream Deck's own
- * key titles are cut off instead). Keeps the scroll start per key and drives redraws while it moves.
+ * The title band at the bottom of a key (sonos-controller's TitleAnimator effect): the band fades
+ * in, then the text, which scrolls through and fades out again in reverse, then a pause and the
+ * next round. Stream Deck's own key titles would just be cut off instead.
  */
-export class KeyTitleMarquee {
-    private readonly state = new Map<string, { key: string; startedAt: number }>();
+export class KeyTitleFader {
+    private readonly faders = new Map<string, TitleFader>();
 
     /**
-     * SVG overlay for `renderKeyImage({ overlay })`. `stillShown` is asked before every animation
-     * frame; returning false (key gone, title turned off) stops the redraws.
+     * SVG overlay for `renderKeyImage({ overlay })`. `stillShown` is asked on every tick;
+     * returning false (key gone, title turned off) stops the animation.
      */
-    overlay(id: string, value: string, withProgress: boolean, stillShown: () => boolean, redraw: () => void): string {
-        if (!value) return "";
-        let m = this.state.get(id);
-        if (m?.key !== value) {
-            m = { key: value, startedAt: Date.now() };
-            this.state.set(id, m);
+    overlay(id: string, value: string, stillShown: () => boolean, redraw: () => void): string {
+        if (!value) {
+            this.forget(id);
+            return "";
         }
-        const bottom = withProgress ? 138 : 144;
-        const band = `<rect y="${bottom - 34}" width="144" height="34" fill="#000" opacity="0.6"/>`;
-        const line = marqueeSvg({ id: `k${id}`, text: value, x: 8, y: bottom - 11, width: TITLE_W, fontSize: TITLE_SIZE, weight: "bold", startedAt: m.startedAt, now: Date.now(), speed: 35 });
-        if (marqueeNeeded(value, TITLE_SIZE, TITLE_W)) {
-            const key = m.key;
-            frames.run(`key-${id}`, () => {
-                if (this.state.get(id)?.key !== key || !stillShown()) return false;
-                redraw();
-                return true;
-            });
-        }
-        return band + line;
+        let fader = this.faders.get(id);
+        if (fader) fader.setText(value);
+        else this.faders.set(id, (fader = new TitleFader(value)));
+
+        const current = fader;
+        titleFrames.run(`title-${id}`, () => {
+            if (this.faders.get(id) !== current || !stillShown()) {
+                if (this.faders.get(id) === current) this.faders.delete(id);
+                return false;
+            }
+            // Only push a new image when something visible changed (not during the pauses)
+            if (current.step()) redraw();
+            return true;
+        });
+        return current.svg(TITLE_COLOR);
     }
 
     forget(id: string): void {
-        this.state.delete(id);
+        this.faders.delete(id);
+        titleFrames.stop(`title-${id}`);
     }
 }

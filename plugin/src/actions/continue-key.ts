@@ -4,7 +4,7 @@ import { currentElapsed } from "music-assistant-client";
 import { inProgress, type InProgressItem, type InProgressKind } from "../ma/in-progress";
 import { getCachedCover, loadCover } from "../render/cover-cache";
 import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
-import { KeyTitleMarquee } from "../render/key-title";
+import { KeyTitleFader } from "../render/key-title";
 import { COVER_SIZE, type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type ContinueSettings = MaKeySettings & {
@@ -22,7 +22,7 @@ const KINDS = new Set(["audiobook", "podcast_episode"]);
  */
 @action({ UUID: "de.boriskemper.music-assistant-controller.continue-key" })
 export class ContinueKey extends MaKeyAction<ContinueSettings> {
-    private readonly title = new KeyTitleMarquee();
+    private readonly title = new KeyTitleFader();
 
     constructor() {
         super();
@@ -54,7 +54,7 @@ export class ContinueKey extends MaKeyAction<ContinueSettings> {
                 active: playing ? ACCENT : undefined,
                 progress,
                 progressColor: ACCENT,
-                overlay: showName ? this.title.overlay(id, item.name, progress !== undefined, () => this.instances.get(id)?.settings.showName !== false, () => this.render(id)) : undefined,
+                overlay: showName ? this.title.overlay(id, item.name, () => this.instances.get(id)?.settings.showName !== false, () => this.render(id)) : undefined,
             }),
             title: "",
             preview: { track: item.name, state: playing ? "playing" : "idle" },

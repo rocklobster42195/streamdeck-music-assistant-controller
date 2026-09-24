@@ -2,7 +2,8 @@
 // Plays quietly on MA_TEST_PLAYER, toggles play/pause via the key, and snapshots the deck.
 //   node tools/sd-sim/play-pause.mjs [outDir]
 import path from "node:path";
-import { readEnv, startSim } from "./sim.mjs";
+import { createRequire } from "node:module";
+import { assertTestPlayerFree, readEnv, startSim } from "./sim.mjs";
 
 const env = readEnv();
 if (!env.MA_URL || !env.MA_TOKEN || !env.MA_TEST_PLAYER) {
@@ -10,6 +11,17 @@ if (!env.MA_URL || !env.MA_TOKEN || !env.MA_TEST_PLAYER) {
     process.exit(1);
 }
 const out = path.resolve(process.argv[2] ?? "sim-out");
+
+// Only test on a free player (not grouped, not playing)
+{
+    const WebSocket = createRequire(path.resolve("plugin/package.json"))("ws");
+    const { MusicAssistantClient } = await import("../../packages/ma-client/dist/index.js");
+    const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
+    ma.start();
+    for (let i = 0; i < 100 && !ma.isConnected; i++) await new Promise((r) => setTimeout(r, 100));
+    assertTestPlayerFree(ma, env.MA_TEST_PLAYER);
+    ma.stop();
+}
 const TEST_STREAM = "https://ice1.somafm.com/groovesalad-128-mp3";
 
 // 1) Unconfigured plugin → "Setup" state

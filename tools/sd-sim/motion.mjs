@@ -3,7 +3,7 @@
 //   node tools/sd-sim/motion.mjs [outDir]
 import path from "node:path";
 import { createRequire } from "node:module";
-import { readEnv, startSim } from "./sim.mjs";
+import { assertTestPlayerFree, readEnv, startSim } from "./sim.mjs";
 
 const env = readEnv();
 const out = path.resolve(process.argv[2] ?? "sim-out");
@@ -14,6 +14,7 @@ const { MusicAssistantClient } = await import("../../packages/ma-client/dist/ind
 const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
 ma.start();
 await until(() => ma.isConnected, 10000);
+assertTestPlayerFree(ma, P);
 const before = ma.players.get(P)?.volume_level;
 
 const sim = await startSim({ globalSettings: { maUrl: env.MA_URL, maToken: env.MA_TOKEN, activePlayerId: P } });

@@ -57,8 +57,8 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
         const m = this.marqueeState(id, `${title}
 ${artist}`);
         const now = Date.now();
-        parts.push(marqueeSvg({ id: `t${id}`, text: title, x, y: 28, width: w, fontSize: 14, weight: "bold", startedAt: m.startedAt, now, speed: 30 }));
-        parts.push(marqueeSvg({ id: `a${id}`, text: artist, x, y: 47, width: w, fontSize: 11, color: "#a4a4aa", startedAt: m.startedAt + 400, now, speed: 30 }));
+        parts.push(marqueeSvg({ id: `t${id}`, text: title, x, y: 28, width: w, fontSize: 14, weight: "bold", startedAt: m.startedAt, now, speed: 25 }));
+        parts.push(marqueeSvg({ id: `a${id}`, text: artist, x, y: 47, width: w, fontSize: 11, color: "#a4a4aa", startedAt: m.startedAt + 400, now, speed: 25 }));
         if (marqueeNeeded(title, 14, w) || marqueeNeeded(artist, 11, w)) {
             // Keep redrawing while the text scrolls and this dial still shows this media
             frames.run(`track-${id}`, () => {
