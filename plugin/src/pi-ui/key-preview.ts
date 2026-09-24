@@ -42,7 +42,8 @@ export class MacKeyPreview extends HTMLElement {
             case "idle":
                 line.textContent = p.track ?? t("pi.nothing_playing");
                 state.dataset.tone = "idle";
-                state.innerHTML = `<span>${escapeHtml(t(p.state === "paused" ? "pi.state_paused_on" : "pi.state_idle_on", { player: name }))}</span>`;
+                // No player (e.g. the Panorama dial): no "ready on …" line
+                state.innerHTML = name ? `<span>${escapeHtml(t(p.state === "paused" ? "pi.state_paused_on" : "pi.state_idle_on", { player: name }))}</span>` : "";
                 break;
             case "setup":
                 line.textContent = t("pi.preview_setup");

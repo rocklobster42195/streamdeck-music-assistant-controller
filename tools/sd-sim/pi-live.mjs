@@ -22,7 +22,8 @@ const UI = path.resolve("plugin/de.boriskemper.music-assistant-controller.sdPlug
 const env = readEnv();
 
 const sim = await startSim({ language: lang, globalSettings: { maUrl: env.MA_URL, maToken: env.MA_TOKEN, activePlayerId: env.MA_TEST_PLAYER } });
-const ctx = sim.add(action, {}, { column: 0, row: 0 });
+// Dials must be placed as encoders — a dial action ignores a keypad slot
+const ctx = sim.add(action, {}, { column: 0, row: 0, controller: action.endsWith("-dial") ? "Encoder" : "Keypad" });
 const slot = () => sim.state.slots.get(ctx);
 
 const wss = new WebSocketServer({ port: WS_PORT });

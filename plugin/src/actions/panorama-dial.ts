@@ -104,7 +104,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const now = Date.now();
         if (!inst.previewAt || now - inst.previewAt > PREVIEW_EVERY_MS) {
             inst.previewAt = now;
-            piBridge.updatePreview(id, { image, kind: "dial", state: "idle" });
+            const effectId = this.effectId(inst);
+            const name = streamDeck.i18n.t(`effect.${effectId}.name`);
+            piBridge.updatePreview(id, { image, kind: "dial", state: "idle", track: name.startsWith("effect.") ? effectId : name });
         }
     }
 
