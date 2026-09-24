@@ -3,10 +3,11 @@ import { lyricIndexAt, parseLrc } from '../src/lyrics.js';
 
 describe('parseLrc', () => {
     it('parses timed lines and skips metadata tags', () => {
-        const lines = parseLrc('[ar:Kelly Clarkson]\n[00:18.29] He drowns in his dreams\n[00:22.08] An exquisite extreme, I know\n');
+        // Invented text: no real song lyrics in the repo
+        const lines = parseLrc('[ar:Test Artist]\n[00:18.29] Paper boats on a quiet river\n[00:22.08] Carry the lantern light, I know\n');
         expect(lines).toEqual([
-            { time: 18.29, text: 'He drowns in his dreams' },
-            { time: 22.08, text: 'An exquisite extreme, I know' },
+            { time: 18.29, text: 'Paper boats on a quiet river' },
+            { time: 22.08, text: 'Carry the lantern light, I know' },
         ]);
     });
 

@@ -1,8 +1,8 @@
 // Text over the panorama effect: "title & artist" (ported from sonos-controller's
 // PanoramaEffectsDial overlay) or synced lyrics. Neighbouring text dials form one "run": text is
 // laid out across the whole run and every display draws its own 200 px window of it.
-import { balanceLines, measureArialWidth } from "streamdeck-core";
-import { escapeXml, fit, wrap } from "./strip";
+import { balanceLines, measureArialWidth, wrapToWidth } from "streamdeck-core";
+import { escapeXml, fit } from "./strip";
 
 /** A run of neighbouring text dials: total width, and where this display sits in it. */
 export type TextRun = { width: number; offset: number };
@@ -47,7 +47,8 @@ const NEXT_COLOR = "#d4d4d8";
  */
 export function lyricsOverlay(run: TextRun, current: string, next: string, previous: string | undefined, t = 1): string {
     const cx = run.width / 2;
-    const max = run.width - 16;
+    // 16 px margin on each side, so lines never touch the edges of the run
+    const max = run.width - 32;
     const layout = sungLayout(current, max);
     const parts: string[] = [];
     if (previous !== undefined && t < 1) parts.push(...sungLines(cx, sungLayout(previous, max), 1 - t, -6 * t));
@@ -59,14 +60,28 @@ export function lyricsOverlay(run: TextRun, current: string, next: string, previ
 
 type SungLayout = { lines: string[]; size: number; top: number; gap: number };
 
-/** One line, two even lines, or — only if that's not enough — three smaller lines. */
+/** Largest first: two lines stay big, three lines only when two don't fit even at 18 px. */
+const STEPS: [size: number, lines: number][] = [
+    [SUNG, 2],
+    [20, 2],
+    [18, 2],
+    [18, 3],
+    [16, 3],
+];
+
+/** The sung block centered around y = 40 (the next line sits below it). */
 function sungLayout(value: string, max: number): SungLayout {
     if (!value) return { lines: [], size: SUNG, top: 0, gap: 0 };
-    const two = balanceLines(value, SUNG, max, 2, true);
-    if (two?.length === 1) return { lines: two, size: SUNG, top: 48, gap: 0 };
-    if (two) return { lines: two, size: SUNG, top: 32, gap: 26 };
-    const three = balanceLines(value, 18, max, 3, true) ?? wrap(value, max, 18, 3);
-    return { lines: three, size: 18, top: 26, gap: 23 };
+    for (const [size, maxLines] of STEPS) {
+        const lines = balanceLines(value, size, max, maxLines, true);
+        if (lines) return place(lines, size);
+    }
+    return place(wrapToWidth(value, 16, max, 3, true), 16);
+}
+
+function place(lines: string[], size: number): SungLayout {
+    const gap = Math.round(size * 1.2);
+    return { lines, size, gap, top: Math.round(40 + size * 0.35 - ((lines.length - 1) * gap) / 2) };
 }
 
 function sungLines(cx: number, layout: SungLayout, opacity: number, dy: number): string[] {
@@ -77,7 +92,7 @@ function sungLines(cx: number, layout: SungLayout, opacity: number, dy: number):
 /** A centered line on its own dark box, so the effect stays bright around the text. */
 function backed(cx: number, y: number, value: string, size: number, color: string, weight: string, opacity: number): string {
     if (!value || opacity <= 0) return "";
-    const w = measureArialWidth(value, size) * (weight === "bold" ? 1.07 : 1) + 16;
+    const w = measureArialWidth(value, size, weight === "bold") + 16;
     const box = `<rect x="${(cx - w / 2).toFixed(1)}" y="${(y - size - 2).toFixed(1)}" width="${w.toFixed(1)}" height="${size + 8}" rx="8" fill="#000" opacity="${(0.5 * opacity).toFixed(2)}"/>`;
     return box + label(cx, y, value, size, color, weight, "middle", opacity);
 }

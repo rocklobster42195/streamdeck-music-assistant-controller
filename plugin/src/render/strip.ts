@@ -26,10 +26,10 @@ export function wrap(value: string, maxWidth: number, fontSize: number, maxLines
     return wrapToWidth(value, fontSize, maxWidth, maxLines);
 }
 
-/** Width a text() call will take (fitted to `maxWidth`; bold measured a little wider). */
+/** Width a text() call will take (fitted to `maxWidth`, measured with the bold metrics for bold text). */
 export function textWidth(value: string, size: number, opts: { bold?: boolean; maxWidth?: number } = {}): number {
     const shown = opts.maxWidth ? fit(value, opts.maxWidth, size) : value;
-    return measureArialWidth(shown, size) * (opts.bold ? 1.07 : 1);
+    return measureArialWidth(shown, size, opts.bold);
 }
 
 /** On an effect background: darken only behind a ring's center … */
