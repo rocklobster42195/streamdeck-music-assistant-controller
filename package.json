@@ -27,6 +27,7 @@
         "sim:players": "node tools/sd-sim/players.mjs sim-out",
         "sim:queue-group": "node tools/sd-sim/queue-group.mjs sim-out",
         "sim:extras": "node tools/sd-sim/extras.mjs sim-out",
+        "sim:lyrics": "node tools/sd-sim/lyrics.mjs sim-out",
         "translate": "node tools/serve-translate.mjs",
         "translate:build": "node tools/build-translator.mjs",
         "check": "npm run build && npm test && npm run lint && npm run validate -w mac-plugin",

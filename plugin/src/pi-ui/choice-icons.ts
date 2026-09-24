@@ -5,6 +5,9 @@ import {
     mdiSpeaker,
     mdiSpeakerMultiple,
     mdiBookshelf,
+    mdiCardTextOutline,
+    mdiEyeOffOutline,
+    mdiMicrophoneVariant,
     mdiFolderOpenOutline,
     mdiServerNetwork,
     mdiFormatAlignCenter,
@@ -50,6 +53,9 @@ const ICONS: Record<string, string> = {
     speaker: mdiSpeaker,
     speakers: mdiSpeakerMultiple,
     quiz: mdiHelpCircleOutline,
+    textOff: mdiEyeOffOutline,
+    trackInfo: mdiCardTextOutline,
+    lyrics: mdiMicrophoneVariant,
 };
 
 /** Read each <pi-choice data-options> and hand the parsed options (with icon paths) to the element. */

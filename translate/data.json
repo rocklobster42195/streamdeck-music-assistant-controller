@@ -238,6 +238,13 @@
     "pi.cover_color": "Cover-Farbe",
     "pi.cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
     "pi.panorama_help": "Drehen und Drücken verändern den Effekt (z. B. Tempo). Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
+    "pi.overlay": "Text",
+    "pi.overlay_off": "Aus",
+    "pi.overlay_track": "Titel",
+    "pi.overlay_lyrics": "Lyrics",
+    "pi.overlay_hint": "Zeigt, was der aktive Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
+    "pi.lyrics_offset": "Timing",
+    "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Laufen die Lyrics der Musik voraus? Timing nach links schieben.",
     "pi.choose": "Wählen",
     "pi.no_options": "Nichts verfügbar.",
     "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibenden Minuten herunter.",
@@ -513,6 +520,13 @@
     "pi.cover_color": "Cover color",
     "pi.cover_color_hint": "Tint the effect with the colors of what is playing",
     "pi.panorama_help": "Rotate and push change the effect (e.g. speed). Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
+    "pi.overlay": "Text",
+    "pi.overlay_off": "Off",
+    "pi.overlay_track": "Title",
+    "pi.overlay_lyrics": "Lyrics",
+    "pi.overlay_hint": "Shows what the active player plays. Neighbouring Panorama dials share one line across their displays.",
+    "pi.lyrics_offset": "Timing",
+    "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. Lyrics running ahead of the music? Move the timing to the left.",
     "pi.choose": "Choose",
     "pi.no_options": "Nothing available.",
     "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the minutes left.",
@@ -3414,6 +3428,83 @@
   },
   {
    "key": "pi.panorama_help",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.overlay",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.overlay_off",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.overlay_track",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.overlay_lyrics",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.overlay_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.lyrics_offset",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.lyrics_hint",
    "group": "pi",
    "usedIn": [
     {

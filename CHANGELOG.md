@@ -5,6 +5,8 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Panorama dial text**: show the **title** (fading on song changes, as in Sonos Controller) or **synced lyrics** over the effect. Lyrics come from Music Assistant's metadata providers (LRCLIB) and stretch across neighbouring Panorama dials. The next song's lyrics load ahead of time, there is a timing offset for speaker latency, and it falls back to title and artist when there are no lyrics.
+- `music-assistant-client`: `trackLyrics()`, `parseLrc()` and `lyricIndexAt()`. `streamdeck-core`: `PanoramaEngine.members()`.
 - **Release pipeline** with beta channel: `npm run ship:beta|patch|minor|major` bumps the version, tags, and creates the GitHub release (betas as pre-releases). The Release workflow attaches the versioned `.streamDeckPlugin`, and a CI workflow checks every push and pull request. Release packages leave out the Node debug port.
 - **Contributor guide**: `CONTRIBUTING.md` (bug reports, dev setup, testing without hardware, conventions, pull requests) and `CONTRIBUTING_EFFECTS.md` (writing a panorama effect for `streamdeck-core`), plus GitHub issue forms (bug, feature, translation) and a pull request template.
 - **Translation page** (`translate/`, `npm run translate`): pick source and target language (new languages included), see where each text is used (scanned from code, PI pages and manifest), missing/outdated status (outdated via git blame), live key preview with a too-wide warning, placeholder check, draft in the browser, and export as JSON or a GitHub proposal. Dark theme with the PI design tokens.

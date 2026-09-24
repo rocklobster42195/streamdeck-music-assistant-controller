@@ -109,6 +109,15 @@ export class MusicAssistantClient extends MusicAssistantConnection {
     }
 
     /** Fetch a media item by URI; provider URIs resolve to the library item when it exists. */
+    /**
+     * Lyrics of a track from the metadata providers (e.g. lrclib): `[plain, lrc]`, each null when
+     * missing. The first lookup of a track can take ~30 s; MA caches the result (also a miss).
+     */
+    async trackLyrics(track: MediaItem): Promise<{ plain: string | null; lrc: string | null }> {
+        const r = await this.send<[string | null, string | null] | null>('metadata/get_track_lyrics', { track }, { timeoutMs: 60_000 });
+        return { plain: r?.[0] || null, lrc: r?.[1] || null };
+    }
+
     itemByUri(uri: string) {
         return this.send<MediaItem>('music/item_by_uri', { uri });
     }

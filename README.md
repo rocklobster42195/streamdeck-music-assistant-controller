@@ -42,7 +42,7 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) |
 | **Queue**: scroll through the queue and jump to any track | Dial (SD+) |
 | **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) |
-| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover | Dial (SD+) |
+| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover, with the title or **synced lyrics** on top | Dial (SD+) |
 | **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key |
 | **Announcement**: speak a message on one or all speakers (TTS) | Key |
 | **Source**: switch a speaker to Line-in, TV or another input | Key |
@@ -121,6 +121,11 @@ Controls the volume of the **whole group** the player belongs to, and shows the 
 ### Panorama dial and effect backgrounds *(Stream Deck + only)*
 
 Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing Globe**. Neighbouring dials with the same effect share **one continuous scene** across the touch strip. Rotating or pushing a Panorama dial changes the effect, for example its speed, and the dial remembers the change. With **Cover color** on, the effect takes the colors of what is playing.
+
+**Text** puts the active player's music on top of the effect:
+
+- **Title**: title and artist, bottom right. A new song fades in.
+- **Lyrics**: the line being sung, large, with the next line below it, in time with the music. Neighbouring Panorama dials share **one line across all their displays**. On a single dial, long lines wrap. Lyrics come from Music Assistant's metadata providers (for example [LRCLIB](https://lrclib.net), enabled by default), so they work for many well-known songs but not for everything. Without lyrics (radio, audiobooks, less-known tracks), the dial shows title and artist instead. The first lookup of a song can take a few seconds, so MAC fetches the lyrics of the next song in the queue ahead of time. If the lyrics run ahead of or behind the music (speakers buffer audio), adjust **Timing**.
 
 The **Track**, **Volume** and **Group Volume** dials can show an effect as their **background** (dimmed, so the text stays readable). Put them next to Panorama dials with the same effect, and the scene runs underneath everything.
 

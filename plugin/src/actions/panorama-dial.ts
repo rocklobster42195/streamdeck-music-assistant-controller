@@ -14,9 +14,16 @@ import { DEFAULT_EFFECT_ID } from "streamdeck-core";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import { effectSettingsFor, panorama, type EffectSettings } from "../render/panorama";
-import { stripImage } from "../render/strip";
+import { STRIP_W, stripImage } from "../render/strip";
+import { PanoramaOverlay, type OverlayMode } from "./panorama-overlay";
 
-type PanoramaDialSettings = EffectSettings & JsonObject;
+type PanoramaDialSettings = EffectSettings &
+    JsonObject & {
+        /** Text over the effect (shared by neighbouring Panorama dials). */
+        text?: OverlayMode;
+        /** Seconds added to the playback position for lyrics (speaker latency). */
+        lyricsOffset?: number;
+    };
 type Instance = { action: DialAction<PanoramaDialSettings>; settings: PanoramaDialSettings; deviceId: string; column: number; previewAt?: number };
 
 const PREVIEW_EVERY_MS = 1000;
@@ -25,11 +32,13 @@ const PREVIEW_EVERY_MS = 1000;
  * An ambient effect across neighbouring dials (particles, matrix rain, boing ball, boing globe) —
  * the sonos-controller panorama effects. Rotate/push/touch are handed to the effect; values it
  * changes itself (e.g. speed) are saved. Tinted with the active player's cover color when on.
+ * Optionally shows title & artist or synced lyrics across neighbouring Panorama dials.
  */
 @action({ UUID: "de.boriskemper.music-assistant-controller.panorama-dial" })
 export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     private readonly instances = new Map<string, Instance>();
     private readonly persistTimers = new Map<string, ReturnType<typeof setTimeout>>();
+    private readonly overlay = new PanoramaOverlay();
 
     constructor() {
         super();
@@ -48,6 +57,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
 
     override onWillDisappear(ev: WillDisappearEvent<PanoramaDialSettings>): void {
         this.instances.delete(ev.action.id);
+        this.overlay.forget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
     }
@@ -55,7 +65,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     override onDidReceiveSettings(ev: DidReceiveSettingsEvent<PanoramaDialSettings>): void {
         const inst = this.instances.get(ev.action.id);
         if (!inst) return;
+        const before = inst.settings;
         inst.settings = ev.payload.settings;
+        if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset) this.shareText(ev.action.id);
         this.join(ev.action.id);
         this.pushSettings(ev.action.id);
     }
@@ -98,7 +110,11 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     private render(id: string): void {
         const inst = this.instances.get(id);
         if (!inst) return;
-        const image = stripImage([], "#000", panorama.renderSlice(id));
+        const run = this.run(id);
+        // The first dial of the run that shows text decides (a freshly added neighbour defaults to "off")
+        const lead = run.ids.map((i) => this.instances.get(i)?.settings).find((s) => s?.text && s.text !== "off");
+        const text = lead ? this.overlay.render(run.ids[0], { width: run.ids.length * STRIP_W, offset: run.index * STRIP_W }, lead.text!, Number(lead.lyricsOffset ?? 0)) : "";
+        const image = stripImage([text], "#000", panorama.renderSlice(id));
         void inst.action.setFeedback({ "full-canvas": image });
         // The PI preview doesn't need every frame
         const now = Date.now();
@@ -107,6 +123,35 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             const effectId = this.effectId(inst);
             const name = streamDeck.i18n.t(`effect.${effectId}.name`);
             piBridge.updatePreview(id, { image, kind: "dial", state: "idle", track: name.startsWith("effect.") ? effectId : name });
+        }
+    }
+
+    /**
+     * The neighbouring Panorama dials in this dial's effect group, left to right, that share one
+     * text line (other dials in the group, e.g. a Track dial with a background, break the run).
+     */
+    private run(id: string): { ids: string[]; index: number } {
+        const members = panorama.members(id);
+        const at = members.findIndex((m) => m.context === id);
+        if (at < 0) return { ids: [id], index: 0 };
+        const joins = (from: number, to: number) => this.instances.has(members[to].context) && Math.abs(members[to].column - members[from].column) === 1;
+        let first = at;
+        while (first > 0 && joins(first, first - 1)) first--;
+        let last = at;
+        while (last < members.length - 1 && joins(last, last + 1)) last++;
+        const ids = members.slice(first, last + 1).map((m) => m.context);
+        return { ids, index: at - first };
+    }
+
+    /** A text setting changed on one dial: the rest of its run follows. */
+    private shareText(id: string): void {
+        const source = this.instances.get(id);
+        if (!source) return;
+        for (const other of this.run(id).ids) {
+            const inst = this.instances.get(other);
+            if (!inst || other === id || (inst.settings.text === source.settings.text && inst.settings.lyricsOffset === source.settings.lyricsOffset)) continue;
+            inst.settings = { ...inst.settings, text: source.settings.text, lyricsOffset: source.settings.lyricsOffset };
+            inst.action.setSettings(inst.settings).catch((e) => streamDeck.logger.warn("[panorama] text sync failed", e));
         }
     }
 
