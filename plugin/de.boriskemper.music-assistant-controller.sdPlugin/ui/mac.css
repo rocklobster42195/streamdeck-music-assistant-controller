@@ -1,13 +1,12 @@
 /* MAC-specific PI styles on top of streamdeck-core's pi-theme.css */
 
 /* Header: live key preview */
-.mac-preview { display: flex; gap: 14px; align-items: center; padding: 12px; background: var(--pi-card); border: 1px solid var(--pi-card-border); border-radius: 12px; }
-.mac-preview-key { width: 72px; height: 72px; border-radius: 12px; overflow: hidden; background: #101010; flex-shrink: 0; }
-.mac-preview-key img { display: block; width: 72px; height: 72px; }
-.mac-preview-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.mac-preview-title { font-size: 15px; font-weight: 600; }
-.mac-preview-line { font-size: 12px; color: var(--pi-text-2); line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.mac-preview-state { display: flex; gap: 6px; align-items: center; font-size: 11px; color: var(--pi-text-3); }
+.mac-preview { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: var(--pi-card); border: 1px solid var(--pi-card-border); border-radius: 12px; }
+.mac-preview-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-width: 0; }
+.mac-preview-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mac-preview-state { display: flex; gap: 5px; align-items: center; flex-shrink: 0; font-size: 11px; color: var(--pi-text-3); white-space: nowrap; }
+.mac-preview-line { font-size: 12px; color: var(--pi-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mac-preview-line:empty { display: none; }
 .mac-preview-state[data-tone="ok"] { color: #8fd97a; }
 .mac-preview-state[data-tone="ok"] svg { fill: currentColor; stroke: none; }
 .mac-preview-state[data-tone="error"] { color: var(--pi-error-text); }
@@ -60,9 +59,6 @@ mac-connection-card { display: flex; flex-direction: column; gap: 6px; }
 .mac-results-empty { padding: 8px 4px; }
 
 /* Dial preview: a 200×100 touch-strip segment instead of a square key */
-.mac-preview-dial { flex-direction: column; align-items: stretch; }
-.mac-preview-dial .mac-preview-key { width: 100%; height: auto; aspect-ratio: 2 / 1; border-radius: 10px; }
-.mac-preview-dial .mac-preview-key img { width: 100%; height: 100%; }
 .mac-dial-help { margin-top: -4px; }
 
 /* Effect settings: tiles, then the effect's own fields */

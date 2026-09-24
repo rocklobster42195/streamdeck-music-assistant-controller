@@ -47,6 +47,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Dial foundation: `MaDialAction` base class, touch-strip renderer, `LatestSender` throttle, and dial previews in the PI.
 
 ### Changed
+- Settings panels: a compact header (action name, player status, what plays) instead of the large key/dial image — the Stream Deck app already shows keys and dial displays live.
 - Dials with an effect background (Track, Volume, Group Volume, and the lyrics on the Panorama dial) darken only behind the number and each line of text, not the whole strip.
 - Lyrics timing range widened to −10 … +5 s, default +0.5 s (the line appears just before it is sung).
 - Lyrics look: plain white text without the outline, long lines split into even halves at full size (breaks after punctuation preferred; `balanceLines` in `streamdeck-core`) instead of a smaller font, and a larger, brighter next line.

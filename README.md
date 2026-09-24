@@ -241,7 +241,7 @@ The settings panels do not use `sdpi-components`. They are built on a small, fra
 - `streamdeck-core/pi`: the Stream Deck PI socket client, i18n, and light-DOM components (`<pi-section>`, `<pi-toggle>`, `<pi-field>`)
 - `streamdeck-core/styles/pi-theme.css`: the shared dark theme, used by both MAC and Sonos Controller
 
-MAC adds `<mac-key-preview>`, `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
+MAC adds `<mac-key-preview>` (compact status header), `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
 
 ### Testing without hardware
 

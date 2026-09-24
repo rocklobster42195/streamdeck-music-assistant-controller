@@ -1,4 +1,6 @@
-// <mac-key-preview label="Play/Pause"> — header card with the key image as the plugin renders it.
+// <mac-key-preview label="Play/Pause"> — compact header: action name, player status and what plays.
+// No key image: the Stream Deck app already shows keys and dial displays live (hardware test
+// 2026-09-24), and the image took up a lot of room — dials most of all.
 import { escapeHtml, icon, t } from "streamdeck-core/pi";
 import { onPiState, piState } from "./state";
 
@@ -8,12 +10,11 @@ export class MacKeyPreview extends HTMLElement {
     connectedCallback(): void {
         this.classList.add("mac-preview");
         this.innerHTML = `
-            <div class="mac-preview-key"><img alt="" width="72" height="72"/></div>
-            <div class="mac-preview-text">
-                <div class="mac-preview-title">${escapeHtml(t(this.getAttribute("label") ?? ""))}</div>
-                <div class="mac-preview-line"></div>
-                <div class="mac-preview-state"></div>
-            </div>`;
+            <div class="mac-preview-head">
+                <span class="mac-preview-title">${escapeHtml(t(this.getAttribute("label") ?? ""))}</span>
+                <span class="mac-preview-state"></span>
+            </div>
+            <div class="mac-preview-line"></div>`;
         this.off = onPiState(() => this.render());
         this.render();
     }
@@ -24,12 +25,8 @@ export class MacKeyPreview extends HTMLElement {
 
     private render(): void {
         const p = piState.preview;
-        const img = this.querySelector("img")!;
         const line = this.querySelector<HTMLElement>(".mac-preview-line")!;
         const state = this.querySelector<HTMLElement>(".mac-preview-state")!;
-        img.hidden = !p;
-        if (p) img.src = p.image;
-        this.classList.toggle("mac-preview-dial", p?.kind === "dial");
 
         const name = p?.playerName ?? "";
         switch (p?.state) {
