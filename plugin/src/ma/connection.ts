@@ -1,6 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
-import { MusicAssistantClient, type ConnectionState, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike } from "music-assistant-client";
+import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike } from "music-assistant-client";
 import WebSocket from "ws";
+import { OptimisticStore } from "./optimistic";
 
 /** Plugin-wide settings, shared by all actions (Stream Deck global settings). */
 export type GlobalSettings = {
@@ -23,10 +24,12 @@ class MaConnection {
     private client: MusicAssistantClient | undefined;
     private settings: GlobalSettings = {};
     private readonly listeners = new Set<Listener>();
+    private readonly eventListeners = new Set<(ev: MaEvent) => void>();
     private unsubscribers: (() => void)[] = [];
     private settingsLoaded = false;
-    /** Optimistic playback state per queue, shown right after a key press until the server confirms. */
-    private readonly optimistic = new Map<string, { state: PlaybackState; until: number }>();
+    /** Local overrides shown right after a key press/dial turn until the server confirms. */
+    private readonly optimisticQueues = new OptimisticStore<PlayerQueue>();
+    private readonly optimisticPlayers = new OptimisticStore<Player>();
 
     /** False until the global settings arrived — render a neutral "loading" state until then. */
     get loaded(): boolean {
@@ -68,13 +71,21 @@ class MaConnection {
         return () => this.listeners.delete(listener);
     }
 
+    /** Raw server events (all of them), across reconnects. */
+    onServerEvent(listener: (ev: MaEvent) => void): () => void {
+        this.eventListeners.add(listener);
+        return () => this.eventListeners.delete(listener);
+    }
+
     /** Resolve an action's player setting to a concrete player id. */
     resolvePlayerId(playerSetting: string | undefined): string | undefined {
         return playerSetting || this.settings.activePlayerId || undefined;
     }
 
+    /** A player as the keys should show it (with optimistic overrides applied). */
     player(playerId: string | undefined): Player | undefined {
-        return playerId ? this.client?.players.get(playerId) : undefined;
+        const p = playerId ? this.client?.players.get(playerId) : undefined;
+        return p && this.optimisticPlayers.apply(p.player_id, p);
     }
 
     /**
@@ -85,31 +96,35 @@ class MaConnection {
         if (!player || !this.client) return undefined;
         const queues = this.client.queues;
         for (const id of [player.active_source, player.synced_to, player.active_group, player.player_id]) {
-            if (id && queues.has(id)) return queues.get(id);
+            const q = id ? queues.get(id) : undefined;
+            if (q) return this.optimisticQueues.apply(q.queue_id, q);
         }
         return undefined;
     }
 
     /**
-     * Show `state` for a queue right away, on every key that uses it. Fast command sequences are
-     * coalesced server-side, so keys can't wait for the confirming event.
+     * Show changed queue fields right away on every key that uses the queue. Fast command sequences
+     * are coalesced server-side, so keys can't wait for the confirming event.
      */
-    setOptimisticState(queueId: string, state: PlaybackState, ms = 2000): void {
-        this.optimistic.set(queueId, { state, until: Date.now() + ms });
-        this.emit();
-        setTimeout(() => this.emit(), ms + 50);
+    patchQueue(queueId: string, patch: Partial<PlayerQueue>, ms = 2000): void {
+        this.optimisticQueues.set(queueId, patch, ms);
+        this.emitNowAndAfter(ms);
     }
 
-    clearOptimisticState(queueId: string): void {
-        this.optimistic.delete(queueId);
+    patchPlayer(playerId: string, patch: Partial<Player>, ms = 2000): void {
+        this.optimisticPlayers.set(playerId, patch, ms);
+        this.emitNowAndAfter(ms);
+    }
+
+    /** Drop overrides again, e.g. when the command failed. */
+    unpatch(id: string): void {
+        this.optimisticQueues.clear(id);
+        this.optimisticPlayers.clear(id);
         this.emit();
     }
 
-    /** The queue's playback state, preferring a recent optimistic one. */
+    /** The queue's playback state (optimistic overrides are already applied by {@link queueFor}). */
     playbackState(queue: PlayerQueue): PlaybackState {
-        const o = this.optimistic.get(queue.queue_id);
-        if (o && o.until > Date.now()) return o.state;
-        this.optimistic.delete(queue.queue_id);
         return queue.state;
     }
 
@@ -152,10 +167,24 @@ class MaConnection {
                 streamDeck.logger.info(`[MA] connection: ${state}`);
                 this.emit();
             }),
-            client.on("*", () => this.emit()),
+            client.on("*", (ev) => {
+                for (const l of this.eventListeners) l(ev);
+                this.emit();
+            }),
         );
         this.client = client;
         client.start();
+    }
+
+    /** Ask all keys to re-render (e.g. after a lookup finished). */
+    notify(): void {
+        this.emit();
+    }
+
+    private emitNowAndAfter(ms: number): void {
+        this.emit();
+        // Re-render once the override expired, in case no server event arrives meanwhile.
+        setTimeout(() => this.emit(), ms + 50);
     }
 
     private emit(): void {

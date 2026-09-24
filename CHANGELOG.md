@@ -5,6 +5,11 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Playback Control** key: previous, next, shuffle, repeat (off → all → one), crossfade and "Don't stop the music". Toggles show their state, and skipping is dimmed on live radio.
+- **Volume** key: down, up (adjustable step), mute and preset, showing the current volume.
+- **Like** key: toggles the current item in the MA favorites, with a filled heart when it already is one.
+- Instant key feedback for all toggles and volume changes (optimistic state shared by every key on a player).
+- PI components `<pi-choice>` (tile grid) and `<pi-range>` (slider), plus conditional visibility (`data-show-when`).
 - `music-assistant-client`: TypeScript client for the Music Assistant WebSocket API. It authenticates with a long-lived token, keeps player and queue state live from server events, reconnects with backoff, merges partial results, and offers typed commands (play/pause, next/previous, shuffle, repeat, crossfade, autoplay, volume, mute, like, play media, transfer queue) plus image proxy URL helpers.
 - Plugin scaffold: shared MA connection (global settings for server, token and active player), and the **Play/Pause** key with cover art, optimistic state, optional progress bar and player name, plus setup/offline/token/no-player states.
 - i18n: English and German. One JSON file per language covers the manifest, key texts and property inspectors.

@@ -11,6 +11,9 @@ const root = "plugin/de.boriskemper.music-assistant-controller.sdPlugin/imgs";
 // Action list icon: monochrome white on transparent (Stream Deck tints it). Key: default key image.
 const actions = {
     "play-pause-key": mdi.mdiPlayPause,
+    "playback-control-key": mdi.mdiSkipNext,
+    "volume-key": mdi.mdiVolumeHigh,
+    "like-key": mdi.mdiHeart,
 };
 
 const listIcon = (d) => `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="#ffffff" d="${d}"/></svg>`;

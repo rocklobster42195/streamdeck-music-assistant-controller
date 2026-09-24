@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playback Control</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Playback Control"></mac-key-preview>
+
+  <pi-section title="pi.command">
+    <pi-choice setting="command" default="next" columns="3" data-options='[
+      {"value":"previous","label":"pi.cmd_previous","icon":"previous"},
+      {"value":"next","label":"pi.cmd_next","icon":"next"},
+      {"value":"shuffle","label":"pi.cmd_shuffle","icon":"shuffle"},
+      {"value":"repeat","label":"pi.cmd_repeat","icon":"repeat"},
+      {"value":"crossfade","label":"pi.cmd_crossfade","icon":"crossfade"},
+      {"value":"dont_stop","label":"pi.cmd_dont_stop","icon":"dontStop"}
+    ]'></pi-choice>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-show-when="command=next,previous" data-show-default="next" data-i18n="pi.cmd_skip_hint"></div>
+  <div class="pi-hint mac-cmd-hint" data-show-when="command=repeat" data-i18n="pi.cmd_repeat_hint"></div>
+  <div class="pi-hint mac-cmd-hint" data-show-when="command=dont_stop" data-i18n="pi.cmd_dont_stop_hint"></div>
+
+  <pi-section title="pi.player" class="pi-needs-connection">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

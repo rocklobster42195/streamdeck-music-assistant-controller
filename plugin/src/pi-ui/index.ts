@@ -1,5 +1,6 @@
 // Entry of the property inspector bundle (ui/pi.js): shared core components + MAC components.
-import { definePiComponents, sd, translateDom } from "streamdeck-core/pi";
+import { definePiComponents, initConditionalVisibility, sd, translateDom } from "streamdeck-core/pi";
+import { initChoiceOptions } from "./choice-icons";
 import { MacConnectionCard } from "./connection-card";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
@@ -14,6 +15,8 @@ sd.onReady(() => {
     customElements.define("mac-player-picker", MacPlayerPicker);
     customElements.define("mac-key-preview", MacKeyPreview);
     customElements.define("mac-connection-card", MacConnectionCard);
+    initChoiceOptions();
+    initConditionalVisibility();
 
     const version = document.querySelector<HTMLElement>("[data-plugin-version]");
     if (version) version.textContent = `MAC ${sd.info?.plugin.version ?? ""}`.trim();

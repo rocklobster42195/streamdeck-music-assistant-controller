@@ -9,7 +9,7 @@ Control **[Music Assistant](https://www.music-assistant.io/)** from your Stream 
 
 > **Disclaimer:** This is an independent, community-made plugin. It is not affiliated with, endorsed by, or officially connected to the Music Assistant project or Elgato in any way.
 
-> **Status:** MAC is in early development. The connection layer and the first action (Play/Pause) work. The remaining MVP actions are in progress. See the [roadmap](#roadmap).
+> **Status:** MAC is in early development. Play/Pause, Playback Control, Volume and Like keys work. Play Item and the Stream Deck + dials are in progress. See the [roadmap](#roadmap).
 
 ---
 
@@ -33,12 +33,12 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | Action | Controller | Status |
 |---|---|---|
 | **Play / Pause**: cover art, live play state, optional progress bar and player name | Key | ✅ working |
-| **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key | 🚧 MVP |
-| **Volume**: up · down · mute · preset | Key | 🚧 MVP |
+| **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key | ✅ working |
+| **Volume**: up · down · mute · preset | Key | ✅ working |
 | **Volume**: rotate to change, press to mute | Dial (SD+) | 🚧 MVP |
 | **Track Control**: cover, title and progress on the LCD, rotate to seek | Dial (SD+) | 🚧 MVP |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key | 🚧 MVP |
-| **Like**: add the current track to your favorites; the heart fills when it already is one | Key | 🚧 MVP |
+| **Like**: add the current track to your favorites; the heart fills when it already is one | Key | ✅ working |
 
 ### Play / Pause
 
@@ -51,6 +51,20 @@ The settings panel shows a **live preview of the key** together with what is pla
 | Player | A specific player/group, or **Active player** (default) |
 | Player name | Show the player's name as the key title |
 | Progress | Thin progress bar at the bottom, tinted with the cover's accent color |
+
+### Playback Control
+
+One key per function: **previous, next, shuffle, repeat, crossfade** or **"Don't stop the music"**. Toggles show their state: blue with a frame means on. Repeat cycles through off, all and one. Next and previous are dimmed while a live radio stream plays, because there is nothing to skip.
+
+### Volume
+
+**Down, up, mute** or a **preset** volume. The key shows the current volume. For down and up, the step per press can be set from 1 to 20 %. Several quick presses add up correctly.
+
+### Like
+
+Adds the current track or station to your Music Assistant **favorites**. The heart is filled when it already is a favorite, and pressing again removes it. Music Assistant also uses a heart for favorites.
+
+### Status on the keys
 
 When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MAC reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
 
@@ -140,6 +154,7 @@ MAC adds `<mac-key-preview>`, `<mac-player-picker>` and `<mac-connection-card>` 
 ```bash
 npm run build
 npm run sim:play-pause    # end-to-end against your MA server (needs .env), snapshots in sim-out/
+npm run sim:keys          # playback control, like and volume keys: presses everything, checks MA, restores state
 ```
 
 For API experiments, create a `.env` file (it is gitignored) with `MA_URL=http://<host>:8095`, `MA_TOKEN=<token>` and `MA_TEST_PLAYER=<player_id>`. The simulator plays quietly on that player. `npm run probe` records raw API traffic.

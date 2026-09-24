@@ -1,4 +1,4 @@
-import type { AuthUser, EventMap, EventName, MaEvent, Player, PlayerQueue, RepeatMode, ServerInfo } from './types.js';
+import type { AuthUser, EventMap, EventName, MaEvent, MediaItem, Player, PlayerQueue, RepeatMode, ServerInfo } from './types.js';
 
 /** Schema version this client was written against (MA server 2.10.4). */
 export const CLIENT_SCHEMA_VERSION = 65;
@@ -197,6 +197,17 @@ export class MusicAssistantClient {
     /** "Like": add the currently playing item to the MA favorites. */
     addCurrentlyPlayingToFavorites(playerId: string) {
         return this.send<null>('players/add_currently_playing_to_favorites', { player_id: playerId });
+    }
+
+    /** Fetch a media item by URI; provider URIs resolve to the library item when it exists. */
+    itemByUri(uri: string) {
+        return this.send<MediaItem>('music/item_by_uri', { uri });
+    }
+    addFavorite(uri: string) {
+        return this.send<null>('music/favorites/add_item', { item: uri });
+    }
+    removeFavorite(mediaType: string, libraryItemId: string | number) {
+        return this.send<null>('music/favorites/remove_item', { media_type: mediaType, library_item_id: libraryItemId });
     }
 
     // ---- helpers ----------------------------------------------------------------------------

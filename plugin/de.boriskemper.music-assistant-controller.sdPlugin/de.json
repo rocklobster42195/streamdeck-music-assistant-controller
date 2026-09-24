@@ -5,6 +5,12 @@
 	"Localization": {
 		"Play/Pause": "Play/Pause",
 		"Toggle play/pause with cover art.": "Schaltet zwischen Wiedergabe und Pause um, mit Albumcover.",
+		"Playback Control": "Wiedergabe-Steuerung",
+		"Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.": "Weiter, zurück, Zufall, Wiederholen, Crossfade oder „Don't stop the music“.",
+		"Volume": "Lautstärke",
+		"Volume up, down, mute or a preset.": "Lauter, leiser, stumm oder ein Preset.",
+		"Like": "Like",
+		"Add the current track to your favorites, or remove it.": "Aktuellen Titel zu den Favoriten hinzufügen oder entfernen.",
 		"key": {
 			"setup": "Einrichten",
 			"offline": "Offline",
@@ -64,7 +70,25 @@
 			"token_rejected": "Token abgelehnt",
 			"token_rejected_hint": "Prüfe, ob der Token vollständig kopiert wurde und in Music Assistant noch existiert. Einen neuen erstellst du unter Einstellungen → Profil.",
 			"active_player": "Aktiver Player",
-			"active_player_hint": "Gilt für alle MAC-Tasten. Tasten mit „Aktiver Player“ steuern diesen Player."
+			"active_player_hint": "Gilt für alle MAC-Tasten. Tasten mit „Aktiver Player“ steuern diesen Player.",
+			"command": "Funktion",
+			"cmd_previous": "Zurück",
+			"cmd_next": "Weiter",
+			"cmd_shuffle": "Zufall",
+			"cmd_repeat": "Wiederholen",
+			"cmd_crossfade": "Crossfade",
+			"cmd_dont_stop": "Don't stop the music",
+			"cmd_skip_hint": "Ausgegraut, solange ein Live-Radiostream läuft – da gibt es nichts zu überspringen.",
+			"cmd_repeat_hint": "Jeder Druck schaltet weiter: aus → alle → einer.",
+			"cmd_dont_stop_hint": "Wenn die Warteschlange zu Ende ist, spielt Music Assistant ähnliche Musik weiter.",
+			"volume_settings": "Einstellungen",
+			"vol_down": "Leiser",
+			"vol_up": "Lauter",
+			"vol_mute": "Stumm",
+			"vol_preset": "Preset",
+			"vol_step": "Schritt pro Druck",
+			"vol_preset_value": "Preset-Lautstärke",
+			"like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn."
 		}
 	}
 }

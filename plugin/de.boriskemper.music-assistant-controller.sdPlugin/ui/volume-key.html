@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Volume"></mac-key-preview>
+
+  <pi-section title="pi.command">
+    <pi-choice setting="command" default="up" columns="4" data-options='[
+      {"value":"down","label":"pi.vol_down","icon":"volumeDown"},
+      {"value":"up","label":"pi.vol_up","icon":"volumeUp"},
+      {"value":"mute","label":"pi.vol_mute","icon":"volumeOff"},
+      {"value":"preset","label":"pi.vol_preset","icon":"volumeMedium"}
+    ]'></pi-choice>
+  </pi-section>
+
+  <pi-section title="pi.volume_settings" data-show-when="command=up,down,preset" data-show-default="up">
+    <pi-range setting="step" min="1" max="20" step="1" default="5" unit="%" label="pi.vol_step" data-show-when="command=up,down" data-show-default="up"></pi-range>
+    <pi-range setting="preset" min="0" max="100" step="1" default="20" unit="%" label="pi.vol_preset_value" data-show-when="command=preset" data-show-default="up"></pi-range>
+  </pi-section>
+
+  <pi-section title="pi.player" class="pi-needs-connection">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

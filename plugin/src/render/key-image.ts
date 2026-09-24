@@ -1,4 +1,28 @@
-import { mdiLanConnect, mdiLanDisconnect, mdiMusicNote, mdiPause, mdiPlay, mdiSpeakerOff } from "@mdi/js";
+import {
+    mdiAllInclusive,
+    mdiHeart,
+    mdiHeartOutline,
+    mdiLanConnect,
+    mdiLanDisconnect,
+    mdiMusicNote,
+    mdiPause,
+    mdiPlay,
+    mdiRepeat,
+    mdiRepeatOff,
+    mdiRepeatOnce,
+    mdiShuffleDisabled,
+    mdiShuffleVariant,
+    mdiSkipNext,
+    mdiSkipPrevious,
+    mdiSpeakerOff,
+    mdiTransition,
+    mdiVolumeHigh,
+    mdiVolumeLow,
+    mdiVolumeMedium,
+    mdiVolumeMinus,
+    mdiVolumeOff,
+    mdiVolumePlus,
+} from "@mdi/js";
 
 // Key images are rendered as SVG data URIs at 144 px (the @2x key size).
 const SIZE = 144;
@@ -10,7 +34,27 @@ export const ICONS = {
     offline: mdiLanDisconnect,
     connecting: mdiLanConnect,
     noPlayer: mdiSpeakerOff,
+    next: mdiSkipNext,
+    previous: mdiSkipPrevious,
+    shuffle: mdiShuffleVariant,
+    shuffleOff: mdiShuffleDisabled,
+    repeat: mdiRepeat,
+    repeatOne: mdiRepeatOnce,
+    repeatOff: mdiRepeatOff,
+    crossfade: mdiTransition,
+    dontStop: mdiAllInclusive,
+    heart: mdiHeart,
+    heartOutline: mdiHeartOutline,
+    volumeHigh: mdiVolumeHigh,
+    volumeMedium: mdiVolumeMedium,
+    volumeLow: mdiVolumeLow,
+    volumeOff: mdiVolumeOff,
+    volumeUp: mdiVolumePlus,
+    volumeDown: mdiVolumeMinus,
 };
+
+/** Accent for "on" states (matches the PI theme). */
+export const ACCENT = "#6cc4ff";
 
 export type KeyImageOptions = {
     /** data: URI of the cover art, drawn full-bleed. */
@@ -24,11 +68,19 @@ export type KeyImageOptions = {
     /** 0..1 progress bar at the bottom. */
     progress?: number;
     progressColor?: string;
+    /** Highlight the key as "on" (tinted background + ring in this color). */
+    active?: string;
+    /** Small caption at the top (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
+    badge?: string;
 };
 
 export function renderKeyImage(opts: KeyImageOptions): string {
     const color = opts.color ?? "#e0e0e0";
     const parts: string[] = [`<rect width="${SIZE}" height="${SIZE}" fill="#101010"/>`];
+    if (opts.active) {
+        parts.push(`<rect x="4" y="4" width="${SIZE - 8}" height="${SIZE - 8}" rx="18" fill="${opts.active}" opacity="0.14"/>`);
+        parts.push(`<rect x="4" y="4" width="${SIZE - 8}" height="${SIZE - 8}" rx="18" fill="none" stroke="${opts.active}" stroke-width="3" opacity="0.7"/>`);
+    }
 
     if (opts.cover) {
         parts.push(`<image href="${opts.cover}" width="${SIZE}" height="${SIZE}" preserveAspectRatio="xMidYMid slice"/>`);
@@ -40,6 +92,10 @@ export function renderKeyImage(opts: KeyImageOptions): string {
         }
     } else if (opts.icon) {
         parts.push(icon(opts.icon, 32, 32, 80, opts.dimmed ? "#777" : color));
+    }
+
+    if (opts.badge) {
+        parts.push(`<text x="${SIZE / 2}" y="30" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="${color}">${escapeXml(opts.badge)}</text>`);
     }
 
     if (opts.progress !== undefined) {
@@ -55,6 +111,10 @@ export function renderKeyImage(opts: KeyImageOptions): string {
 function icon(path: string, x: number, y: number, size: number, fill: string): string {
     const scale = size / 24;
     return `<path transform="translate(${x} ${y}) scale(${scale})" fill="${fill}" d="${path}"/>`;
+}
+
+function escapeXml(s: string): string {
+    return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
 
 /** "rgb(r,g,b)" from an MA palette triplet. */

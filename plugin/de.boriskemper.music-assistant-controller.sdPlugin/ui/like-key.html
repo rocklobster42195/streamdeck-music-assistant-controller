@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Like</title>
+  <link rel="stylesheet" href="pi-theme.css" />
+  <link rel="stylesheet" href="mac.css" />
+  <script src="locales.generated.js"></script>
+  <script src="pi.js"></script>
+</head>
+
+<body hidden>
+  <mac-key-preview label="Like"></mac-key-preview>
+  <div class="pi-hint mac-cmd-hint" data-i18n="pi.like_hint"></div>
+
+  <pi-section title="pi.player" class="pi-needs-connection">
+    <mac-player-picker setting="playerId"></mac-player-picker>
+  </pi-section>
+
+  <mac-connection-card></mac-connection-card>
+
+  <div class="pi-footer"><span data-plugin-version>MAC</span><a href="https://github.com/rocklobster42195" data-i18n="pi.help">Help &amp; feedback</a></div>
+</body>
+
+</html>

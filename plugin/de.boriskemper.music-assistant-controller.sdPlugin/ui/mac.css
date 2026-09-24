@@ -29,3 +29,6 @@ mac-connection-card { display: flex; flex-direction: column; gap: 6px; }
 .mac-step-num { width: 22px; height: 22px; border-radius: 11px; background: var(--pi-accent-strong); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 16px; }
 .mac-conn-active { display: flex; flex-direction: column; gap: 4px; padding: 0 12px 4px; }
 .mac-conn-actions { display: flex; flex-direction: column; padding: 4px 12px 0; }
+
+/* Short explanation under a section */
+.mac-cmd-hint { padding: 0 4px; margin-top: -6px; }

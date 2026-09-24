@@ -5,6 +5,12 @@
 	"Localization": {
 		"Play/Pause": "Play/Pause",
 		"Toggle play/pause with cover art.": "Toggle play/pause with cover art.",
+		"Playback Control": "Playback Control",
+		"Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.": "Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.",
+		"Volume": "Volume",
+		"Volume up, down, mute or a preset.": "Volume up, down, mute or a preset.",
+		"Like": "Like",
+		"Add the current track to your favorites, or remove it.": "Add the current track to your favorites, or remove it.",
 		"key": {
 			"setup": "Setup",
 			"offline": "Offline",
@@ -64,7 +70,25 @@
 			"token_rejected": "Token rejected",
 			"token_rejected_hint": "Check that the token was copied completely and still exists in Music Assistant. You can create a new one under Settings → Profile.",
 			"active_player": "Active player",
-			"active_player_hint": "Applies to all MAC keys. Keys set to “Active player” control this player."
+			"active_player_hint": "Applies to all MAC keys. Keys set to “Active player” control this player.",
+			"command": "Function",
+			"cmd_previous": "Previous",
+			"cmd_next": "Next",
+			"cmd_shuffle": "Shuffle",
+			"cmd_repeat": "Repeat",
+			"cmd_crossfade": "Crossfade",
+			"cmd_dont_stop": "Don't stop the music",
+			"cmd_skip_hint": "Dimmed while a live radio stream plays: there is nothing to skip.",
+			"cmd_repeat_hint": "Each press cycles: off → all → one.",
+			"cmd_dont_stop_hint": "When the queue ends, Music Assistant keeps playing similar music.",
+			"volume_settings": "Settings",
+			"vol_down": "Down",
+			"vol_up": "Up",
+			"vol_mute": "Mute",
+			"vol_preset": "Preset",
+			"vol_step": "Step per press",
+			"vol_preset_value": "Preset volume",
+			"like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it."
 		}
 	}
 }

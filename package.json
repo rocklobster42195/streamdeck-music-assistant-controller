@@ -17,7 +17,8 @@
         "lint": "eslint packages plugin/src",
         "probe": "node tools/ma-probe.mjs",
         "pi:preview": "node tools/pi-preview.mjs",
-        "sim:play-pause": "node tools/sd-sim/play-pause.mjs sim-out"
+        "sim:play-pause": "node tools/sd-sim/play-pause.mjs sim-out",
+        "sim:keys": "node tools/sd-sim/keys.mjs sim-out"
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.9",

@@ -18,6 +18,51 @@
 					"Image": "imgs/actions/play-pause-key/key"
 				}
 			]
+		},
+		{
+			"Name": "Playback Control",
+			"UUID": "de.boriskemper.music-assistant-controller.playback-control-key",
+			"Icon": "imgs/actions/playback-control-key/icon",
+			"Tooltip": "Next, previous, shuffle, repeat, crossfade or “Don't stop the music”.",
+			"PropertyInspectorPath": "ui/playback-control-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/playback-control-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Volume",
+			"UUID": "de.boriskemper.music-assistant-controller.volume-key",
+			"Icon": "imgs/actions/volume-key/icon",
+			"Tooltip": "Volume up, down, mute or a preset.",
+			"PropertyInspectorPath": "ui/volume-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/volume-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Like",
+			"UUID": "de.boriskemper.music-assistant-controller.like-key",
+			"Icon": "imgs/actions/like-key/icon",
+			"Tooltip": "Add the current track to your favorites, or remove it.",
+			"PropertyInspectorPath": "ui/like-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/like-key/key"
+				}
+			]
 		}
 	],
 	"Category": "Music Assistant Controller",
