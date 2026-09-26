@@ -45,7 +45,7 @@ export type LibraryItem = {
 };
 
 /** An entry of a list the plugin provides to the PI (TTS engines, sources, dashboard endpoints, …). */
-export type OptionItem = { value: string; label: string; sub?: string };
+export type OptionItem = { value: string; label: string; sub?: string; /** MDI path for a preview (e.g. the icon picker). */ icon?: string };
 
 /** PI → plugin */
 export type PiRequest =

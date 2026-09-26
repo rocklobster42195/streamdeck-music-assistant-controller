@@ -22,6 +22,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
+- Announcement key: **Timer** option — a press starts a countdown (ring and time on the key), the message comes when it ends ("The pasta is ready!"), a second press cancels it; it survives a restart. Plus an **icon picker** with a search over all Material Design Icons, a new target **Player + group** (every speaker grouped with the chosen one), and an own "done" flash instead of Stream Deck's green tick.
 - Play/Pause key and Track dial: **Show the service** option — a small logo on the cover shows where the music comes from (Spotify, your files, radio, …), using Music Assistant's own provider logos.
 - Every key (except Play/Pause, which shows the cover anyway) has a **Cover color** option: its icons take the color of what is playing instead of light grey and blue. Off-states stay grey, unavailable ones dark.
 - Browser dial: while idle it shows what the music comes from — the playlist or album (with its cover), and the current track and artist below. Without such a source it shows title and artist. Playlists show who made them as their subtitle.

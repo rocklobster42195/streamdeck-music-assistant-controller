@@ -290,11 +290,22 @@
     "pi.announce_no_engines": "Keine TTS-Engine gefunden – in Home Assistant oder Music Assistant einrichten.",
     "pi.announce_where": "Wo",
     "pi.announce_one": "Ein Player",
+    "pi.announce_group": "Player + Gruppe",
     "pi.announce_all": "Alle Player",
     "pi.announce_chime": "Gong vorab",
     "pi.announce_chime_hint": "Ein kurzer Ton vor der Nachricht",
     "pi.announce_volume": "Lautstärke",
     "pi.announce_volume_hint": "Lautstärke 0 % behält die aktuelle Lautstärke jedes Lautsprechers.",
+    "pi.announce_when": "Wann",
+    "pi.announce_now": "Sofort",
+    "pi.announce_timer": "Timer",
+    "pi.announce_minutes": "Minuten",
+    "pi.announce_timer_hint": "Drücken startet den Countdown (Ring und Zeit auf der Taste); die Durchsage kommt, wenn er abgelaufen ist. Nochmal drücken bricht ab.",
+    "pi.icon": "Symbol",
+    "pi.icon_search": "Symbol suchen … (z. B. pasta, bell, coffee)",
+    "pi.icon_default": "Standard",
+    "pi.icon_default_name": "Standardsymbol",
+    "pi.icon_none_found": "Kein Symbol gefunden.",
     "pi.source_help": "Schaltet den Player auf diesen Eingang. Die Taste leuchtet, solange er aktiv ist.",
     "pi.source": "Eingang",
     "pi.choose_source": "Eingang wählen",
@@ -607,11 +618,22 @@
     "pi.announce_no_engines": "No TTS engine found — add one in Home Assistant or Music Assistant.",
     "pi.announce_where": "Where",
     "pi.announce_one": "One player",
+    "pi.announce_group": "Player + group",
     "pi.announce_all": "All players",
     "pi.announce_chime": "Chime first",
     "pi.announce_chime_hint": "A short sound before the message",
     "pi.announce_volume": "Volume",
     "pi.announce_volume_hint": "Volume 0 % keeps each speaker's current volume.",
+    "pi.announce_when": "When",
+    "pi.announce_now": "At once",
+    "pi.announce_timer": "Timer",
+    "pi.announce_minutes": "Minutes",
+    "pi.announce_timer_hint": "Pressing starts the countdown (ring and time on the key); the message comes when it ends. Press again to cancel.",
+    "pi.icon": "Icon",
+    "pi.icon_search": "Search icons … (e.g. pasta, bell, coffee)",
+    "pi.icon_default": "Default",
+    "pi.icon_default_name": "Default icon",
+    "pi.icon_none_found": "No icon found.",
     "pi.source_help": "Switches the player to this input. The key lights up while the input is active.",
     "pi.source": "Input",
     "pi.choose_source": "Choose input",
@@ -4310,6 +4332,17 @@
    ]
   },
   {
+   "key": "pi.announce_group",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
    "key": "pi.announce_all",
    "group": "pi",
    "usedIn": [
@@ -4361,6 +4394,116 @@
      "label": "Announcement",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_when",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_now",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_timer",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_minutes",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.announce_timer_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_search",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/icon-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_default",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/icon-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_default_name",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/icon-picker.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_none_found",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/icon-picker.ts"
     }
    ]
   },

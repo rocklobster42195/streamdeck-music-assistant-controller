@@ -29,10 +29,13 @@ import {
     mdiVolumeMinus,
     mdiVolumeOff,
     mdiVolumePlus,
+    mdiTimerOutline,
+    mdiSpeakerWireless,
 } from "@mdi/js";
 import type { PiChoice, PiChoiceOption } from "streamdeck-core/pi";
 
 const ICONS: Record<string, string> = {
+    timer: mdiTimerOutline,
     next: mdiSkipNext,
     previous: mdiSkipPrevious,
     shuffle: mdiShuffleVariant,
@@ -55,6 +58,7 @@ const ICONS: Record<string, string> = {
     folderOpen: mdiFolderOpenOutline,
     speaker: mdiSpeaker,
     speakers: mdiSpeakerMultiple,
+    speakerGroup: mdiSpeakerWireless,
     quiz: mdiHelpCircleOutline,
     textOff: mdiEyeOffOutline,
     trackInfo: mdiCardTextOutline,

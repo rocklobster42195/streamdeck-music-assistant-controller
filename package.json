@@ -29,6 +29,7 @@
         "sim:extras": "node tools/sd-sim/extras.mjs sim-out",
         "sim:lyrics": "node tools/sd-sim/lyrics.mjs sim-out",
         "sim:continue": "node tools/sd-sim/continue.mjs sim-out",
+        "sim:announce-timer": "node tools/sd-sim/announce-timer.mjs sim-out",
         "sim:effect-sync": "node tools/sd-sim/effect-sync.mjs sim-out",
         "translate": "node tools/serve-translate.mjs",
         "translate:build": "node tools/build-translator.mjs",

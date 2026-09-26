@@ -1,6 +1,7 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
+import { groupLeader, groupMembers, isGrouped } from "../ma/groups";
 import { LatestSender } from "../ma/latest-sender";
 import { ICONS } from "../render/key-image";
 import { glide } from "../render/glide";
@@ -100,21 +101,6 @@ export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
         }
         return s;
     }
-}
-
-/** The player that leads the group this player is in (itself when it leads or isn't grouped). */
-function groupLeader(player: Player): Player {
-    const leaderId = player.synced_to ?? player.active_group;
-    return (leaderId && maConnection.player(leaderId)) || player;
-}
-
-function isGrouped(leader: Player): boolean {
-    return (leader.group_members?.length ?? 0) > 1;
-}
-
-function groupMembers(leader: Player): Player[] {
-    if (!isGrouped(leader)) return [leader];
-    return leader.group_members.map((id) => maConnection.player(id)).filter((p): p is Player => !!p);
 }
 
 function groupVolume(leader: Player): number {

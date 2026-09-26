@@ -43,7 +43,7 @@ All keys can show their icons in the **cover color** of what is playing (option 
 | **Continue Listening**: resume your latest audiobook or podcast episode where you left off | Key |
 | **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key |
 | **Source**: switch a speaker to Line-in, TV or another input | Key |
-| **Announcement**: speak a message on one or all speakers (TTS) | Key |
+| **Announcement**: speak a message on one or all speakers (TTS), at once or after a **timer**, with an icon of your choice | Key |
 | **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
 | **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) |
 | **Volume**: rotate to change, push to mute, touch for a preset; ring optionally in the cover color | Dial (SD+) |

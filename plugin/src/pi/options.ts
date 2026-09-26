@@ -1,4 +1,5 @@
 import { maConnection } from "../ma/connection";
+import { mdiLabel, mdiPath, searchMdi } from "../render/mdi-catalog";
 import { piBridge } from "./pi-bridge";
 
 /** Lists the property inspectors can ask for via <mac-select source="…">. */
@@ -22,6 +23,13 @@ export function registerOptionSources(): void {
         if (!ma?.isConnected) return [];
         const providers = (await ma.send<{ instance_id: string; domain: string; name: string; type: string; available?: boolean }[]>("providers")) ?? [];
         return providers.filter((p) => p.type === "music" && p.available !== false).map((p) => ({ value: p.instance_id, label: p.name, sub: p.domain }));
+    });
+
+    // Icon picker: search all Material Design Icons (an exact "mdi…" name returns just that icon)
+    piBridge.registerOptions("mdi-icons", ({ q }) => {
+        const exact = mdiPath(q);
+        if (exact) return [{ value: q, label: mdiLabel(q), icon: exact }];
+        return searchMdi(q ?? "").map((r) => ({ value: r.name, label: r.label, icon: r.path }));
     });
 
     piBridge.registerOptions("dashboards", async () => {

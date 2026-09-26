@@ -102,7 +102,7 @@ export type KeyImageOptions = {
     /** Caption under the icon (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
     badge?: string;
     /** A ring gauge (0..1) filling the key instead of an icon, e.g. the mute key's volume. */
-    ring?: { value: number; color: string; center?: { icon?: string; text?: string; color: string } };
+    ring?: { value: number; color: string; center?: { icon?: string; text?: string; color: string; size?: number } };
 };
 
 // Icon sizes without cover art: as large as sonos-controller's full-bleed MDI glyphs, a bit
@@ -209,7 +209,7 @@ function ringParts(ring: NonNullable<KeyImageOptions["ring"]>): string[] {
     }
     const center = ring.center;
     if (center?.text) {
-        parts.push(`<text x="${c}" y="${c + 15}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="${center.color}">${escapeXml(center.text)}</text>`);
+        parts.push(`<text x="${c}" y="${c + Math.round((center.size ?? 42) * 0.36)}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="${center.size ?? 42}" font-weight="700" fill="${center.color}">${escapeXml(center.text)}</text>`);
     } else if (center?.icon) {
         parts.push(icon(center.icon, c - 28, c - 28, 56, center.color));
     }

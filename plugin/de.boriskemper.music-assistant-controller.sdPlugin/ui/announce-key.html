@@ -18,13 +18,27 @@
     <pi-field setting="message" label="pi.announce_text" placeholder="pi.announce_placeholder"></pi-field>
   </pi-section>
 
+  <pi-section title="pi.announce_when">
+    <pi-choice setting="when" default="now" columns="2" data-options='[
+      {"value":"now","label":"pi.announce_now","icon":"playNow"},
+      {"value":"timer","label":"pi.announce_timer","icon":"timer"}
+    ]'></pi-choice>
+    <pi-range setting="minutes" min="1" max="120" step="1" default="10" unit=" min" label="pi.announce_minutes" data-show-when="when=timer" data-show-default="now"></pi-range>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-show-when="when=timer" data-show-default="now" data-i18n="pi.announce_timer_hint"></div>
+
+  <pi-section title="pi.icon">
+    <mac-icon-picker setting="icon" default-icon="mdiBullhorn"></mac-icon-picker>
+  </pi-section>
+
   <pi-section title="pi.announce_voice" class="pi-needs-connection">
     <mac-select setting="ttsEngine" source="tts-engines" placeholder="pi.announce_default_voice" empty="pi.announce_no_engines"></mac-select>
   </pi-section>
 
   <pi-section title="pi.announce_where">
-    <pi-choice setting="target" default="player" columns="2" data-options='[
+    <pi-choice setting="target" default="player" columns="3" data-options='[
       {"value":"player","label":"pi.announce_one","icon":"speaker"},
+      {"value":"group","label":"pi.announce_group","icon":"speakerGroup"},
       {"value":"all","label":"pi.announce_all","icon":"speakers"}
     ]'></pi-choice>
   </pi-section>
@@ -39,7 +53,7 @@
     <pi-toggle setting="iconCoverColor" label="pi.icon_cover_color" hint="pi.icon_cover_color_hint"></pi-toggle>
   </pi-section>
 
-  <pi-section title="pi.player" class="pi-needs-connection" data-show-when="target=player" data-show-default="player">
+  <pi-section title="pi.player" class="pi-needs-connection" data-show-when="target=player,group" data-show-default="player">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
 
