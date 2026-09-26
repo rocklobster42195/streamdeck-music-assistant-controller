@@ -92,6 +92,7 @@ ${d.svg(1920 - d.w - 90, (960 - d.h) / 2)}`);
 
 // Showcases 1920×960
 const showcases = [
+    ["store-showcase-0-lyrics.png", "05-lyrics", "Synced lyrics", "Sing along.\nOn your deck.", "The line being sung, across all Panorama\ndials, in time with the music.\nTurn to fine-tune, tap to re-sync."],
     ["store-showcase-1-panorama.png", "02-panorama", "Panorama", "One scene.\nFour dials.", "Effects span neighbouring dials, tinted by the cover,\nwith the title or synced lyrics on top."],
     ["store-showcase-2-browser.png", "04-browser", "Browse & queue", "Find it.\nPlay it.", "Scroll every service or your library on the dial,\njump through the queue, switch rooms with a turn."],
     ["store-showcase-3-effects.png", "03-matrix", "Made to look good", "Covers, colors,\nmotion.", "Crossfading covers, rings in the cover's color,\neffects behind any dial."],

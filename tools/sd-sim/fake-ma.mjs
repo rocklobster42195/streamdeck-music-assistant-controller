@@ -131,6 +131,26 @@ function browse(pathArg) {
     return [];
 }
 
+/**
+ * Invented lyrics for the invented "Midnight Tram" (never real song lyrics in screenshots — see
+ * CLAUDE.md), timed around the staged position (71 s plus the few seconds a scene takes).
+ */
+const DEMO_LRC = [
+    "Neon rivers on the window",
+    "every stop a little brighter",
+    "we ride the last tram through the city",
+    "holding on to midnight",
+    "streetlights humming in the rain",
+    "take me where the lines don't end",
+    "one more station, one more song",
+    "the night is ours until the morning",
+]
+    .map((line, i) => {
+        const t = 60 + i * 5;
+        return `[${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}.00] ${line}`;
+    })
+    .join("\n");
+
 const NOTE_ICON = `data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6Z"/></svg>`).toString("base64")}`;
 
 export async function startFakeMa({ port = 8199 } = {}) {
@@ -176,6 +196,7 @@ export async function startFakeMa({ port = 8199 } = {}) {
                     { instance_id: "radiobrowser", domain: "radiobrowser", name: "Radio", type: "music", available: true },
                 ],
                 "providers/icon": NOTE_ICON,
+                "metadata/get_track_lyrics": args.track?.uri === "spotify--demo://track/neon" ? [null, DEMO_LRC] : [null, null],
             };
             const result = msg.command in answers ? answers[msg.command] : null;
             ws.send(JSON.stringify({ message_id: msg.message_id, result }));

@@ -36,8 +36,10 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 |---|---|
 | ![Panorama: one effect across all four dials, with the title](docs/screenshots/02-panorama.png) | ![Matrix rain behind the Track and Group Volume dials](docs/screenshots/03-matrix.png) |
 | **Panorama:** one scene across neighbouring dials, with the title or synced lyrics on top | **Effect backgrounds** behind any dial, here Matrix Rain |
-| ![Browser, Queue, Active Player and Volume dials](docs/screenshots/04-browser.png) | ![Keys and dials](docs/screenshots/01-overview.png) |
-| **Browser, Queue, Active Player** and **Volume** on the dials | Everyday keys: cover, shuffle, skip, mute ring, rooms, favorites, a pasta timer |
+| ![Synced lyrics across four Panorama dials](docs/screenshots/05-lyrics.png) | ![Browser, Queue, Active Player and Volume dials](docs/screenshots/04-browser.png) |
+| **Synced lyrics** across the Panorama dials, in time with the music (invented lyrics here) | **Browser, Queue, Active Player** and **Volume** on the dials |
+| ![Keys and dials](docs/screenshots/01-overview.png) | |
+| Everyday keys: previous, play/pause with cover, next, shuffle, volume down/mute/up, a pasta timer | |
 
 The screenshots are rendered by the simulator against a stand-in Music Assistant with invented music and generated covers (`node tools/sd-sim/showcase.mjs`).
 

@@ -26,15 +26,15 @@ async function scene(name, build, settleMs = 4500, after) {
 const key = (sim, suffix, settings, column, row) => sim.add(suffix, settings, { column, row });
 const dial = (sim, suffix, settings, column) => sim.add(suffix, settings, { column, controller: "Encoder" });
 
-/** The everyday keys, used in every scene. */
+/** The everyday keys, used in every scene: transport on top, volume below (as they'd sit on a real deck). */
 function keys(sim) {
-    key(sim, "play-pause-key", { showTitle: true, showProgress: true, showProvider: true }, 0, 0);
-    key(sim, "playback-control-key", { command: "shuffle" }, 1, 0);
+    key(sim, "playback-control-key", { command: "previous" }, 0, 0);
+    key(sim, "play-pause-key", { showTitle: true, showProgress: true, showProvider: true }, 1, 0);
     key(sim, "playback-control-key", { command: "next" }, 2, 0);
-    key(sim, "volume-key", { command: "mute" }, 3, 0);
-    key(sim, "player-key", { playerId: "kitchen" }, 0, 1);
-    key(sim, "playback-control-key", { command: "repeat" }, 1, 1);
-    key(sim, "like-key", {}, 2, 1);
+    key(sim, "playback-control-key", { command: "shuffle" }, 3, 0);
+    key(sim, "volume-key", { command: "down", showVolume: false }, 0, 1);
+    key(sim, "volume-key", { command: "mute" }, 1, 1);
+    key(sim, "volume-key", { command: "up", showVolume: false }, 2, 1);
     key(sim, "announce-key", { message: "The pasta is ready!", when: "timer", minutes: 9, icon: "mdiPasta" }, 3, 1);
 }
 
@@ -58,6 +58,11 @@ try {
         for (const c of [1, 2]) dial(sim, "panorama-dial", { background: "matrix-rain", text: "off" }, c);
         dial(sim, "group-volume-dial", { background: "matrix-rain", ringCoverColor: true }, 3);
     });
+
+    await scene("05-lyrics", (sim) => {
+        keys(sim);
+        for (const c of [0, 1, 2, 3]) dial(sim, "panorama-dial", { background: "particles", text: "lyrics", lyricsOffset: 0.5 }, c);
+    }, 6000);
 
     await scene(
         "04-browser",
