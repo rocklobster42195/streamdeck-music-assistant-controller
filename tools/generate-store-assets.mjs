@@ -96,7 +96,7 @@ const showcases = [
     ["store-showcase-1-panorama.png", "02-panorama", "Panorama", "One scene.\nFour dials.", "Effects span neighbouring dials, tinted by the cover,\nwith the title or synced lyrics on top."],
     ["store-showcase-2-browser.png", "04-browser", "Browse & queue", "Find it.\nPlay it.", "Scroll every service or your library on the dial,\njump through the queue, switch rooms with a turn."],
     ["store-showcase-3-effects.png", "03-matrix", "Made to look good", "Covers, colors,\nmotion.", "Crossfading covers, rings in the cover's color,\neffects behind any dial."],
-    ["store-showcase-4-keys.png", "01-overview", "Everyday keys", "Every room.\nOne deck.", "Play/pause, shuffle, mute, favorites, rooms —\nand a timer that tells you the pasta is ready."],
+    ["store-showcase-4-keys.png", "01-overview", "Everyday keys", "Every room.\nOne deck.", "Skip, play, shuffle, volume and mute —\nand a timer that tells you the pasta is ready."],
 ];
 for (const [file, scene, eyebrow, title, sub] of showcases) {
     const d = await device(scene, 940);
