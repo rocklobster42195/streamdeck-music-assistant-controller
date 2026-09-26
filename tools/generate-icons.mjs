@@ -45,13 +45,28 @@ for (const [name, d] of Object.entries(actions)) {
     write(`${root}/actions/${name}/key.svg`, keyImage(d));
 }
 
-// Category + plugin icon: placeholder until a proper MAC logo exists (must not be the MA logo).
-write(`${root}/plugin/category-icon.svg`, `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="#ffffff" d="${mdi.mdiMusicCircle}"/></svg>`);
-
-// The plugin icon must be PNG (256 px + @2x 512 px).
+// Category + plugin icon: the Rocklobster lobster shared with Sonos Controller (not the MA logo).
+// docs/brand/lobster.svg is a potrace vectorization of sonos-controller's store/lobster_icon.png.
 const sharp = require("sharp");
-const pluginIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 288 288"><rect width="288" height="288" rx="48" fill="#1b2a3a"/><path transform="translate(48 48) scale(8)" fill="#7fd1ff" d="${mdi.mdiMusicCircle}"/></svg>`;
+const MA_BLUE = "#03a9f4"; // Music Assistant's primary color (frontend theme)
+const lobsterSvg = fs.readFileSync("docs/brand/lobster.svg", "utf8");
+const viewBox = lobsterSvg.match(/viewBox="([^"]+)"/)[1];
+const lobsterPath = lobsterSvg.match(/ d="([^"]+)"/)[1];
+/** The lobster in `color`; `stroke` (viewBox units) thickens the wireframe for small sizes. */
+const lobster = (color, stroke = 0) =>
+    `<path fill="${color}" stroke="${color}" stroke-width="${stroke}" stroke-linejoin="round" fill-rule="evenodd" d="${lobsterPath}"/>`;
+
+// Category icon (action list): white, filling the icon, lines only slightly thickened (heavier looked clumsy next to Sonos Controller).
+fs.rmSync(`${root}/plugin/category-icon.png`, { force: true });
+fs.rmSync(`${root}/plugin/category-icon@2x.png`, { force: true });
+write(`${root}/plugin/category-icon.svg`, `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="${viewBox}">${lobster("#f2f2f2", 6)}</svg>`);
+
+// Plugin / Marketplace icon (PNG, 256 px + @2x 512 px): dark lobster on a Music Assistant blue circle.
+const pluginIcon = (size) => {
+    const pad = size * 0.17;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${MA_BLUE}"/><svg x="${pad}" y="${pad}" width="${size - 2 * pad}" height="${size - 2 * pad}" viewBox="${viewBox}">${lobster("#0a141e", 6)}</svg></svg>`;
+};
 for (const [file, size] of [["marketplace.png", 256], ["marketplace@2x.png", 512]]) {
-    await sharp(Buffer.from(pluginIcon)).resize(size, size).png().toFile(`${root}/plugin/${file}`);
+    await sharp(Buffer.from(pluginIcon(size))).png().toFile(`${root}/plugin/${file}`);
     console.log("wrote", `${root}/plugin/${file}`);
 }
