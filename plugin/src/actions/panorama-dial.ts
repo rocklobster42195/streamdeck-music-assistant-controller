@@ -13,7 +13,7 @@ import type { JsonObject } from "@elgato/utils";
 import { DEFAULT_EFFECT_ID } from "streamdeck-core";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
-import { effectSettingsFor, panorama, type EffectSettings } from "../render/panorama";
+import { effectSettingsFor, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { STRIP_W, stripImage } from "../render/strip";
 import { PanoramaOverlay, type OverlayMode } from "./panorama-overlay";
 
@@ -56,12 +56,21 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!ev.action.isDial()) return;
         const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
+        registerEffectTarget(ev.action.id, (effectId) => {
+            const inst = this.instances.get(ev.action.id);
+            if (!inst || this.effectId(inst) === effectId) return;
+            inst.settings = { ...inst.settings, background: effectId };
+            void inst.action.setSettings(inst.settings);
+            this.join(ev.action.id);
+            this.pushSettings(ev.action.id);
+        });
         this.join(ev.action.id);
     }
 
     override onWillDisappear(ev: WillDisappearEvent<PanoramaDialSettings>): void {
         this.instances.delete(ev.action.id);
         this.overlay.forget(ev.action.id);
+        unregisterEffectTarget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
     }
@@ -71,6 +80,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!inst) return;
         const before = inst.settings;
         inst.settings = ev.payload.settings;
+        spreadEffect(ev.action.id, this.effectId({ ...inst, settings: before }), this.effectId(inst), inst.settings.syncEffect);
         if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset || before.playerId !== inst.settings.playerId) this.shareText(ev.action.id);
         this.join(ev.action.id);
         this.pushSettings(ev.action.id);

@@ -5,6 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Changed
+- Panorama effects: changing the effect on one display now switches all connected displays of that scene (Track/Volume dial backgrounds included), instead of splitting that display off. Can be turned off per dial ("Apply to connected displays"); choosing no effect still takes a single display out.
 - Larger icons on the keys, as in Sonos Controller.
 - Volume key: the mute key shows the volume as a ring (like the Volume dial); muted, the ring turns grey with a red muted speaker inside. The volume number can be turned off ("Show volume").
 

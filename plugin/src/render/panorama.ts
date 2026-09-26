@@ -14,6 +14,8 @@ export type EffectSettings = {
     background?: string;
     /** Tint the effect with the cover's accent color (default on). */
     coverColor?: boolean;
+    /** Changing the effect here switches the whole group of connected displays (default on). */
+    syncEffect?: boolean;
     [field: string]: unknown;
 };
 
@@ -38,6 +40,31 @@ export function effectSettingsFor(settings: EffectSettings, effectId: string, me
 
 function rgbToHex([r, g, b]: [number, number, number]): string {
     return `#${[r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
+}
+
+const effectTargets = new Map<string, (effectId: string) => void>();
+
+/** Lets a dial take over an effect chosen on a connected display (see {@link spreadEffect}). */
+export function registerEffectTarget(context: string, apply: (effectId: string) => void): void {
+    effectTargets.set(context, apply);
+}
+
+export function unregisterEffectTarget(context: string): void {
+    effectTargets.delete(context);
+}
+
+/**
+ * A dial's effect choice changed. Connected displays only form one panorama while they share an
+ * effect, so without this a change split the dial off from its group. With `syncEffect` on
+ * (default) the other displays of the group follow instead. Turning the effect off never spreads:
+ * that's how a single display leaves the group. Call it before the dial re-joins the engine, while
+ * {@link PanoramaEngine.members} still returns the old group.
+ */
+export function spreadEffect(context: string, before: string | undefined, after: string | undefined, sync: boolean | undefined): void {
+    if (sync === false || !before || !after || before === after) return;
+    for (const m of panorama.members(context)) {
+        if (m.context !== context) effectTargets.get(m.context)?.(after);
+    }
 }
 
 /** Darkening layer over an effect, so text on top stays readable. */

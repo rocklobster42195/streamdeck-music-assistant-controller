@@ -231,6 +231,8 @@
 			"background_hint": "Benachbarte Dials mit demselben Effekt teilen sich eine durchgehende Szene.",
 			"effect": "Effekt",
 			"effect_none": "Keiner",
+			"sync_effect": "Auf verbundene Displays übertragen",
+			"sync_effect_hint": "Ein Effektwechsel hier gilt auch für die benachbarten Displays mit demselben Effekt. „Kein Effekt“ nimmt nur dieses Display heraus.",
 			"cover_color": "Cover-Farbe",
 			"cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
 			"panorama_help": "Drehen und Drücken verändern den Effekt (z. B. Tempo). Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",

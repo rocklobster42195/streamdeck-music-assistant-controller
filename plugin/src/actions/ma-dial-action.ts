@@ -15,7 +15,7 @@ import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { CoverFader } from "../render/cover-fade";
 import { ICONS } from "../render/key-image";
-import { effectSettingsFor, panorama, SCRIM, type EffectSettings } from "../render/panorama";
+import { effectSettingsFor, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { mdi, stripImage, text } from "../render/strip";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
@@ -51,12 +51,21 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         if (!ev.action.isDial()) return;
         const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
+        registerEffectTarget(ev.action.id, (effectId) => {
+            const inst = this.instances.get(ev.action.id);
+            if (!inst || (inst.settings as EffectSettings).background === effectId) return;
+            inst.settings = { ...inst.settings, background: effectId };
+            void inst.action.setSettings(inst.settings);
+            inst.lastRender = undefined;
+            this.render(ev.action.id);
+        });
         this.render(ev.action.id);
     }
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
         this.instances.delete(ev.action.id);
         this.covers.forget(ev.action.id);
+        unregisterEffectTarget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
     }
@@ -64,7 +73,10 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     override onDidReceiveSettings(ev: DidReceiveSettingsEvent<S>): void {
         const inst = this.instances.get(ev.action.id);
         if (!inst) return;
+        const before = (inst.settings as EffectSettings).background;
         inst.settings = ev.payload.settings;
+        const next = inst.settings as EffectSettings;
+        spreadEffect(ev.action.id, before, next.background, next.syncEffect);
         inst.lastRender = undefined;
         this.render(ev.action.id);
     }

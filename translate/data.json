@@ -172,7 +172,7 @@
     "pi.vol_step": "Schritt pro Druck",
     "pi.vol_preset_value": "Preset-Lautstärke",
     "pi.vol_show_value": "Lautstärke anzeigen",
-    "pi.vol_show_value_hint": "Die aktuelle Lautstärke auf der Taste (bei Stumm im Ring)",
+    "pi.vol_show_value_hint": "Die aktuelle Lautstärke auf der Taste (bei der Stumm-Taste im Ring)",
     "pi.like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn.",
     "pi.item": "Inhalt",
     "pi.item_search_placeholder": "In Music Assistant suchen…",
@@ -243,6 +243,8 @@
     "pi.background_hint": "Benachbarte Dials mit demselben Effekt teilen sich eine durchgehende Szene.",
     "pi.effect": "Effekt",
     "pi.effect_none": "Keiner",
+    "pi.sync_effect": "Auf verbundene Displays übertragen",
+    "pi.sync_effect_hint": "Ein Effektwechsel hier gilt auch für die benachbarten Displays mit demselben Effekt. „Kein Effekt“ nimmt nur dieses Display heraus.",
     "pi.cover_color": "Cover-Farbe",
     "pi.cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
     "pi.panorama_help": "Drehen und Drücken verändern den Effekt (z. B. Tempo). Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
@@ -538,6 +540,8 @@
     "pi.background_hint": "Neighbouring dials with the same effect share one continuous scene.",
     "pi.effect": "Effect",
     "pi.effect_none": "None",
+    "pi.sync_effect": "Apply to connected displays",
+    "pi.sync_effect_hint": "Changing the effect here also switches the neighboring displays that run the same effect. Choosing none takes only this display out.",
     "pi.cover_color": "Cover color",
     "pi.cover_color_hint": "Tint the effect with the colors of what is playing",
     "pi.panorama_help": "Rotate and push change the effect (e.g. speed). Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
@@ -3559,6 +3563,28 @@
   },
   {
    "key": "pi.effect_none",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.sync_effect",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.sync_effect_hint",
    "group": "pi",
    "usedIn": [
     {

@@ -58,6 +58,7 @@ export class MacEffectSettings extends HTMLElement {
         const fields = this.querySelector<HTMLElement>(".mac-effect-fields")!;
         if (!effect) return;
         fields.innerHTML = [
+            `<pi-toggle setting="syncEffect" label="pi.sync_effect" hint="pi.sync_effect_hint" data-default="true"></pi-toggle>`,
             `<pi-toggle setting="coverColor" label="pi.cover_color" hint="pi.cover_color_hint" data-default="true"></pi-toggle>`,
             ...effect.settingsSchema.map((f) => fieldHtml(effect, f)),
         ].join("");

@@ -129,7 +129,7 @@ Controls the volume of the **whole group** the player belongs to, and shows the 
 
 ### Panorama dial and effect backgrounds *(Stream Deck + only)*
 
-Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing Globe**. Neighbouring dials with the same effect share **one continuous scene** across the touch strip. Rotating or pushing a Panorama dial changes the effect, for example its speed, and the dial remembers the change. With **Cover color** on, the effect takes the colors of what is playing.
+Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing Globe**. Neighbouring dials with the same effect share **one continuous scene** across the touch strip. Changing the effect on one of them switches all connected displays (turn off **Apply to connected displays** to change just one; choosing no effect always takes only that display out). Rotating or pushing a Panorama dial changes the effect, for example its speed, and the dial remembers the change. With **Cover color** on, the effect takes the colors of what is playing.
 
 **Text** puts the music of the chosen **Player** (default: the active player) on top of the effect:
 
