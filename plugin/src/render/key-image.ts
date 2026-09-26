@@ -108,7 +108,35 @@ export type KeyImageOptions = {
 const ICON = { size: 112, xy: 16 };
 const ICON_WITH_BADGE = { size: 92, x: 26, y: 6 };
 
-export function renderKeyImage(opts: KeyImageOptions): string {
+/** Cover color that replaces the light default and the blue "on" color while a key renders (see withIconTint). */
+let iconTint: string | undefined;
+
+/**
+ * Render with icons in `tint` (the cover's color) instead of the light default and the blue "on"
+ * color — for keys with the "Cover color" option. OFF grey and UNAVAILABLE stay as they are, so
+ * the three states remain tellable apart.
+ */
+export function withIconTint<T>(tint: string | undefined, render: () => T): T {
+    const before = iconTint;
+    iconTint = tint;
+    try {
+        return render();
+    } finally {
+        iconTint = before;
+    }
+}
+
+export function renderKeyImage(input: KeyImageOptions): string {
+    const t = iconTint;
+    const opts: KeyImageOptions = t
+        ? {
+              ...input,
+              color: input.color === undefined || input.color === ACCENT ? t : input.color,
+              active: input.active === ACCENT ? t : input.active,
+              // The mute key's volume ring (a muted one keeps its grey)
+              ring: input.ring && input.ring.color === ACCENT ? { ...input.ring, color: t } : input.ring,
+          }
+        : input;
     const color = opts.color ?? "#e0e0e0";
     const parts: string[] = [`<rect width="${SIZE}" height="${SIZE}" fill="#101010"/>`];
     if (opts.active && !opts.cover) {

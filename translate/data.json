@@ -261,6 +261,9 @@
     "pi.sync_effect": "Auf verbundene Displays übertragen",
     "pi.sync_effect_hint": "Ein Effektwechsel hier – auch „Kein Effekt“ – gilt auch für die benachbarten Displays mit demselben Effekt. Ausschalten, um nur dieses Display zu ändern.",
     "pi.cover_color": "Cover-Farbe",
+    "pi.icon_color": "Symbolfarbe",
+    "pi.icon_cover_color": "Cover-Farbe",
+    "pi.icon_cover_color_hint": "Symbole in der Farbe dessen, was gerade läuft. Aus: hellgrau (und blau, wenn eingeschaltet).",
     "pi.cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
     "pi.panorama_help": "Drehen verändert den gewählten Wert (z. B. Tempo), Drücken wechselt ihn – oben auf dem Display erscheint ein Symbol. Tippen synchronisiert die Lyrics neu. Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
     "pi.overlay": "Text",
@@ -573,6 +576,9 @@
     "pi.sync_effect": "Apply to connected displays",
     "pi.sync_effect_hint": "Changing the effect here, or turning it off, also switches the neighboring displays that run the same effect. Turn this off to change only this display.",
     "pi.cover_color": "Cover color",
+    "pi.icon_color": "Icon color",
+    "pi.icon_cover_color": "Cover color",
+    "pi.icon_cover_color_hint": "Icons take the color of what is playing. Off, they stay light grey (and blue when on).",
     "pi.cover_color_hint": "Tint the effect with the colors of what is playing",
     "pi.panorama_help": "Rotate changes the chosen value (e.g. speed), push switches it — a small icon shows at the top of the display. Tap to re-sync the lyrics. Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
     "pi.overlay": "Text",
@@ -3827,6 +3833,174 @@
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/effect-settings.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_color",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    },
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    },
+    {
+     "label": "Like",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    },
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    },
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    },
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    },
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_cover_color",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    },
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    },
+    {
+     "label": "Like",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    },
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    },
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    },
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    },
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.icon_cover_color_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Announcement",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/announce-key.html"
+    },
+    {
+     "label": "Continue Listening",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/continue-key.html"
+    },
+    {
+     "label": "Cast Dashboard",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/dashboard-key.html"
+    },
+    {
+     "label": "Like",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/like-key.html"
+    },
+    {
+     "label": "Play Item",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
+    },
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    },
+    {
+     "label": "Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
+    },
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    },
+    {
+     "label": "Source",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
     }
    ]
   },

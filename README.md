@@ -30,6 +30,8 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 
 ## Actions
 
+All keys can show their icons in the **cover color** of what is playing (option **Cover color**).
+
 | Action | Controller |
 |---|---|
 | **Play / Pause**: cover art, live play state, optional progress bar and player name | Key |

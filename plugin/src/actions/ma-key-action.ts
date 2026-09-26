@@ -12,10 +12,14 @@ import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { CoverFader, type CoverFrame } from "../render/cover-fade";
-import { ICONS, renderKeyImage } from "../render/key-image";
+import { coverAccent, ICONS, renderKeyImage, rgb, withIconTint } from "../render/key-image";
 
 /** Every MAC key has a player target; "" / undefined = follow the active player. */
-export type MaKeySettings = { playerId?: string } & JsonObject;
+export type MaKeySettings = {
+    playerId?: string;
+    /** Icons in the cover's color instead of light grey / blue (off: as usual). */
+    iconCoverColor?: boolean;
+} & JsonObject;
 
 /** Everything a key needs to render or act once MA is connected and its player exists. */
 export type PlayerContext<S> = {
@@ -115,7 +119,9 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
         let previewState: KeyPreviewState;
 
         if (ctx) {
-            out = this.renderPlayer(ctx);
+            // "Cover color" option: icons take the color of what is playing
+            const tint = inst.settings.iconCoverColor === true ? coverAccent(ctx.player.current_media) : undefined;
+            out = withIconTint(tint && rgb(tint, ""), () => this.renderPlayer(ctx));
             const s = ctx.queue?.state ?? ctx.player.playback_state;
             previewState = s === "playing" ? "playing" : s === "paused" ? "paused" : "idle";
         } else {
