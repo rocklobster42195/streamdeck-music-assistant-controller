@@ -30,3 +30,6 @@ release/
 
 # npm pack output
 *.tgz
+
+# Marketplace material (images, texts) — kept local
+docs/marketplace/
