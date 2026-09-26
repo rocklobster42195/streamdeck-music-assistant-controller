@@ -11,13 +11,13 @@ const sharp = require("sharp");
 
 const KEY = 144;
 
-/** Write one PNG per slot and the deck overview (`<name>.png`) into `dir`. Returns the overview path. */
+/** Write the deck overview (`<name>.png`) into `dir` and one PNG per slot into `dir/parts`. Returns the overview path. */
 export async function renderDeck(slots, dir, name = "deck") {
-    fs.mkdirSync(dir, { recursive: true });
+    fs.mkdirSync(path.join(dir, "parts"), { recursive: true });
     const layers = [];
     for (const [context, slot] of slots) {
         const png = await renderSlot(slot);
-        fs.writeFileSync(path.join(dir, `${name}-${context}.png`), png);
+        fs.writeFileSync(path.join(dir, "parts", `${name}-${context}.png`), png);
         const { column, row } = slot.coordinates;
         const top = slot.controller === "Encoder" ? 2 * (KEY + 24) + 24 : row * (KEY + 24) + 12;
         const left = slot.controller === "Encoder" ? column * 200 + 12 : column * (KEY + 24) + 12;

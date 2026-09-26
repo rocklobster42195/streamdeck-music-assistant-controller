@@ -226,8 +226,10 @@ export async function startSim({ globalSettings = {}, language = "de", verbose =
         sleep: (ms) => new Promise((r) => setTimeout(r, ms)),
 
         /** Render every slot plus the deck overview into `dir`. Returns the deck image path. */
+        /** Writes into `<dir>/<scenario>/` (the running script's name), so scenarios don't mix. */
         snapshot(dir, name = "deck") {
-            return renderDeck(state.slots, dir, name);
+            const scenario = path.basename(process.argv[1] ?? "sim", ".mjs");
+            return renderDeck(state.slots, path.basename(dir) === scenario ? dir : path.join(dir, scenario), name);
         },
 
         async stop() {
