@@ -22,6 +22,11 @@
     ]'></pi-choice>
   </pi-section>
 
+  <pi-section title="pi.browse_providers" class="pi-needs-connection">
+    <mac-provider-filter setting="providers"></mac-provider-filter>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-i18n="pi.browse_providers_hint"></div>
+
   <pi-section title="pi.play_mode">
     <pi-choice setting="option" default="replace" columns="3" data-options='[
       {"value":"replace","label":"pi.opt_replace","icon":"playNow"},

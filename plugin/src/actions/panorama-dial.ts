@@ -112,9 +112,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         // Turning changes the chosen function: lyrics timing (shown as a scale) or an effect value.
         const { run, lead } = this.lead(ev.action.id);
         const current = this.currentFunction(ev.action.id, run.ids[0], lead);
-        if (current === "timing") {
-            const current = Number(lead.lyricsOffset ?? LYRICS_LEAD_S);
-            const next = Math.round(Math.min(OFFSET_MAX, Math.max(OFFSET_MIN, current + ev.payload.ticks * OFFSET_STEP)) * 10) / 10;
+        if (current === "timing" && lead) {
+            const offset = Number(lead.lyricsOffset ?? LYRICS_LEAD_S);
+            const next = Math.round(Math.min(OFFSET_MAX, Math.max(OFFSET_MIN, offset + ev.payload.ticks * OFFSET_STEP)) * 10) / 10;
             for (const id of run.ids) {
                 const inst = this.instances.get(id);
                 if (inst) inst.settings = { ...inst.settings, lyricsOffset: next };

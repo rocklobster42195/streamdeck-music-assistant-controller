@@ -21,3 +21,6 @@ export const LIBRARY_ROOT = "mac:library";
 export interface BrowseSource {
     list(path: string): Promise<BrowseEntry[]>;
 }
+
+/** Music provider instances to show (e.g. only Spotify); undefined = all. */
+export type ProviderFilter = ReadonlySet<string> | undefined;

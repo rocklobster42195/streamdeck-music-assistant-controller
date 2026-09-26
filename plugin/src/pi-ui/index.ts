@@ -7,6 +7,7 @@ import { MacFlowMode } from "./flow-mode";
 import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
+import { MacProviderFilter } from "./provider-filter";
 import { MacSelect } from "./select";
 import { functionIcon } from "../render/function-icons";
 import { initPiState } from "./state";
@@ -26,6 +27,7 @@ sd.onReady(() => {
     customElements.define("mac-effect-settings", MacEffectSettings);
     customElements.define("mac-select", MacSelect);
     customElements.define("mac-flow-mode", MacFlowMode);
+    customElements.define("mac-provider-filter", MacProviderFilter);
     initChoiceOptions();
     initConditionalVisibility();
 

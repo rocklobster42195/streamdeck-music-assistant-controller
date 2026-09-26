@@ -16,6 +16,14 @@ export function registerOptionSources(): void {
         return (player?.source_list ?? []).filter((s) => !s.passive).map((s) => ({ value: s.id, label: s.id === playerId ? "Music Assistant" : s.name }));
     });
 
+    // Music providers for the Browser dial's filter (instance id, name, provider type)
+    piBridge.registerOptions("music-providers", async () => {
+        const ma = maConnection.ma;
+        if (!ma?.isConnected) return [];
+        const providers = (await ma.send<{ instance_id: string; domain: string; name: string; type: string; available?: boolean }[]>("providers")) ?? [];
+        return providers.filter((p) => p.type === "music" && p.available !== false).map((p) => ({ value: p.instance_id, label: p.name, sub: p.domain }));
+    });
+
     piBridge.registerOptions("dashboards", async () => {
         const ma = maConnection.ma;
         if (!ma?.isConnected) return [];

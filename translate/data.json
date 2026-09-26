@@ -232,6 +232,9 @@
     "pi.align_center": "Mitte",
     "pi.align_right": "Rechts",
     "pi.browse_start": "Startpunkt",
+    "pi.browse_providers": "Dienste",
+    "pi.browse_providers_hint": "Nur eingeschaltete Dienste erscheinen in der Anbieterliste und in den Bibliotheksordnern (Favoriten, Playlists, Alben …). Solange alle an sind, kommen neue Dienste von selbst dazu.",
+    "pi.loading": "Wird geladen …",
     "pi.browse_start_providers": "Alle Anbieter",
     "pi.browse_start_library": "Bibliothek",
     "pi.browse_folder": "Abspielbare Ordner",
@@ -541,6 +544,9 @@
     "pi.align_center": "Center",
     "pi.align_right": "Right",
     "pi.browse_start": "Start at",
+    "pi.browse_providers": "Services",
+    "pi.browse_providers_hint": "Only the switched-on services show up in the list of providers and in your library folders (favorites, playlists, albums …). New services appear on their own while all are on.",
+    "pi.loading": "Loading …",
     "pi.browse_start_providers": "All providers",
     "pi.browse_start_library": "Library",
     "pi.browse_folder": "Playable folders",
@@ -3452,6 +3458,39 @@
      "label": "Browser",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_providers",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.browse_providers_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.loading",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/provider-filter.ts"
     }
    ]
   },

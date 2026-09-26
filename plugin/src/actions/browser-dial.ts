@@ -14,6 +14,8 @@ type BrowserDialSettings = MaKeySettings & {
     /** Seconds without input until the dial returns to "now playing". */
     timeout?: number;
     option?: "replace" | "next" | "add";
+    /** Music provider instances to show (e.g. only Spotify); unset = all. */
+    providers?: string[];
 };
 
 type State = {
@@ -99,7 +101,11 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
     private state(id: string): State {
         let st = this.states.get(id);
         if (!st) {
-            st = { model: new BrowserModel(this.source, () => this.render(id)), browsing: false };
+            const filter = () => {
+                const list = this.instances.get(id)?.settings.providers;
+                return Array.isArray(list) ? new Set(list) : undefined;
+            };
+            st = { model: new BrowserModel(this.source.filtered(filter), () => this.render(id)), browsing: false };
             this.states.set(id, st);
         }
         return st;

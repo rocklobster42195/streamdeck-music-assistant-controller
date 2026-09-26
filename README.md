@@ -142,7 +142,7 @@ The **Track**, **Volume**, **Group Volume**, **Queue**, **Browser** and **Player
 
 ### Browser dial *(Stream Deck + only)*
 
-Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The first folder, **Continue listening**, holds the audiobooks and podcast episodes you started. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24").
+Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The first folder, **Continue listening**, holds the audiobooks and podcast episodes you started. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24"). Under **Services** you choose which music services show up (for example only Spotify): the provider list and your library folders then leave the others out.
 
 | Input | Effect |
 |---|---|
