@@ -58,6 +58,66 @@ export function lyricsOverlay(run: TextRun, current: string, next: string, previ
     return inRun(run, parts);
 }
 
+/**
+ * Lyrics timing while the dial turns: a scale across the top of the run with a tick at 0 and a
+ * marker at the current offset, plus its value ("+0.7 s").
+ */
+export function timingOverlay(run: TextRun, offset: number, min: number, max: number, opacity = 1): string {
+    if (opacity <= 0) return "";
+    const x0 = 16;
+    const x1 = run.width - 16;
+    const at = (v: number) => x0 + ((Math.min(max, Math.max(min, v)) - min) / (max - min)) * (x1 - x0);
+    const zero = at(0);
+    const pos = at(offset);
+    const value = `${offset > 0 ? "+" : offset < 0 ? "−" : "±"}${Math.abs(offset).toFixed(1)} s`;
+    // A flat strip (the sung line right below stays readable): value next to the marker
+    const w = measureArialWidth(value, 12, true);
+    const right = pos + 8 + w <= x1;
+    const o = opacity < 1 ? ` opacity="${opacity.toFixed(2)}"` : "";
+    return inRun(run, [
+        `<g${o}>`,
+        `<rect x="${x0 - 8}" y="0" width="${x1 - x0 + 16}" height="19" rx="6" fill="#000" opacity="0.65"/>`,
+        `<line x1="${x0}" y1="9.5" x2="${x1}" y2="9.5" stroke="#8a8a90" stroke-width="2"/>`,
+        `<line x1="${zero.toFixed(1)}" y1="4" x2="${zero.toFixed(1)}" y2="15" stroke="#d4d4d8" stroke-width="2"/>`,
+        `<line x1="${pos.toFixed(1)}" y1="2" x2="${pos.toFixed(1)}" y2="17" stroke="#6cc4ff" stroke-width="4" stroke-linecap="round"/>`,
+        `<rect x="${(right ? pos + 5 : pos - 11 - w).toFixed(1)}" y="2" width="${(w + 6).toFixed(1)}" height="15" rx="4" fill="#000"/>`,
+        label(right ? pos + 8 : pos - 8, 14, value, 12, "#ffffff", "bold", right ? "start" : "end", 1),
+        `</g>`,
+    ]);
+}
+
+/**
+ * Which value the dial changes right now: a small pill at the top of the run with the function's
+ * icon and name, plus a level bar (0–100) for effect values.
+ */
+export function functionOverlay(run: TextRun, icon: string, name: string, level: number | undefined, opacity = 1): string {
+    if (opacity <= 0) return "";
+    const textW = measureArialWidth(name, 12, true);
+    const barW = level === undefined ? 0 : 44;
+    const w = 8 + 16 + 6 + textW + (barW ? 8 + barW : 0) + 10;
+    const x = run.width / 2 - w / 2;
+    const o = opacity < 1 ? ` opacity="${opacity.toFixed(2)}"` : "";
+    const parts = [
+        `<g${o}>`,
+        `<rect x="${x.toFixed(1)}" y="0" width="${w.toFixed(1)}" height="22" rx="8" fill="#000" opacity="0.7"/>`,
+        `<path transform="translate(${(x + 8).toFixed(1)} 3) scale(${16 / 24})" fill="#6cc4ff" d="${icon}"/>`,
+        label(x + 30, 15.5, name, 12, "#ffffff", "bold", "start", 1),
+    ];
+    if (level !== undefined) {
+        const bx = x + 30 + textW + 8;
+        const v = Math.min(100, Math.max(0, level)) / 100;
+        parts.push(`<rect x="${bx.toFixed(1)}" y="9" width="${barW}" height="4" rx="2" fill="#3a3a40"/>`, `<rect x="${bx.toFixed(1)}" y="9" width="${Math.max(4, barW * v).toFixed(1)}" height="4" rx="2" fill="#6cc4ff"/>`);
+    }
+    parts.push(`</g>`);
+    return inRun(run, parts);
+}
+
+/** A short confirmation across the top of the run (e.g. after a resync). */
+export function noticeOverlay(run: TextRun, value: string, opacity = 1): string {
+    if (opacity <= 0) return "";
+    return inRun(run, [backed(run.width / 2, 15, value, 13, "#6cc4ff", "bold", opacity)]);
+}
+
 type SungLayout = { lines: string[]; size: number; top: number; gap: number };
 
 /** Largest first: two lines stay big, three lines only when two don't fit even at 18 px. */

@@ -205,6 +205,14 @@ class MaConnection {
         client.start();
     }
 
+    /** Re-measure the server clock and reload the position of the queue a player plays from. */
+    async resync(playerId: string | undefined): Promise<void> {
+        const client = this.client;
+        if (!client) return;
+        await client.resync(this.queueFor(this.player(playerId))?.queue_id);
+        this.emit();
+    }
+
     /** Ask all keys to re-render (e.g. after a lookup finished). */
     notify(): void {
         this.emit();

@@ -327,6 +327,17 @@ export class MusicAssistantConnection {
         }
     }
 
+    /**
+     * Measure the clock offset again and reload a queue's position straight from the server, e.g.
+     * when extrapolated positions seem to have drifted (a long session, many seeks).
+     */
+    async resync(queueId?: string): Promise<void> {
+        await this.measureClock();
+        if (!queueId) return;
+        const fresh = await this.send<PlayerQueue>('player_queues/get', { queue_id: queueId });
+        if (fresh?.queue_id) this.queues.set(fresh.queue_id, fresh);
+    }
+
     /** "Now" on the server's clock, in seconds — use it with `currentElapsed(queue, ma.serverNow())`. */
     serverNow(): number {
         return Date.now() / 1000 + this.clockOffset;

@@ -50,11 +50,18 @@ export interface EffectInstance<S> {
   onRotate?(ticks: number): void;
   onPress?(): void;
   onTouch?(x: number, y: number): void;
+  /** What rotating can change ("count", "speed", "density", …), in the order a press cycles
+   *  through them; getControl/setControl read and switch the active one. */
+  getControls?(): string[];
+  getControl?(): string;
+  setControl?(id: string): void;
   getIndicatorValue?(): number;
   /** Settings your effect changed itself (e.g. speed after rotating) — MAC saves them. */
   getRuntimeSettings?(): Partial<S>;
 }
 ```
+
+**Dial controls:** if rotating changes a value, list it in `getControls()` and give the matching schema field `control: "<id>"` (e.g. `{ key: "savedSpeed", type: "range", …, control: "speed" }`). The Panorama dial then shows a small badge with the value's icon and level while turning, and a press switches between your values (and the lyrics timing when lyrics are on). The PI shows the same icon next to the field. Known ids with icons: `count`, `speed`, `density` (others get the speed icon; ask for a new one in your PR). With more than one control, `setControl` must switch what `onRotate` changes. With a single control, a press still goes to `onPress` when lyrics are off.
 
 **Colors:** when the user enables **Cover color**, MAC passes the accent color of what is playing as `color`, and also as `primaryColor` and `landColor` if your schema has those keys. Name your main color field `color` and it follows the cover automatically.
 

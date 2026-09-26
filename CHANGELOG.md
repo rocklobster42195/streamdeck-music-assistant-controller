@@ -17,6 +17,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
+- Panorama dial with lyrics: turning adjusts the lyrics timing in 0.1 s steps (a scale with the zero point shows it at the top), tapping the display re-syncs the lyrics with Music Assistant. Pushing switches between the lyrics timing and the effect's own values (particle count, speed, density); a small badge shows which one turning changes.
 - Play/Pause key: in flow mode with crossfade, the next cover starts fading in over the last 8 s of a track, as Music Assistant only reports the new track after its audio crossfade. With Smart Crossfade the real fade can start earlier, so the cover may still come a little late.
 - Crossfade key: its settings show whether Music Assistant's flow mode is on for the player and can switch it. Crossfade only works in flow mode; the settings also explain the same-album rule and possible problems with Spotify.
 - Volume and Group Volume dials: **Ring in cover color** option.

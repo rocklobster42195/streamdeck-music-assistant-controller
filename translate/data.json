@@ -79,6 +79,11 @@
     "key.volume": "Lautstärke",
     "key.muted": "Stumm",
     "key.preset_saved": "Preset gespeichert: {volume}",
+    "key.lyrics_synced": "Synchronisiert",
+    "key.fn_timing": "Timing",
+    "key.fn_count": "Partikel",
+    "key.fn_speed": "Tempo",
+    "key.fn_density": "Dichte",
     "key.nothing_playing": "Es läuft nichts",
     "key.browse_providers": "Alle Anbieter",
     "key.browse_library": "Bibliothek",
@@ -254,14 +259,14 @@
     "pi.sync_effect_hint": "Ein Effektwechsel hier gilt auch für die benachbarten Displays mit demselben Effekt. „Kein Effekt“ nimmt nur dieses Display heraus.",
     "pi.cover_color": "Cover-Farbe",
     "pi.cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
-    "pi.panorama_help": "Drehen und Drücken verändern den Effekt (z. B. Tempo). Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
+    "pi.panorama_help": "Drehen verändert den gewählten Wert (z. B. Tempo), Drücken wechselt ihn – oben auf dem Display erscheint ein Symbol. Tippen synchronisiert die Lyrics neu. Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
     "pi.overlay": "Text",
     "pi.overlay_off": "Aus",
     "pi.overlay_track": "Titel",
     "pi.overlay_lyrics": "Lyrics",
     "pi.overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
     "pi.lyrics_offset": "Timing",
-    "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing nach links oder rechts schieben.",
+    "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing verschieben oder am Dial drehen (oben erscheint die Skala). Hängen die Lyrics nach einer Weile hinterher? Aufs Display tippen, dann wird neu synchronisiert.",
     "pi.choose": "Wählen",
     "pi.no_options": "Nichts verfügbar.",
     "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibenden Minuten herunter.",
@@ -383,6 +388,11 @@
     "key.volume": "Volume",
     "key.muted": "Muted",
     "key.preset_saved": "Preset saved: {volume}",
+    "key.lyrics_synced": "Synced",
+    "key.fn_timing": "Timing",
+    "key.fn_count": "Particles",
+    "key.fn_speed": "Speed",
+    "key.fn_density": "Density",
     "key.nothing_playing": "Nothing playing",
     "key.browse_providers": "All providers",
     "key.browse_library": "Library",
@@ -558,14 +568,14 @@
     "pi.sync_effect_hint": "Changing the effect here also switches the neighboring displays that run the same effect. Choosing none takes only this display out.",
     "pi.cover_color": "Cover color",
     "pi.cover_color_hint": "Tint the effect with the colors of what is playing",
-    "pi.panorama_help": "Rotate and push change the effect (e.g. speed). Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
+    "pi.panorama_help": "Rotate changes the chosen value (e.g. speed), push switches it — a small icon shows at the top of the display. Tap to re-sync the lyrics. Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
     "pi.overlay": "Text",
     "pi.overlay_off": "Off",
     "pi.overlay_track": "Title",
     "pi.overlay_lyrics": "Lyrics",
     "pi.overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
     "pi.lyrics_offset": "Timing",
-    "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing left or right.",
+    "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing, or turn the dial (the scale at the top shows it). Lyrics lagging after a while? Tap the display to re-sync.",
     "pi.choose": "Choose",
     "pi.no_options": "Nothing available.",
     "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the minutes left.",
@@ -1329,6 +1339,61 @@
      "label": "Volume",
      "where": "dial",
      "file": "plugin/src/actions/volume-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.lyrics_synced",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.fn_timing",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.fn_count",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.fn_speed",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.fn_density",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "dial",
+     "file": "plugin/src/actions/panorama-dial.ts"
     }
    ]
   },

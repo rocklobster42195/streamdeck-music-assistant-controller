@@ -8,6 +8,7 @@ import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
 import { MacSelect } from "./select";
+import { functionIcon } from "../render/function-icons";
 import { initPiState } from "./state";
 
 initPiState();
@@ -15,6 +16,8 @@ initPiState();
 // Components render translated text, so wait until Stream Deck told us the language.
 sd.onReady(() => {
     translateDom();
+    // <pi-range data-fn-icon="timing">: the icon the Panorama dial shows for that function
+    document.querySelectorAll<HTMLElement>("[data-fn-icon]").forEach((el) => el.setAttribute("icon", functionIcon(el.dataset.fnIcon ?? "")));
     definePiComponents();
     customElements.define("mac-player-picker", MacPlayerPicker);
     customElements.define("mac-key-preview", MacKeyPreview);

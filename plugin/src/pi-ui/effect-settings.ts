@@ -3,6 +3,7 @@
 // so a new effect brings its controls along without PI changes.
 import { escapeHtml, sd, t } from "streamdeck-core/pi";
 import type { EffectInfo } from "streamdeck-core";
+import { functionIcon } from "../render/function-icons";
 import { onPiState, piState } from "./state";
 
 const NONE = "";
@@ -71,7 +72,8 @@ function fieldHtml(effect: EffectInfo, f: EffectInfo["settingsSchema"][number]):
         case "range": {
             const span = f.max - f.min;
             const step = f.step ?? (span <= 2 ? 0.05 : span <= 10 ? 0.5 : 1);
-            return `<pi-range setting="${escapeHtml(f.key)}" min="${f.min}" max="${f.max}" step="${step}" default="${f.default}" label="${label}"></pi-range>`;
+            const icon = f.control ? ` icon="${escapeHtml(functionIcon(f.control))}"` : "";
+            return `<pi-range setting="${escapeHtml(f.key)}" min="${f.min}" max="${f.max}" step="${step}" default="${f.default}" label="${label}"${icon}></pi-range>`;
         }
         case "color":
             return `<pi-color setting="${escapeHtml(f.key)}" default="${escapeHtml(f.default)}" label="${label}"></pi-color>`;
