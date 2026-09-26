@@ -1,5 +1,7 @@
-import streamDeck, { action, type WillDisappearEvent } from "@elgato/streamdeck";
+import { randomUUID } from "node:crypto";
+import streamDeck, { action, type WillAppearEvent, type WillDisappearEvent } from "@elgato/streamdeck";
 import { mdiBullhorn } from "@mdi/js";
+import { alarmTimers } from "../ma/alarm-timers";
 import { maConnection } from "../ma/connection";
 import { groupLeader, groupMembers } from "../ma/groups";
 import { ACCENT, OFF, renderKeyImage } from "../render/key-image";
@@ -23,22 +25,37 @@ type AnnounceSettings = MaKeySettings & {
     icon?: string;
     /** While a countdown runs: when it ends (ms since epoch), saved so a restart keeps it. */
     timerEnd?: number;
+    /** While a countdown runs: its id in the plugin-wide alarm timers (see ma/alarm-timers). */
+    timerId?: string;
 };
 
-/** A countdown that ran out while the plugin was down is still announced if this recent. */
-const LATE_GRACE_MS = 60_000;
 /** After an announcement the key lights up in its "on" look for a moment (instead of Stream Deck's green tick). */
 const DONE_FLASH_MS = 1500;
 
 /**
  * Speaks a text on one or all players — "Dinner is ready!" — via a TTS engine from Home Assistant/MA.
  * With "timer" a press starts a countdown (ring and time on the key) and the message comes when it
- * ends ("The pasta is ready!"); pressing again cancels it.
+ * ends ("The pasta is ready!"); pressing again cancels it. The countdown runs plugin-wide, so it
+ * still goes off while the key is on another page or profile, or just being moved.
  */
 @action({ UUID: "de.boriskemper.music-assistant-controller.announce-key" })
 export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
     private readonly tickers = new Map<string, ReturnType<typeof setInterval>>();
     private readonly doneUntil = new Map<string, number>();
+    /** Last known settings per running timer, to announce while its key isn't on screen. */
+    private readonly timerSettings = new Map<string, AnnounceSettings>();
+
+    constructor() {
+        super();
+        // A timer went off (possibly while its key was hidden): the key shows its resting look again
+        alarmTimers.onFinished((timerId) => {
+            this.timerSettings.delete(timerId);
+            const id = this.instanceWithTimer(timerId);
+            if (!id) return;
+            this.save(id, { timerEnd: undefined, timerId: undefined });
+            this.render(id);
+        });
+    }
 
     protected override renderPlayer({ id, settings }: PlayerContext<AnnounceSettings>): KeyRender {
         const ready = !!settings.message?.trim();
@@ -66,8 +83,65 @@ export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
 
         // Timer: start it, or cancel the running one
         const running = !!settings.timerEnd && settings.timerEnd > Date.now();
-        this.save(id, { timerEnd: running ? undefined : Date.now() + minutesOf(settings) * 60_000 });
+        if (settings.timerId) {
+            alarmTimers.cancel(settings.timerId);
+            this.timerSettings.delete(settings.timerId);
+        }
+        if (running) {
+            this.save(id, { timerEnd: undefined, timerId: undefined });
+        } else {
+            const timerId = randomUUID();
+            this.save(id, { timerEnd: Date.now() + minutesOf(settings) * 60_000, timerId });
+            this.startTimer(timerId, this.instances.get(id)!.settings);
+        }
         this.render(id);
+    }
+
+    override onWillAppear(ev: WillAppearEvent<AnnounceSettings>): void {
+        super.onWillAppear(ev);
+        this.attach(ev.action.id);
+    }
+
+    /**
+     * A key with a countdown (re)appeared: after a page switch or a move its timer is still running
+     * here; after a plugin restart it starts again from the saved end. A copied key carries the same
+     * timer id, and only the first one keeps the timer.
+     */
+    private attach(id: string): void {
+        const settings = this.instances.get(id)?.settings;
+        if (!settings?.timerEnd) return;
+        const { timerId } = settings;
+        const copy = !!timerId && [...this.instances].some(([other, inst]) => other !== id && inst.settings.timerId === timerId);
+        if (!timerId || copy || alarmTimers.hasFinished(timerId) || settings.when !== "timer") {
+            this.save(id, { timerEnd: undefined, timerId: undefined });
+            this.render(id);
+            return;
+        }
+        this.timerSettings.set(timerId, settings);
+        if (!alarmTimers.isRunning(timerId)) this.startTimer(timerId, settings);
+    }
+
+    private startTimer(timerId: string, settings: AnnounceSettings): void {
+        this.timerSettings.set(timerId, settings);
+        alarmTimers.start(timerId, settings.timerEnd!, async () => {
+            // The key's current settings when it's on screen, else the last known ones
+            const id = this.instanceWithTimer(timerId);
+            const current = (id && this.instances.get(id)?.settings) || this.timerSettings.get(timerId);
+            const ctx = current && this.playerContext(id ?? timerId, current);
+            if (!ctx) return false; // not connected yet: try again
+            try {
+                await this.announce(ctx);
+                return true;
+            } catch (e) {
+                streamDeck.logger.warn("[announce] timer announcement failed", e);
+                return false;
+            }
+        });
+    }
+
+    private instanceWithTimer(timerId: string): string | undefined {
+        for (const [id, inst] of this.instances) if (inst.settings.timerId === timerId) return id;
+        return undefined;
     }
 
     /** "All players" needs no particular player: any available one serves as the key's context. */
@@ -104,27 +178,15 @@ export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
         setTimeout(() => this.render(id), DONE_FLASH_MS + 50);
     }
 
-    /** Once a second while a countdown runs: redraw, and announce when it ends. */
+    /** Once a second while a countdown runs on screen: redraw (going off is up to alarmTimers). */
     private tick(id: string): void {
         if (this.tickers.has(id)) return;
         this.tickers.set(
             id,
             setInterval(() => {
-                const inst = this.instances.get(id);
-                const end = inst?.settings.timerEnd;
-                if (!inst || !end) return this.stopTick(id);
-                const now = Date.now();
-                if (now < end) return this.render(id);
-                this.stopTick(id);
-                this.save(id, { timerEnd: undefined });
+                const end = this.instances.get(id)?.settings.timerEnd;
+                if (!end || end <= Date.now()) this.stopTick(id);
                 this.render(id);
-                if (now - end > LATE_GRACE_MS) return; // ran out long ago (plugin was down)
-                const ctx = this.playerContext(id, inst.settings);
-                if (!ctx) return;
-                this.announce(ctx).catch((e) => {
-                    streamDeck.logger.warn("[announce] timer announcement failed", e);
-                    void inst.action.showAlert();
-                });
             }, 1000),
         );
     }
@@ -138,7 +200,7 @@ export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
         const inst = this.instances.get(id);
         if (!inst) return;
         const next = { ...inst.settings, ...patch } as AnnounceSettings;
-        if (patch.timerEnd === undefined) delete next.timerEnd;
+        for (const key of Object.keys(patch) as (keyof AnnounceSettings)[]) if (patch[key] === undefined) delete next[key];
         inst.settings = next;
         inst.lastRender = undefined;
         void inst.action.setSettings(next);
