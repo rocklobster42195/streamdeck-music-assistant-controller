@@ -38,6 +38,11 @@
     <pi-range setting="timeout" min="5" max="120" step="5" default="20" unit=" s" label="pi.browse_timeout"></pi-range>
   </pi-section>
 
+  <pi-section title="pi.background">
+    <mac-effect-settings allow-none></mac-effect-settings>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-i18n="pi.background_hint"></div>
+
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>

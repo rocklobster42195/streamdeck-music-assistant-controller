@@ -52,7 +52,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         const st = this.state(ctx.id);
         const flash = st.flash && st.flash.until > Date.now() ? st.flash : undefined;
         if (!st.browsing) return { image: this.renderIdle(ctx, flash) };
-        return { image: this.renderBrowse(ctx.id, st, flash), preview: { track: st.model.breadcrumb.join(" › ") } };
+        return { image: this.renderBrowse(ctx.id, st, flash, this.backdrop(ctx)), preview: { track: st.model.breadcrumb.join(" › ") } };
     }
 
     protected override async rotate(ctx: PlayerContext<BrowserDialSettings>, ticks: number): Promise<void> {
@@ -150,12 +150,13 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
 
     // ---- rendering (layouts in render/browser-strip.ts) ----------------------------------------------
 
-    private renderIdle({ id, ma, player }: PlayerContext<BrowserDialSettings>, flash: State["flash"]): string {
+    private renderIdle(ctx: PlayerContext<BrowserDialSettings>, flash: State["flash"]): string {
+        const { id, ma, player } = ctx;
         const media = player.current_media;
-        return browserIdleStrip({ cover: this.cover(id, ma, media), title: media?.title ?? this.t("key.nothing_playing"), flash, hint: this.t("key.browse_hint") });
+        return browserIdleStrip({ cover: this.cover(id, ma, media), title: media?.title ?? this.t("key.nothing_playing"), flash, hint: this.t("key.browse_hint"), backdrop: this.backdrop(ctx) });
     }
 
-    private renderBrowse(id: string, st: State, flash: State["flash"]): string {
+    private renderBrowse(id: string, st: State, flash: State["flash"], backdrop: string): string {
         const m = st.model;
         const entry = m.current;
         const typeLabel = entry && !entry.isFolder ? this.t(`pi.type_${entry.mediaType}`) : "";
@@ -169,6 +170,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
             // Unknown media types have no translation — then show nothing rather than the raw key
             subtitle: typeLabel.startsWith("pi.") ? undefined : typeLabel,
             texts: { loading: this.t("key.browse_loading"), empty: this.t("key.browse_empty") },
+            backdrop,
         });
     }
 

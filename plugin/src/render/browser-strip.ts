@@ -7,13 +7,13 @@ import { image, mdi, stripImage, text, wrap } from "./strip";
 export type Flash = { text: string; color: string };
 
 /** Idle: what is playing, and a hint to turn the dial. */
-export function browserIdleStrip(o: { cover?: string; title: string; flash?: Flash; hint: string }): string {
+export function browserIdleStrip(o: { cover?: string; title: string; flash?: Flash; hint: string; backdrop?: string }): string {
     const parts: string[] = [];
     if (o.cover) parts.push(image(o.cover, 8, 18, 64, 64));
     else parts.push(`<rect x="8" y="18" width="64" height="64" rx="6" fill="#1d1d20"/>`, mdi(mdiFolderMusic, 20, 30, 40, "#6c6c72"));
     wrap(o.flash?.text ?? o.title, 112, 13, 2).forEach((line, i) => parts.push(text(82, 40 + i * 16, line, { size: 13, weight: "bold", color: o.flash?.color ?? "#ffffff" })));
     parts.push(text(82, 78, o.hint, { size: 11, color: "#8a8a90", maxWidth: 112 }));
-    return stripImage(parts);
+    return stripImage(parts, undefined, o.backdrop);
 }
 
 export type BrowseStripData = {
@@ -26,6 +26,8 @@ export type BrowseStripData = {
     /** Subtitle for entries without one (e.g. the translated media type). */
     subtitle?: string;
     texts: { loading: string; empty: string };
+    /** Panorama effect slice drawn under the content ('' / undefined: none). */
+    backdrop?: string;
 };
 
 /** Browsing: breadcrumb, current entry with cover or type icon, position and scroll indicator. */
@@ -37,7 +39,7 @@ export function browserStrip(d: BrowseStripData): string {
 
     const centered = (value: string, color: string, weight: "bold" | "normal" = "normal") => {
         parts.push(text(100, 60, value, { size: 13, weight, color, anchor: "middle", maxWidth: 184 }));
-        return stripImage(parts);
+        return stripImage(parts, undefined, d.backdrop);
     };
     if (d.flash) return centered(d.flash.text, d.flash.color, "bold");
     if (d.loading) return centered(d.texts.loading, "#a4a4aa");
@@ -60,7 +62,7 @@ export function browserStrip(d: BrowseStripData): string {
         const y = 22 + ((70 - h) * (index - 1)) / (total - 1);
         parts.push(`<rect x="196" y="22" width="2" height="70" rx="1" fill="#2c2c30"/>`, `<rect x="196" y="${y.toFixed(1)}" width="2" height="${h.toFixed(1)}" rx="1" fill="#6c6c72"/>`);
     }
-    return stripImage(parts);
+    return stripImage(parts, undefined, d.backdrop);
 }
 
 function entryIcon(entry: BrowseEntry): string {

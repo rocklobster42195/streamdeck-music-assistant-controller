@@ -20,7 +20,8 @@ export class PlayerDial extends MaDialAction<MaKeySettings> {
     private flashUntil = 0;
     private flashText = "";
 
-    protected override renderPlayer({ id, ma, player, queue, playerName }: PlayerContext<MaKeySettings>): StripRender {
+    protected override renderPlayer(ctx: PlayerContext<MaKeySettings>): StripRender {
+        const { id, ma, player, queue, playerName } = ctx;
         const players = maConnection.selectablePlayers();
         const index = players.findIndex((p) => p.player_id === player.player_id);
         const state = !player.available ? "offline" : (queue?.state ?? player.playback_state) === "playing" ? "playing" : queue?.state === "paused" ? "paused" : "idle";
@@ -44,7 +45,7 @@ export class PlayerDial extends MaDialAction<MaKeySettings> {
         } else if (players.length > 9) {
             parts.push(text(82, 90, `${index + 1} / ${players.length}`, { size: 10, color: "#8a8a90" }));
         }
-        return { image: stripImage(parts) };
+        return { image: stripImage(parts, undefined, this.backdrop(ctx)) };
     }
 
     protected override async rotate({ player }: PlayerContext<MaKeySettings>, ticks: number): Promise<void> {

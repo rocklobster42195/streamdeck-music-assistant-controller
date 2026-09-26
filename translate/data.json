@@ -3513,9 +3513,24 @@
    "group": "pi",
    "usedIn": [
     {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
      "label": "Group Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Active Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
     },
     {
      "label": "Track",
@@ -3534,9 +3549,24 @@
    "group": "pi",
    "usedIn": [
     {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
      "label": "Group Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Active Player",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
     },
     {
      "label": "Track",

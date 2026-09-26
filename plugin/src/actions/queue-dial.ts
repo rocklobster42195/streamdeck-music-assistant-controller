@@ -45,6 +45,7 @@ export class QueueDial extends MaDialAction<QueueDialSettings> {
     }
 
     protected override renderPlayer(ctx: PlayerContext<QueueDialSettings>): StripRender {
+        const bd = this.backdrop(ctx);
         const st = this.state(ctx);
         const queue = ctx.queue;
         const total = queue?.items ?? 0;
@@ -59,15 +60,15 @@ export class QueueDial extends MaDialAction<QueueDialSettings> {
 
         if (flash) {
             parts.push(text(100, 60, flash.text, { size: 13, weight: "bold", color: ACCENT, anchor: "middle", maxWidth: 184 }));
-            return { image: stripImage(parts) };
+            return { image: stripImage(parts, undefined, bd) };
         }
         if (!total) {
             parts.push(mdi(mdiPlaylistPlay, 20, 32, 40, "#5a5a60"), text(72, 58, this.t("key.queue_empty"), { size: 13, color: "#a4a4aa", maxWidth: 120 }));
-            return { image: stripImage(parts) };
+            return { image: stripImage(parts, undefined, bd) };
         }
         if (!item) {
             parts.push(text(100, 60, this.t("key.browse_loading"), { size: 13, color: "#a4a4aa", anchor: "middle" }));
-            return { image: stripImage(parts) };
+            return { image: stripImage(parts, undefined, bd) };
         }
 
         const played = index < current;
@@ -90,7 +91,7 @@ export class QueueDial extends MaDialAction<QueueDialSettings> {
             const y = 22 + ((70 - h) * index) / (total - 1);
             parts.push(`<rect x="196" y="22" width="2" height="70" rx="1" fill="#2c2c30"/>`, `<rect x="196" y="${y.toFixed(1)}" width="2" height="${h.toFixed(1)}" rx="1" fill="#6c6c72"/>`);
         }
-        return { image: stripImage(parts), preview: { track: item.name } };
+        return { image: stripImage(parts, undefined, bd), preview: { track: item.name } };
     }
 
     protected override async rotate(ctx: PlayerContext<QueueDialSettings>, ticks: number): Promise<void> {

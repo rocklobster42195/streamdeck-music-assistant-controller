@@ -1,6 +1,7 @@
 // Effect choice across connected displays: changing the effect on one display of a panorama group
 // switches the whole group (setting `syncEffect`, default on); with it off, or when choosing no
-// effect, only that display changes. No playback needed.
+// effect, only that display changes. Also shows Queue, Browser and Player dials with an effect
+// background. No playback needed.
 //   node tools/sd-sim/effect-sync.mjs [outDir]
 import path from "node:path";
 import { readEnv, startSim } from "./sim.mjs";
@@ -36,6 +37,18 @@ try {
     await sim.sleep(1500);
     check("choosing no effect takes only that display out", bg(t) === "" && bg(a) === "boing-globe" && bg(b) === "boing-globe", all());
     await sim.snapshot(out, "96-effect-sync-2");
+
+    // Queue, Browser and Player dials take part too (effect as a dimmed background)
+    for (const ctx of [a, b, c, t]) sim.remove(ctx);
+    const q = sim.add("queue-dial", { background: "boing-globe" }, { column: 0, controller: "Encoder" });
+    const br = sim.add("browser-dial", { background: "boing-globe" }, { column: 1, controller: "Encoder" });
+    const pl = sim.add("player-dial", { background: "boing-globe" }, { column: 2, controller: "Encoder" });
+    const tr = sim.add("track-dial", { background: "boing-globe" }, { column: 3, controller: "Encoder" });
+    await sim.sleep(3000);
+    await sim.snapshot(out, "96-effect-sync-3");
+    sim.setSettings(q, { background: "particles" });
+    await sim.sleep(1500);
+    check("queue, browser and player dials follow an effect change", [q, br, pl, tr].every((x) => bg(x) === "particles"), [q, br, pl, tr].map(bg).join(","));
 } finally {
     await sim.stop();
 }
