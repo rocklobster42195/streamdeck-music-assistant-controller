@@ -159,6 +159,8 @@
 			"vol_preset": "Preset",
 			"vol_step": "Schritt pro Druck",
 			"vol_preset_value": "Preset-Lautstärke",
+			"vol_show_value": "Lautstärke anzeigen",
+			"vol_show_value_hint": "Die aktuelle Lautstärke auf der Taste (bei der Stumm-Taste im Ring)",
 			"like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn.",
 			"item": "Inhalt",
 			"item_search_placeholder": "In Music Assistant suchen…",

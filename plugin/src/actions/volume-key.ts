@@ -11,9 +11,13 @@ type VolumeKeySettings = MaKeySettings & {
     step?: number;
     /** Target volume for "preset". */
     preset?: number;
+    /** Show the current volume on the key (default on). */
+    showVolume?: boolean;
 };
 
 const MUTED = "#ff8a8a";
+/** Ring color while muted (the Volume dial's). */
+const MUTED_RING = "#5a5a60";
 
 /** Volume up/down/mute/preset as keys. Shows the current volume; reacts instantly, then syncs. */
 @action({ UUID: "de.boriskemper.music-assistant-controller.volume-key" })
@@ -21,16 +25,29 @@ export class VolumeKey extends MaKeyAction<VolumeKeySettings> {
     protected override renderPlayer({ player, settings }: PlayerContext<VolumeKeySettings>): KeyRender {
         const volume = Math.round(player.volume_level ?? 0);
         const muted = !!player.volume_muted;
-        const badge = muted ? undefined : String(volume);
+        const showVolume = settings.showVolume !== false;
+        const badge = muted || !showVolume ? undefined : String(volume);
         switch (settings.command ?? "up") {
             case "up":
                 return { image: renderKeyImage({ icon: ICONS.volumeUp, badge, dimmed: muted }) };
             case "down":
                 return { image: renderKeyImage({ icon: ICONS.volumeDown, badge, dimmed: muted }) };
             case "mute":
-                return muted
-                    ? { image: renderKeyImage({ icon: ICONS.volumeOff, color: MUTED, active: MUTED }) }
-                    : { image: renderKeyImage({ icon: volumeIcon(volume), badge }) };
+                // The Volume dial's ring (sonos-controller shows its pie here). Muted: grey ring at
+                // the volume that comes back on unmute, red muted speaker inside — as on the dial.
+                return {
+                    image: renderKeyImage({
+                        ring: {
+                            value: volume / 100,
+                            color: muted ? MUTED_RING : ACCENT,
+                            center: muted
+                                ? { icon: ICONS.volumeOff, color: MUTED }
+                                : showVolume
+                                  ? { text: String(volume), color: "#e0e0e0" }
+                                  : { icon: volumeIcon(volume), color: "#e0e0e0" },
+                        },
+                    }),
+                };
             case "preset": {
                 const preset = presetOf(settings);
                 const on = !muted && volume === preset;

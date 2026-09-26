@@ -171,6 +171,8 @@
     "pi.vol_preset": "Preset",
     "pi.vol_step": "Schritt pro Druck",
     "pi.vol_preset_value": "Preset-Lautstärke",
+    "pi.vol_show_value": "Lautstärke anzeigen",
+    "pi.vol_show_value_hint": "Die aktuelle Lautstärke auf der Taste (bei Stumm im Ring)",
     "pi.like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn.",
     "pi.item": "Inhalt",
     "pi.item_search_placeholder": "In Music Assistant suchen…",
@@ -464,6 +466,8 @@
     "pi.vol_preset": "Preset",
     "pi.vol_step": "Step per press",
     "pi.vol_preset_value": "Preset volume",
+    "pi.vol_show_value": "Show volume",
+    "pi.vol_show_value_hint": "The current volume on the key (in the ring on the mute key)",
     "pi.like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it.",
     "pi.item": "Item",
     "pi.item_search_placeholder": "Search Music Assistant…",
@@ -1701,6 +1705,11 @@
      "label": "Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
     }
    ]
   },
@@ -2610,6 +2619,28 @@
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_show_value",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.vol_show_value_hint",
+   "group": "pi",
+   "usedIn": [
     {
      "label": "Volume",
      "where": "settings",

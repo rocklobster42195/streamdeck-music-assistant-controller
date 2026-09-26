@@ -84,7 +84,7 @@ One key per function: **previous, next, shuffle, repeat, crossfade** or **"Don't
 
 ### Volume
 
-**Down, up, mute** or a **preset** volume. The key shows the current volume. For down and up, the step per press can be set from 1 to 20 %. Several quick presses add up correctly.
+**Down, up, mute** or a **preset** volume. The key shows the current volume, which you can turn off. The mute key shows the volume as a ring like the Volume dial; when muted, the ring turns grey with a red muted speaker inside. For down and up, the step per press can be set from 1 to 20 %. Several quick presses add up correctly.
 
 ### Like
 

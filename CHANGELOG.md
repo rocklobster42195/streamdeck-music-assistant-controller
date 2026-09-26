@@ -4,6 +4,10 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 
 ## [Unreleased]
 
+### Changed
+- Larger icons on the keys, as in Sonos Controller.
+- Volume key: the mute key shows the volume as a ring (like the Volume dial); muted, the ring turns grey with a red muted speaker inside. The volume number can be turned off ("Show volume").
+
 ### Fixed
 - Play/Pause key: when the track changes, the key keeps the old cover until the new one has loaded and then crossfades to it (as in Sonos Controller). Before, it briefly showed a music-note icon. Dials keep the old cover while the new one loads, too.
 - Keys no longer flash their paused look on every track change. Sonos reports "idle" for about a second after each skip; a queue that was playing a moment ago now counts as playing for another 2.5 s. Pausing from a key still shows right away.

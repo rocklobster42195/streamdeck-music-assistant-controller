@@ -159,6 +159,8 @@
 			"vol_preset": "Preset",
 			"vol_step": "Step per press",
 			"vol_preset_value": "Preset volume",
+			"vol_show_value": "Show volume",
+			"vol_show_value_hint": "The current volume on the key (in the ring on the mute key)",
 			"like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it.",
 			"item": "Item",
 			"item_search_placeholder": "Search Music Assistant…",

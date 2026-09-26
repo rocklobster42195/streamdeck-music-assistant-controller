@@ -91,9 +91,16 @@ export type KeyImageOptions = {
     statusDot?: string;
     /** Extra SVG drawn on top of everything (e.g. a scrolling title). */
     overlay?: string;
-    /** Small caption at the top (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
+    /** Caption under the icon (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
     badge?: string;
+    /** A ring gauge (0..1) filling the key instead of an icon, e.g. the mute key's volume. */
+    ring?: { value: number; color: string; center?: { icon?: string; text?: string; color: string } };
 };
+
+// Icon sizes without cover art: as large as sonos-controller's full-bleed MDI glyphs, a bit
+// smaller when a caption sits underneath.
+const ICON = { size: 112, xy: 16 };
+const ICON_WITH_BADGE = { size: 92, x: 26, y: 6 };
 
 export function renderKeyImage(opts: KeyImageOptions): string {
     const color = opts.color ?? "#e0e0e0";
@@ -112,8 +119,11 @@ export function renderKeyImage(opts: KeyImageOptions): string {
             parts.push(`<circle cx="72" cy="72" r="30" fill="#000" opacity="0.55"/>`);
             parts.push(icon(opts.icon, 48, 48, 48, color));
         }
+    } else if (opts.ring) {
+        parts.push(...ringParts(opts.ring));
     } else if (opts.icon) {
-        parts.push(icon(opts.icon, 32, 32, 80, opts.dimmed ? "#777" : color));
+        const fill = opts.dimmed ? "#777" : color;
+        parts.push(opts.badge ? icon(opts.icon, ICON_WITH_BADGE.x, ICON_WITH_BADGE.y, ICON_WITH_BADGE.size, fill) : icon(opts.icon, ICON.xy, ICON.xy, ICON.size, fill));
     }
 
     if (opts.active) {
@@ -132,8 +142,10 @@ export function renderKeyImage(opts: KeyImageOptions): string {
         parts.push(`<circle cx="${SIZE - 26}" cy="26" r="9" fill="#101010"/>`, `<circle cx="${SIZE - 26}" cy="26" r="6" fill="${opts.statusDot}"/>`);
     }
 
-    if (opts.badge) {
-        parts.push(`<text x="${SIZE / 2}" y="30" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="${color}">${escapeXml(opts.badge)}</text>`);
+    if (opts.badge && !opts.ring) {
+        // Under the icon; over cover art it stays at the top, where the cover badge leaves room.
+        const y = opts.cover ? 30 : SIZE - 8;
+        parts.push(`<text x="${SIZE / 2}" y="${y}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="${opts.cover ? 22 : 28}" font-weight="700" fill="${opts.dimmed ? "#777" : color}">${escapeXml(opts.badge)}</text>`);
     }
 
     if (opts.progress !== undefined) {
@@ -146,6 +158,25 @@ export function renderKeyImage(opts: KeyImageOptions): string {
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">${parts.join("")}</svg>`;
     return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+}
+
+/** Ring gauge like the Volume dial's, sized to the key; the center holds a number or an icon. */
+function ringParts(ring: NonNullable<KeyImageOptions["ring"]>): string[] {
+    const c = SIZE / 2;
+    const r = 54;
+    const circumference = 2 * Math.PI * r;
+    const v = Math.min(1, Math.max(0, ring.value));
+    const parts = [`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#2c2c30" stroke-width="14"/>`];
+    if (v > 0) {
+        parts.push(`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${ring.color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${(v * circumference).toFixed(1)} ${circumference.toFixed(1)}" transform="rotate(-90 ${c} ${c})"/>`);
+    }
+    const center = ring.center;
+    if (center?.text) {
+        parts.push(`<text x="${c}" y="${c + 15}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="${center.color}">${escapeXml(center.text)}</text>`);
+    } else if (center?.icon) {
+        parts.push(icon(center.icon, c - 28, c - 28, 56, center.color));
+    }
+    return parts;
 }
 
 function icon(path: string, x: number, y: number, size: number, fill: string): string {

@@ -28,6 +28,10 @@
     <pi-range setting="preset" min="0" max="100" step="1" default="20" unit="%" label="pi.vol_preset_value" data-show-when="command=preset" data-show-default="up"></pi-range>
   </pi-section>
 
+  <pi-section title="pi.display" data-show-when="command=up,down,mute" data-show-default="up">
+    <pi-toggle setting="showVolume" label="pi.vol_show_value" hint="pi.vol_show_value_hint" data-default="true"></pi-toggle>
+  </pi-section>
+
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
