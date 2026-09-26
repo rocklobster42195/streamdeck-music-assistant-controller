@@ -16,7 +16,7 @@
     "dependencies": {
         "@elgato/streamdeck": "^2.1.0",
         "@mdi/js": "^7.4.47",
-        "music-assistant-client": "*",
+        "music-assistant-client": "^0.1.0",
         "ws": "^8.21.3",
         "streamdeck-core": "*"
     },

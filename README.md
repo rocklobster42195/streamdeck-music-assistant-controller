@@ -233,17 +233,15 @@ MAC ships in **English** and **German**. Each language is a **single JSON file**
 This repository is a small npm-workspaces monorepo:
 
 ```
-packages/ma-client/        TypeScript client for the Music Assistant WebSocket API (no Stream Deck code)
 packages/streamdeck-core/  Stream Deck UI building blocks shared with Sonos Controller (in progress)
 plugin/                    The Stream Deck plugin (actions, property inspectors, manifest)
-docs/ma-api/               Music Assistant API reference captured from a live server
 tools/                     Dev scripts (icon generation, API probe)
 ```
 
 ```bash
 npm install          # installs all workspaces
-npm run build        # builds ma-client and streamdeck-core, then the plugin and the PI bundle
-npm test             # vitest (ma-client and plugin)
+npm run build        # builds streamdeck-core, then the plugin and the PI bundle
+npm test             # vitest (plugin and tools)
 npm run lint
 
 # Stream Deck dev loop
@@ -301,51 +299,15 @@ Each `ship:*` runs `npm run check` (build, tests, lint, validate), then `tools/b
 
 ### `music-assistant-client`
 
-The package has its own **[README](packages/ma-client/README.md)** and **[CHANGELOG](packages/ma-client/CHANGELOG.md)** and is released to npm separately: `npm run client:release:patch|minor|major` runs the checks, bumps its version, dates its changelog and pushes a `ma-client-v<version>` tag. The **Publish client** workflow then checks the tag and publishes to npm (repository secret `NPM_TOKEN`).
-
-The Music Assistant client is deliberately **independent of Stream Deck**. It handles token authentication, keeps player and queue state live from server events, reconnects with backoff, and offers typed convenience commands. It is planned to be published to npm once its API has settled.
+The plugin talks to Music Assistant through **[music-assistant-client](https://github.com/rocklobster42195/music-assistant-client)** ([npm](https://www.npmjs.com/package/music-assistant-client)), a typed TypeScript client for the Music Assistant WebSocket API with no Stream Deck code. It lives in its own repository; to work on both at once, `npm link` it into this one.
 
 ```ts
 import { MusicAssistantClient } from "music-assistant-client";
 
 const ma = new MusicAssistantClient({ url: "http://192.168.1.10:8095", token: "…" });
-ma.on("player_updated", (player) => console.log(player.name, player.playback_state));
 await ma.connect(); // starts and waits until players and queues are loaded
 await ma.playPause("RINCON_…");
 ```
-
-On Node 20, pass a WebSocket implementation: `webSocketFactory: (url) => new WebSocket(url)` from the [`ws`](https://www.npmjs.com/package/ws) package.
-
-**Convenience methods** cover what automations and remote controls typically need:
-
-| Area | Methods |
-|---|---|
-| Playback | `playPause` `play` `pause` `stopPlayback` `next` `previous` `seek` `skipSeconds` `setShuffle` `setRepeat` `setCrossfade` `setAutoplay` `setPlaybackSpeed` `playMedia` `transferQueue` |
-| Queue | `queueItems` `playIndex` `clearQueue` `removeQueueItem` `moveQueueItem` `saveQueueAsPlaylist` |
-| Players and groups | `playerByName` `setPower` `setVolume` `volumeUp` `volumeDown` `setMute` `selectSource` `groupPlayers` `ungroup` `ungroupMany` `setGroupVolume` `setGroupMute` `setSleepTimer` `sleepTimer` `clearSleepTimer` `stopPlayer` |
-| Library | `search` `browse` `libraryItems` `itemByUri` `albumTracks` `playlistTracks` `artistTopTracks` `podcastEpisodes` `recommendations` `addToLibrary` `removeFromLibrary` `addFavorite` `removeFavorite` `addCurrentlyPlayingToFavorites` |
-| Listening history | `recentlyPlayed` `inProgressItems` `markPlayed` `markUnplayed` |
-| Playlists | `createPlaylist` `addToPlaylist` `removeFromPlaylist` |
-| Extras | `trackLyrics` `playAnnouncement` `ttsEngines` `dashboards` `showDashboard` `hideDashboard` `partyUrl` `partyAddToQueue` `partyBoost` `partySkip` |
-
-```ts
-const kitchen = ma.playerByName("Kitchen");
-const { albums = [] } = await ma.search("Dark Side of the Moon", { mediaTypes: ["album"] });
-if (kitchen && albums[0]?.uri) await ma.playMedia(kitchen.player_id, albums[0].uri, "replace");
-if (kitchen) await ma.skipSeconds(kitchen.player_id, 30);
-```
-
-**The whole API, typed.** Besides the convenience methods, `call()` reaches **every** Music Assistant command (310 in 2.10.4) with checked arguments and a typed result, and all data models are available as `MA.*`:
-
-```ts
-import type { MA } from "music-assistant-client";
-
-const results = await ma.call("music/search", { search_query: "Sherlock Holmes", media_types: ["audiobook"] });
-const books: MA.Audiobook[] = results.audiobooks;
-await ma.call("player_queues/set_playback_speed", { queue_id: "RINCON_…", speed: 1.25 }); // typo in a name or type → compile error
-```
-
-These types are generated from the server's own API docs (`docs/ma-api/openapi-*.json` and `commands-*.json`) by `npm run gen:api` (`tools/ma-api/`). For a new Music Assistant version, save `/api-docs/openapi.json`, `/api-docs/commands.json` and `/info` from the server into `docs/ma-api/` and regenerate. CI fails if the generated files don't match the docs. Note that the server also sends a few undocumented compatibility fields (for example `Player.display_name`); the hand-written state types (`Player`, `PlayerQueue`, …) include the ones MAC uses.
 
 ---
 

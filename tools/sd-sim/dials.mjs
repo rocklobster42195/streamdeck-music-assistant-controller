@@ -12,7 +12,7 @@ const P = env.MA_TEST_PLAYER;
 const MEDIA = process.env.SIM_MEDIA ?? "library://album/1";
 const require = createRequire(path.resolve("plugin/package.json"));
 const WebSocket = require("ws");
-const { MusicAssistantClient, currentElapsed } = await import("../../packages/ma-client/dist/index.js");
+const { MusicAssistantClient, currentElapsed } = await import("music-assistant-client");
 const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
 ma.start();
 await until(() => ma.isConnected, 10000);

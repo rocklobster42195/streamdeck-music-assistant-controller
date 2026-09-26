@@ -5,6 +5,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- `music-assistant-client` moved to its own repository and is published on npm (0.1.0); the plugin uses it from there.
 - Sleep Timer: fades the whole group out at the end (30 s by default, adjustable), stops, and restores every speaker's own volume. Music Assistant itself stops without fading.
 
 ### Changed

@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
     {
-        ignores: ['**/dist/**', '**/*.sdPlugin/bin/**', 'node_modules/**', '**/*.sdPlugin/ui/pi.js', '**/*.sdPlugin/ui/locales.generated.js', 'packages/ma-client/src/generated/**'],
+        ignores: ['**/dist/**', '**/*.sdPlugin/bin/**', 'node_modules/**', '**/*.sdPlugin/ui/pi.js', '**/*.sdPlugin/ui/locales.generated.js'],
     },
     tseslint.configs.recommended,
     {

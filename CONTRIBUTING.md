@@ -56,7 +56,7 @@ npm run watch                # rebuild and restart the plugin on every change
 ```
 
 The layout of the repository is described in the README under **Development**. In short:
-- `packages/ma-client` is the Music Assistant client (no Stream Deck code).
+- The Music Assistant client is its own package, [`music-assistant-client`](https://github.com/rocklobster42195/music-assistant-client), installed from npm.
 - `packages/streamdeck-core` holds the shared building blocks, which are also used by the Sonos Controller.
 - `plugin/` is the Stream Deck plugin.
 

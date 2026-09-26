@@ -15,7 +15,7 @@ const out = path.resolve(process.argv[2] ?? "sim-out");
 // Only test on a free player (not grouped, not playing)
 {
     const WebSocket = createRequire(path.resolve("plugin/package.json"))("ws");
-    const { MusicAssistantClient } = await import("../../packages/ma-client/dist/index.js");
+    const { MusicAssistantClient } = await import("music-assistant-client");
     const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
     ma.start();
     for (let i = 0; i < 100 && !ma.isConnected; i++) await new Promise((r) => setTimeout(r, 100));
@@ -50,7 +50,7 @@ console.log("idle titles:", sim.state.slots.get(follow).title, "|", sim.state.sl
 await sim.snapshot(out, "03-idle");
 
 // Start quiet playback directly through MA (volume 5), so the key has something to show.
-const { MusicAssistantClient } = await import("../../packages/ma-client/dist/index.js");
+const { MusicAssistantClient } = await import("music-assistant-client");
 const { default: WebSocket } = await import("../../plugin/node_modules/ws/index.js").catch(() => import("ws"));
 const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
 ma.start();

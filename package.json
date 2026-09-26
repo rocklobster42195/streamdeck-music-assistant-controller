@@ -6,13 +6,12 @@
     "author": "Boris Kemper",
     "type": "module",
     "workspaces": [
-        "packages/ma-client",
         "packages/streamdeck-core",
         "plugin"
     ],
     "scripts": {
-        "build": "npm run build -w music-assistant-client -w streamdeck-core && npm run build -w mac-plugin && node tools/build-translator.mjs",
-        "watch": "npm run build -w music-assistant-client -w streamdeck-core && npm run watch -w mac-plugin",
+        "build": "npm run build -w streamdeck-core && npm run build -w mac-plugin && node tools/build-translator.mjs",
+        "watch": "npm run build -w streamdeck-core && npm run watch -w mac-plugin",
         "test": "vitest run",
         "lint": "eslint packages plugin/src",
         "probe": "node tools/ma-probe.mjs",
@@ -36,8 +35,7 @@
         "sim:effect-sync": "node tools/sd-sim/effect-sync.mjs sim-out",
         "translate": "node tools/serve-translate.mjs",
         "translate:build": "node tools/build-translator.mjs",
-        "gen:api": "node tools/ma-api/generate.mjs",
-        "check": "npm run build && npm run typecheck -w music-assistant-client && npm test && npm run lint && npm run validate -w mac-plugin",
+        "check": "npm run build && npm test && npm run lint && npm run validate -w mac-plugin",
         "version:patch": "node tools/bump-version.mjs patch",
         "version:minor": "node tools/bump-version.mjs minor",
         "version:major": "node tools/bump-version.mjs major",
@@ -46,10 +44,7 @@
         "ship:patch": "npm run check && npm run version:patch && npm run release",
         "ship:minor": "npm run check && npm run version:minor && npm run release",
         "ship:major": "npm run check && npm run version:major && npm run release",
-        "ship:beta": "npm run check && npm run version:beta && npm run release",
-        "client:release:patch": "npm run check && node tools/release-client.mjs patch",
-        "client:release:minor": "npm run check && node tools/release-client.mjs minor",
-        "client:release:major": "npm run check && node tools/release-client.mjs major"
+        "ship:beta": "npm run check && npm run version:beta && npm run release"
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.9",

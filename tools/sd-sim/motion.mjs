@@ -10,7 +10,7 @@ const out = path.resolve(process.argv[2] ?? "sim-out");
 const P = env.MA_TEST_PLAYER;
 const require = createRequire(path.resolve("plugin/package.json"));
 const WebSocket = require("ws");
-const { MusicAssistantClient } = await import("../../packages/ma-client/dist/index.js");
+const { MusicAssistantClient } = await import("music-assistant-client");
 const ma = new MusicAssistantClient({ url: env.MA_URL, token: env.MA_TOKEN, webSocketFactory: (u) => new WebSocket(u) });
 ma.start();
 await until(() => ma.isConnected, 10000);
