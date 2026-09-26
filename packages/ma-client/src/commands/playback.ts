@@ -80,6 +80,8 @@ export class PlaybackCommands extends MusicAssistantConnection {
         }
         return undefined;
     }
+    /** Stop the player itself (also sources outside MA's queue) — what MA's sleep timer does. */
+    stopPlayer(playerId: string) { return this.call('players/cmd/stop', { player_id: playerId }); }
     setPower(playerId: string, powered: boolean) { return this.call('players/cmd/power', { player_id: playerId, powered }); }
     setVolume(playerId: string, level: number) { return this.call('players/cmd/volume_set', { player_id: playerId, volume_level: clampVolume(level) }); }
     volumeUp(playerId: string) { return this.call('players/cmd/volume_up', { player_id: playerId }); }

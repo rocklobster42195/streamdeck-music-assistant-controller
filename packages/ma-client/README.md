@@ -61,7 +61,7 @@ await ma.skipSeconds(kitchen.player_id, 30);
 |---|---|
 | Playback | `playPause` `play` `pause` `stopPlayback` `next` `previous` `seek` `skipSeconds` `setShuffle` `setRepeat` `setCrossfade` `setAutoplay` `setPlaybackSpeed` `playMedia` `transferQueue` |
 | Queue | `queueItems` `playIndex` `clearQueue` `removeQueueItem` `moveQueueItem` `saveQueueAsPlaylist` |
-| Players and groups | `playerByName` `setPower` `setVolume` `volumeUp` `volumeDown` `setMute` `selectSource` `groupPlayers` `ungroup` `ungroupMany` `setGroupVolume` `setGroupMute` `setSleepTimer` `sleepTimer` `clearSleepTimer` |
+| Players and groups | `playerByName` `setPower` `setVolume` `volumeUp` `volumeDown` `setMute` `selectSource` `groupPlayers` `ungroup` `ungroupMany` `setGroupVolume` `setGroupMute` `setSleepTimer` `sleepTimer` `clearSleepTimer` `stopPlayer` |
 | Library | `search` `browse` `libraryItems` `itemByUri` `albumTracks` `playlistTracks` `artistTopTracks` `podcastEpisodes` `recommendations` `addToLibrary` `removeFromLibrary` `addFavorite` `removeFavorite` `addCurrentlyPlayingToFavorites` |
 | Listening history | `recentlyPlayed` `inProgressItems` `markPlayed` `markUnplayed` |
 | Playlists | `createPlaylist` `addToPlaylist` `removeFromPlaylist` |

@@ -277,10 +277,13 @@
     "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing verschieben oder am Dial drehen (oben erscheint die Skala). Hängen die Lyrics nach einer Weile hinterher? Aufs Display tippen, dann wird neu synchronisiert.",
     "pi.choose": "Wählen",
     "pi.no_options": "Nichts verfügbar.",
-    "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibenden Minuten herunter.",
+    "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibende Zeit herunter.",
     "pi.sleep_steps": "Dauern",
     "pi.sleep_steps_label": "Minuten",
     "pi.sleep_steps_placeholder": "15, 30, 60, 90",
+    "pi.sleep_fade": "Ausblenden",
+    "pi.sleep_fade_label": "Dauer",
+    "pi.sleep_fade_hint": "Am Ende wird die ganze Gruppe leiser, stoppt und bekommt ihre Lautstärken zurück. 0 = ohne Ausblenden stoppen.",
     "pi.sleep_steps_hint": "Minuten mit Komma getrennt – jeder Druck schaltet weiter.",
     "pi.announce_message": "Nachricht",
     "pi.announce_text": "Gesprochener Text",
@@ -605,10 +608,13 @@
     "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing, or turn the dial (the scale at the top shows it). Lyrics lagging after a while? Tap the display to re-sync.",
     "pi.choose": "Choose",
     "pi.no_options": "Nothing available.",
-    "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the minutes left.",
+    "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the time left.",
     "pi.sleep_steps": "Durations",
     "pi.sleep_steps_label": "Minutes",
     "pi.sleep_steps_placeholder": "15, 30, 60, 90",
+    "pi.sleep_fade": "Fade-out",
+    "pi.sleep_fade_label": "Duration",
+    "pi.sleep_fade_hint": "At the end, the whole group fades out, stops and gets its volumes back. 0 = stop without fading.",
     "pi.sleep_steps_hint": "Comma-separated minutes, stepped through with each press.",
     "pi.announce_message": "Message",
     "pi.announce_text": "Text to speak",
@@ -4223,6 +4229,39 @@
   },
   {
    "key": "pi.sleep_steps_placeholder",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_fade",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_fade_label",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Sleep Timer",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/sleep-timer-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.sleep_fade_hint",
    "group": "pi",
    "usedIn": [
     {

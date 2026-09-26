@@ -19,6 +19,11 @@
     <pi-field setting="steps" label="pi.sleep_steps_label" placeholder="pi.sleep_steps_placeholder" hint="pi.sleep_steps_hint"></pi-field>
   </pi-section>
 
+  <pi-section title="pi.sleep_fade">
+    <pi-range setting="fadeOut" min="0" max="120" step="5" default="30" unit=" s" label="pi.sleep_fade_label"></pi-range>
+    <div class="pi-hint" data-i18n="pi.sleep_fade_hint"></div>
+  </pi-section>
+
   <pi-section title="pi.icon_color">
     <pi-toggle setting="iconCoverColor" label="pi.icon_cover_color" hint="pi.icon_cover_color_hint"></pi-toggle>
   </pi-section>

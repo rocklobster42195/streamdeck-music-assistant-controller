@@ -58,7 +58,7 @@ All keys can show their icons in the **cover color** of what is playing (option 
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key |
 | **Player**: one key per room; makes it the active player and brings the music along | Key |
 | **Continue Listening**: resume your latest audiobook or podcast episode where you left off | Key |
-| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key |
+| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown and a fade-out at the end | Key |
 | **Source**: switch a speaker to Line-in, TV or another input | Key |
 | **Announcement**: speak a message on one or all speakers (TTS), at once or after a **timer**, with an icon of your choice | Key |
 | **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
@@ -182,7 +182,7 @@ Providers that can't be browsed are hidden automatically.
 
 ### Sleep Timer, Announcement, Source, Cast Dashboard
 
-- **Sleep Timer:** Each press sets the next duration (default 15, 30, 60 and 90 minutes; configurable). After the last one, the timer switches off. While running, the key counts down the minutes left.
+- **Sleep Timer:** Each press sets the next duration (default 15, 30, 60 and 90 minutes; configurable). After the last one, the timer switches off. While running, the key counts down the time left (minutes and seconds). At the end, the whole group fades out (30 seconds by default, adjustable, 0 = off), stops, and every speaker gets its own volume back for next time. The fade needs Stream Deck running; without it, Music Assistant still stops playback on time, just without fading.
 - **Announcement:** Speaks your text on the chosen player or **on all players**, with an optional chime and its own volume. The voice comes from a TTS engine in Home Assistant or Music Assistant, which you pick in the settings.
 - **Source:** Switches a player to one of its inputs (e.g. Line-in on a Sonos Five, or TV). The key lights up while that input is active. Only inputs you can actually select are offered.
 - **Cast Dashboard:** Shows a Music Assistant dashboard ("Now playing", "Party" or "Music quiz") on a screen that Music Assistant knows, such as a Chromecast TV. Press again to take it down.
@@ -322,7 +322,7 @@ On Node 20, pass a WebSocket implementation: `webSocketFactory: (url) => new Web
 |---|---|
 | Playback | `playPause` `play` `pause` `stopPlayback` `next` `previous` `seek` `skipSeconds` `setShuffle` `setRepeat` `setCrossfade` `setAutoplay` `setPlaybackSpeed` `playMedia` `transferQueue` |
 | Queue | `queueItems` `playIndex` `clearQueue` `removeQueueItem` `moveQueueItem` `saveQueueAsPlaylist` |
-| Players and groups | `playerByName` `setPower` `setVolume` `volumeUp` `volumeDown` `setMute` `selectSource` `groupPlayers` `ungroup` `ungroupMany` `setGroupVolume` `setGroupMute` `setSleepTimer` `sleepTimer` `clearSleepTimer` |
+| Players and groups | `playerByName` `setPower` `setVolume` `volumeUp` `volumeDown` `setMute` `selectSource` `groupPlayers` `ungroup` `ungroupMany` `setGroupVolume` `setGroupMute` `setSleepTimer` `sleepTimer` `clearSleepTimer` `stopPlayer` |
 | Library | `search` `browse` `libraryItems` `itemByUri` `albumTracks` `playlistTracks` `artistTopTracks` `podcastEpisodes` `recommendations` `addToLibrary` `removeFromLibrary` `addFavorite` `removeFavorite` `addCurrentlyPlayingToFavorites` |
 | Listening history | `recentlyPlayed` `inProgressItems` `markPlayed` `markUnplayed` |
 | Playlists | `createPlaylist` `addToPlaylist` `removeFromPlaylist` |
