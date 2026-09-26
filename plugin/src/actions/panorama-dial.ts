@@ -13,7 +13,7 @@ import type { JsonObject } from "@elgato/utils";
 import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID } from "streamdeck-core";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
-import { effectSettingsFor, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
+import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { STRIP_W, stripImage } from "../render/strip";
 import { functionIcon } from "../render/function-icons";
 import { functionOverlay, noticeOverlay, timingOverlay } from "../render/panorama-text";
@@ -76,14 +76,28 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!ev.action.isDial()) return;
         const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
-        registerEffectTarget(ev.action.id, (effectId) => {
-            const inst = this.instances.get(ev.action.id);
-            if (!inst || inst.settings.background === effectId || (effectId && this.effectId(inst) === effectId)) return;
-            inst.settings = { ...inst.settings, background: effectId };
-            void inst.action.setSettings(inst.settings);
-            this.join(ev.action.id);
-            this.pushSettings(ev.action.id);
+        registerEffectTarget(ev.action.id, {
+            deviceId: ev.action.device.id,
+            column,
+            settings: () => this.instances.get(ev.action.id)?.settings ?? {},
+            apply: (effectId) => {
+                const inst = this.instances.get(ev.action.id);
+                if (!inst || inst.settings.background === effectId || (effectId && this.effectId(inst) === effectId)) return;
+                inst.settings = { ...inst.settings, background: effectId };
+                void inst.action.setSettings(inst.settings);
+                this.join(ev.action.id);
+                this.pushSettings(ev.action.id);
+            },
         });
+        // A freshly placed Panorama dial joins the scene next to it: effect, color and (from another
+        // Panorama dial) the text line — title or lyrics, timing and player
+        const neighbour = isFresh(ev.payload.settings) ? (neighbourEffectSettings(ev.action.id) as PanoramaDialSettings | undefined) : undefined;
+        if (neighbour) {
+            const inst = this.instances.get(ev.action.id)!;
+            const pick = <K extends keyof PanoramaDialSettings>(k: K) => (neighbour[k] !== undefined ? { [k]: neighbour[k] } : {});
+            inst.settings = { ...inst.settings, background: neighbour.background, ...pick("coverColor"), ...pick("text"), ...pick("lyricsOffset"), ...pick("playerId") };
+            void inst.action.setSettings(inst.settings);
+        }
         this.join(ev.action.id);
     }
 

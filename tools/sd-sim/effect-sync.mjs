@@ -64,6 +64,19 @@ try {
     sim.setSettings(q, { background: "boing-globe" });
     await sim.sleep(1500);
     check("off and on again brings the effect back on every dial", [q, br, pl, tr].every((x) => bg(x) === "boing-globe"), [q, br, pl, tr].map(bg).join(","));
+
+    // A freshly placed dial joins the scene next to it (effect, and for Panorama dials the text line)
+    for (const ctx of [q, br, pl, tr]) sim.remove(ctx);
+    const p1 = sim.add("panorama-dial", { background: "boing-ball", text: "lyrics", lyricsOffset: 1.2, playerId: "sim-no-player" }, { column: 1, controller: "Encoder" });
+    const p2 = sim.add("panorama-dial", { background: "boing-ball", text: "lyrics", lyricsOffset: 1.2, playerId: "sim-no-player" }, { column: 2, controller: "Encoder" });
+    await sim.sleep(800);
+    const fresh = sim.add("panorama-dial", {}, { column: 3, controller: "Encoder" });
+    const freshTrack = sim.add("track-dial", {}, { column: 0, controller: "Encoder" });
+    await sim.sleep(1200);
+    const f = sim.state.slots.get(fresh).settings;
+    check("a new Panorama dial takes over effect and lyrics from its neighbour", f.background === "boing-ball" && f.text === "lyrics" && f.lyricsOffset === 1.2 && f.playerId === "sim-no-player", JSON.stringify(f));
+    check("a new Track dial takes over the neighbour's effect", bg(freshTrack) === "boing-ball", String(bg(freshTrack)));
+    void p1; void p2;
 } finally {
     await sim.stop();
 }

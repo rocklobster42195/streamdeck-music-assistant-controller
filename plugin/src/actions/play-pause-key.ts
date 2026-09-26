@@ -79,8 +79,12 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
         };
     }
 
-    protected override async press({ ma, queue }: PlayerContext<PlayPauseSettings>): Promise<void> {
-        if (!queue) throw new Error("player has no queue");
+    protected override async press({ ma, player, queue }: PlayerContext<PlayPauseSettings>): Promise<void> {
+        // Playing from a source outside MA (e.g. started in the Sonos app): control the player itself
+        if (!queue) {
+            await ma.call("players/cmd/play_pause", { player_id: player.player_id });
+            return;
+        }
         // Flip immediately on every key of this queue; the server confirms via events.
         maConnection.patchQueue(queue.queue_id, { state: queue.state === "playing" ? "paused" : "playing" });
         try {

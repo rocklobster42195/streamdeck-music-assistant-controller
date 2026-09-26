@@ -11,6 +11,11 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Volume key: the mute key shows the volume as a ring (like the Volume dial); muted, the ring turns grey with a red muted speaker inside. The volume number can be turned off ("Show volume").
 
 ### Fixed
+- Key colors are consistent: blue = on, grey = off (shuffle, repeat, crossfade, "Don't stop the music", sleep timer, inactive player/source/screen), dark = not available right now (e.g. skip on a radio stream).
+- Play/Pause and other keys show the right state when playback was started outside Music Assistant (e.g. in the Sonos app); Play/Pause then controls the player directly.
+- Play/Pause title: scrolls exactly like Sonos Controller again. The fade-out starts with the end of the title well in view instead of while the last letters are still coming in. Animation frames no longer resend the key title or flood an open settings panel.
+- Volume and Group Volume dials with the ring in the cover color: the color glides to the next track's instead of flashing blue in between.
+- A newly placed dial takes over the effect of the dial next to it, and a new Panorama dial also its title/lyrics line, timing and player, so it joins the scene right away.
 - Play/Pause key: when the track changes, the key keeps the old cover until the new one has loaded and then crossfades to it (as in Sonos Controller). Before, it briefly showed a music-note icon. Dials keep the old cover while the new one loads, too.
 - Keys no longer flash their paused look on every track change. Sonos reports "idle" for about a second after each skip; a queue that was playing a moment ago now counts as playing for another 2.5 s. Pausing from a key still shows right away.
 - Playback positions (progress bars, lyrics, seeking) are extrapolated on the Music Assistant server's clock: `music-assistant-client` measures the offset on connect (`time` command, `clockOffset`, `serverNow()`). A local clock running ahead made lyrics appear early. Position-only updates (`queue_time_updated`) are stamped on the same clock, so the lyrics timing no longer jumps by the clock offset depending on which event came last.

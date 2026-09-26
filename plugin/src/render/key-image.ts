@@ -66,8 +66,14 @@ export const ICONS = {
     album: mdiAlbum,
 };
 
-/** Accent for "on" states (matches the PI theme). */
+/**
+ * Key color tiers (same on every key): ACCENT = on / active, the default light grey = an action
+ * that is available, OFF = a toggle that is off or a choice that isn't the current one,
+ * UNAVAILABLE = can't be used right now (e.g. skip on a radio stream).
+ */
 export const ACCENT = "#6cc4ff";
+export const OFF = "#8a8a90";
+export const UNAVAILABLE = "#4a4a50";
 
 export type KeyImageOptions = {
     /** data: URI of the cover art, drawn full-bleed. */
@@ -122,7 +128,7 @@ export function renderKeyImage(opts: KeyImageOptions): string {
     } else if (opts.ring) {
         parts.push(...ringParts(opts.ring));
     } else if (opts.icon) {
-        const fill = opts.dimmed ? "#777" : color;
+        const fill = opts.dimmed ? UNAVAILABLE : color;
         parts.push(opts.badge ? icon(opts.icon, ICON_WITH_BADGE.x, ICON_WITH_BADGE.y, ICON_WITH_BADGE.size, fill) : icon(opts.icon, ICON.xy, ICON.xy, ICON.size, fill));
     }
 
@@ -145,7 +151,7 @@ export function renderKeyImage(opts: KeyImageOptions): string {
     if (opts.badge && !opts.ring) {
         // Under the icon; over cover art it stays at the top, where the cover badge leaves room.
         const y = opts.cover ? 30 : SIZE - 8;
-        parts.push(`<text x="${SIZE / 2}" y="${y}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="${opts.cover ? 22 : 28}" font-weight="700" fill="${opts.dimmed ? "#777" : color}">${escapeXml(opts.badge)}</text>`);
+        parts.push(`<text x="${SIZE / 2}" y="${y}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="${opts.cover ? 22 : 28}" font-weight="700" fill="${opts.dimmed ? UNAVAILABLE : color}">${escapeXml(opts.badge)}</text>`);
     }
 
     if (opts.progress !== undefined) {

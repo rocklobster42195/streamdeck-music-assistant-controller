@@ -2,7 +2,7 @@ import streamDeck, { action } from "@elgato/streamdeck";
 import { mdiCast, mdiCastConnected } from "@mdi/js";
 import type { DashboardType } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
-import { ACCENT, renderKeyImage } from "../render/key-image";
+import { ACCENT, OFF, renderKeyImage } from "../render/key-image";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type DashboardSettings = MaKeySettings & {
@@ -43,7 +43,7 @@ export class DashboardKey extends MaKeyAction<DashboardSettings> {
         const on = this.active.has(settings.dashboardId);
         const busy = this.busy.has(settings.dashboardId);
         return {
-            image: renderKeyImage({ icon: on ? mdiCastConnected : mdiCast, color: on ? ACCENT : "#c8c8cc", active: on ? ACCENT : undefined, dimmed: busy, badge: busy ? "…" : undefined }),
+            image: renderKeyImage({ icon: on ? mdiCastConnected : mdiCast, color: on ? ACCENT : OFF, active: on ? ACCENT : undefined, dimmed: busy, badge: busy ? "…" : undefined }),
             title: settings.dashboardName ?? "",
         };
     }

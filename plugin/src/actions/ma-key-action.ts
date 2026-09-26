@@ -35,7 +35,10 @@ export type KeyRender = {
     preview?: Partial<Pick<KeyPreview, "track" | "state">>;
 };
 
-type Instance<S extends JsonObject> = { action: KeyAction<S>; settings: S; lastRender?: string };
+type Instance<S extends JsonObject> = { action: KeyAction<S>; settings: S; lastRender?: string; lastTitle?: string; previewAt?: number; previewKey?: string };
+
+/** An open PI's key preview doesn't need every animation frame (the Stream Deck app shows the key live). */
+const PREVIEW_EVERY_MS = 1000;
 
 export const COVER_SIZE = 160;
 
@@ -128,7 +131,14 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
             following: !inst.settings.playerId,
             ...out.preview,
         };
-        piBridge.updatePreview(id, preview);
+        // State or track changes go out at once; image-only changes (animation frames) at most once a second
+        const now = Date.now();
+        const previewKey = `${preview.state}\n${preview.track ?? ""}\n${preview.playerName ?? ""}`;
+        if (previewKey !== inst.previewKey || !inst.previewAt || now - inst.previewAt >= PREVIEW_EVERY_MS) {
+            inst.previewAt = now;
+            inst.previewKey = previewKey;
+            piBridge.updatePreview(id, preview);
+        }
 
         // Events arrive often (e.g. queue_time_updated) — only push to the device when something changed.
         const title = out.title ?? "";
@@ -136,7 +146,11 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
         if (signature === inst.lastRender) return;
         inst.lastRender = signature;
         void inst.action.setImage(out.image);
-        void inst.action.setTitle(title);
+        // Titles rarely change; don't resend them with every animation frame
+        if (title !== inst.lastTitle) {
+            inst.lastTitle = title;
+            void inst.action.setTitle(title);
+        }
     }
 
     protected playerContext(id: string, settings: S): PlayerContext<S> | undefined {

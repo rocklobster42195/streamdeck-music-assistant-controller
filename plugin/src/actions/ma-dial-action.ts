@@ -13,10 +13,11 @@ import type { MusicAssistantClient, PlayerMedia } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
+import { ColorFader } from "../render/color-fade";
 import { CoverFader } from "../render/cover-fade";
-import { ICONS } from "../render/key-image";
+import { ACCENT, coverAccent, ICONS } from "../render/key-image";
 import { BLANK_EFFECT_ID } from "streamdeck-core";
-import { effectSettingsFor, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
+import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { mdi, stripImage, text } from "../render/strip";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
@@ -52,20 +53,33 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         if (!ev.action.isDial()) return;
         const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
-        registerEffectTarget(ev.action.id, (effectId) => {
-            const inst = this.instances.get(ev.action.id);
-            if (!inst || (inst.settings as EffectSettings).background === effectId) return;
-            inst.settings = { ...inst.settings, background: effectId };
-            void inst.action.setSettings(inst.settings);
-            inst.lastRender = undefined;
-            this.render(ev.action.id);
+        registerEffectTarget(ev.action.id, {
+            deviceId: ev.action.device.id,
+            column,
+            settings: () => (this.instances.get(ev.action.id)?.settings ?? {}) as EffectSettings,
+            apply: (effectId) => {
+                const inst = this.instances.get(ev.action.id);
+                if (!inst || (inst.settings as EffectSettings).background === effectId) return;
+                inst.settings = { ...inst.settings, background: effectId };
+                void inst.action.setSettings(inst.settings);
+                inst.lastRender = undefined;
+                this.render(ev.action.id);
+            },
         });
+        // A freshly placed dial joins the scene next to it (the Panorama dial does the same in its own class)
+        const neighbour = isFresh(ev.payload.settings) ? neighbourEffectSettings(ev.action.id) : undefined;
+        if (neighbour) {
+            const inst = this.instances.get(ev.action.id)!;
+            inst.settings = { ...inst.settings, background: neighbour.background, ...(neighbour.coverColor !== undefined ? { coverColor: neighbour.coverColor } : {}) };
+            void inst.action.setSettings(inst.settings);
+        }
         this.render(ev.action.id);
     }
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
         this.instances.delete(ev.action.id);
         this.covers.forget(ev.action.id);
+        this.ringColors.forget(ev.action.id);
         unregisterEffectTarget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
@@ -166,6 +180,13 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         const player = maConnection.player(this.followsActivePlayer ? maConnection.resolvePlayerId(settings.playerId) : settings.playerId || undefined);
         if (!player) return undefined;
         return { id, settings, ma, player, queue: maConnection.queueFor(player), playerName: player.display_name ?? player.name };
+    }
+
+    private readonly ringColors = new ColorFader();
+
+    /** Ring color: the cover's, gliding to the next track's (no blue flash in between), or MAC's blue. */
+    protected ringColor(id: string, useCover: boolean | undefined, media: PlayerMedia | null | undefined): string {
+        return useCover ? this.ringColors.color(id, coverAccent(media), ACCENT, () => this.render(id)) : ACCENT;
     }
 
     /** Strips don't crossfade; they only keep the last cover while the next one loads. */

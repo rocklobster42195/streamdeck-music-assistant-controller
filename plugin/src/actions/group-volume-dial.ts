@@ -2,7 +2,7 @@ import streamDeck, { action } from "@elgato/streamdeck";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
-import { ICONS, ringColor } from "../render/key-image";
+import { ICONS } from "../render/key-image";
 import { glide } from "../render/glide";
 import { gauge, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "../render/strip";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
@@ -35,7 +35,7 @@ export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
         const muted = !!(grouped ? leader.group_volume_muted : leader.volume_muted);
 
         const shown = glide(`group-${id}`, volume, () => this.render(id));
-        const parts = [...gauge(50, 50, 34, shown / 100, muted ? "#5a5a60" : ringColor(settings.ringCoverColor, leader.current_media))];
+        const parts = [...gauge(50, 50, 34, shown / 100, muted ? "#5a5a60" : this.ringColor(id, settings.ringCoverColor, leader.current_media))];
         if (muted) parts.push(mdi(ICONS.volumeOff, 34, 34, 32, MUTED));
         else parts.push(text(50, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
 

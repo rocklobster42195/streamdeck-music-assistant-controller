@@ -109,6 +109,10 @@ class MaConnection {
     queueFor(player: Player | undefined): PlayerQueue | undefined {
         if (!player || !this.client) return undefined;
         const queues = this.client.queues;
+        // Started outside MA (Sonos app, radio, line-in): MA's own queue is idle, so the keys go by
+        // the player's own state and media instead
+        const source = player.active_source;
+        if (source && source !== player.player_id && !queues.has(source)) return undefined;
         for (const id of [player.active_source, player.synced_to, player.active_group, player.player_id]) {
             const q = id ? queues.get(id) : undefined;
             if (q) return this.bridged(this.optimisticQueues.apply(q.queue_id, q));

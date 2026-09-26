@@ -1,7 +1,7 @@
 import { action } from "@elgato/streamdeck";
 import type { PlayerQueue, RepeatMode } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
-import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
+import { ACCENT, ICONS, OFF, renderKeyImage } from "../render/key-image";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type PlaybackCommand = "next" | "previous" | "shuffle" | "repeat" | "crossfade" | "dont_stop";
@@ -25,21 +25,21 @@ export class PlaybackControlKey extends MaKeyAction<PlaybackControlSettings> {
                 return { image: renderKeyImage({ icon: command === "next" ? ICONS.next : ICONS.previous, dimmed: isRadio || !queue }) };
             case "shuffle": {
                 const on = !!queue?.shuffle_enabled;
-                return { image: renderKeyImage({ icon: on ? ICONS.shuffle : ICONS.shuffleOff, color: on ? ACCENT : undefined, active: on ? ACCENT : undefined, dimmed: !on && isRadio }) };
+                return { image: renderKeyImage({ icon: on ? ICONS.shuffle : ICONS.shuffleOff, color: on ? ACCENT : OFF, active: on ? ACCENT : undefined, dimmed: !on && isRadio }) };
             }
             case "repeat": {
                 const mode = queue?.repeat_mode ?? "off";
                 const on = mode !== "off";
                 const icon = mode === "one" ? ICONS.repeatOne : mode === "all" ? ICONS.repeat : ICONS.repeatOff;
-                return { image: renderKeyImage({ icon, color: on ? ACCENT : undefined, active: on ? ACCENT : undefined, dimmed: !on && isRadio }) };
+                return { image: renderKeyImage({ icon, color: on ? ACCENT : OFF, active: on ? ACCENT : undefined, dimmed: !on && isRadio }) };
             }
             case "crossfade": {
                 const on = !!queue?.crossfade_enabled;
-                return { image: renderKeyImage({ icon: ICONS.crossfade, color: on ? ACCENT : "#8a8a90", active: on ? ACCENT : undefined }) };
+                return { image: renderKeyImage({ icon: ICONS.crossfade, color: on ? ACCENT : OFF, active: on ? ACCENT : undefined }) };
             }
             case "dont_stop": {
                 const on = !!queue?.autoplay_enabled;
-                return { image: renderKeyImage({ icon: ICONS.dontStop, color: on ? ACCENT : "#8a8a90", active: on ? ACCENT : undefined }) };
+                return { image: renderKeyImage({ icon: ICONS.dontStop, color: on ? ACCENT : OFF, active: on ? ACCENT : undefined }) };
             }
         }
     }

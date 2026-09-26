@@ -2,7 +2,7 @@ import { action } from "@elgato/streamdeck";
 import { mdiSleep } from "@mdi/js";
 import { maConnection } from "../ma/connection";
 import { parseSteps } from "../ma/sleep-steps";
-import { ACCENT, renderKeyImage } from "../render/key-image";
+import { ACCENT, OFF, renderKeyImage } from "../render/key-image";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type SleepTimerSettings = MaKeySettings & {
@@ -24,7 +24,7 @@ export class SleepTimerKey extends MaKeyAction<SleepTimerSettings> {
 
     protected override renderPlayer({ player }: PlayerContext<SleepTimerSettings>): KeyRender {
         const left = remainingSeconds(player.sleep_timer_expires_at);
-        if (left <= 0) return { image: renderKeyImage({ icon: mdiSleep, color: "#8a8a90" }) };
+        if (left <= 0) return { image: renderKeyImage({ icon: mdiSleep, color: OFF }) };
         const minutes = Math.ceil(left / 60);
         return { image: renderKeyImage({ icon: mdiSleep, color: ACCENT, active: ACCENT, badge: minutes >= 60 ? `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, "0")}` : `${minutes}′` }) };
     }

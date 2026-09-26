@@ -1,7 +1,7 @@
 import { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import { transferSource, transferTo } from "../ma/transfer";
-import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
+import { ACCENT, ICONS, OFF, renderKeyImage } from "../render/key-image";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type PlayerKeySettings = MaKeySettings & {
@@ -28,7 +28,7 @@ export class PlayerKey extends MaKeyAction<PlayerKeySettings> {
             image: renderKeyImage({
                 cover,
                 icon: cover ? undefined : ICONS.speaker,
-                color: active ? ACCENT : "#c8c8cc",
+                color: active ? ACCENT : OFF,
                 dimmed: !player.available,
                 active: active ? ACCENT : undefined,
                 statusDot: STATE_COLORS[state],

@@ -45,15 +45,41 @@ function rgbToHex([r, g, b]: [number, number, number]): string {
     return `#${[r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
 }
 
-const effectTargets = new Map<string, (effectId: string) => void>();
+/** A dial that can show an effect: where it sits, its settings, and how it takes over an effect. */
+export type EffectDial = { deviceId: string; column: number; settings: () => EffectSettings; apply: (effectId: string) => void };
+
+const effectDials = new Map<string, EffectDial>();
 
 /** Lets a dial take over an effect chosen on a connected display (see {@link spreadEffect}). */
-export function registerEffectTarget(context: string, apply: (effectId: string) => void): void {
-    effectTargets.set(context, apply);
+export function registerEffectTarget(context: string, dial: EffectDial): void {
+    effectDials.set(context, dial);
 }
 
 export function unregisterEffectTarget(context: string): void {
-    effectTargets.delete(context);
+    effectDials.delete(context);
+}
+
+/**
+ * Settings of the dial next to `context` (left first) that has an effect chosen, for a freshly
+ * placed dial to join the scene it lands in. Without this a new dial started with the default and
+ * stayed apart — no shared effect, no title or lyrics running across it.
+ */
+export function neighbourEffectSettings(context: string): EffectSettings | undefined {
+    const me = effectDials.get(context);
+    if (!me) return undefined;
+    for (const side of [-1, 1]) {
+        for (const [other, d] of effectDials) {
+            if (other === context || d.deviceId !== me.deviceId || d.column !== me.column + side) continue;
+            const s = d.settings();
+            if (s.background !== undefined && s.syncEffect !== false) return s;
+        }
+    }
+    return undefined;
+}
+
+/** Stream Deck sends {} for a dial that was just placed and never configured. */
+export function isFresh(settings: object): boolean {
+    return Object.keys(settings).length === 0;
 }
 
 /**
@@ -67,7 +93,7 @@ export function spreadEffect(context: string, before: string | undefined, after:
     // "" = no effect; undefined = never set (nothing to spread from or to)
     if (sync === false || before === undefined || after === undefined || before === after) return;
     for (const m of panorama.members(context)) {
-        if (m.context !== context) effectTargets.get(m.context)?.(after);
+        if (m.context !== context) effectDials.get(m.context)?.apply(after);
     }
 }
 

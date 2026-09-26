@@ -1,6 +1,6 @@
 import { action } from "@elgato/streamdeck";
 import { mdiAudioInputRca, mdiBluetooth, mdiLogin, mdiPlaylistMusic, mdiTelevision } from "@mdi/js";
-import { ACCENT, renderKeyImage } from "../render/key-image";
+import { ACCENT, OFF, renderKeyImage } from "../render/key-image";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type SourceSettings = MaKeySettings & {
@@ -15,7 +15,7 @@ export class SourceKey extends MaKeyAction<SourceSettings> {
         if (!settings.source) return { image: renderKeyImage({ icon: mdiLogin, dimmed: true }), title: this.t("key.choose_source") };
         const active = player.active_source === settings.source;
         return {
-            image: renderKeyImage({ icon: sourceIcon(settings.source, settings.sourceName), color: active ? ACCENT : "#c8c8cc", active: active ? ACCENT : undefined }),
+            image: renderKeyImage({ icon: sourceIcon(settings.source, settings.sourceName), color: active ? ACCENT : OFF, active: active ? ACCENT : undefined }),
             title: settings.sourceName ?? "",
         };
     }
