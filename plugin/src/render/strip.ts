@@ -8,7 +8,7 @@ export const STRIP_H = 100;
 
 /** Full strip image. `underlay` (e.g. a panorama effect slice) is drawn between background and content. */
 export function stripImage(parts: string[], background = "#0a0a0a", underlay = ""): string {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${STRIP_W}" height="${STRIP_H}" viewBox="0 0 ${STRIP_W} ${STRIP_H}"><defs><clipPath id="strip"><rect width="${STRIP_W}" height="${STRIP_H}"/></clipPath></defs><rect width="${STRIP_W}" height="${STRIP_H}" fill="${background}"/>${underlay ? `<g clip-path="url(#strip)">${underlay}</g>` : ""}${parts.join("")}</svg>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${STRIP_W}" height="${STRIP_H}" viewBox="0 0 ${STRIP_W} ${STRIP_H}"><defs><clipPath id="strip"><rect width="${STRIP_W}" height="${STRIP_H}"/></clipPath></defs><rect width="${STRIP_W}" height="${STRIP_H}" fill="${background}"/>${underlay ? `<g clip-path="url(#strip)">${underlay}</g>` : ""}${parts.join("")}</svg>`;
     return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 }
 

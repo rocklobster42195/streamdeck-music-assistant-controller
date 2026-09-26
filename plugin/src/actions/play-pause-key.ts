@@ -1,6 +1,9 @@
 import { action } from "@elgato/streamdeck";
+import type { PlayerMedia, PlayerQueue } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { upcomingCrossfade } from "../ma/crossfade-predict";
+import { playingProvider, providerLogo } from "../ma/provider-icons";
+import { providerBadge } from "../render/provider-badge";
 import { getCachedCover, loadCover } from "../render/cover-cache";
 import { frames } from "../render/frames";
 import { coverAccent, ICONS, renderKeyImage, rgb } from "../render/key-image";
@@ -12,6 +15,8 @@ type PlayPauseSettings = MaKeySettings & {
     showProgress?: boolean;
     /** Scrolling "title [artist]" at the bottom of the key (as in sonos-controller). */
     showTitle?: boolean;
+    /** Logo of the music service that is playing, top left. */
+    showProvider?: boolean;
 };
 
 @action({ UUID: "de.boriskemper.music-assistant-controller.play-pause-key" })
@@ -70,6 +75,7 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
                 dimmed: !playing,
                 progress,
                 progressColor: accent,
+                cornerBadge: this.badge(id, settings, media, queue),
                 overlay:
                     settings.showTitle && media
                         ? this.title.overlay(id, media.title ? `${media.title}${media.artist ? ` [${media.artist}]` : ""}` : (media.artist ?? ""), () => !!this.instances.get(id)?.settings.showTitle, () => this.render(id))
@@ -77,6 +83,12 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
             }),
             title: settings.showPlayerName ? playerName : "",
         };
+    }
+
+    private badge(id: string, settings: PlayPauseSettings, media: PlayerMedia | null | undefined, queue: PlayerQueue | undefined): string | undefined {
+        const provider = settings.showProvider ? playingProvider(media, queue) : undefined;
+        const logo = provider && providerLogo(provider, 13, 13, 22, () => this.render(id));
+        return logo ? providerBadge(24, 24, 18, logo) : undefined;
     }
 
     protected override async press({ ma, player, queue }: PlayerContext<PlayPauseSettings>): Promise<void> {

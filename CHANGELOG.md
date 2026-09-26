@@ -22,6 +22,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
+- Play/Pause key and Track dial: **Show the service** option — a small logo on the cover shows where the music comes from (Spotify, your files, radio, …), using Music Assistant's own provider logos.
 - Every key (except Play/Pause, which shows the cover anyway) has a **Cover color** option: its icons take the color of what is playing instead of light grey and blue. Off-states stay grey, unavailable ones dark.
 - Browser dial: while idle it shows what the music comes from — the playlist or album (with its cover), and the current track and artist below. Without such a source it shows title and artist. Playlists show who made them as their subtitle.
 - Browser dial: **Services** setting, a switch per music service. Only the chosen ones show up in the provider list and in the library folders (favorites, playlists, albums …), e.g. only Spotify instead of every file playlist.

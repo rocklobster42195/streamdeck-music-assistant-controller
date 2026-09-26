@@ -112,6 +112,8 @@
     "pi.show_player_name_hint": "Name des Players auf der Taste",
     "pi.show_progress": "Fortschritt",
     "pi.show_progress_hint": "Balken in der Farbe des Covers",
+    "pi.show_provider": "Dienst anzeigen",
+    "pi.show_provider_hint": "Ein kleines Logo auf dem Cover: Spotify, deine Dateien, Radio …",
     "pi.help": "Hilfe & Feedback",
     "pi.state_playing_on": "spielt auf {player}",
     "pi.state_paused_on": "pausiert auf {player}",
@@ -427,6 +429,8 @@
     "pi.show_player_name_hint": "Player name on the key",
     "pi.show_progress": "Progress",
     "pi.show_progress_hint": "Bar in the color of the cover",
+    "pi.show_provider": "Show the service",
+    "pi.show_provider_hint": "A small logo on the cover: Spotify, your files, radio, …",
     "pi.help": "Help & feedback",
     "pi.state_playing_on": "playing on {player}",
     "pi.state_paused_on": "paused on {player}",
@@ -1797,6 +1801,11 @@
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-key.html"
     },
     {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
      "label": "Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
@@ -1869,6 +1878,38 @@
      "label": "Play/Pause",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_provider",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_provider_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    },
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
     }
    ]
   },

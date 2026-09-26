@@ -97,6 +97,8 @@ export type KeyImageOptions = {
     statusDot?: string;
     /** Extra SVG drawn on top of everything (e.g. a scrolling title). */
     overlay?: string;
+    /** Service badge in the top-left corner (already positioned SVG, see providerBadge). */
+    cornerBadge?: string;
     /** Caption under the icon (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
     badge?: string;
     /** A ring gauge (0..1) filling the key instead of an icon, e.g. the mute key's volume. */
@@ -188,9 +190,10 @@ export function renderKeyImage(input: KeyImageOptions): string {
         parts.push(`<rect y="${SIZE - 6}" width="${w}" height="6" fill="${opts.progressColor ?? color}"/>`);
     }
 
+    if (opts.cornerBadge) parts.push(opts.cornerBadge);
     if (opts.overlay) parts.push(opts.overlay);
 
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">${parts.join("")}</svg>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">${parts.join("")}</svg>`;
     return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 }
 

@@ -100,6 +100,8 @@
 			"show_player_name_hint": "Player name on the key",
 			"show_progress": "Progress",
 			"show_progress_hint": "Bar in the color of the cover",
+			"show_provider": "Show the service",
+			"show_provider_hint": "A small logo on the cover: Spotify, your files, radio, …",
 			"help": "Help & feedback",
 			"state_playing_on": "playing on {player}",
 			"state_paused_on": "paused on {player}",

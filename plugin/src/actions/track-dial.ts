@@ -5,6 +5,8 @@ import { coverAccent, ICONS, rgb } from "../render/key-image";
 import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
 import { frames } from "../render/frames";
 import { formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "../render/strip";
+import { playingProvider, providerLogo } from "../ma/provider-icons";
+import { providerBadge } from "../render/provider-badge";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -12,6 +14,8 @@ import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 type TrackDialSettings = MaKeySettings & EffectSettings & {
     /** Seconds per tick when seeking. */
     seekStep?: number;
+    /** Logo of the music service that is playing, on the cover. */
+    showProvider?: boolean;
 };
 
 /**
@@ -46,6 +50,10 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
         if (cover) parts.push(image(cover, 0, 0, 100, 100));
         else parts.push(`<rect width="100" height="100" fill="#1d1d20"/>`, mdi(ICONS.note, 26, 26, 48, "#5a5a60"));
         if (!playing) parts.push(`<rect width="100" height="100" fill="#000" opacity="0.55"/>`, mdi(ICONS.play, 30, 30, 40, "#ffffff"));
+        // Where the music comes from: the service's logo on the cover
+        const provider = ctx.settings.showProvider ? playingProvider(media, queue) : undefined;
+        const logo = provider && providerLogo(provider, 7, 7, 16, () => this.render(id));
+        if (logo) parts.push(providerBadge(15, 15, 12, logo));
 
         // Right: title, artist, progress
         const x = 108;
