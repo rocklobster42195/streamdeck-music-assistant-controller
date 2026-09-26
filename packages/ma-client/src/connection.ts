@@ -133,6 +133,33 @@ export class MusicAssistantConnection {
         this.openSocket();
     }
 
+    /**
+     * Start (if needed) and wait until connected, with players and queues loaded — handy for
+     * scripts. Rejects when the token is rejected or `timeoutMs` passes (0 = wait forever); the
+     * client is then stopped, so a script can exit.
+     */
+    connect(options: { timeoutMs?: number } = {}): Promise<void> {
+        const timeoutMs = options.timeoutMs ?? 15_000;
+        if (this._state === 'connected') return Promise.resolve();
+        return new Promise<void>((resolve, reject) => {
+            let timer: ReturnType<typeof setTimeout> | undefined;
+            const settle = (error?: Error) => {
+                clearTimeout(timer);
+                unsubscribe();
+                if (!error) return resolve();
+                this.stop();
+                reject(error);
+            };
+            const unsubscribe = this.onStateChange((state) => {
+                if (state === 'connected') settle();
+                else if (state === 'auth_failed') settle(new MaApiError(ERROR_AUTH_REQUIRED, 'token rejected', 'auth'));
+                else if (state === 'stopped') settle(new Error('Client stopped'));
+            });
+            if (timeoutMs > 0) timer = setTimeout(() => settle(new Error(`Could not connect to ${this.opts.url} within ${timeoutMs} ms`)), timeoutMs);
+            this.start();
+        });
+    }
+
     stop(): void {
         clearTimeout(this.reconnectTimer);
         this.reconnectTimer = undefined;

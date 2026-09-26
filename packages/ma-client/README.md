@@ -35,6 +35,20 @@ ma.on("player_updated", (player) => {
 });
 ```
 
+For a **script** that does one thing and exits, `connect()` starts the client and waits until players and queues are loaded. It rejects when the token is rejected or the server doesn't answer within 15 s (`connect({ timeoutMs })`, 0 = wait forever), and stops the client then:
+
+```ts
+// announce.mjs — node announce.mjs "Kitchen" "Dinner is ready"
+const [room, message] = process.argv.slice(2);
+const ma = new MusicAssistantClient({ url: process.env.MA_URL, token: process.env.MA_TOKEN });
+await ma.connect();
+
+const player = ma.playerByName(room);
+if (!player) throw new Error(`No player "${room}"`);
+await ma.playAnnouncement(player.player_id, { message, volume: 30 });
+ma.stop();
+```
+
 Node.js 20:
 
 ```ts

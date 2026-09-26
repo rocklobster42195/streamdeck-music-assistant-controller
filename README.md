@@ -310,7 +310,7 @@ import { MusicAssistantClient } from "music-assistant-client";
 
 const ma = new MusicAssistantClient({ url: "http://192.168.1.10:8095", token: "…" });
 ma.on("player_updated", (player) => console.log(player.name, player.playback_state));
-ma.start();
+await ma.connect(); // starts and waits until players and queues are loaded
 await ma.playPause("RINCON_…");
 ```
 

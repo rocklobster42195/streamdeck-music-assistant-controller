@@ -96,6 +96,32 @@ describe('MusicAssistantClient', () => {
         expect(sockets).toHaveLength(1);
     });
 
+    it('connect() resolves once players and queues are loaded', async () => {
+        const client = makeClient();
+        const connected = client.connect();
+        sockets[0].open();
+        await connected;
+        expect(client.players.get('RINCON_BATH')?.name).toBe('Bathroom');
+        await client.connect(); // already connected: resolves right away
+        expect(sockets).toHaveLength(1);
+    });
+
+    it('connect() rejects on a bad token and on timeout, and stops the client', async () => {
+        const bad = makeClient('bad');
+        const rejected = bad.connect();
+        sockets[0].open();
+        await expect(rejected).rejects.toBeInstanceOf(MaApiError);
+        expect(bad.state).toBe('stopped');
+
+        vi.useFakeTimers();
+        const silent = makeClient();
+        const timedOut = silent.connect({ timeoutMs: 1000 });
+        const check = expect(timedOut).rejects.toThrow(/within 1000 ms/);
+        await vi.advanceTimersByTimeAsync(1000);
+        await check;
+        expect(silent.state).toBe('stopped');
+    });
+
     it('call() sends any API command with typed args and result', async () => {
         const client = makeClient();
         client.start();
