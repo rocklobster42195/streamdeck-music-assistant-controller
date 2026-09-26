@@ -9,7 +9,9 @@ Control **[Music Assistant](https://www.music-assistant.io/)** from your Stream 
 
 > **Disclaimer:** This is an independent, community-made plugin. It is not affiliated with, endorsed by, or officially connected to the Music Assistant project or Elgato in any way.
 
-> **Status:** MAC is in early development. All MVP actions work (Play/Pause, Play Item, Playback Control, Volume, Like, plus the Volume and Track dials on Stream Deck +) and are tested end-to-end against a live Music Assistant server. They have not been tested on hardware yet. See the [roadmap](#roadmap).
+> **Status:** MAC is in early development, heading for its first release. All actions work and are tested against a live Music Assistant server and on a Stream Deck +. See the [roadmap](#roadmap).
+
+![Keys and dials on a Stream Deck +](docs/screenshots/01-overview.png)
 
 ---
 
@@ -22,9 +24,22 @@ MAC puts that on physical buttons and dials:
 - **One plugin for all speaker brands.** Any player that Music Assistant knows about can be controlled from the deck.
 - **Live state.** Keys update instantly through Music Assistant's event stream, so there is no polling.
 - **"Active player" concept.** A whole deck profile can follow one switchable player, so you don't have to configure each key.
-- **Beyond remote control:** a Like key, "Don't stop the music", crossfade, and later queue transfer ("music follows me"), party mode and more.
+- **Beyond remote control:** a Like key, "Don't stop the music", crossfade, "music follows me" from room to room, synced lyrics across the dials, and announcements with a timer.
 
 MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster42195/streamdeck-sonos-controller)** and shares its UI foundation.
+
+---
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Panorama: one effect across all four dials, with the title](docs/screenshots/02-panorama.png) | ![Matrix rain behind the Track and Group Volume dials](docs/screenshots/03-matrix.png) |
+| **Panorama:** one scene across neighbouring dials, with the title or synced lyrics on top | **Effect backgrounds** behind any dial, here Matrix Rain |
+| ![Browser, Queue, Active Player and Volume dials](docs/screenshots/04-browser.png) | ![Keys and dials](docs/screenshots/01-overview.png) |
+| **Browser, Queue, Active Player** and **Volume** on the dials | Everyday keys: cover, shuffle, skip, mute ring, rooms, favorites, a pasta timer |
+
+The screenshots are rendered by the simulator against a stand-in Music Assistant with invented music and generated covers (`node tools/sd-sim/showcase.mjs`).
 
 ---
 
