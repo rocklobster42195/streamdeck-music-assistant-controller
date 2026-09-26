@@ -49,7 +49,7 @@ try {
 
     await scene("02-panorama", (sim) => {
         keys(sim);
-        for (const c of [0, 1, 2, 3]) dial(sim, "panorama-dial", { background: "boing-globe", text: "track" }, c);
+        for (const c of [0, 1, 2, 3]) dial(sim, "panorama-dial", { background: "particles", text: "track" }, c);
     });
 
     await scene("03-matrix", (sim) => {

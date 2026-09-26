@@ -15,12 +15,14 @@ const KEY = 144;
 export async function renderDeck(slots, dir, name = "deck") {
     fs.mkdirSync(path.join(dir, "parts"), { recursive: true });
     const layers = [];
+    // Stream Deck +: keys sit centered over the four dials, like on the device
+    const plus = [...slots.values()].some((s) => s.controller === "Encoder");
     for (const [context, slot] of slots) {
         const png = await renderSlot(slot);
         fs.writeFileSync(path.join(dir, "parts", `${name}-${context}.png`), png);
         const { column, row } = slot.coordinates;
         const top = slot.controller === "Encoder" ? 2 * (KEY + 24) + 24 : row * (KEY + 24) + 12;
-        const left = slot.controller === "Encoder" ? column * 200 + 12 : column * (KEY + 24) + 12;
+        const left = slot.controller === "Encoder" ? column * 200 + 12 : plus ? column * 200 + 12 + (200 - KEY) / 2 : column * (KEY + 24) + 12;
         layers.push({ input: png, top, left });
     }
     const encoders = [...slots.values()].some((s) => s.controller === "Encoder");
