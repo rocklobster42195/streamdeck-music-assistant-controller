@@ -25,7 +25,8 @@ export class CoverFader {
 
     constructor(private readonly fadeMs = FADE_MS) {}
 
-    frame(id: string, url: string | undefined, redraw: () => void): CoverFrame {
+    /** `startMix`: a new cover starts its fade this far in (it was already faded in by a prediction). */
+    frame(id: string, url: string | undefined, redraw: () => void, startMix = 0): CoverFrame {
         if (!url) {
             this.forget(id);
             return { mix: 1 };
@@ -45,7 +46,7 @@ export class CoverFader {
             s.previous = this.fadeMs > 0 ? s.cover : undefined;
             s.url = url;
             s.cover = hit;
-            s.since = Date.now();
+            s.since = Date.now() - Math.min(1, Math.max(0, startMix)) * this.fadeMs;
             if (s.previous) {
                 frames.run(`cover-${id}`, () => {
                     if (this.state.get(id) !== s || !s.previous) return false;

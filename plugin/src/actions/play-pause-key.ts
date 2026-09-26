@@ -1,8 +1,11 @@
 import { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
+import { upcomingCrossfade } from "../ma/crossfade-predict";
+import { getCachedCover, loadCover } from "../render/cover-cache";
+import { frames } from "../render/frames";
 import { coverAccent, ICONS, renderKeyImage, rgb } from "../render/key-image";
 import { KeyTitleFader } from "../render/key-title";
-import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
+import { COVER_SIZE, type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type PlayPauseSettings = MaKeySettings & {
     showPlayerName?: boolean;
@@ -14,12 +17,45 @@ type PlayPauseSettings = MaKeySettings & {
 @action({ UUID: "de.boriskemper.music-assistant-controller.play-pause-key" })
 export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
     private readonly title = new KeyTitleFader();
+    /** The next item whose cover a predicted crossfade already faded in, and how far. */
+    private readonly predicted = new Map<string, { itemId: string; mix: number }>();
+    /** Keys whose predicted fade is running right now (drives the redraw ticks). */
+    private readonly fading = new Set<string>();
 
     protected override renderPlayer({ id, ma, player, queue, settings, playerName }: PlayerContext<PlayPauseSettings>): KeyRender {
         const playing = (queue?.state ?? player.playback_state) === "playing";
         const media = player.current_media;
         const accent = rgb(coverAccent(media), "#e0e0e0");
-        const { cover, previous, mix } = this.coverFrame(id, ma, media);
+        // Once MA reports the predicted track, its cover continues from where the prediction left off.
+        const pred = this.predicted.get(id);
+        const current = queue?.current_item?.queue_item_id;
+        const startMix = pred && pred.itemId === current ? pred.mix : 0;
+        if (pred && pred.itemId === current) this.predicted.delete(id);
+        let { cover, previous, mix } = this.coverFrame(id, ma, media, startMix);
+
+        // In flow mode, fade the next cover in along with MA's audio crossfade (see crossfade-predict.ts).
+        const xf = playing && queue ? upcomingCrossfade(queue, maConnection.elapsed(queue)) : undefined;
+        this.fading.delete(id);
+        const nextUrl = xf?.next.image?.proxy_id ? ma.imageProxyUrl(xf.next.image.proxy_id, COVER_SIZE) : undefined;
+        if (xf && nextUrl && cover) {
+            const next = getCachedCover(nextUrl);
+            if (!next) void loadCover(nextUrl).then((c) => c && this.render(id));
+            else {
+                previous = cover;
+                cover = next;
+                mix = xf.mix;
+                this.predicted.set(id, { itemId: xf.next.queue_item_id, mix: xf.mix });
+                if (xf.mix < 1) {
+                    this.fading.add(id);
+                    // Keys otherwise only redraw on events — tick while the fade runs.
+                    frames.run(`xfade-${id}`, () => {
+                        if (!this.fading.has(id) || !this.instances.has(id)) return false;
+                        this.render(id);
+                        return this.fading.has(id);
+                    });
+                }
+            }
+        }
 
         let progress: number | undefined;
         if (settings.showProgress && queue && media?.duration) progress = maConnection.elapsed(queue) / media.duration;

@@ -154,9 +154,9 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
      * Cover art of the current media as data URI. While the next cover loads, the last one stays
      * (and re-renders once it's there); a new cover crossfades in over the old one.
      */
-    protected coverFrame(id: string, ma: MusicAssistantClient, media: PlayerMedia | null | undefined): CoverFrame {
+    protected coverFrame(id: string, ma: MusicAssistantClient, media: PlayerMedia | null | undefined, startMix = 0): CoverFrame {
         const url = media?.image_url ? ma.resolveImageUrl(media.image_url, COVER_SIZE) : undefined;
-        return this.covers.frame(id, url, () => this.render(id));
+        return this.covers.frame(id, url, () => this.render(id), startMix);
     }
 
     /** {@link coverFrame} without the crossfade, for keys that just show the cover. */
