@@ -3,6 +3,7 @@ import { definePiComponents, initConditionalVisibility, sd, translateDom } from 
 import { initChoiceOptions } from "./choice-icons";
 import { MacConnectionCard } from "./connection-card";
 import { MacEffectSettings } from "./effect-settings";
+import { MacFlowMode } from "./flow-mode";
 import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
@@ -21,6 +22,7 @@ sd.onReady(() => {
     customElements.define("mac-item-picker", MacItemPicker);
     customElements.define("mac-effect-settings", MacEffectSettings);
     customElements.define("mac-select", MacSelect);
+    customElements.define("mac-flow-mode", MacFlowMode);
     initChoiceOptions();
     initConditionalVisibility();
 

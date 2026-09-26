@@ -1,6 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
+import { flowModePlayerId, getFlowMode, setFlowMode } from "../ma/flow-mode";
 import { searchLibrary } from "../ma/library";
 import { listEffects } from "streamdeck-core";
 import type { ConnectionStatus, KeyPreview, OptionItem, PiPush, PiRequest, PlayerOption, PlayerState } from "./protocol";
@@ -62,6 +63,9 @@ class PiBridge {
             case "library-search":
                 void this.librarySearch(msg.requestId, msg.query, msg.filter);
                 break;
+            case "flow-mode":
+                void this.flowMode(msg.requestId, msg.playerId, msg.set);
+                break;
         }
     }
 
@@ -77,6 +81,21 @@ class PiBridge {
             reply = { event: "library-results", requestId, items: [], favorites: !query, error: String((e as Error)?.message ?? e) };
         }
         // Results are answers to a request — never deduplicated.
+        await streamDeck.ui.sendToPropertyInspector(reply as never);
+    }
+
+    private async flowMode(requestId: number, playerSetting: string | undefined, set: boolean | undefined): Promise<void> {
+        let reply: PiPush;
+        try {
+            const ma = maConnection.ma;
+            const playerId = flowModePlayerId(playerSetting);
+            if (!ma?.isConnected || !playerId) throw new Error("no player");
+            const enabled = set === undefined ? await getFlowMode(ma, playerId) : await setFlowMode(ma, playerId, set);
+            const player = maConnection.player(playerId);
+            reply = { event: "flow-mode-result", requestId, playerName: player?.display_name ?? player?.name, enabled };
+        } catch (e) {
+            reply = { event: "flow-mode-result", requestId, error: String((e as Error)?.message ?? e) };
+        }
         await streamDeck.ui.sendToPropertyInspector(reply as never);
     }
 

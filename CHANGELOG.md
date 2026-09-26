@@ -17,6 +17,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
+- Crossfade key: its settings show whether Music Assistant's flow mode is on for the player and can switch it. Crossfade only works in flow mode; the settings also explain the same-album rule and possible problems with Spotify.
 - Volume and Group Volume dials: **Ring in cover color** option.
 - Panorama dial: a **Player** setting (default: active player). The text, the lyrics, the cover color and the settings panel header follow that player; neighbouring Panorama dials share it.
 - Key titles now use Sonos Controller's fade effect (`TitleFader` in `streamdeck-core`): the band fades in, then the text while it starts scrolling; it scrolls in even 80 ms steps and fades out in reverse, then pauses. The Play/Pause key shows "Title [Artist]" as in Sonos Controller, in a slightly brighter color.

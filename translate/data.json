@@ -164,6 +164,13 @@
     "pi.cmd_skip_hint": "Ausgegraut, solange ein Live-Radiostream läuft – da gibt es nichts zu überspringen.",
     "pi.cmd_repeat_hint": "Jeder Druck schaltet weiter: aus → alle → einer.",
     "pi.cmd_dont_stop_hint": "Wenn die Warteschlange zu Ende ist, spielt Music Assistant ähnliche Musik weiter.",
+    "pi.crossfade_setup": "Überblenden in Music Assistant",
+    "pi.flow_mode": "Flow-Modus",
+    "pi.flow_mode_on": "an",
+    "pi.flow_mode_off": "aus – Überblenden wirkt nicht",
+    "pi.flow_mode_unsupported": "für diesen Player nicht verfügbar",
+    "pi.flow_mode_unknown": "unbekannt (nicht verbunden?)",
+    "pi.cmd_crossfade_hint": "Music Assistant blendet nur im Flow-Modus über (eine Player-Einstellung in Music Assistant, hier umschaltbar). Das Umschalten startet die laufende Wiedergabe kurz neu. Titel desselben Albums blendet Music Assistant nie über, außer es ist in den Music-Assistant-Einstellungen erlaubt. Mit Spotify können im Flow-Modus Titel ausfallen.",
     "pi.volume_settings": "Einstellungen",
     "pi.vol_down": "Leiser",
     "pi.vol_up": "Lauter",
@@ -461,6 +468,13 @@
     "pi.cmd_skip_hint": "Dimmed while a live radio stream plays: there is nothing to skip.",
     "pi.cmd_repeat_hint": "Each press cycles: off → all → one.",
     "pi.cmd_dont_stop_hint": "When the queue ends, Music Assistant keeps playing similar music.",
+    "pi.crossfade_setup": "Crossfade in Music Assistant",
+    "pi.flow_mode": "Flow mode",
+    "pi.flow_mode_on": "on",
+    "pi.flow_mode_off": "off — crossfade has no effect",
+    "pi.flow_mode_unsupported": "not available for this player",
+    "pi.flow_mode_unknown": "unknown (not connected?)",
+    "pi.cmd_crossfade_hint": "Music Assistant only crossfades in flow mode (a player setting in Music Assistant, switchable here). Switching it briefly restarts what is playing. Tracks from the same album are never crossfaded unless allowed in Music Assistant's settings. With Spotify, tracks may fail to play in flow mode.",
     "pi.volume_settings": "Settings",
     "pi.vol_down": "Down",
     "pi.vol_up": "Up",
@@ -2534,6 +2548,83 @@
   },
   {
    "key": "pi.cmd_dont_stop_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.crossfade_setup",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Playback Control",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.flow_mode",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/flow-mode.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.flow_mode_on",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/flow-mode.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.flow_mode_off",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/flow-mode.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.flow_mode_unsupported",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/flow-mode.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.flow_mode_unknown",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/flow-mode.ts"
+    }
+   ]
+  },
+  {
+   "key": "pi.cmd_crossfade_hint",
    "group": "pi",
    "usedIn": [
     {

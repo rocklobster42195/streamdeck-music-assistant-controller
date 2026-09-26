@@ -27,6 +27,10 @@
   <div class="pi-hint mac-cmd-hint" data-show-when="command=next,previous" data-show-default="next" data-i18n="pi.cmd_skip_hint"></div>
   <div class="pi-hint mac-cmd-hint" data-show-when="command=repeat" data-i18n="pi.cmd_repeat_hint"></div>
   <div class="pi-hint mac-cmd-hint" data-show-when="command=dont_stop" data-i18n="pi.cmd_dont_stop_hint"></div>
+  <pi-section title="pi.crossfade_setup" class="pi-needs-connection" data-show-when="command=crossfade">
+    <mac-flow-mode></mac-flow-mode>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-show-when="command=crossfade" data-i18n="pi.cmd_crossfade_hint"></div>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>

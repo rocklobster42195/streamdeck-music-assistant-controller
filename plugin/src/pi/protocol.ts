@@ -53,7 +53,9 @@ export type PiRequest =
     | { event: "pi-ready" }
     | { event: "reconnect" }
     /** Empty query = favorites. */
-    | { event: "library-search"; requestId: number; query: string; filter: LibraryFilter };
+    | { event: "library-search"; requestId: number; query: string; filter: LibraryFilter }
+    /** Read (or, with `set`, change) MA's flow mode of the action's player (empty = active player). */
+    | { event: "flow-mode"; requestId: number; playerId?: string; set?: boolean };
 
 /** Plugin → PI */
 export type PiPush =
@@ -62,4 +64,6 @@ export type PiPush =
     | { event: "preview"; preview: KeyPreview }
     | { event: "library-results"; requestId: number; items: LibraryItem[]; favorites: boolean; error?: string }
     | { event: "effects"; effects: EffectInfo[] }
-    | { event: "options-result"; requestId: number; source: string; items: OptionItem[]; error?: string };
+    | { event: "options-result"; requestId: number; source: string; items: OptionItem[]; error?: string }
+    /** `enabled` undefined: the player has no flow-mode setting. */
+    | { event: "flow-mode-result"; requestId: number; playerName?: string; enabled?: boolean; error?: string };

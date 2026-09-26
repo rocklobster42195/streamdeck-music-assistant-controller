@@ -82,6 +82,8 @@ Audiobooks and podcasts come from Music Assistant's providers (for example Audio
 
 One key per function: **previous, next, shuffle, repeat, crossfade** or **"Don't stop the music"**. Toggles show their state: blue with a frame means on. Repeat cycles through off, all and one. Next and previous are dimmed while a live radio stream plays, because there is nothing to skip.
 
+**Crossfade** only works when the player runs in Music Assistant's **flow mode**. Without it, Sonos speakers play the tracks one by one and the crossfade setting has no effect. The crossfade key's settings show whether flow mode is on for its player and can switch it; switching briefly restarts what is playing. Music Assistant never crossfades tracks from the same album unless that is allowed in its settings, and with Spotify some tracks may fail to play in flow mode.
+
 ### Volume
 
 **Down, up, mute** or a **preset** volume. The key shows the current volume, which you can turn off. The mute key shows the volume as a ring like the Volume dial; when muted, the ring turns grey with a red muted speaker inside. For down and up, the step per press can be set from 1 to 20 %. Several quick presses add up correctly.
