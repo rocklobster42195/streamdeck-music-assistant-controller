@@ -11,7 +11,7 @@ import type { MusicAssistantClient, Player, PlayerMedia, PlayerQueue } from "mus
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
-import { getCachedCover, loadCover } from "../render/cover-cache";
+import { CoverFader, type CoverFrame } from "../render/cover-fade";
 import { ICONS, renderKeyImage } from "../render/key-image";
 
 /** Every MAC key has a player target; "" / undefined = follow the active player. */
@@ -74,6 +74,7 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
         this.instances.delete(ev.action.id);
+        this.covers.forget(ev.action.id);
         piBridge.forget(ev.action.id);
     }
 
@@ -147,13 +148,20 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
         return { id, settings, ma, player, queue: maConnection.queueFor(player), playerName: player.display_name ?? player.name };
     }
 
-    /** Cover art of the current media as data URI, if cached; otherwise starts loading and re-renders. */
+    private readonly covers = new CoverFader();
+
+    /**
+     * Cover art of the current media as data URI. While the next cover loads, the last one stays
+     * (and re-renders once it's there); a new cover crossfades in over the old one.
+     */
+    protected coverFrame(id: string, ma: MusicAssistantClient, media: PlayerMedia | null | undefined): CoverFrame {
+        const url = media?.image_url ? ma.resolveImageUrl(media.image_url, COVER_SIZE) : undefined;
+        return this.covers.frame(id, url, () => this.render(id));
+    }
+
+    /** {@link coverFrame} without the crossfade, for keys that just show the cover. */
     protected cover(id: string, ma: MusicAssistantClient, media: PlayerMedia | null | undefined): string | undefined {
-        if (!media?.image_url) return undefined;
-        const url = ma.resolveImageUrl(media.image_url, COVER_SIZE);
-        const hit = getCachedCover(url);
-        if (!hit) void loadCover(url).then((c) => c && this.render(id));
-        return hit;
+        return this.coverFrame(id, ma, media).cover;
     }
 }
 

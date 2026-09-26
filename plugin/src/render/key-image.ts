@@ -72,6 +72,10 @@ export const ACCENT = "#6cc4ff";
 export type KeyImageOptions = {
     /** data: URI of the cover art, drawn full-bleed. */
     cover?: string;
+    /** Cover being faded out underneath `cover` (see CoverFader). */
+    previousCover?: string;
+    /** 0..1 opacity of `cover` over `previousCover`. */
+    coverMix?: number;
     /** MDI path drawn centered (large when there is no cover, as a small badge otherwise). */
     icon?: string;
     /** Icon/accent color. */
@@ -99,7 +103,9 @@ export function renderKeyImage(opts: KeyImageOptions): string {
     }
 
     if (opts.cover) {
-        parts.push(`<image href="${opts.cover}" width="${SIZE}" height="${SIZE}" preserveAspectRatio="xMidYMid slice"/>`);
+        const mix = opts.previousCover ? Math.min(1, Math.max(0, opts.coverMix ?? 1)) : 1;
+        if (mix < 1) parts.push(`<image href="${opts.previousCover}" width="${SIZE}" height="${SIZE}" preserveAspectRatio="xMidYMid slice"/>`);
+        parts.push(`<image href="${opts.cover}" width="${SIZE}" height="${SIZE}" preserveAspectRatio="xMidYMid slice"${mix < 1 ? ` opacity="${mix.toFixed(2)}"` : ""}/>`);
         if (opts.dimmed) parts.push(`<rect width="${SIZE}" height="${SIZE}" fill="#000" opacity="0.55"/>`);
         if (opts.icon) {
             // Centered badge on top of the cover

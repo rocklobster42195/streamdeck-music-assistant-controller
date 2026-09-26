@@ -19,7 +19,7 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
         const playing = (queue?.state ?? player.playback_state) === "playing";
         const media = player.current_media;
         const accent = rgb(coverAccent(media), "#e0e0e0");
-        const cover = this.cover(id, ma, media);
+        const { cover, previous, mix } = this.coverFrame(id, ma, media);
 
         let progress: number | undefined;
         if (settings.showProgress && queue && media?.duration) progress = maConnection.elapsed(queue) / media.duration;
@@ -27,6 +27,8 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
         return {
             image: renderKeyImage({
                 cover,
+                previousCover: previous,
+                coverMix: mix,
                 icon: playing ? (cover ? undefined : ICONS.note) : ICONS.play,
                 color: accent,
                 dimmed: !playing,

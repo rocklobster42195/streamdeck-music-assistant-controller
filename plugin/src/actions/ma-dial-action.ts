@@ -13,7 +13,7 @@ import type { MusicAssistantClient, PlayerMedia } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
-import { getCachedCover, loadCover } from "../render/cover-cache";
+import { CoverFader } from "../render/cover-fade";
 import { ICONS } from "../render/key-image";
 import { effectSettingsFor, panorama, SCRIM, type EffectSettings } from "../render/panorama";
 import { mdi, stripImage, text } from "../render/strip";
@@ -56,6 +56,7 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
         this.instances.delete(ev.action.id);
+        this.covers.forget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
     }
@@ -153,12 +154,12 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         return { id, settings, ma, player, queue: maConnection.queueFor(player), playerName: player.display_name ?? player.name };
     }
 
+    /** Strips don't crossfade; they only keep the last cover while the next one loads. */
+    private readonly covers = new CoverFader(0);
+
     protected cover(id: string, ma: MusicAssistantClient, media: PlayerMedia | null | undefined): string | undefined {
-        if (!media?.image_url) return undefined;
-        const url = ma.resolveImageUrl(media.image_url, COVER_SIZE);
-        const hit = getCachedCover(url);
-        if (!hit) void loadCover(url).then((c) => c && this.render(id));
-        return hit;
+        const url = media?.image_url ? ma.resolveImageUrl(media.image_url, COVER_SIZE) : undefined;
+        return this.covers.frame(id, url, () => this.render(id)).cover;
     }
 
     private async run(id: string, settings: S, fn: (ctx: PlayerContext<S>) => Promise<void>): Promise<void> {

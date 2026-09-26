@@ -5,6 +5,8 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Fixed
+- Play/Pause key: when the track changes, the key keeps the old cover until the new one has loaded and then crossfades to it (as in Sonos Controller). Before, it briefly showed a music-note icon. Dials keep the old cover while the new one loads, too.
+- Keys no longer flash their paused look on every track change. Sonos reports "idle" for about a second after each skip; a queue that was playing a moment ago now counts as playing for another 2.5 s. Pausing from a key still shows right away.
 - Playback positions (progress bars, lyrics, seeking) are extrapolated on the Music Assistant server's clock: `music-assistant-client` measures the offset on connect (`time` command, `clockOffset`, `serverNow()`). A local clock running ahead made lyrics appear early. Position-only updates (`queue_time_updated`) are stamped on the same clock, so the lyrics timing no longer jumps by the clock offset depending on which event came last.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 

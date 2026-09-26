@@ -2,6 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike, currentElapsed } from "music-assistant-client";
 import WebSocket from "ws";
 import { OptimisticStore } from "./optimistic";
+import { PlayingHold } from "./playing-hold";
 
 /** Plugin-wide settings, shared by all actions (Stream Deck global settings). */
 export type GlobalSettings = {
@@ -29,6 +30,8 @@ class MaConnection {
     private settingsLoaded = false;
     /** Local overrides shown right after a key press/dial turn until the server confirms. */
     private readonly optimisticQueues = new OptimisticStore<PlayerQueue>();
+    private readonly playingHold = new PlayingHold();
+    private holdTimer: ReturnType<typeof setTimeout> | undefined;
     private readonly optimisticPlayers = new OptimisticStore<Player>();
 
     /** False until the global settings arrived — render a neutral "loading" state until then. */
@@ -108,9 +111,22 @@ class MaConnection {
         const queues = this.client.queues;
         for (const id of [player.active_source, player.synced_to, player.active_group, player.player_id]) {
             const q = id ? queues.get(id) : undefined;
-            if (q) return this.optimisticQueues.apply(q.queue_id, q);
+            if (q) return this.bridged(this.optimisticQueues.apply(q.queue_id, q));
         }
         return undefined;
+    }
+
+    /** Shows a queue that stopped playing only a moment ago as still playing (see PlayingHold). */
+    private bridged(queue: PlayerQueue): PlayerQueue {
+        if (queue.state === "playing") return queue;
+        const ms = this.playingHold.remaining(queue.queue_id);
+        if (!ms) return queue;
+        // Re-render once the hold ends, in case the server stays silent.
+        this.holdTimer ??= setTimeout(() => {
+            this.holdTimer = undefined;
+            this.emit();
+        }, ms + 50);
+        return { ...queue, state: "playing" };
     }
 
     /**
@@ -118,6 +134,7 @@ class MaConnection {
      * are coalesced server-side, so keys can't wait for the confirming event.
      */
     patchQueue(queueId: string, patch: Partial<PlayerQueue>, ms = 2000): void {
+        if (patch.state && patch.state !== "playing") this.playingHold.suppress(queueId);
         this.optimisticQueues.set(queueId, patch, ms);
         this.emitNowAndAfter(ms);
     }
@@ -179,6 +196,7 @@ class MaConnection {
                 this.emit();
             }),
             client.on("*", (ev) => {
+                if (ev.event === "queue_updated" && (ev.data as PlayerQueue | undefined)?.state === "playing" && ev.object_id) this.playingHold.notePlaying(ev.object_id);
                 for (const l of this.eventListeners) l(ev);
                 this.emit();
             }),
