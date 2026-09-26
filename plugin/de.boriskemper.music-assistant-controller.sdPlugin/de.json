@@ -244,7 +244,7 @@
 			"effect": "Effekt",
 			"effect_none": "Keiner",
 			"sync_effect": "Auf verbundene Displays übertragen",
-			"sync_effect_hint": "Ein Effektwechsel hier gilt auch für die benachbarten Displays mit demselben Effekt. „Kein Effekt“ nimmt nur dieses Display heraus.",
+			"sync_effect_hint": "Ein Effektwechsel hier – auch „Kein Effekt“ – gilt auch für die benachbarten Displays mit demselben Effekt. Ausschalten, um nur dieses Display zu ändern.",
 			"cover_color": "Cover-Farbe",
 			"cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
 			"panorama_help": "Drehen verändert den gewählten Wert (z. B. Tempo), Drücken wechselt ihn – oben auf dem Display erscheint ein Symbol. Tippen synchronisiert die Lyrics neu. Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",

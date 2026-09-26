@@ -1,6 +1,6 @@
 // Effect choice across connected displays: changing the effect on one display of a panorama group
 // switches the whole group (setting `syncEffect`, default on); with it off, or when choosing no
-// effect, only that display changes. Also shows Queue, Browser and Player dials with an effect
+// effect too. Also shows Queue, Browser and Player dials with an effect
 // background. No playback needed.
 //   node tools/sd-sim/effect-sync.mjs [outDir]
 import path from "node:path";
@@ -33,9 +33,18 @@ try {
     await sim.sleep(1500);
     check("with sync off only that display changes", bg(c) === "matrix-rain" && [a, b, t].every((x) => bg(x) === "boing-globe"), all());
 
-    sim.setSettings(t, { background: "" });
+    sim.setSettings(t, { background: "", syncEffect: false });
     await sim.sleep(1500);
-    check("choosing no effect takes only that display out", bg(t) === "" && bg(a) === "boing-globe" && bg(b) === "boing-globe", all());
+    check("no effect with sync off takes only that display out", bg(t) === "" && bg(a) === "boing-globe" && bg(b) === "boing-globe", all());
+
+    sim.setSettings(a, { background: "" });
+    await sim.sleep(1500);
+    check("no effect with sync on spreads to the group", bg(a) === "" && bg(b) === "", all());
+
+    // …and the dials stay connected: an effect chosen later comes back on all of them
+    sim.setSettings(b, { background: "boing-ball" });
+    await sim.sleep(1500);
+    check("an effect chosen after no effect spreads back", bg(a) === "boing-ball" && bg(b) === "boing-ball", all());
     await sim.snapshot(out, "96-effect-sync-2");
 
     // Queue, Browser and Player dials take part too (effect as a dimmed background)
@@ -49,6 +58,12 @@ try {
     sim.setSettings(q, { background: "particles" });
     await sim.sleep(1500);
     check("queue, browser and player dials follow an effect change", [q, br, pl, tr].every((x) => bg(x) === "particles"), [q, br, pl, tr].map(bg).join(","));
+    // Off and on again: every dial takes the effect back (they stay connected while off)
+    sim.setSettings(q, { background: "" });
+    await sim.sleep(1500);
+    sim.setSettings(q, { background: "boing-globe" });
+    await sim.sleep(1500);
+    check("off and on again brings the effect back on every dial", [q, br, pl, tr].every((x) => bg(x) === "boing-globe"), [q, br, pl, tr].map(bg).join(","));
 } finally {
     await sim.stop();
 }

@@ -244,7 +244,7 @@
 			"effect": "Effect",
 			"effect_none": "None",
 			"sync_effect": "Apply to connected displays",
-			"sync_effect_hint": "Changing the effect here also switches the neighboring displays that run the same effect. Choosing none takes only this display out.",
+			"sync_effect_hint": "Changing the effect here, or turning it off, also switches the neighboring displays that run the same effect. Turn this off to change only this display.",
 			"cover_color": "Cover color",
 			"cover_color_hint": "Tint the effect with the colors of what is playing",
 			"panorama_help": "Rotate changes the chosen value (e.g. speed), push switches it — a small icon shows at the top of the display. Tap to re-sync the lyrics. Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",

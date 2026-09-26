@@ -46,6 +46,14 @@ try {
     await sim.sleep(1200);
     const after = sim.state.slots.get(a).settings.savedDensity;
     check("after a press, turning changes the particle count, not the timing", after !== before && offset(a) === -0.7, `density ${before} → ${after}, timing ${offset(a)}`);
+
+    // No effect (spreads to the neighbour): text only, still one run across both displays
+    sim.setSettings(a, { ...sim.state.slots.get(a).settings, background: "" });
+    await sim.sleep(1500);
+    check("no effect spreads to the neighbour", sim.state.slots.get(b).settings.background === "", JSON.stringify(sim.state.slots.get(b).settings.background));
+    sim.rotate(a, 1);
+    await sim.sleep(300);
+    await sim.snapshot(out, "97-lyrics-no-effect");
 } finally {
     await sim.stop();
 }

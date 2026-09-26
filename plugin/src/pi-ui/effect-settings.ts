@@ -1,4 +1,4 @@
-// <mac-effect-settings [allow-none]> — choose a panorama effect (setting "background") and tune it.
+// <mac-effect-settings [allow-none] [default-effect="particles"]> — choose a panorama effect (setting "background") and tune it.
 // The fields come from the effect's own settingsSchema (range → <pi-range>, color → <pi-color>),
 // so a new effect brings its controls along without PI changes.
 import { escapeHtml, sd, t } from "streamdeck-core/pi";
@@ -24,7 +24,8 @@ export class MacEffectSettings extends HTMLElement {
 
     private get value(): string {
         const v = sd.settings.background as string | undefined;
-        return v ?? (this.allowNone ? NONE : (piState.effects[0]?.id ?? ""));
+        // Unset: the dial's default (e.g. the Panorama dial runs particles until something is chosen)
+        return v ?? this.getAttribute("default-effect") ?? (this.allowNone ? NONE : (piState.effects[0]?.id ?? ""));
     }
 
     connectedCallback(): void {
@@ -57,9 +58,14 @@ export class MacEffectSettings extends HTMLElement {
         this.querySelectorAll<HTMLElement>(".pi-choice-tile").forEach((el) => el.addEventListener("click", () => sd.setSetting("background", el.dataset.id ?? NONE)));
 
         const fields = this.querySelector<HTMLElement>(".mac-effect-fields")!;
-        if (!effect) return;
+        const sync = `<pi-toggle setting="syncEffect" label="pi.sync_effect" hint="pi.sync_effect_hint" data-default="true"></pi-toggle>`;
+        if (!effect) {
+            // "No effect" spreads to connected displays too, so the switch stays available
+            if (value === NONE) fields.innerHTML = sync;
+            return;
+        }
         fields.innerHTML = [
-            `<pi-toggle setting="syncEffect" label="pi.sync_effect" hint="pi.sync_effect_hint" data-default="true"></pi-toggle>`,
+            sync,
             `<pi-toggle setting="coverColor" label="pi.cover_color" hint="pi.cover_color_hint" data-default="true"></pi-toggle>`,
             ...effect.settingsSchema.map((f) => fieldHtml(effect, f)),
         ].join("");

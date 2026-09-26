@@ -6,7 +6,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 
 ### Changed
 - Queue, Browser and Player dials can show a panorama effect as their background too (dimmed), so every dial can be part of one continuous scene.
-- Panorama effects: changing the effect on one display now switches all connected displays of that scene (Track/Volume dial backgrounds included), instead of splitting that display off. Can be turned off per dial ("Apply to connected displays"); choosing no effect still takes a single display out.
+- Panorama effects: changing the effect on one display now switches all connected displays of that scene (Track/Volume dial backgrounds included), instead of splitting that display off. Choosing no effect spreads too. Can be turned off per dial ("Apply to connected displays") to change a single display.
 - Larger icons on the keys, as in Sonos Controller.
 - Volume key: the mute key shows the volume as a ring (like the Volume dial); muted, the ring turns grey with a red muted speaker inside. The volume number can be turned off ("Show volume").
 
@@ -17,6 +17,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Player picker and dropdowns in the settings panels: a click on the text or icon opened the list and closed it again right away.
 
 ### Added
+- Panorama dial: **No effect** option, for title or lyrics on black. Neighbouring dials without an effect still share one line of text.
 - Panorama dial with lyrics: turning adjusts the lyrics timing in 0.1 s steps (a scale with the zero point shows it at the top), tapping the display re-syncs the lyrics with Music Assistant. Pushing switches between the lyrics timing and the effect's own values (particle count, speed, density); a small badge shows which one turning changes.
 - Play/Pause key: in flow mode with crossfade, the next cover starts fading in over the last 8 s of a track, as Music Assistant only reports the new track after its audio crossfade. With Smart Crossfade the real fade can start earlier, so the cover may still come a little late.
 - Crossfade key: its settings show whether Music Assistant's flow mode is on for the player and can switch it. Crossfade only works in flow mode; the settings also explain the same-album rule and possible problems with Spotify.

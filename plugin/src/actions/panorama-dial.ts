@@ -10,7 +10,7 @@ import streamDeck, {
     type WillDisappearEvent,
 } from "@elgato/streamdeck";
 import type { JsonObject } from "@elgato/utils";
-import { DEFAULT_EFFECT_ID } from "streamdeck-core";
+import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID } from "streamdeck-core";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import { effectSettingsFor, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
@@ -78,7 +78,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
         registerEffectTarget(ev.action.id, (effectId) => {
             const inst = this.instances.get(ev.action.id);
-            if (!inst || this.effectId(inst) === effectId) return;
+            if (!inst || inst.settings.background === effectId || (effectId && this.effectId(inst) === effectId)) return;
             inst.settings = { ...inst.settings, background: effectId };
             void inst.action.setSettings(inst.settings);
             this.join(ev.action.id);
@@ -100,7 +100,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!inst) return;
         const before = inst.settings;
         inst.settings = ev.payload.settings;
-        spreadEffect(ev.action.id, this.effectId({ ...inst, settings: before }), this.effectId(inst), inst.settings.syncEffect);
+        // "No effect" spreads as "" (connected Track/Volume dials drop their background too)
+        const choice = (s: PanoramaDialSettings) => (s.background === "" ? "" : this.effectId({ ...inst, settings: s }));
+        spreadEffect(ev.action.id, choice(before), choice(inst.settings), inst.settings.syncEffect);
         if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset || before.playerId !== inst.settings.playerId) this.shareText(ev.action.id);
         this.join(ev.action.id);
         this.pushSettings(ev.action.id);
@@ -219,8 +221,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         return "";
     }
 
+    /** "" = no effect: the dial still joins a (blank) group, so text spans its neighbours. Unset = default. */
     private effectId(inst: Instance): string {
-        return inst.settings.background || DEFAULT_EFFECT_ID;
+        return inst.settings.background === "" ? BLANK_EFFECT_ID : inst.settings.background || DEFAULT_EFFECT_ID;
     }
 
     /** The chosen player, or the active one. */

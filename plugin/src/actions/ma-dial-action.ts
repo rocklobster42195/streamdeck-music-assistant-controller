@@ -15,6 +15,7 @@ import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { CoverFader } from "../render/cover-fade";
 import { ICONS } from "../render/key-image";
+import { BLANK_EFFECT_ID } from "streamdeck-core";
 import { effectSettingsFor, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { mdi, stripImage, text } from "../render/strip";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
@@ -104,7 +105,8 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     protected backdrop(ctx: PlayerContext<S>, scrim?: string): string {
         const inst = this.instances.get(ctx.id);
         const settings = ctx.settings as EffectSettings;
-        const effectId = settings.background;
+        // "" (no effect, chosen on purpose) keeps the dial in its group as an invisible member
+        const effectId = settings.background === "" ? BLANK_EFFECT_ID : settings.background;
         if (!inst || !effectId) {
             panorama.leave(ctx.id);
             return "";

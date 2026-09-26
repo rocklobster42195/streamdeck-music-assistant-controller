@@ -10,7 +10,10 @@ export const panorama = new PanoramaEngine({ defaultColor: ACCENT });
 
 /** Dial settings that choose and tune an effect (stored flat, like sonos-controller). */
 export type EffectSettings = {
-    /** Effect id; "" / undefined = none. */
+    /**
+     * Effect id. "" = no effect, chosen on purpose: the dial stays a (blank) member of its group,
+     * so it takes up an effect chosen on a connected display later. Unset = no effect, not connected.
+     */
     background?: string;
     /** Tint the effect with the cover's accent color (default on). */
     coverColor?: boolean;
@@ -56,12 +59,13 @@ export function unregisterEffectTarget(context: string): void {
 /**
  * A dial's effect choice changed. Connected displays only form one panorama while they share an
  * effect, so without this a change split the dial off from its group. With `syncEffect` on
- * (default) the other displays of the group follow instead. Turning the effect off never spreads:
- * that's how a single display leaves the group. Call it before the dial re-joins the engine, while
- * {@link PanoramaEngine.members} still returns the old group.
+ * (default) the other displays of the group follow instead — "no effect" ("") included; turning
+ * the switch off is how a single display leaves. Call it before the dial re-joins the engine,
+ * while {@link PanoramaEngine.members} still returns the old group.
  */
 export function spreadEffect(context: string, before: string | undefined, after: string | undefined, sync: boolean | undefined): void {
-    if (sync === false || !before || !after || before === after) return;
+    // "" = no effect; undefined = never set (nothing to spread from or to)
+    if (sync === false || before === undefined || after === undefined || before === after) return;
     for (const m of panorama.members(context)) {
         if (m.context !== context) effectTargets.get(m.context)?.(after);
     }
