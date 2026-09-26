@@ -5,9 +5,7 @@
 // reloads when that changes. `label-setting` also stores the chosen label (e.g. to show it on the key).
 import { escapeHtml, icon, sd, t } from "streamdeck-core/pi";
 import type { OptionItem, PiPush } from "../pi/protocol";
-import { onPiState, piState } from "./state";
-
-let nextRequestId = 1;
+import { onPiState, piState, nextRequestId } from "./state";
 
 export class MacSelect extends HTMLElement {
     private open = false;
@@ -61,7 +59,7 @@ export class MacSelect extends HTMLElement {
         const key = JSON.stringify(params) + (piState.status?.state ?? "");
         if (key !== this.paramsKey) {
             this.paramsKey = key;
-            this.requestId = nextRequestId++;
+            this.requestId = nextRequestId();
             this.items = undefined;
             sd.sendToPlugin({ event: "options", requestId: this.requestId, source: this.getAttribute("source") ?? "", params });
         }

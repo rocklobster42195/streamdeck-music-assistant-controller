@@ -3,7 +3,7 @@
 // favorites as the starting point. Stores uri/name/subtitle/mediaType/imageProxyId in the action settings.
 import { escapeHtml, icon, sd, t } from "streamdeck-core/pi";
 import type { LibraryFilter, LibraryItem, PiPush } from "../pi/protocol";
-import { onPiState, piState } from "./state";
+import { onPiState, piState, nextRequestId } from "./state";
 
 const FILTERS: LibraryFilter[] = ["all", "playlist", "album", "radio", "podcast", "track", "audiobook"];
 
@@ -81,7 +81,7 @@ export class MacItemPicker extends HTMLElement {
 
     private search(): void {
         if (piState.status && piState.status.state !== "connected") return;
-        this.requestId++;
+        this.requestId = nextRequestId();
         this.loading = true;
         this.renderBrowser();
         sd.sendToPlugin({ event: "library-search", requestId: this.requestId, query: this.query, filter: this.filter });

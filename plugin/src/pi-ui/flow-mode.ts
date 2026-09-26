@@ -2,9 +2,7 @@
 // player setting in MA, not a key setting). Crossfade on Sonos needs it; see ma/flow-mode.ts.
 import { escapeHtml, sd, t } from "streamdeck-core/pi";
 import type { PiPush } from "../pi/protocol";
-import { onPiState, piState } from "./state";
-
-let nextRequestId = 1;
+import { onPiState, piState, nextRequestId } from "./state";
 
 export class MacFlowMode extends HTMLElement {
     private requestId = 0;
@@ -49,7 +47,7 @@ export class MacFlowMode extends HTMLElement {
     }
 
     private request(set?: boolean): void {
-        this.requestId = nextRequestId++;
+        this.requestId = nextRequestId();
         this.busy = set !== undefined;
         sd.sendToPlugin({ event: "flow-mode", requestId: this.requestId, playerId: this.playerId || undefined, set });
         this.render();

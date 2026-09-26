@@ -15,6 +15,7 @@ All notable changes to MAC (Music Assistant Controller) are documented here.
 - Volume key: the mute key shows the volume as a ring (like the Volume dial); muted, the ring turns grey with a red muted speaker inside. The volume number can be turned off ("Show volume").
 
 ### Fixed
+- Announcement settings: a chosen icon shows again when the settings are reopened. Before, the voice list's answer could overwrite it and the panel showed "Default icon".
 - Key colors are consistent: blue = on, grey = off (shuffle, repeat, crossfade, "Don't stop the music", sleep timer, inactive player/source/screen), dark = not available right now (e.g. skip on a radio stream).
 - Play/Pause and other keys show the right state when playback was started outside Music Assistant (e.g. in the Sonos app); Play/Pause then controls the player directly.
 - Play/Pause title: scrolls exactly like Sonos Controller again. The fade-out starts with the end of the title well in view instead of while the last letters are still coming in. Animation frames no longer resend the key title or flood an open settings panel.

@@ -1,9 +1,8 @@
 // <mac-provider-filter setting="providers"> — one switch per Music Assistant music provider. The
 // setting holds the enabled provider instances; unset = all (so providers added later show up).
 import { escapeHtml, sd, t } from "streamdeck-core/pi";
+import { nextRequestId } from "./state";
 import type { OptionItem, PiPush } from "../pi/protocol";
-
-let nextRequestId = 1;
 
 export class MacProviderFilter extends HTMLElement {
     private items: OptionItem[] | undefined;
@@ -29,7 +28,7 @@ export class MacProviderFilter extends HTMLElement {
             }),
             sd.onSettings(() => this.render()),
         );
-        this.requestId = nextRequestId++;
+        this.requestId = nextRequestId();
         sd.sendToPlugin({ event: "options", requestId: this.requestId, source: "music-providers" });
         this.render();
     }

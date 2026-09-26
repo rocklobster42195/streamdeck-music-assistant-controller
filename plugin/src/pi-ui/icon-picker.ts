@@ -2,9 +2,8 @@
 // suggestions as icon tiles (the search runs in the plugin, see render/mdi-catalog), the current
 // choice with its preview, and a button back to the key's default icon.
 import { escapeHtml, sd, t } from "streamdeck-core/pi";
+import { nextRequestId } from "./state";
 import type { OptionItem, PiPush } from "../pi/protocol";
-
-let nextRequestId = 1;
 
 const svg = (path: string, size: number) => `<svg viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true"><path fill="currentColor" d="${escapeHtml(path)}"/></svg>`;
 
@@ -81,7 +80,7 @@ export class MacIconPicker extends HTMLElement {
     }
 
     private request(q: string): void {
-        this.requestId = nextRequestId++;
+        this.requestId = nextRequestId();
         sd.sendToPlugin({ event: "options", requestId: this.requestId, source: "mdi-icons", params: { q } });
     }
 
