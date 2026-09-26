@@ -157,9 +157,24 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
     // ---- rendering (layouts in render/browser-strip.ts) ----------------------------------------------
 
     private renderIdle(ctx: PlayerContext<BrowserDialSettings>, flash: State["flash"]): string {
-        const { id, ma, player } = ctx;
+        const { id, ma, player, queue } = ctx;
         const media = player.current_media;
-        return browserIdleStrip({ cover: this.cover(id, ma, media), title: media?.title ?? this.t("key.nothing_playing"), flash, hint: this.t("key.browse_hint"), backdrop: this.backdrop(ctx) });
+        // Started from a playlist, album, …: show that (a browser is about where the music comes from)
+        const from = (queue?.sources as { name?: string; media_type?: string; image?: { proxy_id?: string } | null }[] | undefined)?.[0];
+        const kind = from?.media_type ? this.t(`pi.type_${from.media_type}`) : "";
+        const source = from?.name && from.media_type !== "track" && !kind.startsWith("pi.")
+            ? { kind, name: from.name, track: [media?.title, media?.artist].filter(Boolean).join(" · ") }
+            : undefined;
+        const sourceCover = source && from?.image?.proxy_id ? this.thumbFor(id, from.image.proxy_id) : undefined;
+        return browserIdleStrip({
+            cover: sourceCover ?? this.cover(id, ma, media),
+            title: media?.title ?? this.t("key.nothing_playing"),
+            artist: media?.artist ?? undefined,
+            source,
+            flash,
+            hint: this.t("key.browse_hint"),
+            backdrop: this.backdrop(ctx),
+        });
     }
 
     private renderBrowse(id: string, st: State, flash: State["flash"], backdrop: string): string {
@@ -181,9 +196,13 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
     }
 
     private thumb(id: string, entry: BrowseEntry): string | undefined {
+        return entry.imageProxyId ? this.thumbFor(id, entry.imageProxyId) : undefined;
+    }
+
+    private thumbFor(id: string, proxyId: string): string | undefined {
         const ma = maConnection.ma;
-        if (!entry.imageProxyId || !ma) return undefined;
-        const url = ma.imageProxyUrl(entry.imageProxyId, THUMB);
+        if (!ma) return undefined;
+        const url = ma.imageProxyUrl(proxyId, THUMB);
         const hit = getCachedCover(url);
         if (!hit) void loadCover(url).then((c) => c && this.render(id));
         return hit;

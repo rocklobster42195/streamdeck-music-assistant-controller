@@ -110,6 +110,7 @@ export function toEntry(item: MediaItem): BrowseEntry {
         isFolder,
         playable: item.media_type === "folder" ? item.is_playable === true : item.is_playable !== false,
         imageProxyId: image?.proxy_id,
-        subtitle: artists?.length ? artists.join(", ") : undefined,
+        // Artists for albums and tracks; who made it for playlists (e.g. "Spotify" or a user)
+        subtitle: artists?.length ? artists.join(", ") : typeof item.owner === "string" && item.owner ? item.owner : undefined,
     };
 }
