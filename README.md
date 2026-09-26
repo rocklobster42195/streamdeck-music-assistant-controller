@@ -35,21 +35,21 @@ MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster
 | **Play / Pause**: cover art, live play state, optional progress bar and player name | Key |
 | **Playback Control**: next · previous · shuffle · repeat · crossfade · "Don't stop the music" | Key |
 | **Volume**: up · down · mute · preset | Key |
-| **Volume**: rotate to change, push to mute, touch for a preset; ring optionally in the cover color | Dial (SD+) |
-| **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) |
-| **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) |
-| **Player**: one key per room; makes it the active player and brings the music along | Key |
-| **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) |
-| **Queue**: scroll through the queue and jump to any track | Dial (SD+) |
-| **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) |
-| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover, with the title or **synced lyrics** on top | Dial (SD+) |
-| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key |
-| **Announcement**: speak a message on one or all speakers (TTS) | Key |
-| **Source**: switch a speaker to Line-in, TV or another input | Key |
-| **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
 | **Play Item**: play any playlist, album, radio station or podcast from your library | Key |
-| **Continue Listening**: resume your latest audiobook or podcast episode where you left off | Key |
 | **Like**: add the current track to your favorites; the heart fills when it already is one | Key |
+| **Player**: one key per room; makes it the active player and brings the music along | Key |
+| **Continue Listening**: resume your latest audiobook or podcast episode where you left off | Key |
+| **Sleep Timer**: each press steps 15 → 30 → 60 → 90 min → off, with a countdown | Key |
+| **Source**: switch a speaker to Line-in, TV or another input | Key |
+| **Announcement**: speak a message on one or all speakers (TTS) | Key |
+| **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
+| **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) |
+| **Volume**: rotate to change, push to mute, touch for a preset; ring optionally in the cover color | Dial (SD+) |
+| **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) |
+| **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) |
+| **Queue**: scroll through the queue and jump to any track | Dial (SD+) |
+| **Active Player**: choose the active player with a turn, bring the music here | Dial (SD+) |
+| **Panorama**: ambient effects spanning neighbouring dials, tinted by the cover, with the title or **synced lyrics** on top | Dial (SD+) |
 
 ### Play / Pause
 

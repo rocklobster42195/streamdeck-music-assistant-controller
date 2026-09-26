@@ -20,36 +20,6 @@
 			]
 		},
 		{
-			"Name": "Play Item",
-			"UUID": "de.boriskemper.music-assistant-controller.play-item-key",
-			"Icon": "imgs/actions/play-item-key/icon",
-			"Tooltip": "Play a playlist, album, radio station or podcast from your library.",
-			"PropertyInspectorPath": "ui/play-item-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/play-item-key/key"
-				}
-			]
-		},
-		{
-			"Name": "Continue Listening",
-			"UUID": "de.boriskemper.music-assistant-controller.continue-key",
-			"Icon": "imgs/actions/continue-key/icon",
-			"Tooltip": "Resume your latest audiobook or podcast episode where you left off.",
-			"PropertyInspectorPath": "ui/continue-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/continue-key/key"
-				}
-			]
-		},
-		{
 			"Name": "Playback Control",
 			"UUID": "de.boriskemper.music-assistant-controller.playback-control-key",
 			"Icon": "imgs/actions/playback-control-key/icon",
@@ -80,6 +50,21 @@
 			]
 		},
 		{
+			"Name": "Play Item",
+			"UUID": "de.boriskemper.music-assistant-controller.play-item-key",
+			"Icon": "imgs/actions/play-item-key/icon",
+			"Tooltip": "Play a playlist, album, radio station or podcast from your library.",
+			"PropertyInspectorPath": "ui/play-item-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/play-item-key/key"
+				}
+			]
+		},
+		{
 			"Name": "Like",
 			"UUID": "de.boriskemper.music-assistant-controller.like-key",
 			"Icon": "imgs/actions/like-key/icon",
@@ -91,6 +76,96 @@
 			"States": [
 				{
 					"Image": "imgs/actions/like-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Player",
+			"UUID": "de.boriskemper.music-assistant-controller.player-key",
+			"Icon": "imgs/actions/player-key/icon",
+			"Tooltip": "Make this room the active player — and bring the music along.",
+			"PropertyInspectorPath": "ui/player-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/player-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Continue Listening",
+			"UUID": "de.boriskemper.music-assistant-controller.continue-key",
+			"Icon": "imgs/actions/continue-key/icon",
+			"Tooltip": "Resume your latest audiobook or podcast episode where you left off.",
+			"PropertyInspectorPath": "ui/continue-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/continue-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Sleep Timer",
+			"UUID": "de.boriskemper.music-assistant-controller.sleep-timer-key",
+			"Icon": "imgs/actions/sleep-timer-key/icon",
+			"Tooltip": "Stop the music after 15, 30, 60 or 90 minutes.",
+			"PropertyInspectorPath": "ui/sleep-timer-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/sleep-timer-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Source",
+			"UUID": "de.boriskemper.music-assistant-controller.source-key",
+			"Icon": "imgs/actions/source-key/icon",
+			"Tooltip": "Switch a speaker to an input like Line-in or TV.",
+			"PropertyInspectorPath": "ui/source-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/source-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Announcement",
+			"UUID": "de.boriskemper.music-assistant-controller.announce-key",
+			"Icon": "imgs/actions/announce-key/icon",
+			"Tooltip": "Speak a message on one or all speakers.",
+			"PropertyInspectorPath": "ui/announce-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/announce-key/key"
+				}
+			]
+		},
+		{
+			"Name": "Cast Dashboard",
+			"UUID": "de.boriskemper.music-assistant-controller.dashboard-key",
+			"Icon": "imgs/actions/dashboard-key/icon",
+			"Tooltip": "Show a Music Assistant dashboard on a TV or screen.",
+			"PropertyInspectorPath": "ui/dashboard-key.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/dashboard-key/key"
 				}
 			]
 		},
@@ -141,6 +216,29 @@
 			]
 		},
 		{
+			"Name": "Group Volume",
+			"UUID": "de.boriskemper.music-assistant-controller.group-volume-dial",
+			"Icon": "imgs/actions/group-volume-dial/icon",
+			"Tooltip": "Volume of the whole speaker group.",
+			"PropertyInspectorPath": "ui/group-volume-dial.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/canvas.json",
+				"TriggerDescription": {
+					"Rotate": "Group volume",
+					"Push": "Mute group",
+					"Touch": "Preset (hold: save)"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/group-volume-dial/key"
+				}
+			]
+		},
+		{
 			"Name": "Browser",
 			"UUID": "de.boriskemper.music-assistant-controller.browser-dial",
 			"Icon": "imgs/actions/browser-dial/icon",
@@ -160,44 +258,6 @@
 			"States": [
 				{
 					"Image": "imgs/actions/browser-dial/key"
-				}
-			]
-		},
-		{
-			"Name": "Player",
-			"UUID": "de.boriskemper.music-assistant-controller.player-key",
-			"Icon": "imgs/actions/player-key/icon",
-			"Tooltip": "Make this room the active player — and bring the music along.",
-			"PropertyInspectorPath": "ui/player-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/player-key/key"
-				}
-			]
-		},
-		{
-			"Name": "Active Player",
-			"UUID": "de.boriskemper.music-assistant-controller.player-dial",
-			"Icon": "imgs/actions/player-dial/icon",
-			"Tooltip": "Choose the active player with the dial and bring the music there.",
-			"PropertyInspectorPath": "ui/player-dial.html",
-			"Controllers": [
-				"Encoder"
-			],
-			"Encoder": {
-				"layout": "layouts/canvas.json",
-				"TriggerDescription": {
-					"Rotate": "Choose player",
-					"Push": "Bring music here",
-					"Touch": "Play / pause"
-				}
-			},
-			"States": [
-				{
-					"Image": "imgs/actions/player-dial/key"
 				}
 			]
 		},
@@ -225,25 +285,25 @@
 			]
 		},
 		{
-			"Name": "Group Volume",
-			"UUID": "de.boriskemper.music-assistant-controller.group-volume-dial",
-			"Icon": "imgs/actions/group-volume-dial/icon",
-			"Tooltip": "Volume of the whole speaker group.",
-			"PropertyInspectorPath": "ui/group-volume-dial.html",
+			"Name": "Active Player",
+			"UUID": "de.boriskemper.music-assistant-controller.player-dial",
+			"Icon": "imgs/actions/player-dial/icon",
+			"Tooltip": "Choose the active player with the dial and bring the music there.",
+			"PropertyInspectorPath": "ui/player-dial.html",
 			"Controllers": [
 				"Encoder"
 			],
 			"Encoder": {
 				"layout": "layouts/canvas.json",
 				"TriggerDescription": {
-					"Rotate": "Group volume",
-					"Push": "Mute group",
-					"Touch": "Preset (hold: save)"
+					"Rotate": "Choose player",
+					"Push": "Bring music here",
+					"Touch": "Play / pause"
 				}
 			},
 			"States": [
 				{
-					"Image": "imgs/actions/group-volume-dial/key"
+					"Image": "imgs/actions/player-dial/key"
 				}
 			]
 		},
@@ -267,66 +327,6 @@
 			"States": [
 				{
 					"Image": "imgs/actions/panorama-dial/key"
-				}
-			]
-		},
-		{
-			"Name": "Sleep Timer",
-			"UUID": "de.boriskemper.music-assistant-controller.sleep-timer-key",
-			"Icon": "imgs/actions/sleep-timer-key/icon",
-			"Tooltip": "Stop the music after 15, 30, 60 or 90 minutes.",
-			"PropertyInspectorPath": "ui/sleep-timer-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/sleep-timer-key/key"
-				}
-			]
-		},
-		{
-			"Name": "Announcement",
-			"UUID": "de.boriskemper.music-assistant-controller.announce-key",
-			"Icon": "imgs/actions/announce-key/icon",
-			"Tooltip": "Speak a message on one or all speakers.",
-			"PropertyInspectorPath": "ui/announce-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/announce-key/key"
-				}
-			]
-		},
-		{
-			"Name": "Source",
-			"UUID": "de.boriskemper.music-assistant-controller.source-key",
-			"Icon": "imgs/actions/source-key/icon",
-			"Tooltip": "Switch a speaker to an input like Line-in or TV.",
-			"PropertyInspectorPath": "ui/source-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/source-key/key"
-				}
-			]
-		},
-		{
-			"Name": "Cast Dashboard",
-			"UUID": "de.boriskemper.music-assistant-controller.dashboard-key",
-			"Icon": "imgs/actions/dashboard-key/icon",
-			"Tooltip": "Show a Music Assistant dashboard on a TV or screen.",
-			"PropertyInspectorPath": "ui/dashboard-key.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/dashboard-key/key"
 				}
 			]
 		}
