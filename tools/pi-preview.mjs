@@ -13,16 +13,19 @@ const { WebSocketServer } = require("ws");
 
 const HTTP_PORT = Number(process.env.PORT ?? 5199);
 const WS_PORT = HTTP_PORT + 1;
+// The effects list the Panorama/effect PIs build their fields from (as the plugin sends it)
+const { listEffects } = await import(new URL("../packages/streamdeck-core/dist/index.js", import.meta.url));
+
 const UI = path.resolve("plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui");
 
+// Invented household (the screenshots go public): same names as the stand-in MA (sd-sim/fake-ma.mjs)
 const players = [
-    { id: "bath", name: "Badezimmer", state: "playing" },
-    { id: "dining", name: "Esszimmer", state: "idle" },
-    { id: "study", name: "Herrenzimmer", state: "idle" },
-    { id: "kitchen", name: "Küche", state: "paused" },
-    { id: "bedroom", name: "Schlafzimmer", state: "idle" },
-    { id: "shield", name: "SHIELD", state: "idle" },
-    { id: "terrace", name: "Terrasse", state: "offline" },
+    { id: "living", name: "Living Room", state: "playing" },
+    { id: "kitchen", name: "Kitchen", state: "paused" },
+    { id: "office", name: "Office", state: "playing" },
+    { id: "bedroom", name: "Bedroom", state: "idle" },
+    { id: "tv", name: "TV", state: "idle" },
+    { id: "terrace", name: "Terrace", state: "offline" },
 ];
 
 const svg = (body) => `data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 72 72">${body}</svg>`).toString("base64")}`;
@@ -31,9 +34,9 @@ const iconKey = (color) => svg(`<rect width="72" height="72" fill="#101010"/><ci
 
 const scenarios = {
     connected: {
-        global: { maUrl: "192.168.1.10:8095", maToken: "demo", activePlayerId: "bath" },
+        global: { maUrl: "192.168.1.10:8095", maToken: "demo", activePlayerId: "living" },
         status: { configured: true, state: "connected", reachable: true, url: "http://192.168.1.10:8095", serverVersion: "2.10.4", playerCount: players.length },
-        preview: { image: coverKey, state: "playing", track: "Lisboa Dreaming · Alex Cortiz", playerName: "Badezimmer", following: true },
+        preview: { image: coverKey, state: "playing", track: "Midnight Tram · Neon Harbor", playerName: "Living Room", following: true },
     },
     setup: {
         global: {},
@@ -78,6 +81,7 @@ wss.on("connection", (ws) => {
                     reply({ event: "sendToPropertyInspector", payload: { event: "status", status: scenario.status } });
                     reply({ event: "sendToPropertyInspector", payload: { event: "players", players: scenario.status.state === "connected" ? players : [], activePlayerId: scenario.global.activePlayerId } });
                     reply({ event: "sendToPropertyInspector", payload: { event: "preview", preview: scenario.preview } });
+                    reply({ event: "sendToPropertyInspector", payload: { event: "effects", effects: listEffects() } });
                 } else console.log("sendToPlugin", msg.payload);
                 break;
             case "openUrl":

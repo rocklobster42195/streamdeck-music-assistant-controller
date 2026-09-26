@@ -103,6 +103,32 @@ for (const [file, scene, eyebrow, title, sub] of showcases) {
     await write(file, 1920, 960, `${copy(110, 290, eyebrow, title, sub, 72)}${d.svg(1920 - d.w - 70, (960 - d.h) / 2)}`);
 }
 
+// Settings showcase: three settings panels side by side (run `node tools/pi-shots.mjs` first)
+if (fs.existsSync("sim-out/pi-shots/panorama.png")) {
+    const names = ["setup", "play-pause", "panorama"];
+    const H = 800;
+    const panels = [];
+    // One scale for all three, so they keep their real proportions
+    const metas = await Promise.all(names.map((n) => sharp(`sim-out/pi-shots/${n}.png`).metadata()));
+    const scale = Math.min(1, H / Math.max(...metas.map((m) => m.height)), 400 / Math.max(...metas.map((m) => m.width)));
+    for (const n of names) {
+        const img = sharp(`sim-out/pi-shots/${n}.png`);
+        const m = await img.metadata();
+        const w = Math.round(m.width * scale);
+        const h = Math.round(m.height * scale);
+        panels.push({ w, h, b64: (await img.resize(w, h).png().toBuffer()).toString("base64") });
+    }
+    let x = 1920 - 70 - panels.reduce((sum, p) => sum + p.w + 28, -28);
+    const top = (960 - Math.max(...panels.map((p) => p.h))) / 2;
+    const imgs = panels.map((p) => {
+        const y = top;
+        const svg = `<g filter="url(#shadow)"><rect x="${x - 6}" y="${y - 6}" width="${p.w + 12}" height="${p.h + 12}" rx="16" fill="#1c1c1e" stroke="#2a2f45" stroke-width="2"/></g><image href="data:image/png;base64,${p.b64}" x="${x}" y="${y}" width="${p.w}" height="${p.h}"/>`;
+        x += p.w + 28;
+        return svg;
+    });
+    await write("store-showcase-5-settings.png", 1920, 960, `${copy(110, 290, "Easy settings", "Set up\nin a minute.", "Server and token once, then every key\nworks. Live status, room picker, effects\nand lyrics timing — all in plain words.", 72)}${imgs.join("")}`);
+}
+
 // Banner 1280×640
 {
     const d = await device("02-panorama", 640);

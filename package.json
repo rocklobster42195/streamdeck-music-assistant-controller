@@ -31,6 +31,7 @@
         "sim:continue": "node tools/sd-sim/continue.mjs sim-out",
         "sim:announce-timer": "node tools/sd-sim/announce-timer.mjs sim-out",
         "showcase": "node tools/sd-sim/showcase.mjs sim-out",
+        "pi-shots": "node tools/pi-shots.mjs",
         "store-assets": "node tools/generate-store-assets.mjs",
         "sim:effect-sync": "node tools/sd-sim/effect-sync.mjs sim-out",
         "translate": "node tools/serve-translate.mjs",
