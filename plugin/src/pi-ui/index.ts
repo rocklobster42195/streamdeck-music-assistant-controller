@@ -34,7 +34,7 @@ sd.onReady(() => {
     initConditionalVisibility();
 
     const version = document.querySelector<HTMLElement>("[data-plugin-version]");
-    if (version) version.textContent = `MAC ${sd.info?.plugin.version ?? ""}`.trim();
+    if (version) version.textContent = `MA-C ${sd.info?.plugin.version ?? ""}`.trim();
     document.querySelectorAll<HTMLAnchorElement>("a[href^='http']").forEach((a) =>
         a.addEventListener("click", (e) => {
             e.preventDefault();

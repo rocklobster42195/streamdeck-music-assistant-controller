@@ -1,4 +1,4 @@
-# Music Assistant Controller (MAC) for Elgato Stream Deck
+# Music Assistant Controller (MA-C) for Elgato Stream Deck
 
 Control **[Music Assistant](https://www.music-assistant.io/)** from your Stream Deck. Every speaker and every streaming service in one deck, with cover art, live state and physical buttons.
 
@@ -9,24 +9,24 @@ Control **[Music Assistant](https://www.music-assistant.io/)** from your Stream 
 
 > **Disclaimer:** This is an independent, community-made plugin. It is not affiliated with, endorsed by, or officially connected to the Music Assistant project or Elgato in any way.
 
-> **Status:** MAC is in early development, heading for its first release. All actions work and are tested against a live Music Assistant server and on a Stream Deck +. See the [roadmap](#roadmap).
+> **Status:** MA-C is in early development, heading for its first release. All actions work and are tested against a live Music Assistant server and on a Stream Deck +. See the [roadmap](#roadmap).
 
 ![Keys and dials on a Stream Deck +](docs/screenshots/01-overview.png)
 
 ---
 
-## Why MAC?
+## Why MA-C?
 
 Music Assistant brings Spotify, Tidal, Qobuz, radio, podcasts, audiobooks and your own files together in **one library**. It plays them on almost any speaker: Sonos, AirPlay, Chromecast, Squeezebox, DLNA and more, all in the same house.
 
-MAC puts that on physical buttons and dials:
+MA-C puts that on physical buttons and dials:
 
 - **One plugin for all speaker brands.** Any player that Music Assistant knows about can be controlled from the deck.
 - **Live state.** Keys update instantly through Music Assistant's event stream, so there is no polling.
 - **"Active player" concept.** A whole deck profile can follow one switchable player, so you don't have to configure each key.
 - **Beyond remote control:** a Like key, "Don't stop the music", crossfade, "music follows me" from room to room, synced lyrics across the dials, and announcements with a timer.
 
-MAC is the sister project of **[Sonos Controller](https://github.com/rocklobster42195/streamdeck-sonos-controller)** and shares its UI foundation.
+MA-C is the sister project of **[Sonos Controller](https://github.com/rocklobster42195/streamdeck-sonos-controller)** and shares its UI foundation.
 
 ---
 
@@ -155,7 +155,7 @@ Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing
 **Text** puts the music of the chosen **Player** (default: the active player) on top of the effect:
 
 - **Title**: title and artist, bottom right. A new song fades in.
-- **Lyrics**: the line being sung, large, with the next line below it, in time with the music. Neighbouring Panorama dials share **one line across all their displays**. On a single dial, long lines wrap. Lyrics come from Music Assistant's metadata providers (for example [LRCLIB](https://lrclib.net), enabled by default), so they work for many well-known songs but not for everything. Without lyrics (radio, audiobooks, less-known tracks), the dial shows title and artist instead. The first lookup of a song can take a few seconds, so MAC fetches the lyrics of the next song in the queue ahead of time. If the lyrics run ahead of or behind the music (speakers buffer audio), adjust **Timing**.
+- **Lyrics**: the line being sung, large, with the next line below it, in time with the music. Neighbouring Panorama dials share **one line across all their displays**. On a single dial, long lines wrap. Lyrics come from Music Assistant's metadata providers (for example [LRCLIB](https://lrclib.net), enabled by default), so they work for many well-known songs but not for everything. Without lyrics (radio, audiobooks, less-known tracks), the dial shows title and artist instead. The first lookup of a song can take a few seconds, so MA-C fetches the lyrics of the next song in the queue ahead of time. If the lyrics run ahead of or behind the music (speakers buffer audio), adjust **Timing**.
 
 The **Track**, **Volume**, **Group Volume**, **Queue**, **Browser** and **Player** dials can show an effect as their **background** (dimmed, so the text stays readable). Put them next to Panorama dials with the same effect, and the scene runs underneath everything.
 
@@ -189,7 +189,7 @@ Providers that can't be browsed are hidden automatically.
 
 ### Status on the keys
 
-When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MAC reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
+When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MA-C reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
 
 ---
 
@@ -204,13 +204,13 @@ When a key can't do its job, it tells you: **Setup** means connection details ar
 **Install:** download the `.streamDeckPlugin` file from the [latest release](../../releases/latest) and double-click it. **Beta builds** for testing new features are published as [pre-releases](../../releases); they install the same way and are replaced by the next stable release.
 
 1. In Music Assistant, open **Settings → Profile** and create a **long-lived token**. Name it, for example, "Stream Deck".
-2. Drag any MAC action onto your Stream Deck. Its settings panel guides you through two steps:
+2. Drag any MA-C action onto your Stream Deck. Its settings panel guides you through two steps:
    - **Server address**: the address of your Music Assistant server, e.g. `192.168.1.10` or `192.168.1.10:8095`. Port `8095` is used when you leave it out.
    - **Token**: the token from step 1
 3. Click **Connect**. The panel shows the result right away: connected (with server version and player count), server not reachable, or token rejected.
 4. Under **Music Assistant → Change**, pick the **Active player**. Keys set to "Active player" control this player.
 
-The connection settings are shared by all MAC keys, so you only enter them once.
+The connection settings are shared by all MA-C keys, so you only enter them once.
 
 > Running Music Assistant as a Home Assistant add-on? Use the IP of your Home Assistant host with port `8095`.
 
@@ -224,7 +224,7 @@ Have an idea? [Open an issue](../../issues/new/choose).
 
 ## Translations
 
-MAC ships in **English** and **German**. Each language is a **single JSON file**, so adding yours is easy. The **[translation page](translate/)** shows every text with where it appears, a live key preview and missing/outdated markers, and exports the finished file. See [TRANSLATING.md](TRANSLATING.md).
+MA-C ships in **English** and **German**. Each language is a **single JSON file**, so adding yours is easy. The **[translation page](translate/)** shows every text with where it appears, a live key preview and missing/outdated markers, and exports the finished file. See [TRANSLATING.md](TRANSLATING.md).
 
 ---
 
@@ -258,9 +258,9 @@ npm run pi:preview            # http://localhost:5199/play-pause-key.html?scenar
 The settings panels do not use `sdpi-components`. They are built on a small, framework-free kit from `packages/streamdeck-core`:
 
 - `streamdeck-core/pi`: the Stream Deck PI socket client, i18n, and light-DOM components (`<pi-section>`, `<pi-toggle>`, `<pi-field>`)
-- `streamdeck-core/styles/pi-theme.css`: the shared dark theme, used by both MAC and Sonos Controller
+- `streamdeck-core/styles/pi-theme.css`: the shared dark theme, used by both MA-C and Sonos Controller
 
-MAC adds `<mac-key-preview>` (compact status header), `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
+MA-C adds `<mac-key-preview>` (compact status header), `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
 
 ### Testing without hardware
 

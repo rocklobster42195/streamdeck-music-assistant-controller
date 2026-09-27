@@ -1,6 +1,6 @@
-# Translating MAC
+# Translating MA-C
 
-Thank you for helping! Each language in MAC is **one JSON file**. That file serves the Stream Deck action list, the texts on the keys and the settings panels (property inspectors).
+Thank you for helping! Each language in MA-C is **one JSON file**. That file serves the Stream Deck action list, the texts on the keys and the settings panels (property inspectors).
 
 ## The easy way: the translation page
 

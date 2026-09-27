@@ -1,6 +1,6 @@
-# Contributing to MAC
+# Contributing to MA-C
 
-Thanks for helping make MAC better! You don't need to write code to contribute. Bug reports, ideas and translations are just as valuable.
+Thanks for helping make MA-C better! You don't need to write code to contribute. Bug reports, ideas and translations are just as valuable.
 
 - [Report a bug](#report-a-bug)
 - [Suggest an idea](#suggest-an-idea)
@@ -8,7 +8,7 @@ Thanks for helping make MAC better! You don't need to write code to contribute. 
 - [Contribute code](#contribute-code)
 - [Contribute a panorama effect](#contribute-a-panorama-effect)
 
-> MAC is an independent community project. It is not affiliated with Music Assistant or Elgato. Please don't report MAC issues to the Music Assistant project.
+> MA-C is an independent community project. It is not affiliated with Music Assistant or Elgato. Please don't report MA-C issues to the Music Assistant project.
 
 ---
 
@@ -16,7 +16,7 @@ Thanks for helping make MAC better! You don't need to write code to contribute. 
 
 Use the **[bug report form](../../issues/new/choose)**. The most useful reports include:
 
-- **Versions:** MAC, Music Assistant server, Stream Deck app, the Stream Deck model (e.g. Stream Deck +), and Windows or macOS.
+- **Versions:** MA-C, Music Assistant server, Stream Deck app, the Stream Deck model (e.g. Stream Deck +), and Windows or macOS.
 - **Which action** is affected, and on which player (Sonos, AirPlay, Chromecast, …).
 - **Steps to reproduce**, and what you expected instead.
 - **The plugin log.** It lives here:

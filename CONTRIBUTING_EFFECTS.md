@@ -7,7 +7,7 @@ The effects live in `packages/streamdeck-core` and are shared with the [Sonos Co
 ## Adding an effect, step by step
 
 1. Create `packages/streamdeck-core/src/panorama/effects/my-effect/index.ts` and default-export an `EffectDefinition` (see below).
-2. Register it in `packages/streamdeck-core/src/panorama/registry.ts`, which is one import plus adding it to the array. MAC has no code generator, so the list is explicit.
+2. Register it in `packages/streamdeck-core/src/panorama/registry.ts`, which is one import plus adding it to the array. MA-C has no code generator, so the list is explicit.
 3. Add translations for the effect name and its fields to `plugin/…sdPlugin/en.json` and `de.json`:
    ```json
    "effect": { "my-effect": { "name": "My Effect", "speed": "Speed" } }
@@ -56,14 +56,14 @@ export interface EffectInstance<S> {
   getControl?(): string;
   setControl?(id: string): void;
   getIndicatorValue?(): number;
-  /** Settings your effect changed itself (e.g. speed after rotating) — MAC saves them. */
+  /** Settings your effect changed itself (e.g. speed after rotating) — MA-C saves them. */
   getRuntimeSettings?(): Partial<S>;
 }
 ```
 
 **Dial controls:** if rotating changes a value, list it in `getControls()` and give the matching schema field `control: "<id>"` (e.g. `{ key: "savedSpeed", type: "range", …, control: "speed" }`). The Panorama dial then shows a small badge with the value's icon and level while turning, and a press switches between your values (and the lyrics timing when lyrics are on). The PI shows the same icon next to the field. Known ids with icons: `count`, `speed`, `density` (others get the speed icon; ask for a new one in your PR). With more than one control, `setControl` must switch what `onRotate` changes. With a single control, a press still goes to `onPress` when lyrics are off.
 
-**Colors:** when the user enables **Cover color**, MAC passes the accent color of what is playing as `color`, and also as `primaryColor` and `landColor` if your schema has those keys. Name your main color field `color` and it follows the cover automatically.
+**Colors:** when the user enables **Cover color**, MA-C passes the accent color of what is playing as `color`, and also as `primaryColor` and `landColor` if your schema has those keys. Name your main color field `color` and it follows the cover automatically.
 
 **Raster images:** `renderSlice` must return synchronously, so use a **PNG** data URI built with `encodePngDataUri` from `packages/streamdeck-core/src/render/png.ts` (see Boing Ball). Don't use BMP; it isn't reliably decoded.
 
