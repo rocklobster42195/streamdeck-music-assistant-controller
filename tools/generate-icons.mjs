@@ -48,7 +48,7 @@ for (const [name, d] of Object.entries(actions)) {
 // Category + plugin icon: the Rocklobster lobster shared with Sonos Controller (not the MA logo).
 // docs/brand/lobster.svg is a potrace vectorization of sonos-controller's store/lobster_icon.png.
 const sharp = require("sharp");
-const MA_BLUE = "#03a9f4"; // Music Assistant's primary color (frontend theme)
+const LOGO_BLUE = "#009FDF"; // Düsseldorf Blau from the house palette (komuh/docs/cd-farben.md)
 const lobsterSvg = fs.readFileSync("docs/brand/lobster.svg", "utf8");
 const viewBox = lobsterSvg.match(/viewBox="([^"]+)"/)[1];
 const lobsterPath = lobsterSvg.match(/ d="([^"]+)"/)[1];
@@ -61,10 +61,10 @@ fs.rmSync(`${root}/plugin/category-icon.png`, { force: true });
 fs.rmSync(`${root}/plugin/category-icon@2x.png`, { force: true });
 write(`${root}/plugin/category-icon.svg`, `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="${viewBox}">${lobster("#f2f2f2", 6)}</svg>`);
 
-// Plugin / Marketplace icon (PNG, 256 px + @2x 512 px): dark lobster on a Music Assistant blue circle.
+// Plugin / Marketplace icon (PNG, 256 px + @2x 512 px): dark lobster on a house-palette blue circle.
 const pluginIcon = (size) => {
     const pad = size * 0.17;
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${MA_BLUE}"/><svg x="${pad}" y="${pad}" width="${size - 2 * pad}" height="${size - 2 * pad}" viewBox="${viewBox}">${lobster("#0a141e", 6)}</svg></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${LOGO_BLUE}"/><svg x="${pad}" y="${pad}" width="${size - 2 * pad}" height="${size - 2 * pad}" viewBox="${viewBox}">${lobster("#0a141e", 6)}</svg></svg>`;
 };
 for (const [file, size] of [["marketplace.png", 256], ["marketplace@2x.png", 512]]) {
     await sharp(Buffer.from(pluginIcon(size))).png().toFile(`${root}/plugin/${file}`);

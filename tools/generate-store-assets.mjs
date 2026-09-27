@@ -12,7 +12,7 @@ const sharp = require("sharp");
 
 const OUT = "docs/marketplace/images";
 const SCENES = "sim-out/showcase";
-const MA_BLUE = "#03a9f4";
+const LOGO_BLUE = "#009FDF"; // Düsseldorf Blau from the house palette
 const WARM = "#ff7a59";
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -34,24 +34,24 @@ function background(w, h, seed = 7) {
     for (let i = 0; i < pts.length; i++)
         for (let j = i + 1; j < pts.length; j++) {
             const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
-            if (d < 150) lines.push(`<line x1="${pts[i].x.toFixed(0)}" y1="${pts[i].y.toFixed(0)}" x2="${pts[j].x.toFixed(0)}" y2="${pts[j].y.toFixed(0)}" stroke="${MA_BLUE}" stroke-opacity="${((1 - d / 150) * 0.22).toFixed(2)}" stroke-width="1.5"/>`);
+            if (d < 150) lines.push(`<line x1="${pts[i].x.toFixed(0)}" y1="${pts[i].y.toFixed(0)}" x2="${pts[j].x.toFixed(0)}" y2="${pts[j].y.toFixed(0)}" stroke="${LOGO_BLUE}" stroke-opacity="${((1 - d / 150) * 0.22).toFixed(2)}" stroke-width="1.5"/>`);
         }
     return `
 <defs>
-  <radialGradient id="glowA" cx="0.78" cy="0.35" r="0.55"><stop offset="0" stop-color="${MA_BLUE}" stop-opacity="0.45"/><stop offset="1" stop-color="${MA_BLUE}" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowA" cx="0.78" cy="0.35" r="0.55"><stop offset="0" stop-color="${LOGO_BLUE}" stop-opacity="0.45"/><stop offset="1" stop-color="${LOGO_BLUE}" stop-opacity="0"/></radialGradient>
   <radialGradient id="glowB" cx="0.15" cy="0.95" r="0.5"><stop offset="0" stop-color="${WARM}" stop-opacity="0.28"/><stop offset="1" stop-color="${WARM}" stop-opacity="0"/></radialGradient>
   <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity="0.65"/></filter>
 </defs>
 <rect width="${w}" height="${h}" fill="#070b16"/>
 <rect width="${w}" height="${h}" fill="url(#glowA)"/><rect width="${w}" height="${h}" fill="url(#glowB)"/>
 ${lines.join("")}
-${pts.map((p) => `<circle cx="${p.x.toFixed(0)}" cy="${p.y.toFixed(0)}" r="${p.s.toFixed(1)}" fill="${MA_BLUE}" opacity="0.5"/>`).join("")}`;
+${pts.map((p) => `<circle cx="${p.x.toFixed(0)}" cy="${p.y.toFixed(0)}" r="${p.s.toFixed(1)}" fill="${LOGO_BLUE}" opacity="0.5"/>`).join("")}`;
 }
 
 /** The lobster mark on a Music Assistant blue circle. */
 function mark(cx, cy, r) {
     const pad = r * 0.34;
-    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${MA_BLUE}"/><svg x="${cx - r + pad}" y="${cy - r + pad}" width="${2 * (r - pad)}" height="${2 * (r - pad)}" viewBox="${lobsterViewBox}"><path fill="#0a141e" stroke="#0a141e" stroke-width="6" fill-rule="evenodd" d="${lobsterPath}"/></svg>`;
+    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${LOGO_BLUE}"/><svg x="${cx - r + pad}" y="${cy - r + pad}" width="${2 * (r - pad)}" height="${2 * (r - pad)}" viewBox="${lobsterViewBox}"><path fill="#0a141e" stroke="#0a141e" stroke-width="6" fill-rule="evenodd" d="${lobsterPath}"/></svg>`;
 }
 
 const esc = (s) => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
@@ -76,7 +76,7 @@ async function write(file, w, h, body) {
 /** Headline block: eyebrow, two-line title, subline. */
 function copy(x, y, eyebrow, title, sub, size = 64) {
     const lines = title.split("\n");
-    return `<text x="${x}" y="${y}" ${FONT} font-size="${Math.round(size * 0.34)}" font-weight="700" letter-spacing="3" fill="${MA_BLUE}">${esc(eyebrow.toUpperCase())}</text>
+    return `<text x="${x}" y="${y}" ${FONT} font-size="${Math.round(size * 0.34)}" font-weight="700" letter-spacing="3" fill="${LOGO_BLUE}">${esc(eyebrow.toUpperCase())}</text>
 ${lines.map((l, i) => `<text x="${x}" y="${y + size * 1.25 + i * size * 1.1}" ${FONT} font-size="${size}" font-weight="800" fill="#ffffff">${esc(l)}</text>`).join("")}
 ${sub.split("\n").map((l, i) => `<text x="${x}" y="${y + size * 1.25 + lines.length * size * 1.1 + 24 + i * size * 0.52}" ${FONT} font-size="${Math.round(size * 0.4)}" fill="#b9c2d8">${esc(l)}</text>`).join("")}`;
 }
