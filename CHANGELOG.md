@@ -12,6 +12,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 - Sleep Timer: fades the whole group out at the end (30 s by default, adjustable), stops, and restores every speaker's own volume. Music Assistant itself stops without fading.
 
 ### Changed
+- Requires Stream Deck **7.1** or later and runs on Node.js 24 (Node 20 is out of support). The plugin now uses Node's built-in WebSocket.
 - Sleep Timer: the key counts down in minutes and seconds ("29:59", from an hour on "1h05").
 - Queue, Browser and Player dials can show a panorama effect as their background too (dimmed), so every dial can be part of one continuous scene.
 - Panorama effects: changing the effect on one display now switches all connected displays of that scene (Track/Volume dial backgrounds included), instead of splitting that display off. Choosing no effect spreads too. Can be turned off per dial ("Apply to connected displays") to change a single display.
