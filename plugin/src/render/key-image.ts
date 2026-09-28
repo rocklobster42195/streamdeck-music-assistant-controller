@@ -218,7 +218,7 @@ export function renderKeyImage(input: KeyImageOptions): string {
         parts.push(`<rect y="${SIZE - 6}" width="${w}" height="6" fill="${opts.progressColor ?? color}"/>`);
     }
 
-    if (placed.corner) parts.push(...markerParts(placed.corner, !!opts.cover, !!opts.dimmed));
+    if (placed.corner) parts.push(...markerParts(placed.corner, !!opts.cover, !!opts.ring, !!opts.dimmed));
     if (opts.cornerBadge) parts.push(opts.cornerBadge);
     if (opts.overlay) parts.push(opts.overlay);
 
@@ -235,10 +235,16 @@ function placeMarker(opts: KeyImageOptions, marker: string | undefined): { opts:
     return { opts, corner: marker };
 }
 
-/** The marker in the top-right corner, clear of the icon and the ring; on a cover on a dark disc. */
-function markerParts(marker: string, onCover: boolean, dimmed: boolean): string[] {
-    const parts = onCover ? [`<circle cx="127" cy="17" r="15" fill="#000" opacity="0.55"/>`] : [];
-    parts.push(icon(marker, 116, 6, 22, dimmed ? UNAVAILABLE : "#b8b8be"));
+/**
+ * The marker in the top-right corner: the mirror image of the service badge in the top-left
+ * (see providerBadge, a disc of r 18 around (24, 24) with a 22 px logo); on a cover the disc is
+ * dark. Next to a ring or pie it moves further into the corner, clear of the gauge.
+ */
+function markerParts(marker: string, onCover: boolean, besideGauge: boolean, dimmed: boolean): string[] {
+    const fill = dimmed ? UNAVAILABLE : "#b8b8be";
+    if (besideGauge) return [icon(marker, 116, 6, 22, fill)];
+    const parts = onCover ? [`<circle cx="${SIZE - 24}" cy="24" r="18" fill="#101010" opacity="0.8"/>`] : [];
+    parts.push(icon(marker, SIZE - 35, 13, 22, fill));
     return parts;
 }
 
