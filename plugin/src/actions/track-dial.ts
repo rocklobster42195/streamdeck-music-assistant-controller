@@ -2,7 +2,7 @@ import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import { LatestSender } from "../ma/latest-sender";
 import { coverAccent, ICONS, rgb } from "../render/key-image";
-import { marqueeNeeded, marqueeSvg } from "streamdeck-core";
+import { marqueeNeeded, marqueeSvg } from "@rocklobster42195/streamdeck-kit";
 import { frames } from "../render/frames";
 import { formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "../render/strip";
 import { playingProvider, providerLogo } from "../ma/provider-icons";

@@ -1,5 +1,5 @@
 // Messages between the plugin and its property inspectors (shared by both sides).
-import type { EffectInfo } from "streamdeck-core";
+import type { EffectInfo } from "@rocklobster42195/streamdeck-kit";
 
 export type PlayerState = "playing" | "paused" | "idle" | "offline";
 

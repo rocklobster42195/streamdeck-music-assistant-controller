@@ -230,17 +230,19 @@ MA-C ships in **English** and **German**. Each language is a **single JSON file*
 
 ## Development
 
-This repository is a small npm-workspaces monorepo:
+```
+plugin/    The Stream Deck plugin (actions, property inspectors, manifest), an npm workspace
+tools/     Dev scripts (simulator, PI preview, icon generation, API probe)
+```
 
-```
-packages/streamdeck-core/  Stream Deck UI building blocks shared with Sonos Controller (in progress)
-plugin/                    The Stream Deck plugin (actions, property inspectors, manifest)
-tools/                     Dev scripts (icon generation, API probe)
-```
+MA-C builds on two packages of its own:
+
+- [`music-assistant-client`](https://github.com/rocklobster42195/music-assistant-client): the typed Music Assistant API client
+- [`@rocklobster42195/streamdeck-kit`](https://github.com/rocklobster42195/streamdeck-kit): rendering helpers, animation, Panorama effects and the property inspector kit, shared with Sonos Controller and the plugins that follow. To work on the kit and MA-C at the same time, point `plugin/package.json` at a local checkout (`"file:../../streamdeck-kit/packages/kit"`) or use `npm link`.
 
 ```bash
 npm install          # installs all workspaces
-npm run build        # builds streamdeck-core, then the plugin and the PI bundle
+npm run build        # builds the plugin and the PI bundle
 npm test             # vitest (plugin and tools)
 npm run lint
 
@@ -255,10 +257,10 @@ npm run pi:preview            # http://localhost:5199/play-pause-key.html?scenar
 
 ### Property inspectors
 
-The settings panels do not use `sdpi-components`. They are built on a small, framework-free kit from `packages/streamdeck-core`:
+The settings panels do not use `sdpi-components`. They are built on the framework-free property inspector kit from `@rocklobster42195/streamdeck-kit`:
 
-- `streamdeck-core/pi`: the Stream Deck PI socket client, i18n, and light-DOM components (`<pi-section>`, `<pi-toggle>`, `<pi-field>`)
-- `streamdeck-core/styles/pi-theme.css`: the shared dark theme, used by both MA-C and Sonos Controller
+- `@rocklobster42195/streamdeck-kit/pi`: the Stream Deck PI socket client, i18n, and light-DOM components (`<pi-section>`, `<pi-toggle>`, `<pi-field>`, `<pi-range>`, `<pi-choice>`, `<pi-color>`)
+- `@rocklobster42195/streamdeck-kit/styles/pi-theme.css`: the shared dark theme
 
 MA-C adds `<mac-key-preview>` (compact status header), `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
 

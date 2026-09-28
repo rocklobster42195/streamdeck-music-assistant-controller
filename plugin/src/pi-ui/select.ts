@@ -3,7 +3,7 @@
 // A dropdown whose options come from the plugin (see PiBridge.registerOptions). With `with-player`
 // the request carries the action's player (its own setting, else the active player), and the list
 // reloads when that changes. `label-setting` also stores the chosen label (e.g. to show it on the key).
-import { escapeHtml, icon, sd, t } from "streamdeck-core/pi";
+import { escapeHtml, icon, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
 import type { OptionItem, PiPush } from "../pi/protocol";
 import { onPiState, piState, nextRequestId } from "./state";
 

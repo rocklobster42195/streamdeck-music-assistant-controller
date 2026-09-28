@@ -6,6 +6,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 
 ### Added
 - `music-assistant-client` moved to its own repository and is published on npm (0.1.0); the plugin uses it from there.
+- `streamdeck-core` moved to its own repository as `@rocklobster42195/streamdeck-kit` (rendering helpers, animation, Panorama effects, the settings panel kit), to be shared with Sonos Controller and the plugins that follow. Nothing changes for users.
 - Sleep Timer: fades the whole group out at the end (30 s by default, adjustable), stops, and restores every speaker's own volume. Music Assistant itself stops without fading.
 
 ### Changed

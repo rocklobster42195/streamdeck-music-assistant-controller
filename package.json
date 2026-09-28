@@ -6,14 +6,13 @@
     "author": "Boris Kemper",
     "type": "module",
     "workspaces": [
-        "packages/streamdeck-core",
         "plugin"
     ],
     "scripts": {
-        "build": "npm run build -w streamdeck-core && npm run build -w mac-plugin && node tools/build-translator.mjs",
-        "watch": "npm run build -w streamdeck-core && npm run watch -w mac-plugin",
+        "build": "npm run build -w mac-plugin && node tools/build-translator.mjs",
+        "watch": "npm run watch -w mac-plugin",
         "test": "vitest run",
-        "lint": "eslint packages plugin/src",
+        "lint": "eslint plugin/src",
         "probe": "node tools/ma-probe.mjs",
         "pi:preview": "node tools/pi-preview.mjs",
         "sim:play-pause": "node tools/sd-sim/play-pause.mjs sim-out",

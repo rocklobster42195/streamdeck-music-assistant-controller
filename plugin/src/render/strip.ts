@@ -1,7 +1,7 @@
 // Stream Deck + touch-strip segments: 200×100 SVG, sent as the "full-canvas" pixmap of layouts/canvas.json.
 // Text uses Arial (renders reliably on the device; see sonos-controller's dials) and is measured
-// with real Arial glyph widths from streamdeck-core.
-import { measureArialWidth, truncateToWidth, wrapToWidth } from "streamdeck-core";
+// with real Arial glyph widths from streamdeck-kit.
+import { measureArialWidth, truncateToWidth, wrapToWidth } from "@rocklobster42195/streamdeck-kit";
 
 export const STRIP_W = 200;
 export const STRIP_H = 100;

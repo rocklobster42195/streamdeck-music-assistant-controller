@@ -10,7 +10,7 @@ import streamDeck, {
     type WillDisappearEvent,
 } from "@elgato/streamdeck";
 import type { JsonObject } from "@elgato/utils";
-import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID } from "streamdeck-core";
+import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID } from "@rocklobster42195/streamdeck-kit";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";

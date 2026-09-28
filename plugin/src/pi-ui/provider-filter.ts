@@ -1,6 +1,6 @@
 // <mac-provider-filter setting="providers"> — one switch per Music Assistant music provider. The
 // setting holds the enabled provider instances; unset = all (so providers added later show up).
-import { escapeHtml, sd, t } from "streamdeck-core/pi";
+import { escapeHtml, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
 import { nextRequestId } from "./state";
 import type { OptionItem, PiPush } from "../pi/protocol";
 

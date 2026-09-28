@@ -3,7 +3,7 @@ import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { flowModePlayerId, getFlowMode, setFlowMode } from "../ma/flow-mode";
 import { searchLibrary } from "../ma/library";
-import { listEffects } from "streamdeck-core";
+import { listEffects } from "@rocklobster42195/streamdeck-kit";
 import type { ConnectionStatus, KeyPreview, OptionItem, PiPush, PiRequest, PlayerOption, PlayerState } from "./protocol";
 
 /** Provides a list for the PI; `params` come from the requesting component (e.g. a player id). */

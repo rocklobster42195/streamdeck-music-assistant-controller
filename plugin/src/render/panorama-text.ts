@@ -1,7 +1,7 @@
 // Text over the panorama effect: "title & artist" (ported from sonos-controller's
 // PanoramaEffectsDial overlay) or synced lyrics. Neighbouring text dials form one "run": text is
 // laid out across the whole run and every display draws its own 200 px window of it.
-import { balanceLines, measureArialWidth, wrapToWidth } from "streamdeck-core";
+import { balanceLines, measureArialWidth, wrapToWidth } from "@rocklobster42195/streamdeck-kit";
 import { escapeXml, fit } from "./strip";
 
 /** A run of neighbouring text dials: total width, and where this display sits in it. */

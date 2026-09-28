@@ -1,6 +1,6 @@
 // <mac-player-picker setting="playerId"> — per-action player, with "Active player" as the first choice.
 // <mac-player-picker setting="activePlayerId" global no-follow> — the global active player.
-import { escapeHtml, icon, sd, t } from "streamdeck-core/pi";
+import { escapeHtml, icon, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
 import type { PlayerOption } from "../pi/protocol";
 import { onPiState, piState, playerName } from "./state";
 

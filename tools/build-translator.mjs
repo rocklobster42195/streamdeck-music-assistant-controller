@@ -8,7 +8,9 @@ import path from "node:path";
 
 const root = path.resolve(".");
 const SD = "plugin/de.boriskemper.music-assistant-controller.sdPlugin";
-const SOURCE_DIRS = ["plugin/src", "packages/streamdeck-core/src"];
+// The kit's compiled JS: its property inspector components use keys from MAC's locale files.
+const KIT_DIST = "node_modules/@rocklobster42195/streamdeck-kit/dist";
+const SOURCE_DIRS = ["plugin/src", KIT_DIST];
 /** Languages Stream Deck supports (a locale file per language). */
 const SUPPORTED = ["en", "de", "es", "fr", "ja", "ko", "zh_CN", "zh_TW"];
 
@@ -54,11 +56,11 @@ function placeOfSource(file) {
     const uuid = /UUID:\s*"[^"]+\.([a-z0-9-]+)"/.exec(src)?.[1];
     const a = uuid && actionBySuffix.get(uuid);
     if (a) return { label: a.Name, where: a.Controllers.includes("Encoder") ? "dial" : "key", file: rel };
-    if (rel.includes("/pi-ui/") || rel.includes("streamdeck-core/src/pi")) return { label: "*", where: "settings", file: rel };
+    if (rel.includes("/pi-ui/") || rel.includes("streamdeck-kit/dist/pi")) return { label: "*", where: "settings", file: rel };
     return { label: "*", where: "plugin", file: rel };
 }
 
-for (const file of SOURCE_DIRS.flatMap((d) => walk(d)).filter((f) => f.endsWith(".ts") && !f.endsWith(".test.ts"))) {
+for (const file of SOURCE_DIRS.flatMap((d) => walk(d)).filter((f) => (f.endsWith(".ts") || f.endsWith(".js")) && !f.endsWith(".test.ts") && !f.endsWith(".d.ts"))) {
     const src = fs.readFileSync(file, "utf8");
     const place = JSON.stringify(placeOfSource(file));
     for (const m of src.matchAll(/["'`]((?:key|pi|effect)\.[a-zA-Z0-9_.-]*?)(\$\{|["'`])/g)) {

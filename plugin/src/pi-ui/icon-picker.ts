@@ -1,7 +1,7 @@
 // <mac-icon-picker setting="icon" [default-icon="mdiBullhorn"]> — pick a Material Design Icon for a key: a search field with
 // suggestions as icon tiles (the search runs in the plugin, see render/mdi-catalog), the current
 // choice with its preview, and a button back to the key's default icon.
-import { escapeHtml, sd, t } from "streamdeck-core/pi";
+import { escapeHtml, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
 import { nextRequestId } from "./state";
 import type { OptionItem, PiPush } from "../pi/protocol";
 

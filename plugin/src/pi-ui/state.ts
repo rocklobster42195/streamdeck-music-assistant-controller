@@ -1,6 +1,6 @@
 // Latest data pushed by the plugin, shared by all MAC PI components.
-import { sd } from "streamdeck-core/pi";
-import type { EffectInfo } from "streamdeck-core";
+import { sd } from "@rocklobster42195/streamdeck-kit/pi";
+import type { EffectInfo } from "@rocklobster42195/streamdeck-kit";
 import type { ConnectionStatus, KeyPreview, PiPush, PlayerOption } from "../pi/protocol";
 
 type Listener = () => void;

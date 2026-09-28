@@ -1,7 +1,7 @@
 // <mac-key-preview label="Play/Pause"> — compact header: action name, player status and what plays.
 // No key image: the Stream Deck app already shows keys and dial displays live (hardware test
 // 2026-09-24), and the image took up a lot of room — dials most of all.
-import { escapeHtml, icon, t } from "streamdeck-core/pi";
+import { escapeHtml, icon, t } from "@rocklobster42195/streamdeck-kit/pi";
 import { onPiState, piState } from "./state";
 
 export class MacKeyPreview extends HTMLElement {

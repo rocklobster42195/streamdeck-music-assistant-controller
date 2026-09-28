@@ -16,4 +16,4 @@
 - [ ] No hard-coded user-visible text; new keys are in `en.json` **and** `de.json`
 - [ ] README and CHANGELOG (`[Unreleased]`) updated if users notice the change
 - [ ] No secrets, tokens, IPs or personal names in code, logs or screenshots
-- [ ] Touches `packages/streamdeck-core`? Noted whether Sonos Controller needs the same change
+- [ ] Needs a change in `streamdeck-kit`? Linked the kit PR

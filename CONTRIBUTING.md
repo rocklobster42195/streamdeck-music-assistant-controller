@@ -57,7 +57,7 @@ npm run watch                # rebuild and restart the plugin on every change
 
 The layout of the repository is described in the README under **Development**. In short:
 - The Music Assistant client is its own package, [`music-assistant-client`](https://github.com/rocklobster42195/music-assistant-client), installed from npm.
-- `packages/streamdeck-core` holds the shared building blocks, which are also used by the Sonos Controller.
+- The shared Stream Deck building blocks (rendering, animation, Panorama effects, PI kit) are their own package, [`@rocklobster42195/streamdeck-kit`](https://github.com/rocklobster42195/streamdeck-kit), installed from npm.
 - `plugin/` is the Stream Deck plugin.
 
 ### Testing without a Stream Deck
@@ -83,7 +83,7 @@ Before you open a pull request for a change that affects what users see, check i
 - **Code comments in English.** Keep them short and explain *why*, not *what*.
 - **No hard-coded user-visible text.** Every text goes into the locale files (`plugin/…sdPlugin/en.json` and `de.json`) and is referenced by key. If you can't write the German text, add the English one to `de.json` as well and mention it in the PR.
 - **Focused files.** One component per file. Keep logic apart from rendering (actions vs. `plugin/src/render/`). Split a file when it grows past roughly 200–250 lines or starts mixing concerns.
-- **Reuse the layers.** Music Assistant calls go through `music-assistant-client`. Anything device-agnostic (rendering helpers, PI components, effects) belongs in `streamdeck-core`.
+- **Reuse the layers.** Music Assistant calls go through `music-assistant-client`. Anything device-agnostic (rendering helpers, PI components, effects) belongs in `streamdeck-kit`.
 - **Keep docs current.** Update the **README** (the action table and sections) and the **CHANGELOG** (`[Unreleased]`) in the same PR as the change.
 - **TypeScript strict mode**, formatting as in the surrounding code.
 
@@ -97,7 +97,7 @@ Before you open a pull request for a change that affects what users see, check i
    ```
 4. Open the PR and fill in the template. The CI workflow runs the same checks. For visual changes, attach **screenshots from the simulator** (`sim-out/`) or the PI preview.
 
-Changes to `packages/streamdeck-core` also affect the Sonos Controller. Mention in the PR if something there changes behavior.
+Changes to `streamdeck-kit` go to its own repository and also affect the other plugins that use it (Sonos Controller among them). Mention it in the PR if MA-C needs a new kit version.
 
 ---
 

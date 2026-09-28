@@ -32,7 +32,7 @@ import {
     mdiTimerOutline,
     mdiSpeakerWireless,
 } from "@mdi/js";
-import type { PiChoice, PiChoiceOption } from "streamdeck-core/pi";
+import type { PiChoice, PiChoiceOption } from "@rocklobster42195/streamdeck-kit/pi";
 
 const ICONS: Record<string, string> = {
     timer: mdiTimerOutline,

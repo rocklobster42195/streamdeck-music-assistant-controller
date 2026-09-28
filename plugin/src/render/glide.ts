@@ -1,4 +1,4 @@
-import { AnimatedValue } from "streamdeck-core";
+import { AnimatedValue } from "@rocklobster42195/streamdeck-kit";
 import { frames } from "./frames";
 
 const values = new Map<string, AnimatedValue>();

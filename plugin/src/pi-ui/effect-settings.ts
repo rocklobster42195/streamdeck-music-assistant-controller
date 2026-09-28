@@ -1,8 +1,8 @@
 // <mac-effect-settings [allow-none] [default-effect="particles"]> — choose a panorama effect (setting "background") and tune it.
 // The fields come from the effect's own settingsSchema (range → <pi-range>, color → <pi-color>),
 // so a new effect brings its controls along without PI changes.
-import { escapeHtml, sd, t } from "streamdeck-core/pi";
-import type { EffectInfo } from "streamdeck-core";
+import { escapeHtml, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
+import type { EffectInfo } from "@rocklobster42195/streamdeck-kit";
 import { functionIcon } from "../render/function-icons";
 import { onPiState, piState } from "./state";
 

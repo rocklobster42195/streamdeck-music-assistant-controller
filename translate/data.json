@@ -1700,7 +1700,7 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/i18n.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/i18n.js"
     },
     {
      "label": "Announcement",
@@ -1791,12 +1791,12 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/index.js"
     },
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/section.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/section.js"
     },
     {
      "label": "Announcement",
@@ -1874,12 +1874,12 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/index.js"
     },
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/toggle.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/toggle.js"
     },
     {
      "label": "Play/Pause",
@@ -1895,12 +1895,12 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/index.js"
     },
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/toggle.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/toggle.js"
     },
     {
      "label": "Play/Pause",
@@ -2442,7 +2442,7 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/index.js"
     }
    ]
   },
@@ -2458,7 +2458,7 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/index.js"
     }
    ]
   },
@@ -2485,7 +2485,7 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/index.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/index.js"
     }
    ]
   },
@@ -2518,7 +2518,7 @@
     {
      "label": "*",
      "where": "settings",
-     "file": "packages/streamdeck-core/src/pi/components/field.ts"
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/field.js"
     }
    ]
   },

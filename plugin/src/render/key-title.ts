@@ -1,4 +1,4 @@
-import { FrameTicker, TitleFader } from "streamdeck-core";
+import { FrameTicker, TitleFader } from "@rocklobster42195/streamdeck-kit";
 
 /** Key titles tick on their own 80 ms clock, like sonos-controller's play/pause key. */
 const titleFrames = new FrameTicker(80);

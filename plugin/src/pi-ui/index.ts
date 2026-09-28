@@ -1,5 +1,5 @@
 // Entry of the property inspector bundle (ui/pi.js): shared core components + MAC components.
-import { definePiComponents, initConditionalVisibility, sd, translateDom } from "streamdeck-core/pi";
+import { definePiComponents, initConditionalVisibility, sd, translateDom } from "@rocklobster42195/streamdeck-kit/pi";
 import { initChoiceOptions } from "./choice-icons";
 import { MacConnectionCard } from "./connection-card";
 import { MacEffectSettings } from "./effect-settings";

@@ -14,7 +14,7 @@ const { WebSocketServer } = require("ws");
 const HTTP_PORT = Number(process.env.PORT ?? 5199);
 const WS_PORT = HTTP_PORT + 1;
 // The effects list the Panorama/effect PIs build their fields from (as the plugin sends it)
-const { listEffects } = await import(new URL("../packages/streamdeck-core/dist/index.js", import.meta.url));
+const { listEffects } = await import("@rocklobster42195/streamdeck-kit");
 
 const UI = path.resolve("plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui");
 

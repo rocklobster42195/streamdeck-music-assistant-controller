@@ -1,7 +1,7 @@
 // <mac-connection-card> — Music Assistant connection, shared by all MAC actions (global settings).
 // Modes: setup (not configured) · connected (collapsed summary, "Change" expands) ·
 //        auth error (server ok, token rejected) · offline (server not reachable) · connecting.
-import { escapeHtml, icon, sd, t, type PiField } from "streamdeck-core/pi";
+import { escapeHtml, icon, sd, t, type PiField } from "@rocklobster42195/streamdeck-kit/pi";
 import { onPiState, piState } from "./state";
 
 type Mode = "setup" | "connected" | "auth" | "offline" | "connecting";

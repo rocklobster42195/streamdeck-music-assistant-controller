@@ -16,7 +16,7 @@ import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { ColorFader } from "../render/color-fade";
 import { CoverFader } from "../render/cover-fade";
 import { ACCENT, coverAccent, ICONS } from "../render/key-image";
-import { BLANK_EFFECT_ID } from "streamdeck-core";
+import { BLANK_EFFECT_ID } from "@rocklobster42195/streamdeck-kit";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { mdi, stripImage, text } from "../render/strip";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";

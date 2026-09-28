@@ -85,10 +85,10 @@ const propertyInspector = {
             },
         },
         {
-            // The shared PI theme lives in streamdeck-core; ship a copy next to the PI pages.
+            // The shared PI theme lives in streamdeck-kit; ship a copy next to the PI pages.
             name: "copy-pi-theme",
             buildStart: function () {
-                const theme = require.resolve("streamdeck-core/styles/pi-theme.css");
+                const theme = require.resolve("@rocklobster42195/streamdeck-kit/styles/pi-theme.css");
                 this.addWatchFile(theme);
                 fs.copyFileSync(theme, `${sdPlugin}/ui/pi-theme.css`);
             },

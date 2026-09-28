@@ -1,5 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
-import { effectRegistry, PanoramaEngine, setPanoramaLogger } from "streamdeck-core";
+import { effectRegistry, PanoramaEngine, setPanoramaLogger } from "@rocklobster42195/streamdeck-kit";
 import type { PlayerMedia } from "music-assistant-client";
 import { ACCENT, coverAccent, rgb } from "./key-image";
 
