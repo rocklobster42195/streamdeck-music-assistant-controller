@@ -1,6 +1,7 @@
 import { effectRegistry, PanoramaEngine } from "@rocklobster42195/streamdeck-kit";
 import type { PlayerMedia } from "music-assistant-client";
-import { ACCENT, coverAccent, rgb } from "./key-image";
+import { ACCENT } from "./key-image";
+import { coverAccent, rgb } from "./cover-color";
 
 /** The plugin's one panorama engine: effects spanning neighbouring dials. */
 export const panorama = new PanoramaEngine({ defaultColor: ACCENT });

@@ -47,7 +47,7 @@ The screenshots are rendered by the simulator against a stand-in Music Assistant
 
 ## Actions
 
-All keys can show their icons in the **cover color** of what is playing (option **Cover color**).
+All keys can show their icons in the **cover color** of what is playing (option **Cover color**). A **marker** (any Material Design Icon, e.g. a pot for the kitchen) tells keys apart: it sits in the top-right corner, in the center of the mute key's ring when that shows no number, and on the Player key it replaces the speaker as the room's icon.
 
 | Action | Controller |
 |---|---|

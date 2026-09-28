@@ -12,13 +12,17 @@ import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { CoverFader, type CoverFrame } from "@rocklobster42195/streamdeck-kit";
-import { coverAccent, ICONS, renderKeyImage, rgb, withIconTint } from "../render/key-image";
+import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
+import { ICONS, renderKeyImage, withIconTint, withKeyMarker } from "../render/key-image";
+import { coverAccent, rgb } from "../render/cover-color";
 
 /** Every MAC key has a player target; "" / undefined = follow the active player. */
 export type MaKeySettings = {
     playerId?: string;
     /** Icons in the cover's color instead of light grey / blue (off: as usual). */
     iconCoverColor?: boolean;
+    /** Marker icon (MDI name, e.g. "mdiPot") to tell keys apart; shown in the top-right corner. */
+    marker?: string;
 } & JsonObject;
 
 /** Everything a key needs to render or act once MA is connected and its player exists. */
@@ -118,14 +122,16 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
         let out: KeyRender;
         let previewState: KeyPreviewState;
 
+        // The marker also shows while MA is offline, so the key stays recognisable
+        const marker = mdiPath(inst.settings.marker);
         if (ctx) {
             // "Cover color" option: icons take the color of what is playing
             const tint = inst.settings.iconCoverColor === true ? coverAccent(ctx.player.current_media) : undefined;
-            out = withIconTint(tint && rgb(tint, ""), () => this.renderPlayer(ctx));
+            out = withKeyMarker(marker, () => withIconTint(tint && rgb(tint, ""), () => this.renderPlayer(ctx)));
             const s = ctx.queue?.state ?? ctx.player.playback_state;
             previewState = s === "playing" ? "playing" : s === "paused" ? "paused" : "idle";
         } else {
-            [out, previewState] = notReadyRender();
+            [out, previewState] = withKeyMarker(marker, () => notReadyRender());
         }
 
         const media = ctx?.player.current_media;

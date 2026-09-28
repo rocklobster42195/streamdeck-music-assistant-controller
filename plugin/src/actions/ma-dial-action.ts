@@ -14,7 +14,8 @@ import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { ColorFader, CoverFader, BLANK_EFFECT_ID, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
-import { ACCENT, coverAccent, ICONS } from "../render/key-image";
+import { ACCENT, ICONS } from "../render/key-image";
+import { coverAccent } from "../render/cover-color";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 

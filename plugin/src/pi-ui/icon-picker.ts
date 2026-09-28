@@ -1,4 +1,5 @@
-// <mac-icon-picker setting="icon" [default-icon="mdiBullhorn"]> — pick a Material Design Icon for a key: a search field with
+// <mac-icon-picker setting="icon" [default-icon="mdiBullhorn"] [none-label="…"] [reset-label="…"] [hint="…"]>
+// — pick a Material Design Icon for a key: a search field with
 // suggestions as icon tiles (the search runs in the plugin, see render/mdi-catalog), the current
 // choice with its preview, and a button back to the key's default icon.
 import { escapeHtml, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
@@ -28,8 +29,8 @@ export class MacIconPicker extends HTMLElement {
         this.innerHTML = `
             <div class="pi-row">
                 <span class="mac-icon-current"></span>
-                <div class="pi-row-text"><span class="pi-label mac-icon-name"></span></div>
-                <button type="button" class="pi-button mac-icon-reset">${escapeHtml(t("pi.icon_default"))}</button>
+                <div class="pi-row-text"><span class="pi-label mac-icon-name"></span>${this.hasAttribute("hint") ? `<span class="pi-hint">${escapeHtml(t(this.getAttribute("hint")!))}</span>` : ""}</div>
+                <button type="button" class="pi-button mac-icon-reset">${escapeHtml(t(this.getAttribute("reset-label") ?? "pi.icon_default"))}</button>
             </div>
             <div class="pi-row"><input class="pi-input mac-icon-search" type="search" placeholder="${escapeHtml(t("pi.icon_search"))}"/></div>
             <div class="mac-icon-grid"></div>`;
@@ -87,7 +88,7 @@ export class MacIconPicker extends HTMLElement {
     private render(): void {
         const cur = this.current && this.current.value === this.shown ? this.current : undefined;
         this.querySelector(".mac-icon-current")!.innerHTML = cur?.icon ? svg(cur.icon, 28) : "";
-        this.querySelector(".mac-icon-name")!.textContent = this.value && cur ? cur.label : t("pi.icon_default_name");
+        this.querySelector(".mac-icon-name")!.textContent = this.value && cur ? cur.label : t(this.getAttribute("none-label") ?? "pi.icon_default_name");
         this.querySelector<HTMLButtonElement>(".mac-icon-reset")!.hidden = !this.value;
         const grid = this.querySelector<HTMLElement>(".mac-icon-grid")!;
         if (this.query && !this.results.length) {

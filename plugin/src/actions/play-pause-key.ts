@@ -5,7 +5,8 @@ import { upcomingCrossfade } from "../ma/crossfade-predict";
 import { playingProvider, providerLogo } from "../ma/provider-icons";
 import { providerBadge } from "../render/provider-badge";
 import { getCachedCover, loadCover, frames } from "@rocklobster42195/streamdeck-kit";
-import { coverAccent, ICONS, renderKeyImage, rgb } from "../render/key-image";
+import { ICONS, renderKeyImage } from "../render/key-image";
+import { coverAccent, rgb } from "../render/cover-color";
 import { KeyTitleFader } from "../render/key-title";
 import { COVER_SIZE, type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 

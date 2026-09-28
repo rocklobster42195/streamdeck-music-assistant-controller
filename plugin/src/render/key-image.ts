@@ -1,5 +1,4 @@
 import { arc, pie } from "@rocklobster42195/streamdeck-kit";
-import type { PlayerMedia } from "music-assistant-client";
 import {
     mdiAlbum,
     mdiAllInclusive,
@@ -107,13 +106,14 @@ export type KeyImageOptions = {
      * number or icon in the center, or a pie (Sonos Controller's look), which has room only for an
      * icon when it is empty.
      */
-    ring?: { value: number; color: string; style?: GaugeStyle; center?: { icon?: string; text?: string; color: string; size?: number } };
+    ring?: { value: number; color: string; style?: GaugeStyle; center?: { icon?: string; text?: string; color: string; size?: number; /** The key's marker may take this spot. */ markerSpot?: boolean } };
 };
 
 // Icon sizes without cover art: as large as sonos-controller's full-bleed MDI glyphs, a bit
 // smaller when a caption sits underneath.
 const ICON = { size: 112, xy: 16 };
 const ICON_WITH_BADGE = { size: 92, x: 26, y: 6 };
+const ICON_BESIDE_MARKER = { size: 100, xy: 22 };
 
 /** Cover color that replaces the light default and the blue "on" color while a key renders (see withIconTint). */
 let iconTint: string | undefined;
@@ -133,7 +133,27 @@ export function withIconTint<T>(tint: string | undefined, render: () => T): T {
     }
 }
 
+/** The user's marker icon (MDI path) for the key being rendered (see withKeyMarker). */
+let keyMarker: string | undefined;
+
+/**
+ * Render with the key's marker, a small icon the user picks to tell keys apart (e.g. a pot for the
+ * kitchen). It sits in the top-right corner; a ring's empty center or the Player key's room icon
+ * takes it instead where there is one.
+ */
+export function withKeyMarker<T>(marker: string | undefined, render: () => T): T {
+    const before = keyMarker;
+    keyMarker = marker;
+    try {
+        return render();
+    } finally {
+        keyMarker = before;
+    }
+}
+
 export function renderKeyImage(input: KeyImageOptions): string {
+    const placed = placeMarker(input, keyMarker);
+    input = placed.opts;
     const t = iconTint;
     const opts: KeyImageOptions = t
         ? {
@@ -164,15 +184,18 @@ export function renderKeyImage(input: KeyImageOptions): string {
         parts.push(...ringParts(opts.ring));
     } else if (opts.icon) {
         const fill = opts.dimmed ? UNAVAILABLE : color;
-        parts.push(opts.badge ? icon(opts.icon, ICON_WITH_BADGE.x, ICON_WITH_BADGE.y, ICON_WITH_BADGE.size, fill) : icon(opts.icon, ICON.xy, ICON.xy, ICON.size, fill));
+        // A little smaller next to a corner marker, so the two don't touch
+        const big = placed.corner ? ICON_BESIDE_MARKER : ICON;
+        parts.push(opts.badge ? icon(opts.icon, ICON_WITH_BADGE.x, ICON_WITH_BADGE.y, ICON_WITH_BADGE.size, fill) : icon(opts.icon, big.xy, big.xy, big.size, fill));
     }
 
     if (opts.active) {
         // Frame on top, so it also shows over cover art
         const inset = opts.cover ? 3 : 4;
         parts.push(`<rect x="${inset}" y="${inset}" width="${SIZE - 2 * inset}" height="${SIZE - 2 * inset}" rx="18" fill="none" stroke="${opts.active}" stroke-width="${opts.cover ? 6 : 3}" opacity="${opts.cover ? 1 : 0.7}"/>`);
-        if (opts.cover && !opts.icon) {
-            // "Now playing" tag in the corner (top instead of bottom when a title band sits at the bottom)
+        // "Now playing" tag in the corner (top instead of bottom when a title band sits at the bottom;
+        // left out when the marker already takes the top)
+        if (opts.cover && !opts.icon && !(opts.overlay && placed.corner)) {
             const cy = opts.overlay ? 26 : SIZE - 26;
             parts.push(`<circle cx="${SIZE - 26}" cy="${cy}" r="16" fill="${opts.active}"/>`);
             parts.push(icon(mdiPlay, SIZE - 38, cy - 12, 24, "#0b1a26"));
@@ -195,11 +218,28 @@ export function renderKeyImage(input: KeyImageOptions): string {
         parts.push(`<rect y="${SIZE - 6}" width="${w}" height="6" fill="${opts.progressColor ?? color}"/>`);
     }
 
+    if (placed.corner) parts.push(...markerParts(placed.corner, !!opts.cover, !!opts.dimmed));
     if (opts.cornerBadge) parts.push(opts.cornerBadge);
     if (opts.overlay) parts.push(opts.overlay);
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">${parts.join("")}</svg>`;
     return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+}
+
+/** Where the marker goes: into a ring's free center, as the room icon of a key with a status dot, else the corner. */
+function placeMarker(opts: KeyImageOptions, marker: string | undefined): { opts: KeyImageOptions; corner?: string } {
+    if (!marker) return { opts };
+    const center = opts.ring?.center;
+    if (center?.markerSpot) return { opts: { ...opts, ring: { ...opts.ring!, center: { ...center, icon: marker } } } };
+    if (opts.statusDot) return { opts: opts.cover ? opts : { ...opts, icon: marker } };
+    return { opts, corner: marker };
+}
+
+/** The marker in the top-right corner, clear of the icon and the ring; on a cover on a dark disc. */
+function markerParts(marker: string, onCover: boolean, dimmed: boolean): string[] {
+    const parts = onCover ? [`<circle cx="127" cy="17" r="15" fill="#000" opacity="0.55"/>`] : [];
+    parts.push(icon(marker, 116, 6, 22, dimmed ? UNAVAILABLE : "#b8b8be"));
+    return parts;
 }
 
 /** Ring gauge like the Volume dial's, sized to the key; the center holds a number or an icon. */
@@ -231,31 +271,3 @@ function escapeXml(s: string): string {
 
 /** How volume keys and dials draw the volume: MA-C's ring or Sonos Controller's pie. */
 export type GaugeStyle = "ring" | "pie";
-
-/** "rgb(r,g,b)" from an MA palette triplet. */
-type Rgb = [number, number, number];
-
-/** Relative luminance 0..1 (WCAG). */
-function luminance([r, g, b]: Rgb): number {
-    const lin = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-    return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
-}
-
-/**
- * The cover color to draw with on MAC's black keys and strips: MA's palette accent when it is
- * bright enough to be seen, otherwise the palette's primary or on-dark color (grey-scale covers
- * have a near-black accent), otherwise undefined.
- */
-export function coverAccent(media: PlayerMedia | null | undefined): Rgb | undefined {
-    const p = media?.palette;
-    return [p?.accent, p?.primary, p?.on_dark].find((c): c is Rgb => !!c && luminance(c) >= 0.1);
-}
-
-/** The cover color when `useCover` is on, otherwise MAC's blue. */
-export function ringColor(useCover: boolean | undefined, media: PlayerMedia | null | undefined): string {
-    return useCover ? rgb(coverAccent(media), ACCENT) : ACCENT;
-}
-
-export function rgb(triplet: [number, number, number] | undefined, fallback: string): string {
-    return triplet ? `rgb(${triplet[0]},${triplet[1]},${triplet[2]})` : fallback;
-}

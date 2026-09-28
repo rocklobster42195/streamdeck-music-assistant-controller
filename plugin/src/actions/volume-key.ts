@@ -57,7 +57,7 @@ export class VolumeKey extends MaKeyAction<VolumeKeySettings> {
                                 ? { icon: ICONS.volumeOff, color: MUTED }
                                 : showVolume
                                   ? { text: String(volume), color: "#e0e0e0" }
-                                  : { icon: volumeIcon(volume), color: "#e0e0e0" },
+                                  : { icon: volumeIcon(volume), color: "#e0e0e0", markerSpot: true },
                         },
                     }),
                 };
