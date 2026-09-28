@@ -13,12 +13,12 @@ import type { MusicAssistantClient, PlayerMedia } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
-import { ColorFader } from "../render/color-fade";
-import { CoverFader } from "../render/cover-fade";
+import { ColorFader } from "@rocklobster42195/streamdeck-kit";
+import { CoverFader } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, coverAccent, ICONS } from "../render/key-image";
 import { BLANK_EFFECT_ID } from "@rocklobster42195/streamdeck-kit";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
-import { mdi, stripImage, text } from "../render/strip";
+import { mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type StripRender = { image: string; preview?: Partial<Pick<KeyPreview, "track" | "state">> };

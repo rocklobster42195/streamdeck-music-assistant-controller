@@ -1,5 +1,5 @@
 import { maConnection } from "../ma/connection";
-import { mdiLabel, mdiPath, searchMdi } from "../render/mdi-catalog";
+import { mdiLabel, mdiPath, searchMdi } from "@rocklobster42195/streamdeck-kit/mdi";
 import { piBridge } from "./pi-bridge";
 
 /** Lists the property inspectors can ask for via <mac-select source="…">. */

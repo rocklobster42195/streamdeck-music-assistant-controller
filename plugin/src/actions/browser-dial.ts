@@ -1,7 +1,7 @@
 import { action } from "@elgato/streamdeck";
 import { type BrowseEntry, BrowserModel, LIBRARY_ROOT, MaBrowseSource, PROVIDERS_ROOT } from "../ma/browser";
 import { maConnection } from "../ma/connection";
-import { getCachedCover, loadCover } from "../render/cover-cache";
+import { getCachedCover, loadCover } from "@rocklobster42195/streamdeck-kit";
 import { browserIdleStrip, browserStrip } from "../render/browser-strip";
 import { ACCENT } from "../render/key-image";
 import { MaDialAction, type StripRender } from "./ma-dial-action";

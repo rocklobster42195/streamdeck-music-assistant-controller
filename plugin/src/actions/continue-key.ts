@@ -2,7 +2,7 @@ import { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import { mdiBookOpenPageVariant } from "@mdi/js";
 import { inProgress, type InProgressItem, type InProgressKind } from "../ma/in-progress";
-import { getCachedCover, loadCover } from "../render/cover-cache";
+import { getCachedCover, loadCover } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
 import { KeyTitleFader } from "../render/key-title";
 import { COVER_SIZE, type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";

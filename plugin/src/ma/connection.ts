@@ -1,7 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
 import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike, currentElapsed } from "music-assistant-client";
 import WebSocket from "ws";
-import { OptimisticStore } from "./optimistic";
+import { OptimisticStore } from "@rocklobster42195/streamdeck-kit";
 import { PlayingHold } from "./playing-hold";
 
 /** Plugin-wide settings, shared by all actions (Stream Deck global settings). */

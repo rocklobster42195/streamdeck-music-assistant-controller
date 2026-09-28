@@ -1,9 +1,9 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { LatestSender } from "../ma/latest-sender";
+import { LatestSender } from "@rocklobster42195/streamdeck-kit";
 import { ICONS } from "../render/key-image";
-import { glide } from "../render/glide";
-import { gauge, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "../render/strip";
+import { glide } from "@rocklobster42195/streamdeck-kit";
+import { gauge, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "@rocklobster42195/streamdeck-kit";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
 import type { EffectSettings } from "../render/panorama";

@@ -1,5 +1,5 @@
 import { action } from "@elgato/streamdeck";
-import { getCachedCover, loadCover } from "../render/cover-cache";
+import { getCachedCover, loadCover } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
 import { COVER_SIZE, type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 

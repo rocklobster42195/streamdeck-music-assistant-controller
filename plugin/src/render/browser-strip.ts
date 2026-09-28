@@ -2,7 +2,7 @@
 import { mdiBookOpenPageVariant, mdiChevronRight, mdiFolderMusic, mdiFolderOutline, mdiHeart, mdiHistory, mdiWaveform } from "@mdi/js";
 import type { BrowseEntry } from "../ma/browser";
 import { ACCENT, ICONS } from "./key-image";
-import { image, mdi, stripImage, text, wrap } from "./strip";
+import { image, mdi, stripImage, text, wrap } from "@rocklobster42195/streamdeck-kit";
 
 export type Flash = { text: string; color: string };
 

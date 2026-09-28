@@ -14,7 +14,7 @@ import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID } from "@rocklobster42195/streamdeck
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
-import { STRIP_W, stripImage } from "../render/strip";
+import { STRIP_W, stripImage } from "@rocklobster42195/streamdeck-kit";
 import { functionIcon } from "../render/function-icons";
 import { functionOverlay, noticeOverlay, timingOverlay } from "../render/panorama-text";
 import { PanoramaOverlay, type OverlayMode } from "./panorama-overlay";

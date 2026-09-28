@@ -1,11 +1,11 @@
 import { randomUUID } from "node:crypto";
 import streamDeck, { action, type WillAppearEvent, type WillDisappearEvent } from "@elgato/streamdeck";
 import { mdiBullhorn } from "@mdi/js";
-import { alarmTimers } from "../ma/alarm-timers";
+import { alarmTimers } from "@rocklobster42195/streamdeck-kit";
 import { maConnection } from "../ma/connection";
 import { groupLeader, groupMembers } from "../ma/groups";
 import { ACCENT, OFF, renderKeyImage } from "../render/key-image";
-import { mdiPath } from "../render/mdi-catalog";
+import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 type AnnounceSettings = MaKeySettings & {

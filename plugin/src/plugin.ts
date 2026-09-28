@@ -1,4 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
+import { setKitLogger } from "@rocklobster42195/streamdeck-kit";
 import { AnnounceKey } from "./actions/announce-key";
 import { BrowserDial } from "./actions/browser-dial";
 import { DashboardKey } from "./actions/dashboard-key";
@@ -22,6 +23,8 @@ import { registerOptionSources } from "./pi/options";
 import { piBridge } from "./pi/pi-bridge";
 
 streamDeck.logger.setLevel("info");
+// Kit problems (covers that fail to load, a throwing effect) go to the plugin log.
+setKitLogger(streamDeck.logger);
 
 streamDeck.actions.registerAction(new PlayPauseKey());
 streamDeck.actions.registerAction(new PlaybackControlKey());

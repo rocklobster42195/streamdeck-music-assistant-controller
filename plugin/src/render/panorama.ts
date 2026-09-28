@@ -1,9 +1,6 @@
-import streamDeck from "@elgato/streamdeck";
-import { effectRegistry, PanoramaEngine, setPanoramaLogger } from "@rocklobster42195/streamdeck-kit";
+import { effectRegistry, PanoramaEngine } from "@rocklobster42195/streamdeck-kit";
 import type { PlayerMedia } from "music-assistant-client";
 import { ACCENT, coverAccent, rgb } from "./key-image";
-
-setPanoramaLogger(streamDeck.logger);
 
 /** The plugin's one panorama engine: effects spanning neighbouring dials. */
 export const panorama = new PanoramaEngine({ defaultColor: ACCENT });

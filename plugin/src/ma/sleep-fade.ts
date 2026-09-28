@@ -2,7 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import type { MusicAssistantClient, Player } from "music-assistant-client";
 import { maConnection } from "./connection";
 import { groupLeader, groupMembers } from "./groups";
-import { computeFadeSteps } from "./volume-fade";
+import { computeFadeSteps } from "@rocklobster42195/streamdeck-kit";
 
 /** Stop this long before MA's own timer runs out, so MA never cuts in mid-fade. */
 const STOP_LEAD_S = 2;

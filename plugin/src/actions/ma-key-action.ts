@@ -11,7 +11,7 @@ import type { MusicAssistantClient, Player, PlayerMedia, PlayerQueue } from "mus
 import { maConnection } from "../ma/connection";
 import { piBridge } from "../pi/pi-bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
-import { CoverFader, type CoverFrame } from "../render/cover-fade";
+import { CoverFader, type CoverFrame } from "@rocklobster42195/streamdeck-kit";
 import { coverAccent, ICONS, renderKeyImage, rgb, withIconTint } from "../render/key-image";
 
 /** Every MAC key has a player target; "" / undefined = follow the active player. */
