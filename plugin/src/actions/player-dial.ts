@@ -1,9 +1,8 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { LatestSender } from "@rocklobster42195/streamdeck-kit";
+import { LatestSender, image, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { transferSource, transferTo } from "../ma/transfer";
 import { ACCENT, ICONS } from "../render/key-image";
-import { image, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 

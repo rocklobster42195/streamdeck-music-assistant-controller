@@ -1,10 +1,7 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { LatestSender } from "@rocklobster42195/streamdeck-kit";
+import { LatestSender, marqueeNeeded, marqueeSvg, frames, formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
 import { coverAccent, ICONS, rgb } from "../render/key-image";
-import { marqueeNeeded, marqueeSvg } from "@rocklobster42195/streamdeck-kit";
-import { frames } from "@rocklobster42195/streamdeck-kit";
-import { formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
 import { playingProvider, providerLogo } from "../ma/provider-icons";
 import { providerBadge } from "../render/provider-badge";
 import { MaDialAction, type StripRender } from "./ma-dial-action";

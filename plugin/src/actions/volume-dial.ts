@@ -1,9 +1,7 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { LatestSender } from "@rocklobster42195/streamdeck-kit";
+import { LatestSender, glide, arc, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "@rocklobster42195/streamdeck-kit";
 import { ICONS } from "../render/key-image";
-import { glide } from "@rocklobster42195/streamdeck-kit";
-import { gauge, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "@rocklobster42195/streamdeck-kit";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
 import type { EffectSettings } from "../render/panorama";
@@ -43,7 +41,7 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
         // The ring glides to the new volume; the number shows the target right away
         const shown = glide(`vol-${id}`, volume, () => this.render(id));
         const accent = this.ringColor(id, settings.ringCoverColor, player.current_media);
-        const parts = [...gauge(cx, 50, 34, shown / 100, muted ? "#5a5a60" : accent)];
+        const parts = [...arc(cx, 50, 34, shown / 100, muted ? "#5a5a60" : accent)];
 
         // Inside the ring: the number (with text), a speaker icon (without), or the muted icon
         if (muted) parts.push(mdi(ICONS.volumeOff, cx - 16, 34, 32, MUTED));

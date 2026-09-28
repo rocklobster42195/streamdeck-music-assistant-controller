@@ -5,9 +5,8 @@ import type { MA } from "music-assistant-client";
 type QueueItem = MA.QueueItem;
 import { maConnection } from "../ma/connection";
 import { PagedList } from "../ma/paged-list";
-import { getCachedCover, loadCover } from "@rocklobster42195/streamdeck-kit";
+import { getCachedCover, loadCover, image, mdi, stripImage, text, wrap } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS } from "../render/key-image";
-import { image, mdi, stripImage, text, wrap } from "@rocklobster42195/streamdeck-kit";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 

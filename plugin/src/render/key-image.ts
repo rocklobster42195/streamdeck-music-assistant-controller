@@ -1,3 +1,4 @@
+import { arc } from "@rocklobster42195/streamdeck-kit";
 import type { PlayerMedia } from "music-assistant-client";
 import {
     mdiAlbum,
@@ -200,13 +201,7 @@ export function renderKeyImage(input: KeyImageOptions): string {
 /** Ring gauge like the Volume dial's, sized to the key; the center holds a number or an icon. */
 function ringParts(ring: NonNullable<KeyImageOptions["ring"]>): string[] {
     const c = SIZE / 2;
-    const r = 54;
-    const circumference = 2 * Math.PI * r;
-    const v = Math.min(1, Math.max(0, ring.value));
-    const parts = [`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#2c2c30" stroke-width="14"/>`];
-    if (v > 0) {
-        parts.push(`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${ring.color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${(v * circumference).toFixed(1)} ${circumference.toFixed(1)}" transform="rotate(-90 ${c} ${c})"/>`);
-    }
+    const parts = arc(c, c, 54, ring.value, ring.color, { width: 14 });
     const center = ring.center;
     if (center?.text) {
         parts.push(`<text x="${c}" y="${c + Math.round((center.size ?? 42) * 0.36)}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="${center.size ?? 42}" font-weight="700" fill="${center.color}">${escapeXml(center.text)}</text>`);
