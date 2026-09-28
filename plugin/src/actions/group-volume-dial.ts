@@ -2,8 +2,9 @@ import streamDeck, { action } from "@elgato/streamdeck";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { groupLeader, groupMembers, isGrouped } from "../ma/groups";
-import { LatestSender, glide, arc, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "@rocklobster42195/streamdeck-kit";
-import { ICONS } from "../render/key-image";
+import { LatestSender, glide, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
+import type { GaugeStyle } from "../render/key-image";
+import { volumeGauge } from "../render/volume-gauge";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -13,6 +14,8 @@ type GroupVolumeDialSettings = MaKeySettings & EffectSettings & {
     ringCoverColor?: boolean;
     step?: number;
     preset?: number;
+    /** Volume as a ring (default) or a pie; the pie has no room for the number, so it moves to the header. */
+    gauge?: GaugeStyle;
 };
 
 const MUTED = "#ff8a8a";
@@ -34,21 +37,23 @@ export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
         const muted = !!(grouped ? leader.group_volume_muted : leader.volume_muted);
 
         const shown = glide(`group-${id}`, volume, () => this.render(id));
-        const parts = [...arc(50, 50, 34, shown / 100, muted ? "#5a5a60" : this.ringColor(id, settings.ringCoverColor, leader.current_media))];
-        if (muted) parts.push(mdi(ICONS.volumeOff, 34, 34, 32, MUTED));
-        else parts.push(text(50, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
+        const isPie = settings.gauge === "pie";
+        const gauge = volumeGauge(settings.gauge, 50, shown / 100, this.ringColor(id, settings.ringCoverColor, leader.current_media), muted);
+        const parts = gauge.parts;
+        if (!muted && !isPie) parts.push(text(50, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
 
         const names = members.map((m) => m.display_name ?? m.name);
         const header = grouped ? this.t("key.group").replace("{count}", String(members.length)) : this.t("key.group_single");
         const leaderName = leader.display_name ?? leader.name;
-        const footer = grouped ? names.filter((n) => n !== leaderName).join(", ") : muted ? this.t("key.muted") : "";
+        const others = names.filter((n) => n !== leaderName).join(", ");
+        // With the pie, the number moves into the last line, ahead of the other members
+        const footer = isPie && !muted ? [`${volume} %`, others].filter(Boolean).join(" · ") : grouped ? others : muted ? this.t("key.muted") : "";
         parts.push(text(100, 30, header, { size: 10, color: "#8a8a90", maxWidth: 96 }));
         parts.push(text(100, 50, leaderName, { size: 14, weight: "bold", maxWidth: 96 }));
-        if (footer) parts.push(text(100, 68, footer, { size: 11, color: grouped ? "#a4a4aa" : MUTED, maxWidth: 96 }));
+        if (footer) parts.push(text(100, 68, footer, isPie && !muted ? { size: 12, weight: "bold", color: "#a4a4aa", maxWidth: 96 } : { size: 11, color: grouped ? "#a4a4aa" : MUTED, maxWidth: 96 }));
         // On an effect background, darken only behind the number and the text (not the whole strip)
-        const w = Math.max(textWidth(header, 10, { maxWidth: 96 }), textWidth(leaderName, 14, { bold: true, maxWidth: 96 }), footer ? textWidth(footer, 11, { maxWidth: 96 }) : 0) + 12;
-        const scrim = scrimDisc(50, 50, 30) + scrimBox(94, 18, w, footer ? 56 : 38);
-        void settings;
+        const w = Math.max(textWidth(header, 10, { maxWidth: 96 }), textWidth(leaderName, 14, { bold: true, maxWidth: 96 }), footer ? textWidth(footer, 12, { bold: isPie, maxWidth: 96 }) : 0) + 12;
+        const scrim = gauge.scrim + scrimBox(94, 18, w, footer ? 56 : 38);
         return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }
 

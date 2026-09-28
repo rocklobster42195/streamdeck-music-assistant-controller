@@ -1,7 +1,8 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { LatestSender, glide, arc, mdi, stripImage, text, scrimBox, scrimDisc, textWidth } from "@rocklobster42195/streamdeck-kit";
-import { ICONS } from "../render/key-image";
+import { LatestSender, glide, mdi, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
+import type { GaugeStyle } from "../render/key-image";
+import { volumeGauge } from "../render/volume-gauge";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
 import type { EffectSettings } from "../render/panorama";
@@ -17,6 +18,8 @@ type VolumeDialSettings = MaKeySettings & EffectSettings & {
     showText?: boolean;
     /** Where the ring sits; the text takes the other side ("center": number inside the ring, no name). */
     align?: "left" | "center" | "right";
+    /** Volume as a ring (default) or a pie; the pie has no room for the number, so it moves to the text. */
+    gauge?: GaugeStyle;
 };
 
 const MUTED = "#ff8a8a";
@@ -41,27 +44,32 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
         // The ring glides to the new volume; the number shows the target right away
         const shown = glide(`vol-${id}`, volume, () => this.render(id));
         const accent = this.ringColor(id, settings.ringCoverColor, player.current_media);
-        const parts = [...arc(cx, 50, 34, shown / 100, muted ? "#5a5a60" : accent)];
+        const isPie = settings.gauge === "pie";
+        const gauge = volumeGauge(settings.gauge, cx, shown / 100, accent, muted);
+        const parts = gauge.parts;
 
-        // Inside the ring: the number (with text), a speaker icon (without), or the muted icon
-        if (muted) parts.push(mdi(ICONS.volumeOff, cx - 16, 34, 32, MUTED));
-        else if (showText) parts.push(text(cx, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
-        else parts.push(mdi(volumeIcon(volume), cx - 12, 38, 24, "#8a8a90"));
+        // Inside the ring: the number (with text) or a speaker icon (without); muted, volumeGauge drew the muted icon
+        if (!muted && !isPie) {
+            if (showText) parts.push(text(cx, 57, String(volume), { size: 21, weight: "bold", anchor: "middle" }));
+            else parts.push(mdi(volumeIcon(volume), cx - 12, 38, 24, "#8a8a90"));
+        }
 
-        // On an effect background, darken only behind the number and the text (not the whole strip)
-        let scrim = scrimDisc(cx, 50, 30);
+        // On an effect background, darken only behind the gauge and the text (not the whole strip)
+        let scrim = gauge.scrim;
         if (showText && align !== "center") {
             const saved = (this.savedUntil.get(id) ?? 0) > Date.now();
             const anchor = align === "right" ? "end" : "start";
             const tx = align === "right" ? 96 : 100;
-            const label = saved ? this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))) : muted ? this.t("key.muted") : this.t("key.volume");
+            // With the pie, the number moves into the text ("42 %" instead of "Volume")
+            const volumeLabel = isPie ? `${volume} %` : this.t("key.volume");
+            const label = saved ? this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))) : muted ? this.t("key.muted") : volumeLabel;
             const w = Math.max(textWidth(playerName, 14, { bold: true, maxWidth: 92 }), textWidth(label, 12, { maxWidth: 92 })) + 12;
             scrim += scrimBox(anchor === "end" ? tx + 6 - w : tx - 6, 27, w, 44);
             parts.push(text(tx, 44, playerName, { size: 14, weight: "bold", maxWidth: 92, anchor }));
             parts.push(
                 saved
                     ? text(tx, 64, this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))), { size: 12, color: accent, maxWidth: 92, anchor })
-                    : text(tx, 64, muted ? this.t("key.muted") : this.t("key.volume"), { size: 12, color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor }),
+                    : text(tx, 64, muted ? this.t("key.muted") : volumeLabel, { size: isPie ? 14 : 12, weight: isPie && !muted ? "bold" : "normal", color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor }),
             );
         }
         return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };

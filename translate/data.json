@@ -108,6 +108,9 @@
     "key.nothing_to_continue": "Nichts angefangen",
     "pi.player": "Player",
     "pi.display": "Anzeige",
+    "pi.gauge": "Lautstärke als",
+    "pi.gauge_ring": "Ring",
+    "pi.gauge_pie": "Torte",
     "pi.show_player_name": "Playername",
     "pi.show_player_name_hint": "Name des Players auf der Taste",
     "pi.show_progress": "Fortschritt",
@@ -186,7 +189,7 @@
     "pi.vol_step": "Schritt pro Druck",
     "pi.vol_preset_value": "Preset-Lautstärke",
     "pi.vol_show_value": "Lautstärke anzeigen",
-    "pi.vol_show_value_hint": "Die aktuelle Lautstärke auf der Taste (bei der Stumm-Taste im Ring)",
+    "pi.vol_show_value_hint": "Die aktuelle Lautstärke auf der Taste (bei der Stumm-Taste im Ring; die Torte zeigt keine Zahl)",
     "pi.like_hint": "Das Herz ist gefüllt, wenn der aktuelle Titel oder Sender schon ein Favorit ist. Ein Druck fügt ihn hinzu oder entfernt ihn.",
     "pi.item": "Inhalt",
     "pi.item_search_placeholder": "In Music Assistant suchen…",
@@ -226,10 +229,10 @@
     "pi.dial_step": "Schritt pro Raste",
     "pi.dial_seek_step": "Spulen pro Raste",
     "pi.show_volume_text": "Lautstärke und Name",
-    "pi.show_volume_text_hint": "Zahl im Ring, Playername daneben",
-    "pi.ring_cover_color": "Ring in Cover-Farbe",
-    "pi.ring_cover_color_hint": "Der Ring nimmt die Hauptfarbe dessen an, was gerade läuft",
-    "pi.align": "Position des Rings",
+    "pi.show_volume_text_hint": "Zahl im Ring (bei der Torte daneben), Playername daneben",
+    "pi.ring_cover_color": "Ring/Torte in Cover-Farbe",
+    "pi.ring_cover_color_hint": "Ring bzw. Torte nehmen die Hauptfarbe dessen an, was gerade läuft",
+    "pi.align": "Position von Ring bzw. Torte",
     "pi.align_left": "Links",
     "pi.align_center": "Mitte",
     "pi.align_right": "Rechts",
@@ -439,6 +442,9 @@
     "key.nothing_to_continue": "Nothing to continue",
     "pi.player": "Player",
     "pi.display": "Display",
+    "pi.gauge": "Volume shown as",
+    "pi.gauge_ring": "Ring",
+    "pi.gauge_pie": "Pie",
     "pi.show_player_name": "Player name",
     "pi.show_player_name_hint": "Player name on the key",
     "pi.show_progress": "Progress",
@@ -517,7 +523,7 @@
     "pi.vol_step": "Step per press",
     "pi.vol_preset_value": "Preset volume",
     "pi.vol_show_value": "Show volume",
-    "pi.vol_show_value_hint": "The current volume on the key (in the ring on the mute key)",
+    "pi.vol_show_value_hint": "The current volume on the key (in the ring on the mute key; the pie has no number)",
     "pi.like_hint": "The heart is filled when the current track or station already is a favorite. Pressing adds or removes it.",
     "pi.item": "Item",
     "pi.item_search_placeholder": "Search Music Assistant…",
@@ -557,10 +563,10 @@
     "pi.dial_step": "Step per tick",
     "pi.dial_seek_step": "Seek per tick",
     "pi.show_volume_text": "Volume and name",
-    "pi.show_volume_text_hint": "Number in the ring, player name next to it",
-    "pi.ring_cover_color": "Ring in cover color",
-    "pi.ring_cover_color_hint": "The ring takes the main color of what is playing",
-    "pi.align": "Ring position",
+    "pi.show_volume_text_hint": "Number in the ring (next to the pie), player name beside it",
+    "pi.ring_cover_color": "Ring/pie in cover color",
+    "pi.ring_cover_color_hint": "The ring or pie takes the main color of what is playing",
+    "pi.align": "Position of the ring or pie",
     "pi.align_left": "Left",
     "pi.align_center": "Center",
     "pi.align_right": "Right",
@@ -1832,6 +1838,69 @@
      "label": "Track",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.gauge",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.gauge_ring",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.gauge_pie",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Group Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
     },
     {
      "label": "Volume",

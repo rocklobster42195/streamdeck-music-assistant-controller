@@ -1,4 +1,4 @@
-import { arc } from "@rocklobster42195/streamdeck-kit";
+import { arc, pie } from "@rocklobster42195/streamdeck-kit";
 import type { PlayerMedia } from "music-assistant-client";
 import {
     mdiAlbum,
@@ -102,8 +102,12 @@ export type KeyImageOptions = {
     cornerBadge?: string;
     /** Caption under the icon (e.g. "1" for repeat one, or a volume value). Keys' titles stay free for the user. */
     badge?: string;
-    /** A ring gauge (0..1) filling the key instead of an icon, e.g. the mute key's volume. */
-    ring?: { value: number; color: string; center?: { icon?: string; text?: string; color: string; size?: number } };
+    /**
+     * A gauge (0..1) filling the key instead of an icon, e.g. the mute key's volume: a ring with a
+     * number or icon in the center, or a pie (Sonos Controller's look), which has room only for an
+     * icon when it is empty.
+     */
+    ring?: { value: number; color: string; style?: GaugeStyle; center?: { icon?: string; text?: string; color: string; size?: number } };
 };
 
 // Icon sizes without cover art: as large as sonos-controller's full-bleed MDI glyphs, a bit
@@ -201,8 +205,13 @@ export function renderKeyImage(input: KeyImageOptions): string {
 /** Ring gauge like the Volume dial's, sized to the key; the center holds a number or an icon. */
 function ringParts(ring: NonNullable<KeyImageOptions["ring"]>): string[] {
     const c = SIZE / 2;
-    const parts = arc(c, c, 54, ring.value, ring.color, { width: 14 });
     const center = ring.center;
+    if (ring.style === "pie") {
+        const parts = pie(c, c, 54, ring.value, ring.color);
+        if (center?.icon) parts.push(icon(center.icon, c - 28, c - 28, 56, center.color));
+        return parts;
+    }
+    const parts = arc(c, c, 54, ring.value, ring.color, { width: 14 });
     if (center?.text) {
         parts.push(`<text x="${c}" y="${c + Math.round((center.size ?? 42) * 0.36)}" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="${center.size ?? 42}" font-weight="700" fill="${center.color}">${escapeXml(center.text)}</text>`);
     } else if (center?.icon) {
@@ -219,6 +228,9 @@ function icon(path: string, x: number, y: number, size: number, fill: string): s
 function escapeXml(s: string): string {
     return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
+
+/** How volume keys and dials draw the volume: MA-C's ring or Sonos Controller's pie. */
+export type GaugeStyle = "ring" | "pie";
 
 /** "rgb(r,g,b)" from an MA palette triplet. */
 type Rgb = [number, number, number];

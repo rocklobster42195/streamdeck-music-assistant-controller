@@ -63,7 +63,7 @@ All keys can show their icons in the **cover color** of what is playing (option 
 | **Announcement**: speak a message on one or all speakers (TTS), at once or after a **timer**, with an icon of your choice | Key |
 | **Cast Dashboard**: show "now playing", party or music quiz on a TV | Key |
 | **Track**: cover, title and progress on the display, rotate to seek | Dial (SD+) |
-| **Volume**: rotate to change, push to mute, touch for a preset; ring optionally in the cover color | Dial (SD+) |
+| **Volume**: rotate to change, push to mute, touch for a preset; as a ring or a pie, optionally in the cover color | Dial (SD+) |
 | **Group Volume**: volume and mute for a whole speaker group | Dial (SD+) |
 | **Browser**: browse every provider or your library with the dial and play what you find | Dial (SD+) |
 | **Queue**: scroll through the queue and jump to any track | Dial (SD+) |
@@ -105,7 +105,7 @@ One key per function: **previous, next, shuffle, repeat, crossfade** or **"Don't
 
 ### Volume
 
-**Down, up, mute** or a **preset** volume. The key shows the current volume, which you can turn off. The mute key shows the volume as a ring like the Volume dial; when muted, the ring turns grey with a red muted speaker inside. For down and up, the step per press can be set from 1 to 20 %. Several quick presses add up correctly.
+**Down, up, mute** or a **preset** volume. The key shows the current volume, which you can turn off. The mute key shows the volume as a ring like the Volume dial, or as a **pie** like in Sonos Controller (without the number); when muted, it turns grey with a red muted speaker inside. For down and up, the step per press can be set from 1 to 20 %. Several quick presses add up correctly.
 
 ### Like
 
@@ -122,7 +122,7 @@ A ring shows the volume, with the number inside and the player's name next to it
 | Touch | Recall the preset volume |
 | Touch and hold | Save the current volume as the preset |
 
-Settings: show or hide the text (volume and name), and where the ring sits (left, center or right).
+Settings: **ring or pie** (the pie has no room for the number, so it moves next to it), show or hide the text (volume and name), and where the ring sits (left, center or right).
 
 ### Track dial *(Stream Deck + only)*
 
@@ -146,7 +146,7 @@ Rotate to scroll through the queue, starting at the current track. Each entry sh
 
 ### Group Volume dial *(Stream Deck + only)*
 
-Controls the volume of the **whole group** the player belongs to, and shows the group's rooms ("Group · 2 rooms"). Rotate for volume, push to mute the group, touch for a preset (hold to save it). A player that isn't grouped is controlled on its own.
+Controls the volume of the **whole group** the player belongs to, and shows the group's rooms ("Group · 2 rooms"). Rotate for volume, push to mute the group, touch for a preset (hold to save it). A player that isn't grouped is controlled on its own. Like the Volume dial, it shows the volume as a ring or a pie.
 
 ### Panorama dial and effect backgrounds *(Stream Deck + only)*
 

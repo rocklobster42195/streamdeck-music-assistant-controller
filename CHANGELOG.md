@@ -7,6 +7,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ### Added
 - `music-assistant-client` moved to its own repository and is published on npm (0.1.0); the plugin uses it from there.
 - `streamdeck-core` moved to its own repository as `@rocklobster42195/streamdeck-kit` (rendering helpers, animation, Panorama effects, the settings panel kit), to be shared with Sonos Controller and the plugins that follow. Nothing changes for users.
+- Volume key (mute), Volume dial and Group Volume dial: the volume can be shown as a **pie** like in Sonos Controller instead of the ring ("Volume shown as"). The pie has no room for the number, so on the dials it moves into the text next to it.
 - Sleep Timer: fades the whole group out at the end (30 s by default, adjustable), stops, and restores every speaker's own volume. Music Assistant itself stops without fading.
 
 ### Changed

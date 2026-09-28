@@ -16,6 +16,13 @@
 
   <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.dial_volume_rotate"></div>
 
+  <pi-section title="pi.gauge">
+    <pi-choice setting="gauge" default="ring" columns="2" data-options='[
+      {"value":"ring","label":"pi.gauge_ring","icon":"gaugeRing"},
+      {"value":"pie","label":"pi.gauge_pie","icon":"gaugePie"}
+    ]'></pi-choice>
+  </pi-section>
+
   <pi-section title="pi.display">
     <pi-toggle setting="showText" label="pi.show_volume_text" hint="pi.show_volume_text_hint" data-default="true"></pi-toggle>
     <pi-toggle setting="ringCoverColor" label="pi.ring_cover_color" hint="pi.ring_cover_color_hint"></pi-toggle>

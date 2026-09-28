@@ -1,6 +1,6 @@
 import { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
+import { ACCENT, type GaugeStyle, ICONS, renderKeyImage } from "../render/key-image";
 import { type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type VolumeCommand = "up" | "down" | "mute" | "preset";
@@ -13,6 +13,8 @@ type VolumeKeySettings = MaKeySettings & {
     preset?: number;
     /** Show the current volume on the key (default on). */
     showVolume?: boolean;
+    /** Mute key: volume as a ring (default) or a pie. */
+    gauge?: GaugeStyle;
 };
 
 const MUTED = "#ff8a8a";
@@ -33,8 +35,19 @@ export class VolumeKey extends MaKeyAction<VolumeKeySettings> {
             case "down":
                 return { image: renderKeyImage({ icon: ICONS.volumeDown, badge, dimmed: muted }) };
             case "mute":
-                // The Volume dial's ring (sonos-controller shows its pie here). Muted: grey ring at
-                // the volume that comes back on unmute, red muted speaker inside — as on the dial.
+                if (settings.gauge === "pie") {
+                    // Sonos Controller's pie; it has no room for the number. Muted: an empty grey
+                    // pie with the red muted speaker inside.
+                    return {
+                        image: renderKeyImage({
+                            ring: muted
+                                ? { style: "pie", value: 0, color: MUTED_RING, center: { icon: ICONS.volumeOff, color: MUTED } }
+                                : { style: "pie", value: volume / 100, color: ACCENT },
+                        }),
+                    };
+                }
+                // The Volume dial's ring. Muted: grey ring at the volume that comes back on unmute,
+                // red muted speaker inside — as on the dial.
                 return {
                     image: renderKeyImage({
                         ring: {
