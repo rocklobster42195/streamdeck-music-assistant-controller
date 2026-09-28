@@ -1,8 +1,8 @@
 import { maConnection } from "../ma/connection";
-import { mdiLabel, mdiPath, searchMdi } from "@rocklobster42195/streamdeck-kit/mdi";
-import { piBridge } from "./pi-bridge";
+import { piBridge } from "@rocklobster42195/streamdeck-kit";
+import { mdiOptions } from "@rocklobster42195/streamdeck-kit/mdi";
 
-/** Lists the property inspectors can ask for via <mac-select source="…">. */
+/** Lists the property inspectors can ask for via <pi-select source="…"> (and the icon picker). */
 export function registerOptionSources(): void {
     piBridge.registerOptions("tts-engines", async () => {
         const ma = maConnection.ma;
@@ -25,12 +25,8 @@ export function registerOptionSources(): void {
         return providers.filter((p) => p.type === "music" && p.available !== false).map((p) => ({ value: p.instance_id, label: p.name, sub: p.domain }));
     });
 
-    // Icon picker: search all Material Design Icons (an exact "mdi…" name returns just that icon)
-    piBridge.registerOptions("mdi-icons", ({ q }) => {
-        const exact = mdiPath(q);
-        if (exact) return [{ value: q, label: mdiLabel(q), icon: exact }];
-        return searchMdi(q ?? "").map((r) => ({ value: r.name, label: r.label, icon: r.path }));
-    });
+    // Icon picker: search all Material Design Icons
+    piBridge.registerOptions("mdi-icons", mdiOptions);
 
     piBridge.registerOptions("dashboards", async () => {
         const ma = maConnection.ma;

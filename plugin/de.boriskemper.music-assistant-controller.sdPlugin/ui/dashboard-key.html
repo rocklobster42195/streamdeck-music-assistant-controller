@@ -16,7 +16,7 @@
   <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.dashboard_help"></div>
 
   <pi-section title="pi.dashboard_screen" class="pi-needs-connection">
-    <mac-select setting="dashboardId" source="dashboards" label-setting="dashboardName" placeholder="pi.choose_screen" empty="pi.no_screens"></mac-select>
+    <pi-select setting="dashboardId" source="dashboards" label-setting="dashboardName" placeholder="pi.choose_screen" empty="pi.no_screens"></pi-select>
   </pi-section>
 
   <pi-section title="pi.dashboard_view">
@@ -32,7 +32,7 @@
   </pi-section>
 
   <pi-section title="pi.marker">
-    <mac-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></mac-icon-picker>
+    <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></pi-icon-picker>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection" data-show-when="dashboard=now_playing" data-show-default="now_playing">

@@ -16,7 +16,7 @@
   <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.source_help"></div>
 
   <pi-section title="pi.source" class="pi-needs-connection">
-    <mac-select setting="source" source="player-sources" label-setting="sourceName" with-player placeholder="pi.choose_source" empty="pi.no_sources"></mac-select>
+    <pi-select setting="source" source="player-sources" label-setting="sourceName" with="player" placeholder="pi.choose_source" empty="pi.no_sources"></pi-select>
   </pi-section>
 
   <pi-section title="pi.icon_color">
@@ -24,7 +24,7 @@
   </pi-section>
 
   <pi-section title="pi.marker">
-    <mac-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></mac-icon-picker>
+    <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></pi-icon-picker>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection">

@@ -20,7 +20,7 @@ import { VolumeDial } from "./actions/volume-dial";
 import { VolumeKey } from "./actions/volume-key";
 import { maConnection } from "./ma/connection";
 import { registerOptionSources } from "./pi/options";
-import { piBridge } from "./pi/pi-bridge";
+import { initPiBridge } from "./pi/pi-handlers";
 
 streamDeck.logger.setLevel("info");
 // Kit problems (covers that fail to load, a throwing effect) go to the plugin log.
@@ -44,7 +44,7 @@ streamDeck.actions.registerAction(new SleepTimerKey());
 streamDeck.actions.registerAction(new AnnounceKey());
 streamDeck.actions.registerAction(new SourceKey());
 streamDeck.actions.registerAction(new DashboardKey());
-piBridge.init();
+initPiBridge();
 registerOptionSources();
 
 await streamDeck.connect();

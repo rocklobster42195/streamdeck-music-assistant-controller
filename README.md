@@ -259,10 +259,10 @@ npm run pi:preview            # http://localhost:5199/play-pause-key.html?scenar
 
 The settings panels do not use `sdpi-components`. They are built on the framework-free property inspector kit from `@rocklobster42195/streamdeck-kit`:
 
-- `@rocklobster42195/streamdeck-kit/pi`: the Stream Deck PI socket client, i18n, and light-DOM components (`<pi-section>`, `<pi-toggle>`, `<pi-field>`, `<pi-range>`, `<pi-choice>`, `<pi-color>`)
+- `@rocklobster42195/streamdeck-kit/pi`: the Stream Deck PI socket client, i18n, and light-DOM components (`<pi-section>`, `<pi-toggle>`, `<pi-field>`, `<pi-range>`, `<pi-choice>`, `<pi-color>`, `<pi-select>`, `<pi-icon-picker>`), and on the plugin side `piBridge`, which answers their requests
 - `@rocklobster42195/streamdeck-kit/styles/pi-theme.css`: the shared dark theme
 
-MA-C adds `<mac-key-preview>` (compact status header), `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`).
+MA-C adds `<mac-key-preview>` (compact status header), `<mac-player-picker>` and `<mac-connection-card>` (`plugin/src/pi-ui/`). The plugin feeds these through a small message protocol (`plugin/src/pi/protocol.ts`, on top of the kit's own messages).
 
 ### Testing without hardware
 

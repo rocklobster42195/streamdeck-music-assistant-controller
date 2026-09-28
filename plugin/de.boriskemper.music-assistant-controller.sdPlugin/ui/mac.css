@@ -67,10 +67,3 @@ mac-connection-card { display: flex; flex-direction: column; gap: 6px; }
 .mac-effect-fields > * + * { border-top: 1px solid var(--pi-card-border); }
 .mac-effect-fields:not(:empty) { border-top: 1px solid var(--pi-card-border); }
 
-/* <mac-icon-picker> */
-.mac-icon-current { width: 28px; height: 28px; color: var(--pi-accent); display: flex; align-items: center; justify-content: center; }
-.mac-icon-search { width: 100%; }
-.mac-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; padding: 0 12px 12px; }
-.mac-icon-tile { height: 40px; display: flex; align-items: center; justify-content: center; background: var(--pi-control); border: 1px solid var(--pi-control-border); border-radius: 8px; cursor: pointer; color: var(--pi-text-2); }
-.mac-icon-tile:hover { color: var(--pi-text); }
-.mac-icon-tile[aria-pressed="true"] { border-color: var(--pi-accent); color: var(--pi-accent); }

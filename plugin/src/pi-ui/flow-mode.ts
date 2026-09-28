@@ -1,8 +1,8 @@
 // <mac-flow-mode> — shows and switches Music Assistant's flow mode of the action's player (a
 // player setting in MA, not a key setting). Crossfade on Sonos needs it; see ma/flow-mode.ts.
-import { escapeHtml, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
+import { escapeHtml, nextRequestId, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
 import type { PiPush } from "../pi/protocol";
-import { onPiState, piState, nextRequestId } from "./state";
+import { onPiState, piState } from "./state";
 
 export class MacFlowMode extends HTMLElement {
     private requestId = 0;

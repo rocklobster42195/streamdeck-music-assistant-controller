@@ -1,5 +1,5 @@
 // Latest data pushed by the plugin, shared by all MAC PI components.
-import { sd } from "@rocklobster42195/streamdeck-kit/pi";
+import { refreshPiSelects, registerSelectParams, reloadPiSelects, sd } from "@rocklobster42195/streamdeck-kit/pi";
 import type { EffectInfo } from "@rocklobster42195/streamdeck-kit";
 import type { ConnectionStatus, KeyPreview, PiPush, PlayerOption } from "../pi/protocol";
 
@@ -13,13 +13,6 @@ export const piState = {
     effects: [] as EffectInfo[],
 };
 
-let lastRequestId = 0;
-
-/** Ids for requests to the plugin — one counter for all components, so replies can't reach the wrong one. */
-export function nextRequestId(): number {
-    return ++lastRequestId;
-}
-
 const listeners = new Set<Listener>();
 
 export function onPiState(fn: Listener): () => void {
@@ -27,7 +20,20 @@ export function onPiState(fn: Listener): () => void {
     return () => listeners.delete(fn);
 }
 
+/** Tell the kit's <pi-select>s: lists reload once MA's connection changes, "with=player" ones when the player does. */
+let lastConnection: string | undefined;
+function updateSelects(): void {
+    const connection = piState.status?.state;
+    if (connection !== lastConnection) {
+        lastConnection = connection;
+        reloadPiSelects();
+    } else refreshPiSelects();
+}
+
 export function initPiState(): void {
+    // <pi-select with="player">: the action's player, else the active player
+    registerSelectParams("player", () => ({ playerId: String(sd.settings.playerId || sd.globalSettings.activePlayerId || piState.activePlayerId || "") }));
+    onPiState(updateSelects);
     sd.onMessage((msg: PiPush) => {
         if (msg?.event === "status") piState.status = msg.status;
         else if (msg?.event === "players") {

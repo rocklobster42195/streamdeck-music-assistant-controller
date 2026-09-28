@@ -11,7 +11,7 @@ import streamDeck, {
 import type { JsonObject } from "@elgato/utils";
 import type { MusicAssistantClient, PlayerMedia } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
-import { piBridge } from "../pi/pi-bridge";
+import { piBridge } from "@rocklobster42195/streamdeck-kit";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { ColorFader, CoverFader, BLANK_EFFECT_ID, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS } from "../render/key-image";

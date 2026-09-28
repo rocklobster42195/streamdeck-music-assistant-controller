@@ -163,7 +163,6 @@
     "pi.token": "Token",
     "pi.token_placeholder": "Long-Lived-Token einfügen",
     "pi.token_hint": "In Music Assistant: Einstellungen → Profil → Long-Lived-Token erstellen, z. B. „Stream Deck“.",
-    "pi.show_token": "Token anzeigen",
     "pi.server_reachable": "Server erreichbar · Music Assistant {version}",
     "pi.server_unreachable": "Keine Antwort von {url}",
     "pi.token_rejected": "Token abgelehnt",
@@ -284,8 +283,6 @@
     "pi.overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing verschieben oder am Dial drehen (oben erscheint die Skala). Hängen die Lyrics nach einer Weile hinterher? Aufs Display tippen, dann wird neu synchronisiert.",
-    "pi.choose": "Wählen",
-    "pi.no_options": "Nichts verfügbar.",
     "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibende Zeit herunter.",
     "pi.sleep_steps": "Dauern",
     "pi.sleep_steps_label": "Minuten",
@@ -314,10 +311,6 @@
     "pi.announce_minutes": "Minuten",
     "pi.announce_timer_hint": "Drücken startet den Countdown (Ring und Zeit auf der Taste); die Durchsage kommt, wenn er abgelaufen ist. Nochmal drücken bricht ab.",
     "pi.icon": "Symbol",
-    "pi.icon_search": "Symbol suchen … (z. B. pasta, bell, coffee)",
-    "pi.icon_default": "Standard",
-    "pi.icon_default_name": "Standardsymbol",
-    "pi.icon_none_found": "Kein Symbol gefunden.",
     "pi.source_help": "Schaltet den Player auf diesen Eingang. Die Taste leuchtet, solange er aktiv ist.",
     "pi.source": "Eingang",
     "pi.choose_source": "Eingang wählen",
@@ -503,7 +496,6 @@
     "pi.token": "Token",
     "pi.token_placeholder": "Paste long-lived token",
     "pi.token_hint": "In Music Assistant: Settings → Profile → create a long-lived token, e.g. “Stream Deck”.",
-    "pi.show_token": "Show token",
     "pi.server_reachable": "Server reachable · Music Assistant {version}",
     "pi.server_unreachable": "No answer from {url}",
     "pi.token_rejected": "Token rejected",
@@ -624,8 +616,6 @@
     "pi.overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing, or turn the dial (the scale at the top shows it). Lyrics lagging after a while? Tap the display to re-sync.",
-    "pi.choose": "Choose",
-    "pi.no_options": "Nothing available.",
     "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the time left.",
     "pi.sleep_steps": "Durations",
     "pi.sleep_steps_label": "Minutes",
@@ -654,10 +644,6 @@
     "pi.announce_minutes": "Minutes",
     "pi.announce_timer_hint": "Pressing starts the countdown (ring and time on the key); the message comes when it ends. Press again to cancel.",
     "pi.icon": "Icon",
-    "pi.icon_search": "Search icons … (e.g. pasta, bell, coffee)",
-    "pi.icon_default": "Default",
-    "pi.icon_default_name": "Default icon",
-    "pi.icon_none_found": "No icon found.",
     "pi.source_help": "Switches the player to this input. The key lights up while the input is active.",
     "pi.source": "Input",
     "pi.choose_source": "Choose input",
@@ -2889,17 +2875,6 @@
    ]
   },
   {
-   "key": "pi.show_token",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/field.js"
-    }
-   ]
-  },
-  {
    "key": "pi.server_reachable",
    "group": "pi",
    "usedIn": [
@@ -3318,11 +3293,6 @@
      "label": "*",
      "where": "settings",
      "file": "plugin/src/pi-ui/item-picker.ts"
-    },
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/select.ts"
     }
    ]
   },
@@ -4550,28 +4520,6 @@
    ]
   },
   {
-   "key": "pi.choose",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/select.ts"
-    }
-   ]
-  },
-  {
-   "key": "pi.no_options",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/select.ts"
-    }
-   ]
-  },
-  {
    "key": "pi.sleep_help",
    "group": "pi",
    "usedIn": [
@@ -4880,50 +4828,6 @@
    ]
   },
   {
-   "key": "pi.icon_search",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/icon-picker.ts"
-    }
-   ]
-  },
-  {
-   "key": "pi.icon_default",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/icon-picker.ts"
-    }
-   ]
-  },
-  {
-   "key": "pi.icon_default_name",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/icon-picker.ts"
-    }
-   ]
-  },
-  {
-   "key": "pi.icon_none_found",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/icon-picker.ts"
-    }
-   ]
-  },
-  {
    "key": "pi.source_help",
    "group": "pi",
    "usedIn": [
@@ -4960,11 +4864,6 @@
    "key": "pi.no_sources",
    "group": "pi",
    "usedIn": [
-    {
-     "label": "*",
-     "where": "settings",
-     "file": "plugin/src/pi-ui/select.ts"
-    },
     {
      "label": "Source",
      "where": "settings",

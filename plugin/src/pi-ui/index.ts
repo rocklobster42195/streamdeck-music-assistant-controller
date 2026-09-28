@@ -8,8 +8,6 @@ import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
 import { MacProviderFilter } from "./provider-filter";
-import { MacIconPicker } from "./icon-picker";
-import { MacSelect } from "./select";
 import { functionIcon } from "../render/function-icons";
 import { initPiState } from "./state";
 
@@ -26,10 +24,8 @@ sd.onReady(() => {
     customElements.define("mac-connection-card", MacConnectionCard);
     customElements.define("mac-item-picker", MacItemPicker);
     customElements.define("mac-effect-settings", MacEffectSettings);
-    customElements.define("mac-select", MacSelect);
     customElements.define("mac-flow-mode", MacFlowMode);
     customElements.define("mac-provider-filter", MacProviderFilter);
-    customElements.define("mac-icon-picker", MacIconPicker);
     initChoiceOptions();
     initConditionalVisibility();
 

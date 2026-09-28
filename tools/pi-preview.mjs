@@ -15,6 +15,16 @@ const HTTP_PORT = Number(process.env.PORT ?? 5199);
 const WS_PORT = HTTP_PORT + 1;
 // The effects list the Panorama/effect PIs build their fields from (as the plugin sends it)
 const { listEffects } = await import("@rocklobster42195/streamdeck-kit");
+const { mdiOptions } = await import("@rocklobster42195/streamdeck-kit/mdi");
+
+/** Invented answers for the lists PI components ask the plugin for (<pi-select source="…">, icon picker). */
+const optionLists = {
+    "mdi-icons": (params) => mdiOptions(params),
+    "tts-engines": () => [{ value: "tts/demo", label: "Demo Voice", sub: "tts" }],
+    "player-sources": () => [{ value: "living", label: "Music Assistant" }, { value: "line-in", label: "Line-In" }],
+    "music-providers": () => [{ value: "spotify--demo", label: "Spotify", sub: "spotify" }, { value: "radio--demo", label: "Radio", sub: "radiobrowser" }],
+    dashboards: () => [{ value: "kitchen-tv", label: "Kitchen TV", sub: "cast" }],
+};
 
 const UI = path.resolve("plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui");
 
@@ -82,6 +92,10 @@ wss.on("connection", (ws) => {
                     reply({ event: "sendToPropertyInspector", payload: { event: "players", players: scenario.status.state === "connected" ? players : [], activePlayerId: scenario.global.activePlayerId } });
                     reply({ event: "sendToPropertyInspector", payload: { event: "preview", preview: scenario.preview } });
                     reply({ event: "sendToPropertyInspector", payload: { event: "effects", effects: listEffects() } });
+                } else if (msg.payload?.event === "options") {
+                    const { requestId, source, params } = msg.payload;
+                    const items = optionLists[source]?.(params ?? {}) ?? [];
+                    reply({ event: "sendToPropertyInspector", payload: { event: "options-result", requestId, source, items } });
                 } else console.log("sendToPlugin", msg.payload);
                 break;
             case "openUrl":
