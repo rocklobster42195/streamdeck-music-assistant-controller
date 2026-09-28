@@ -12,7 +12,7 @@ import streamDeck, {
 import type { JsonObject } from "@elgato/utils";
 import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID, STRIP_W, stripImage } from "@rocklobster42195/streamdeck-kit";
 import { maConnection } from "../ma/connection";
-import { piBridge } from "@rocklobster42195/streamdeck-kit";
+import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { functionIcon } from "../render/function-icons";
 import { functionOverlay, noticeOverlay, timingOverlay } from "../render/panorama-text";

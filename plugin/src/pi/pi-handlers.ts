@@ -1,5 +1,6 @@
 import streamDeck from "@elgato/streamdeck";
-import { listEffects, piBridge, type PiPushMessage } from "@rocklobster42195/streamdeck-kit";
+import { listEffects } from "@rocklobster42195/streamdeck-kit";
+import { piBridge, type PiPushMessage } from "@rocklobster42195/streamdeck-kit/bridge";
 import type { Player } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { flowModePlayerId, getFlowMode, setFlowMode } from "../ma/flow-mode";

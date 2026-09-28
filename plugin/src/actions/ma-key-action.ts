@@ -9,7 +9,7 @@ import streamDeck, {
 import type { JsonObject } from "@elgato/utils";
 import type { MusicAssistantClient, Player, PlayerMedia, PlayerQueue } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
-import { piBridge } from "@rocklobster42195/streamdeck-kit";
+import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { CoverFader, type CoverFrame } from "@rocklobster42195/streamdeck-kit";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";

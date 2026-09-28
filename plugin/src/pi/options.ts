@@ -1,5 +1,5 @@
 import { maConnection } from "../ma/connection";
-import { piBridge } from "@rocklobster42195/streamdeck-kit";
+import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import { mdiOptions } from "@rocklobster42195/streamdeck-kit/mdi";
 
 /** Lists the property inspectors can ask for via <pi-select source="…"> (and the icon picker). */
