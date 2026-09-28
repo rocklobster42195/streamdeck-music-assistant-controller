@@ -104,6 +104,7 @@
 			"marker_remove": "Remove",
 			"marker_hint": "A small icon in the top-right corner to tell keys apart, e.g. a pot for the kitchen",
 			"marker_hint_room": "An icon for the room instead of the speaker, e.g. a pot for the kitchen",
+			"marker_hint_dial": "A small icon in front of the room name, e.g. a pot for the kitchen",
 			"show_player_name": "Player name",
 			"show_player_name_hint": "Player name on the key",
 			"show_progress": "Progress",

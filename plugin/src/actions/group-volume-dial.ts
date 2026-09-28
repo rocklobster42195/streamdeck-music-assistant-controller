@@ -5,6 +5,8 @@ import { groupLeader, groupMembers, isGrouped } from "../ma/groups";
 import { LatestSender, glide, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
 import type { GaugeStyle } from "../render/key-image";
 import { volumeGauge } from "../render/volume-gauge";
+import { markedText } from "../render/marked-text";
+import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -48,11 +50,12 @@ export class GroupVolumeDial extends MaDialAction<GroupVolumeDialSettings> {
         const others = names.filter((n) => n !== leaderName).join(", ");
         // With the pie, the number moves into the last line, ahead of the other members
         const footer = isPie && !muted ? [`${volume} %`, others].filter(Boolean).join(" · ") : grouped ? others : muted ? this.t("key.muted") : "";
-        parts.push(text(100, 30, header, { size: 10, color: "#8a8a90", maxWidth: 96 }));
-        parts.push(text(100, 50, leaderName, { size: 14, weight: "bold", maxWidth: 96 }));
+        // The marker goes in front of the short header, so the room name keeps its width
+        const head = markedText(100, 30, header, mdiPath(settings.marker), { size: 10, color: "#8a8a90", maxWidth: 96 });
+        parts.push(...head.parts, text(100, 50, leaderName, { size: 14, weight: "bold", maxWidth: 96 }));
         if (footer) parts.push(text(100, 68, footer, isPie && !muted ? { size: 12, weight: "bold", color: "#a4a4aa", maxWidth: 96 } : { size: 11, color: grouped ? "#a4a4aa" : MUTED, maxWidth: 96 }));
         // On an effect background, darken only behind the number and the text (not the whole strip)
-        const w = Math.max(textWidth(header, 10, { maxWidth: 96 }), textWidth(leaderName, 14, { bold: true, maxWidth: 96 }), footer ? textWidth(footer, 12, { bold: isPie, maxWidth: 96 }) : 0) + 12;
+        const w = Math.max(head.width, textWidth(leaderName, 14, { bold: true, maxWidth: 96 }), footer ? textWidth(footer, 12, { bold: isPie, maxWidth: 96 }) : 0) + 12;
         const scrim = gauge.scrim + scrimBox(94, 18, w, footer ? 56 : 38);
         return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }

@@ -104,6 +104,7 @@
 			"marker_remove": "Entfernen",
 			"marker_hint": "Kleines Icon oben rechts, um Tasten auseinanderzuhalten, z. B. ein Topf für die Küche",
 			"marker_hint_room": "Ein Icon für den Raum statt des Lautsprechers, z. B. ein Topf für die Küche",
+			"marker_hint_dial": "Kleines Icon vor dem Raumnamen, z. B. ein Topf für die Küche",
 			"show_player_name": "Playername",
 			"show_player_name_hint": "Name des Players auf der Taste",
 			"show_progress": "Fortschritt",

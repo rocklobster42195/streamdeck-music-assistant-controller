@@ -3,6 +3,8 @@ import { maConnection } from "../ma/connection";
 import { LatestSender, glide, mdi, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
 import type { GaugeStyle } from "../render/key-image";
 import { volumeGauge } from "../render/volume-gauge";
+import { markedText } from "../render/marked-text";
+import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
 import type { EffectSettings } from "../render/panorama";
@@ -63,14 +65,19 @@ export class VolumeDial extends MaDialAction<VolumeDialSettings> {
             // With the pie, the number moves into the text ("42 %" instead of "Volume")
             const volumeLabel = isPie ? `${volume} %` : this.t("key.volume");
             const label = saved ? this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))) : muted ? this.t("key.muted") : volumeLabel;
-            const w = Math.max(textWidth(playerName, 14, { bold: true, maxWidth: 92 }), textWidth(label, 12, { maxWidth: 92 })) + 12;
-            scrim += scrimBox(anchor === "end" ? tx + 6 - w : tx - 6, 27, w, 44);
-            parts.push(text(tx, 44, playerName, { size: 14, weight: "bold", maxWidth: 92, anchor }));
-            parts.push(
+            // The marker goes in front of the short second line, so the room name keeps its width
+            const second = markedText(
+                tx,
+                64,
+                label,
+                mdiPath(settings.marker),
                 saved
-                    ? text(tx, 64, this.t("key.preset_saved").replace("{volume}", String(presetOf(settings))), { size: 12, color: accent, maxWidth: 92, anchor })
-                    : text(tx, 64, muted ? this.t("key.muted") : volumeLabel, { size: isPie ? 14 : 12, weight: isPie && !muted ? "bold" : "normal", color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor }),
+                    ? { size: 12, color: accent, maxWidth: 92, anchor }
+                    : { size: isPie && !muted ? 14 : 12, weight: isPie && !muted ? "bold" : "normal", color: muted ? MUTED : "#a4a4aa", maxWidth: 92, anchor },
             );
+            const w = Math.max(textWidth(playerName, 14, { bold: true, maxWidth: 92 }), second.width) + 12;
+            scrim += scrimBox(anchor === "end" ? tx + 6 - w : tx - 6, 27, w, 44);
+            parts.push(text(tx, 44, playerName, { size: 14, weight: "bold", maxWidth: 92, anchor }), ...second.parts);
         }
         return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }
