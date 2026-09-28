@@ -39,7 +39,7 @@ Every language is a single JSON file. The **translation page** (`npm run transla
 
 ### Setup
 
-Requirements: Node.js 20 or later, the Stream Deck app, and a Music Assistant server (developed against 2.10) with a long-lived token.
+Requirements: Node.js 24 or later, the Stream Deck app, and a Music Assistant server (developed against 2.10) with a long-lived token.
 
 ```bash
 git clone https://github.com/rocklobster42195/streamdeck-music-assistant-controller.git

@@ -1,6 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
-import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, type WebSocketLike, currentElapsed } from "music-assistant-client";
-import WebSocket from "ws";
+import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, currentElapsed } from "music-assistant-client";
 import { OptimisticStore } from "@rocklobster42195/streamdeck-kit";
 import { PlayingHold } from "./playing-hold";
 
@@ -191,8 +190,6 @@ class MaConnection {
             url: normalizeUrl(maUrl),
             token: maToken.trim(),
             logger: streamDeck.logger,
-            // Stream Deck runs plugins on Node 20, which has no stable global WebSocket.
-            webSocketFactory: (url) => new WebSocket(url) as unknown as WebSocketLike,
         });
         this.unsubscribers.push(
             client.onStateChange((state) => {

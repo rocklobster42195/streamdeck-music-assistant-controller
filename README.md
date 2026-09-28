@@ -195,7 +195,7 @@ When a key can't do its job, it tells you: **Setup** means connection details ar
 
 ## Requirements
 
-- Elgato Stream Deck app **6.9** or later (Windows 10+ or macOS 12+)
+- Elgato Stream Deck app **7.1** or later (Windows 10+ or macOS 12+)
 - A running **Music Assistant server 2.10 or later**, either standalone or as a Home Assistant add-on
 - A **long-lived access token** from Music Assistant
 

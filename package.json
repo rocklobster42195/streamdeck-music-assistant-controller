@@ -46,12 +46,12 @@
         "ship:beta": "npm run check && npm run version:beta && npm run release"
     },
     "devDependencies": {
-        "@tsconfig/node20": "^20.1.9",
-        "@types/node": "~20.15.0",
+        "@types/node": "~24.3.0",
         "eslint": "^10.6.0",
         "puppeteer-core": "^25.12.0",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.62.1",
-        "vitest": "^4.1.10"
+        "vitest": "^4.1.10",
+        "@tsconfig/node24": "^24.0.5"
     }
 }
