@@ -3,6 +3,7 @@
 // the source has been lately (AutoRange: a quiet mixer channel moves the effect too). A source that goes
 // quiet on the bus (plugin closed, mixer offline) falls back to "no level" — the effect then moves
 // as it does without an audio source.
+import streamDeck from "@elgato/streamdeck";
 import { AutoRange } from "./auto-range";
 import { macBus, parseSourceId } from "./mac-bus";
 
@@ -45,6 +46,7 @@ export function watchLevel(sourceId: string, listener: Listener): () => void {
                 if (from.id !== parsed.peerId) return;
                 const db = levelOf(data);
                 if (db === undefined) return;
+                if (!created.lastAt) streamDeck.logger.info(`[audio] receiving ${sourceId} (${db.toFixed(1)} dBFS)`);
                 const target = created.range.strength(db);
                 created.level += (target - created.level) * (target > created.level ? ATTACK : RELEASE);
                 created.lastAt = Date.now();
@@ -52,6 +54,7 @@ export function watchLevel(sourceId: string, listener: Listener): () => void {
             }),
             timer: setInterval(() => {
                 if (created.lastAt && Date.now() - created.lastAt > STALE_MS) {
+                    streamDeck.logger.info(`[audio] ${sourceId} went quiet on the bus`);
                     created.lastAt = 0;
                     created.level = 0;
                     for (const fn of created.listeners) fn(undefined);
@@ -59,6 +62,7 @@ export function watchLevel(sourceId: string, listener: Listener): () => void {
             }, 500),
         };
         sources.set(sourceId, (source = created));
+        streamDeck.logger.info(`[audio] following ${sourceId}`);
     }
     source.listeners.add(listener);
     const active = source;
