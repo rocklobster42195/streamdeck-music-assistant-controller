@@ -18,6 +18,7 @@ import { SourceKey } from "./actions/source-key";
 import { TrackDial } from "./actions/track-dial";
 import { VolumeDial } from "./actions/volume-dial";
 import { VolumeKey } from "./actions/volume-key";
+import { startMacBus } from "./bus/mac-bus";
 import { maConnection } from "./ma/connection";
 import { registerOptionSources } from "./pi/options";
 import { initPiBridge } from "./pi/pi-handlers";
@@ -48,5 +49,7 @@ initPiBridge();
 registerOptionSources();
 
 await streamDeck.connect();
+// deckbus: audio levels from other plugins for the Panorama (works without it if the bus can't start)
+void startMacBus();
 await maConnection.init();
 streamDeck.logger.info("MAC started");

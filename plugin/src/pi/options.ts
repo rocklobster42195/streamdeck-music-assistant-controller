@@ -1,3 +1,5 @@
+import streamDeck from "@elgato/streamdeck";
+import { offeredStreams } from "../bus/mac-bus";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import { mdiOptions } from "@rocklobster42195/streamdeck-kit/mdi";
@@ -33,4 +35,10 @@ export function registerOptionSources(): void {
         if (!ma?.isConnected) return [];
         return (await ma.dashboards()).map((d) => ({ value: d.dashboard_id, label: d.name, sub: d.provider_domain_hint ?? undefined }));
     });
+
+    // Panorama "Audio source": level streams other plugins offer on deckbus (XR-C channels, …)
+    piBridge.registerOptions("audio-sources", () => [
+        { value: "", label: streamDeck.i18n.t("key.audio_none") },
+        ...offeredStreams().map((s) => ({ value: s.id, label: s.label, sub: s.peer })),
+    ]);
 }

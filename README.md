@@ -159,6 +159,8 @@ Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing
 
 The **Track**, **Volume**, **Group Volume**, **Queue**, **Browser** and **Player** dials can show an effect as their **background** (dimmed, so the text stays readable). Put them next to Panorama dials with the same effect, and the scene runs underneath everything.
 
+**Audio source:** the effect can move with the music. Pick a level another plugin offers (see [Works with other plugins](#works-with-other-plugins-deckbus)), for example a mixer channel from XR-C (X-Air Controller). Particles and Matrix Rain get faster when it is loud, the Boing Ball jumps higher, pulses and squashes on the beat, and the Boing Globe spins faster. With **None** (the default), or when the source goes away, the effect moves as usual.
+
 ### Browser dial *(Stream Deck + only)*
 
 Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The first folder, **Continue listening**, holds the audiobooks and podcast episodes you started. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24"). Under **Services** you choose which music services show up (for example only Spotify): the provider list and your library folders then leave the others out.
@@ -192,6 +194,18 @@ Providers that can't be browsed are hidden automatically.
 When a key can't do its job, it tells you: **Setup** means connection details are missing, **Offline** means the server is not reachable (MA-C reconnects automatically), **Token?** means the token was rejected, and **No player** means no player is selected or the player is gone.
 
 ---
+
+## Works with other plugins (deckbus)
+
+MA-C talks to other Stream Deck plugins on your computer through **deckbus**, a small open bus between plugins. You don't need to set anything up: when the plugins run, they find each other.
+
+**Offers:** whether MA-C is connected to Music Assistant.
+
+**Uses:** audio levels for the Panorama's **Audio source**, for example the channels of your mixer from XR-C (X-Air Controller). MA-C subscribes to a level only while a Panorama dial that uses it is visible.
+
+**Only with your permission:** nothing yet. Later, the Announcement key may ask a mixer plugin to lower the music while it speaks. That will need your OK.
+
+deckbus stays on your computer. It uses local pipes (Windows) or sockets (macOS), plugins must know a key stored in your user profile, and nothing goes over the network. The protocol is open: [deckbus protocol](https://github.com/rocklobster42195/streamdeck-kit/blob/main/docs/deckbus-protocol.md).
 
 ## Requirements
 
@@ -274,6 +288,7 @@ npm run sim:play-pause    # end-to-end against your MA server (needs .env), snap
 npm run sim:keys          # playback control, like and volume keys: presses everything, checks MA, restores state
 npm run sim:play-item     # Play Item: search like the PI, choose, press, check it plays
 npm run sim:dials         # Volume and Track dials: turn, push, touch, check MA, restore
+npm run sim:deckbus       # Panorama audio source: a fake level source on deckbus, fake MA, no playback
 npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → play a station, library start
 npm run sim:players       # Player key/dial: switch the active player; with MA_TRANSFER_PLAYER also music-follows-me
 npm run sim:queue-group   # Queue dial (jump to a track) and Group Volume dial (temporary group, restored afterwards)

@@ -11,6 +11,7 @@ import streamDeck, {
 } from "@elgato/streamdeck";
 import type { JsonObject } from "@elgato/utils";
 import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID, STRIP_W, stripImage } from "@rocklobster42195/streamdeck-kit";
+import { watchLevel } from "../bus/audio-level";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
@@ -26,6 +27,10 @@ type PanoramaDialSettings = EffectSettings &
         lyricsOffset?: number;
         /** Player whose music tints the effect and fills the text; "" = active player. */
         playerId?: string;
+        /** deckbus level stream the effect moves with ("<peer id>|<topic>"); unset/"" = none. */
+        audioSource?: string;
+        /** Its name, shown in the PI while the source isn't on the bus. */
+        audioSourceName?: string;
     };
 type Instance = { action: DialAction<PanoramaDialSettings>; settings: PanoramaDialSettings; deviceId: string; column: number; previewAt?: number };
 
@@ -62,6 +67,8 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     /** Per run: the function turning changes, and until when its badge shows. */
     private readonly fn = new Map<string, string>();
     private readonly fnShownUntil = new Map<string, number>();
+    /** Per dial: the audio source it follows while visible. */
+    private readonly audio = new Map<string, { source: string; stop: () => void }>();
 
     constructor() {
         super();
@@ -94,13 +101,16 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (neighbour) {
             const inst = this.instances.get(ev.action.id)!;
             const pick = <K extends keyof PanoramaDialSettings>(k: K) => (neighbour[k] !== undefined ? { [k]: neighbour[k] } : {});
-            inst.settings = { ...inst.settings, background: neighbour.background, ...pick("coverColor"), ...pick("text"), ...pick("lyricsOffset"), ...pick("playerId") };
+            inst.settings = { ...inst.settings, background: neighbour.background, ...pick("coverColor"), ...pick("text"), ...pick("lyricsOffset"), ...pick("playerId"), ...pick("audioSource"), ...pick("audioSourceName") };
             void inst.action.setSettings(inst.settings);
         }
         this.join(ev.action.id);
+        this.followAudio(ev.action.id);
     }
 
     override onWillDisappear(ev: WillDisappearEvent<PanoramaDialSettings>): void {
+        this.audio.get(ev.action.id)?.stop();
+        this.audio.delete(ev.action.id);
         this.instances.delete(ev.action.id);
         this.overlay.forget(ev.action.id);
         unregisterEffectTarget(ev.action.id);
@@ -119,6 +129,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset || before.playerId !== inst.settings.playerId) this.shareText(ev.action.id);
         this.join(ev.action.id);
         this.pushSettings(ev.action.id);
+        this.followAudio(ev.action.id);
     }
 
     override onDialRotate(ev: DialRotateEvent<PanoramaDialSettings>): void {
@@ -159,6 +170,16 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         }
         panorama.press(ev.action.id);
         this.persistRuntime(ev.action.id);
+    }
+
+    /** Let the effect move with the chosen audio source (subscribed only while the dial is visible). */
+    private followAudio(id: string): void {
+        const source = this.instances.get(id)?.settings.audioSource || "";
+        const current = this.audio.get(id);
+        if (current?.source === source) return;
+        current?.stop();
+        this.audio.delete(id);
+        if (source) this.audio.set(id, { source, stop: watchLevel(source, (level) => panorama.setLevel(id, level)) });
     }
 
     /** Show (or keep showing) a top overlay of a run; a visible one only gets its end moved. */

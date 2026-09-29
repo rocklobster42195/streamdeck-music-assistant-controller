@@ -33,6 +33,11 @@
   </pi-section>
   <div class="pi-hint mac-cmd-hint" data-show-when="text=lyrics" data-show-default="off" data-i18n="pi.lyrics_hint"></div>
 
+  <pi-section title="pi.audio_source">
+    <pi-select setting="audioSource" source="audio-sources" label-setting="audioSourceName" placeholder="pi.audio_none"></pi-select>
+  </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-i18n="pi.audio_hint"></div>
+
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>

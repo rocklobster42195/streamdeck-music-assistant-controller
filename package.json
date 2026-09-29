@@ -31,6 +31,7 @@
         "showcase": "node tools/sd-sim/showcase.mjs sim-out",
         "pi-shots": "node tools/pi-shots.mjs",
         "store-assets": "node tools/generate-store-assets.mjs",
+        "sim:deckbus": "node tools/sd-sim/deckbus.mjs sim-out",
         "sim:effect-sync": "node tools/sd-sim/effect-sync.mjs sim-out",
         "translate": "node tools/serve-translate.mjs",
         "translate:build": "node tools/build-translator.mjs",

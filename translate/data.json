@@ -80,6 +80,7 @@
     "key.muted": "Stumm",
     "key.preset_saved": "Preset gespeichert: {volume}",
     "key.lyrics_synced": "Synchronisiert",
+    "key.audio_none": "Keine",
     "key.fn_timing": "Timing",
     "key.fn_count": "Partikel",
     "key.fn_speed": "Tempo",
@@ -281,6 +282,9 @@
     "pi.overlay_track": "Titel",
     "pi.overlay_lyrics": "Lyrics",
     "pi.overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
+    "pi.audio_source": "Audio-Quelle",
+    "pi.audio_none": "Keine",
+    "pi.audio_hint": "Der Effekt bewegt sich mit dem Pegel eines Kanals aus einem anderen Plugin, z. B. einem Mischpult-Kanal in XR-C: schneller, höher, größer, wenn es laut ist. „Keine“ lässt ihn, wie er ist.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing verschieben oder am Dial drehen (oben erscheint die Skala). Hängen die Lyrics nach einer Weile hinterher? Aufs Display tippen, dann wird neu synchronisiert.",
     "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibende Zeit herunter.",
@@ -413,6 +417,7 @@
     "key.muted": "Muted",
     "key.preset_saved": "Preset saved: {volume}",
     "key.lyrics_synced": "Synced",
+    "key.audio_none": "None",
     "key.fn_timing": "Timing",
     "key.fn_count": "Particles",
     "key.fn_speed": "Speed",
@@ -614,6 +619,9 @@
     "pi.overlay_track": "Title",
     "pi.overlay_lyrics": "Lyrics",
     "pi.overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
+    "pi.audio_source": "Audio source",
+    "pi.audio_none": "None",
+    "pi.audio_hint": "The effect moves with the level of a channel from another plugin, e.g. a mixer channel in XR-C: faster, higher, bigger when it is loud. \"None\" leaves it as it is.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing, or turn the dial (the scale at the top shows it). Lyrics lagging after a while? Tap the display to re-sync.",
     "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the time left.",
@@ -1398,6 +1406,17 @@
      "label": "Panorama",
      "where": "dial",
      "file": "plugin/src/actions/panorama-dial.ts"
+    }
+   ]
+  },
+  {
+   "key": "key.audio_none",
+   "group": "key",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "plugin",
+     "file": "plugin/src/pi/options.ts"
     }
    ]
   },
@@ -4488,6 +4507,39 @@
   },
   {
    "key": "pi.overlay_hint",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.audio_source",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.audio_none",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Panorama",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.audio_hint",
    "group": "pi",
    "usedIn": [
     {
