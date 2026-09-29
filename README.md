@@ -159,7 +159,7 @@ Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing
 
 The **Track**, **Volume**, **Group Volume**, **Queue**, **Browser** and **Player** dials can show an effect as their **background** (dimmed, so the text stays readable). Put them next to Panorama dials with the same effect, and the scene runs underneath everything.
 
-**Audio source:** the effect can move with the music. Pick a level another plugin offers (see [Works with other plugins](#works-with-other-plugins-deckbus)), for example a mixer channel from XR-C (X-Air Controller). Particles and Matrix Rain get faster when it is loud, the Boing Ball jumps higher, pulses and squashes on the beat, and the Boing Globe spins faster. With **None** (the default), or when the source goes away, the effect moves as usual.
+**Audio source:** the effect can move with the music. Pick a level another plugin offers (see [Works with other plugins](#works-with-other-plugins-deckbus)), for example a mixer channel from XR-C (X-Air Controller). Particles and Matrix Rain get faster when it is loud, the Boing Ball jumps higher, pulses and squashes on the beat, and the Boing Globe spins faster. MA-C adapts to how loud the source is: a quiet mixer channel moves the effect as much as a loud one. With **None** (the default), or when the source goes away, the effect moves as usual.
 
 ### Browser dial *(Stream Deck + only)*
 

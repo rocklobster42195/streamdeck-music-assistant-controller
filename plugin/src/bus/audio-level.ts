@@ -1,15 +1,14 @@
 // Audio levels from deckbus for the Panorama: one subscription per source however many dials use
-// it, turned from dBFS into a smoothed strength 0..1 (fast up, slower down). A source that goes
+// it, turned from dBFS into a smoothed strength 0..1 (fast up, slower down) relative to how loud
+// the source has been lately (AutoRange: a quiet mixer channel moves the effect too). A source that goes
 // quiet on the bus (plugin closed, mixer offline) falls back to "no level" — the effect then moves
 // as it does without an audio source.
+import { AutoRange } from "./auto-range";
 import { macBus, parseSourceId } from "./mac-bus";
 
 type Listener = (level: number | undefined) => void;
-type Source = { unsubscribe: () => void; listeners: Set<Listener>; level: number; lastAt: number; timer: ReturnType<typeof setInterval> };
+type Source = { unsubscribe: () => void; listeners: Set<Listener>; range: AutoRange; level: number; lastAt: number; timer: ReturnType<typeof setInterval> };
 
-/** dBFS that maps to 0 and to 1 (quiet room tone → loud music). */
-const FLOOR_DB = -40;
-const TOP_DB = -6;
 const ATTACK = 0.6;
 const RELEASE = 0.15;
 /** Without data for this long the source counts as gone. */
@@ -17,12 +16,11 @@ const STALE_MS = 1500;
 
 const sources = new Map<string, Source>();
 
-/** The strength 0..1 of a meter message `{ l, r? }` in dBFS (the louder side). */
-export function strengthOf(data: unknown): number | undefined {
+/** The level of a meter message `{ l, r? }` in dBFS (the louder side), or undefined. */
+export function levelOf(data: unknown): number | undefined {
     const m = data as { l?: unknown; r?: unknown } | undefined;
     const sides = [m?.l, m?.r].filter((v): v is number => typeof v === "number" && Number.isFinite(v));
-    if (!sides.length) return undefined;
-    return Math.min(1, Math.max(0, (Math.max(...sides) - FLOOR_DB) / (TOP_DB - FLOOR_DB)));
+    return sides.length ? Math.max(...sides) : undefined;
 }
 
 /**
@@ -40,12 +38,14 @@ export function watchLevel(sourceId: string, listener: Listener): () => void {
     if (!source) {
         const created: Source = {
             listeners: new Set(),
+            range: new AutoRange(),
             level: 0,
             lastAt: 0,
             unsubscribe: bus.subscribe(parsed.topic, (data, from) => {
                 if (from.id !== parsed.peerId) return;
-                const target = strengthOf(data);
-                if (target === undefined) return;
+                const db = levelOf(data);
+                if (db === undefined) return;
+                const target = created.range.strength(db);
                 created.level += (target - created.level) * (target > created.level ? ATTACK : RELEASE);
                 created.lastAt = Date.now();
                 for (const fn of created.listeners) fn(created.level);
