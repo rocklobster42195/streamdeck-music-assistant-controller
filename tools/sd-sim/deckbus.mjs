@@ -2,7 +2,7 @@
 // PI lists its stream, the dial subscribes only while it uses it and is visible. Fake MA, no playback.
 //   node tools/sd-sim/deckbus.mjs [outDir]
 import path from "node:path";
-import { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
+import { DeckBus, neighbours } from "@rocklobster42195/streamdeck-kit/bus";
 import { startFakeMa } from "./fake-ma.mjs";
 import { startSim } from "./sim.mjs";
 
@@ -27,12 +27,24 @@ source.onSubscribers("meters/test", (n) => {
     if (n) timer = setInterval(() => source.publish("meters/test", { l: db(Date.now() - t0), r: db(Date.now() - t0 + 20) }), 50);
 });
 
+// Plugins already on the bus (e.g. MA-C in the real Stream Deck, same id and name) aren't the one under test
+await new Promise((r) => setTimeout(r, 1200));
+const before = new Set(source.peers().map((p) => p.slot));
+const simMac = () => source.peers().find((p) => p.name === "MA-C" && !before.has(p.slot));
+
 const ma = await startFakeMa();
 const sim = await startSim({ language: "en", globalSettings: { maUrl: ma.url, maToken: "demo", activePlayerId: "living" } });
 try {
     const dials = [0, 1, 2, 3].map((column) => sim.add("panorama-dial", { background: "boing-ball" }, { column, controller: "Encoder" }));
-    await sim.waitFor(() => source.peers().some((p) => p.name === "MA-C"), 15000, "MA-C on the bus");
-    check("MA-C joins the bus with its status", source.peers().some((p) => p.name === "MA-C" && p.state.status?.online), JSON.stringify(source.peers().find((p) => p.name === "MA-C")?.state));
+    await sim.waitFor(() => !!simMac(), 15000, "MA-C on the bus");
+    check("MA-C joins the bus with its status", !!simMac()?.state.status?.online, JSON.stringify(simMac()?.state.status));
+
+    // "actions": where MA-C's dials sit, with their effect; the source sees them as its neighbours
+    await sim.waitFor(() => (simMac()?.state.actions?.length ?? 0) === 4, 5000, "actions state");
+    const shared = simMac().state.actions;
+    check("MA-C shares its visible dials with their effect", shared.every((a, i) => a.column === i && a.controller === "Encoder" && a.effect === "boing-ball" && a.action.endsWith(".panorama-dial")), JSON.stringify(shared[0]));
+    const next = neighbours([simMac()], { device: shared[0].device, column: 4, row: 0, controller: "Encoder" });
+    check("a dial in column 4 has MA-C's Panorama on its left", next.length === 1 && next[0].side === "left" && next[0].action.column === 3);
 
     sim.piOpen(dials[0]);
     sim.piSend(dials[0], { event: "options", requestId: 41, source: "audio-sources" });

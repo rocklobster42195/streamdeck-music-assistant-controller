@@ -2,7 +2,9 @@
 // Assistant is connected, and lists the level streams other plugins offer (XR-C's channels, later
 // SA-C's system audio) for the Panorama's "Audio source".
 import streamDeck from "@elgato/streamdeck";
-import { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
+import { DEFAULT_EFFECT_ID } from "@rocklobster42195/streamdeck-kit";
+import { trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
+import { ActionsState, DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import { maConnection } from "../ma/connection";
 
 /** A level stream some peer offers in its `streams` state. */
@@ -10,6 +12,18 @@ export type OfferedStream = { topic: string; label: string; stereo?: boolean };
 
 let bus: DeckBus | undefined;
 let lastStatus = "";
+/** Where MA-C's actions are visible ("actions" state); collected from the start, shared once the bus exists. */
+const actions = new ActionsState({ setState: (key, value) => bus?.setState(key, value) });
+
+/** Call before streamDeck.connect(), so no willAppear is missed. */
+export function trackMacActions(): void {
+    trackActions(actions, (uuid, settings) => {
+        const background = typeof settings.background === "string" ? settings.background : undefined;
+        // The Panorama dial shows the default effect when none is set; "" is "no effect"
+        const effect = uuid.endsWith(".panorama-dial") ? (background === "" ? undefined : background || DEFAULT_EFFECT_ID) : background || undefined;
+        return effect ? { effect } : undefined;
+    });
+}
 
 /** The bus (without peers when it couldn't start: MA-C works on without it). */
 export function macBus(): DeckBus | undefined {
@@ -22,6 +36,7 @@ export function macBus(): DeckBus | undefined {
  */
 export async function startMacBus(): Promise<void> {
     bus = new DeckBus({ id: "de.boriskemper.music-assistant-controller", name: "MA-C", version: streamDeck.info.plugin.version, caps: [] });
+    bus.setState("actions", actions.list());
     if (!(await bus.start())) return;
     streamDeck.logger.info(`[deckbus] MA-C in slot ${bus.slot}`);
     maConnection.onChange(shareStatus);
