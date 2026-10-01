@@ -3,7 +3,7 @@
 // SA-C's system audio) for the Panorama's "Audio source".
 import streamDeck from "@elgato/streamdeck";
 import { DEFAULT_EFFECT_ID } from "@rocklobster42195/streamdeck-kit";
-import { trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
+import { piBridge, trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
 import { ActionsState, DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import { maConnection } from "../ma/connection";
 
@@ -41,6 +41,8 @@ export async function startMacBus(): Promise<void> {
     streamDeck.logger.info(`[deckbus] MA-C in slot ${bus.slot}`);
     maConnection.onChange(shareStatus);
     shareStatus();
+    // An open Panorama PI shows "Moves with" only while there is something to choose
+    bus.onPeers(() => piBridge.schedulePush());
 }
 
 function shareStatus(): void {

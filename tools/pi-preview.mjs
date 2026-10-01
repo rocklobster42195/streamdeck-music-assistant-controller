@@ -24,7 +24,17 @@ const optionLists = {
     "player-sources": () => [{ value: "living", label: "Music Assistant" }, { value: "line-in", label: "Line-In" }],
     "music-providers": () => [{ value: "spotify--demo", label: "Spotify", sub: "spotify" }, { value: "radio--demo", label: "Radio", sub: "radiobrowser" }],
     dashboards: () => [{ value: "kitchen-tv", label: "Kitchen TV", sub: "cast" }],
+    // The Panorama's "Moves with": like the plugin, the chosen one stays listed while its plugin is away
+    "audio-sources": (params, scenario) => {
+        const offered = scenario.audioSources ?? [];
+        const away = params.current && !offered.some((o) => o.value === params.current) ? [{ value: params.current, label: params.name || params.current, sub: "Not running right now" }] : [];
+        return [{ value: "", label: "Nothing" }, ...offered, ...away];
+    },
 };
+const busStreams = [
+    { value: "de.boriskemper.xair-controller|meters/ch:9", label: "Sonos", sub: "XR-C" },
+    { value: "de.boriskemper.system-audio-controller|meters/system-output", label: "Speakers", sub: "SA-C" },
+];
 
 const UI = path.resolve("plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui");
 
@@ -42,11 +52,23 @@ const svg = (body) => `data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http
 const coverKey = svg(`<rect width="72" height="72" fill="#10220f"/><circle cx="50" cy="22" r="18" fill="#1f4a1b"/><circle cx="22" cy="48" r="26" fill="#2c6a25"/><circle cx="46" cy="52" r="9" fill="#55c939"/><rect y="68" width="72" height="4" fill="#000" opacity="0.5"/><rect y="68" width="30" height="4" fill="#55c939"/>`);
 const iconKey = (color) => svg(`<rect width="72" height="72" fill="#101010"/><circle cx="36" cy="36" r="14" fill="none" stroke="${color}" stroke-width="3"/>`);
 
+const connectedScenario = () => ({
+    global: { maUrl: "192.168.1.10:8095", maToken: "demo", activePlayerId: "living" },
+    status: { configured: true, state: "connected", reachable: true, url: "http://192.168.1.10:8095", serverVersion: "2.10.4", playerCount: players.length },
+    preview: { image: coverKey, state: "playing", track: "Midnight Tram · Neon Harbor", playerName: "Living Room", following: true },
+});
+
 const scenarios = {
-    connected: {
-        global: { maUrl: "192.168.1.10:8095", maToken: "demo", activePlayerId: "living" },
-        status: { configured: true, state: "connected", reachable: true, url: "http://192.168.1.10:8095", serverVersion: "2.10.4", playerCount: players.length },
-        preview: { image: coverKey, state: "playing", track: "Midnight Tram · Neon Harbor", playerName: "Living Room", following: true },
+    connected: connectedScenario(),
+    // Panorama: other plugins offer levels on deckbus ("Moves with" shows)
+    bus: {
+        ...connectedScenario(),
+        audioSources: busStreams,
+    },
+    // Panorama: a level was chosen, but its plugin is away (still shown, can be switched off)
+    away: {
+        ...connectedScenario(),
+        settings: { audioSource: "de.boriskemper.xair-controller|meters/ch:9", audioSourceName: "Sonos" },
     },
     setup: {
         global: {},
@@ -92,9 +114,10 @@ wss.on("connection", (ws) => {
                     reply({ event: "sendToPropertyInspector", payload: { event: "players", players: scenario.status.state === "connected" ? players : [], activePlayerId: scenario.global.activePlayerId } });
                     reply({ event: "sendToPropertyInspector", payload: { event: "preview", preview: scenario.preview } });
                     reply({ event: "sendToPropertyInspector", payload: { event: "effects", effects: listEffects() } });
+                    reply({ event: "sendToPropertyInspector", payload: { event: "audio-sources", count: scenario.audioSources?.length ?? 0 } });
                 } else if (msg.payload?.event === "options") {
                     const { requestId, source, params } = msg.payload;
-                    const items = optionLists[source]?.(params ?? {}) ?? [];
+                    const items = optionLists[source]?.(params ?? {}, scenario) ?? [];
                     reply({ event: "sendToPropertyInspector", payload: { event: "options-result", requestId, source, items } });
                 } else console.log("sendToPlugin", msg.payload);
                 break;
@@ -119,7 +142,7 @@ http.createServer((req, res) => {
         const scenario = u.searchParams.get("scenario") ?? "connected";
         const lang = u.searchParams.get("lang") ?? "de";
         const info = { application: { language: lang, platform: "windows", version: "7.0" }, plugin: { uuid: "de.boriskemper.music-assistant-controller", version: "0.1.0" } };
-        const actionInfo = { action: "de.boriskemper.music-assistant-controller.play-pause-key", context: "ctx", device: "dev", payload: { settings: { playerId: "", showProgress: true } } };
+        const actionInfo = { action: "de.boriskemper.music-assistant-controller.play-pause-key", context: "ctx", device: "dev", payload: { settings: { playerId: "", showProgress: true, ...scenarios[scenario]?.settings } } };
         // ?click=<css selector> clicks an element after load (e.g. to screenshot an open dropdown)
         const click = u.searchParams.get("click");
         const boot = `<script>window.addEventListener("load",()=>{connectElgatoStreamDeckSocket(${WS_PORT},"pi:${scenario}","registerPropertyInspector",${JSON.stringify(JSON.stringify(info))},${JSON.stringify(JSON.stringify(actionInfo))});${click ? `let n=0;const tryClick=()=>{const el=!document.body.hidden&&document.querySelector(${JSON.stringify(click)});if(el)el.click();else if(n++<50)setTimeout(tryClick,100);};tryClick();` : ""}});</script><style>body{width:360px}</style>`;

@@ -63,5 +63,7 @@ export type PiPush =
     | { event: "preview"; preview: KeyPreview }
     | { event: "library-results"; requestId: number; items: LibraryItem[]; favorites: boolean; error?: string }
     | { event: "effects"; effects: EffectInfo[] }
+    /** How many level streams other plugins offer on deckbus (the Panorama's "Moves with"). */
+    | { event: "audio-sources"; count: number }
     /** `enabled` undefined: the player has no flow-mode setting. */
     | { event: "flow-mode-result"; requestId: number; playerName?: string; enabled?: boolean; error?: string };

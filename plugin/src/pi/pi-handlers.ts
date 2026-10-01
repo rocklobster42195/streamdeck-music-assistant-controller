@@ -2,6 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import { listEffects } from "@rocklobster42195/streamdeck-kit";
 import { piBridge, type PiPushMessage } from "@rocklobster42195/streamdeck-kit/bridge";
 import type { Player } from "music-assistant-client";
+import { offeredStreams } from "../bus/mac-bus";
 import { maConnection } from "../ma/connection";
 import { flowModePlayerId, getFlowMode, setFlowMode } from "../ma/flow-mode";
 import { searchLibrary } from "../ma/library";
@@ -21,6 +22,7 @@ export function initPiBridge(): void {
             { event: "status", status: connectionStatus() } as const,
             { event: "players", players: playerOptions(), activePlayerId: maConnection.globalSettings.activePlayerId } as const,
             { event: "effects", effects: listEffects() } as const,
+            { event: "audio-sources", count: offeredStreams().length } as const,
         ].map(json),
     );
     maConnection.onChange(() => piBridge.schedulePush());

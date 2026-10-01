@@ -66,7 +66,7 @@
 			"muted": "Muted",
 			"preset_saved": "Preset saved: {volume}",
 			"lyrics_synced": "Synced",
-			"audio_none": "None",
+			"audio_none": "Nothing",
 			"fn_timing": "Timing",
 			"fn_count": "Particles",
 			"fn_speed": "Speed",
@@ -92,7 +92,8 @@
 			"announce_setup": "Text?",
 			"choose_source": "Source?",
 			"choose_screen": "Screen?",
-			"nothing_to_continue": "Nothing to continue"
+			"nothing_to_continue": "Nothing to continue",
+			"audio_away": "Not running right now"
 		},
 		"pi": {
 			"player": "Player",
@@ -270,9 +271,9 @@
 			"overlay_track": "Title",
 			"overlay_lyrics": "Lyrics",
 			"overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
-			"audio_source": "Audio source",
-			"audio_none": "None",
-			"audio_hint": "The effect moves with the level of a channel from another plugin, e.g. a mixer channel in XR-C: faster, higher, bigger when it is loud. \"None\" leaves it as it is.",
+			"audio_source": "Moves with",
+			"audio_none": "Nothing",
+			"audio_hint": "The effect moves with a level from another plugin, e.g. a mixer channel in XR-C or your computer's sound in SA-C: faster, higher, bigger when it is loud. The picture and colours still come from the player below.",
 			"lyrics_offset": "Timing",
 			"lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing, or turn the dial (the scale at the top shows it). Lyrics lagging after a while? Tap the display to re-sync.",
 			"sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the time left.",
@@ -319,7 +320,8 @@
 			"continue_kind": "Show",
 			"continue_any": "Both",
 			"continue_audiobooks": "Audiobooks",
-			"continue_podcasts": "Podcasts"
+			"continue_podcasts": "Podcasts",
+			"panorama_player_hint": "Cover, colours, track and lyrics come from this player."
 		},
 		"effect": {
 			"particles": {

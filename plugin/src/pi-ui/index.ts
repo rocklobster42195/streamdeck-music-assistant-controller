@@ -9,6 +9,7 @@ import { MacKeyPreview } from "./key-preview";
 import { MacPlayerPicker } from "./player-picker";
 import { MacProviderFilter } from "./provider-filter";
 import { functionIcon } from "../render/function-icons";
+import { initAudioSource } from "./audio-source";
 import { initPiState } from "./state";
 
 initPiState();
@@ -28,6 +29,7 @@ sd.onReady(() => {
     customElements.define("mac-provider-filter", MacProviderFilter);
     initChoiceOptions();
     initConditionalVisibility();
+    initAudioSource();
 
     const version = document.querySelector<HTMLElement>("[data-plugin-version]");
     if (version) version.textContent = `MA-C ${sd.info?.plugin.version ?? ""}`.trim();

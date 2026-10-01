@@ -33,14 +33,15 @@
   </pi-section>
   <div class="pi-hint mac-cmd-hint" data-show-when="text=lyrics" data-show-default="off" data-i18n="pi.lyrics_hint"></div>
 
-  <pi-section title="pi.audio_source">
-    <pi-select setting="audioSource" source="audio-sources" label-setting="audioSourceName" placeholder="pi.audio_none"></pi-select>
+  <pi-section title="pi.audio_source" data-audio-source hidden>
+    <pi-select setting="audioSource" source="audio-sources" with="audio-source" label-setting="audioSourceName" placeholder="pi.audio_none"></pi-select>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-i18n="pi.audio_hint"></div>
+  <div class="pi-hint mac-cmd-hint" data-audio-source hidden data-i18n="pi.audio_hint"></div>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+  <div class="pi-hint mac-cmd-hint" data-i18n="pi.panorama_player_hint"></div>
 
   <mac-connection-card></mac-connection-card>
 

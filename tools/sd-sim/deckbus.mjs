@@ -52,6 +52,13 @@ try {
     const items = sim.state.piMessages.find((m) => m.event === "options-result" && m.requestId === 41).items;
     check("the PI lists None, then the offered stream", items[0]?.value === "" && items.some((i) => i.value === "sim-level-source|meters/test" && i.sub === "Fake source"), items.map((i) => `${i.label}/${i.sub ?? ""}`).join(", "));
     check("nothing is subscribed before a source is chosen", subscribers === 0);
+    sim.piSend(dials[0], { event: "pi-ready" });
+    await sim.waitFor(() => sim.state.piMessages.some((m) => m.event === "audio-sources" && m.count > 0), 5000, "audio-sources push");
+    check("the PI learns that levels are offered (shows 'Moves with')", true);
+    sim.piSend(dials[0], { event: "options", requestId: 42, source: "audio-sources", params: { current: "gone-plugin|meters/ch:1", name: "Old channel" } });
+    await sim.waitFor(() => sim.state.piMessages.some((m) => m.event === "options-result" && m.requestId === 42), 5000, "audio sources with an away one");
+    const withAway = sim.state.piMessages.find((m) => m.event === "options-result" && m.requestId === 42).items;
+    check("a chosen source whose plugin is away stays in the list", withAway.at(-1)?.value === "gone-plugin|meters/ch:1" && withAway.at(-1)?.label === "Old channel", JSON.stringify(withAway.at(-1)));
 
     sim.setSettings(dials[1], { background: "boing-ball", audioSource: "sim-level-source|meters/test", audioSourceName: "Fake music" });
     await sim.waitFor(() => subscribers === 1, 5000, "subscription");

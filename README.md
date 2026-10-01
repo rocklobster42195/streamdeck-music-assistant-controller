@@ -159,7 +159,7 @@ Four ambient effects: **Particles**, **Matrix Rain**, **Boing Ball** and **Boing
 
 The **Track**, **Volume**, **Group Volume**, **Queue**, **Browser** and **Player** dials can show an effect as their **background** (dimmed, so the text stays readable). Put them next to Panorama dials with the same effect, and the scene runs underneath everything.
 
-**Audio source:** the effect can move with the music. Pick a level another plugin offers (see [Works with other plugins](#works-with-other-plugins-deckbus)), for example a mixer channel from XR-C (X-Air Controller). Particles and Matrix Rain get faster when it is loud, the Boing Ball jumps higher, pulses and squashes on the beat, and the Boing Globe spins faster. MA-C adapts to how loud the source is: a quiet mixer channel moves the effect as much as a loud one. With **None** (the default), or when the source goes away, the effect moves as usual.
+**Moves with:** the effect can move with the music. Pick a level another plugin offers (see [Works with other plugins](#works-with-other-plugins-deckbus)), for example a mixer channel from XR-C (X-Air Controller) or your computer's sound from SA-C (System Audio Controller). The picture and colours still come from the dial's player: MA-C gives the look, the other plugin the beat. The setting appears only while another plugin offers a level, or while one is chosen (then it says when that plugin isn't running). Particles and Matrix Rain get faster when it is loud, the Boing Ball jumps higher, pulses and squashes on the beat, and the Boing Globe spins faster. MA-C adapts to how loud the source is: a quiet mixer channel moves the effect as much as a loud one. With **Nothing** (the default), or when the source goes away, the effect moves as usual.
 
 ### Browser dial *(Stream Deck + only)*
 
@@ -201,7 +201,7 @@ MA-C talks to other Stream Deck plugins on your computer through **deckbus**, a 
 
 **Offers:** whether MA-C is connected to Music Assistant.
 
-**Uses:** audio levels for the Panorama's **Audio source**, for example the channels of your mixer from XR-C (X-Air Controller). MA-C subscribes to a level only while a Panorama dial that uses it is visible.
+**Uses:** audio levels for the Panorama's **Moves with**, for example the channels of your mixer from XR-C (X-Air Controller). MA-C subscribes to a level only while a Panorama dial that uses it is visible.
 
 **Only with your permission:** nothing yet. Later, the Announcement key may ask a mixer plugin to lower the music while it speaks. That will need your OK.
 

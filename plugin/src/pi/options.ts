@@ -36,9 +36,12 @@ export function registerOptionSources(): void {
         return (await ma.dashboards()).map((d) => ({ value: d.dashboard_id, label: d.name, sub: d.provider_domain_hint ?? undefined }));
     });
 
-    // Panorama "Audio source": level streams other plugins offer on deckbus (XR-C channels, …)
-    piBridge.registerOptions("audio-sources", () => [
-        { value: "", label: streamDeck.i18n.t("key.audio_none") },
-        ...offeredStreams().map((s) => ({ value: s.id, label: s.label, sub: s.peer })),
-    ]);
+    // Panorama "Moves with": level streams other plugins offer on deckbus (XR-C channels, …). The
+    // chosen one stays in the list while its plugin is away, so it can still be seen and switched off.
+    piBridge.registerOptions("audio-sources", (params) => {
+        const offered = offeredStreams();
+        const current = params.current ?? "";
+        const away = current && !offered.some((s) => s.id === current) ? [{ value: current, label: params.name || current, sub: streamDeck.i18n.t("key.audio_away") }] : [];
+        return [{ value: "", label: streamDeck.i18n.t("key.audio_none") }, ...offered.map((s) => ({ value: s.id, label: s.label, sub: s.peer })), ...away];
+    });
 }

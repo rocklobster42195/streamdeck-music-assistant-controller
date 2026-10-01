@@ -11,6 +11,8 @@ export const piState = {
     activePlayerId: undefined as string | undefined,
     preview: undefined as KeyPreview | undefined,
     effects: [] as EffectInfo[],
+    /** Level streams on deckbus (undefined until the plugin said). */
+    audioSources: undefined as number | undefined,
 };
 
 const listeners = new Set<Listener>();
@@ -41,6 +43,11 @@ export function initPiState(): void {
             piState.activePlayerId = msg.activePlayerId;
         } else if (msg?.event === "preview") piState.preview = msg.preview;
         else if (msg?.event === "effects") piState.effects = msg.effects;
+        else if (msg?.event === "audio-sources") {
+            if (msg.count === piState.audioSources) return;
+            piState.audioSources = msg.count;
+            reloadPiSelects();
+        }
         else return;
         for (const fn of listeners) fn();
     });
