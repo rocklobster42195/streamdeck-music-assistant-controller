@@ -8,7 +8,7 @@ import { ActionsState, DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import { maConnection } from "../ma/connection";
 
 /** A level stream some peer offers in its `streams` state. */
-export type OfferedStream = { topic: string; label: string; stereo?: boolean };
+export type OfferedStream = { topic: string; label: string; stereo?: boolean; /** A mic or other input: not music, so not offered. */ input?: boolean };
 
 let bus: DeckBus | undefined;
 let lastStatus = "";
@@ -64,10 +64,10 @@ export function parseSourceId(id: string | undefined): { peerId: string; topic: 
     return id && at > 0 ? { peerId: id.slice(0, at), topic: id.slice(at + 1) } : undefined;
 }
 
-/** Every level stream the peers on the bus offer right now, with the offering plugin's name. */
+/** Every level stream the peers on the bus offer right now (no inputs like a mic), with the offering plugin's name. */
 export function offeredStreams(): { id: string; label: string; peer: string }[] {
     return (bus?.peers() ?? []).flatMap((peer) => {
         const streams = Array.isArray(peer.state.streams) ? (peer.state.streams as OfferedStream[]) : [];
-        return streams.filter((s) => typeof s?.topic === "string" && s.topic.startsWith("meters/")).map((s) => ({ id: sourceId(peer.id, s.topic), label: String(s.label ?? s.topic), peer: peer.name }));
+        return streams.filter((s) => typeof s?.topic === "string" && s.topic.startsWith("meters/") && s.input !== true).map((s) => ({ id: sourceId(peer.id, s.topic), label: String(s.label ?? s.topic), peer: peer.name }));
     });
 }
