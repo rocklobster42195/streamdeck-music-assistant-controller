@@ -1,6 +1,8 @@
 // MA-C on deckbus (see the kit's docs/deckbus-protocol.md): tells the other plugins whether Music
-// Assistant is connected, and lists the level streams other plugins offer (XR-C's channels, later
-// SA-C's system audio) for the Panorama's "Audio source".
+// Assistant is connected, shares the Panorama with other plugins' dials next to MA-C's, and lists
+// the level streams other plugins offer (XR-C's channels, later SA-C's system audio) for the
+// Panorama's "Audio source".
+import { panorama } from "../render/panorama";
 import streamDeck from "@elgato/streamdeck";
 import { DEFAULT_EFFECT_ID } from "@rocklobster42195/streamdeck-kit";
 import { piBridge, trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
@@ -37,6 +39,8 @@ export function macBus(): DeckBus | undefined {
 export async function startMacBus(): Promise<void> {
     bus = new DeckBus({ id: "de.boriskemper.music-assistant-controller", name: "MA-C", version: streamDeck.info.plugin.version, caps: [] });
     bus.setState("actions", actions.list());
+    // One Panorama with other plugins' dials next to MA-C's (stays local while nobody is there)
+    panorama.connect(bus);
     if (!(await bus.start())) return;
     streamDeck.logger.info(`[deckbus] MA-C in slot ${bus.slot}`);
     maConnection.onChange(shareStatus);

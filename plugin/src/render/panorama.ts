@@ -1,10 +1,14 @@
-import { effectRegistry, PanoramaEngine } from "@rocklobster42195/streamdeck-kit";
+import { effectRegistry, PanoramaEngine, SharedPanorama } from "@rocklobster42195/streamdeck-kit";
 import type { PlayerMedia } from "music-assistant-client";
 import { ACCENT } from "./key-image";
 import { coverAccent, rgb } from "./cover-color";
 
-/** The plugin's one panorama engine: effects spanning neighbouring dials. */
-export const panorama = new PanoramaEngine({ defaultColor: ACCENT });
+/**
+ * The plugin's one panorama: effects spanning neighbouring dials, shared over deckbus with other
+ * plugins' dials next to them (the plugin with the leftmost dial runs the effect; see the kit's
+ * SharedPanorama). Connected in bus/mac-bus.ts.
+ */
+export const panorama = new SharedPanorama(new PanoramaEngine({ defaultColor: ACCENT }));
 
 /** Dial settings that choose and tune an effect (stored flat, like sonos-controller). */
 export type EffectSettings = {
