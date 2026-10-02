@@ -27,17 +27,19 @@
     ]'></pi-choice>
   </pi-section>
 
-  <pi-section title="pi.icon_color">
+  <pi-section class="pi-win" title="pi.icon_color">
     <pi-toggle setting="iconCoverColor" label="pi.icon_cover_color" hint="pi.icon_cover_color_hint"></pi-toggle>
   </pi-section>
 
-  <pi-section title="pi.marker">
+  <pi-section class="pi-win" title="pi.marker">
     <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></pi-icon-picker>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection" data-show-when="dashboard=now_playing" data-show-default="now_playing">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

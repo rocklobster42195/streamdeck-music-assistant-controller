@@ -27,11 +27,11 @@
   </pi-section>
   <div class="pi-hint mac-cmd-hint" data-show-when="when=timer" data-show-default="now" data-i18n="pi.announce_timer_hint"></div>
 
-  <pi-section title="pi.icon">
+  <pi-section class="pi-win" title="pi.icon">
     <pi-icon-picker setting="icon" default-icon="mdiBullhorn"></pi-icon-picker>
   </pi-section>
 
-  <pi-section title="pi.announce_voice" class="pi-needs-connection">
+  <pi-section title="pi.announce_voice" class="pi-needs-connection pi-win">
     <pi-select setting="ttsEngine" source="tts-engines" placeholder="pi.announce_default_voice" empty="pi.announce_no_engines"></pi-select>
   </pi-section>
 
@@ -49,17 +49,19 @@
   </pi-section>
   <div class="pi-hint mac-cmd-hint" data-i18n="pi.announce_volume_hint"></div>
 
-  <pi-section title="pi.icon_color">
+  <pi-section class="pi-win" title="pi.icon_color">
     <pi-toggle setting="iconCoverColor" label="pi.icon_cover_color" hint="pi.icon_cover_color_hint"></pi-toggle>
   </pi-section>
 
-  <pi-section title="pi.marker">
+  <pi-section class="pi-win" title="pi.marker">
     <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></pi-icon-picker>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection" data-show-when="target=player,group" data-show-default="player">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

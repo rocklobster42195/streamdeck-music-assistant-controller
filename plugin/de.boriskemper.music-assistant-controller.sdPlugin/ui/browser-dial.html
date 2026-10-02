@@ -22,10 +22,10 @@
     ]'></pi-choice>
   </pi-section>
 
-  <pi-section title="pi.browse_providers" class="pi-needs-connection">
+  <pi-section title="pi.browse_providers" class="pi-needs-connection pi-win">
     <mac-provider-filter setting="providers"></mac-provider-filter>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-i18n="pi.browse_providers_hint"></div>
+  <div class="pi-hint mac-cmd-hint pi-win" data-i18n="pi.browse_providers_hint"></div>
 
   <pi-section title="pi.play_mode">
     <pi-choice setting="option" default="replace" columns="3" data-options='[
@@ -35,7 +35,7 @@
     ]'></pi-choice>
   </pi-section>
 
-  <pi-section title="pi.browse_folder">
+  <pi-section class="pi-win" title="pi.browse_folder">
     <pi-choice setting="folderAction" default="open" columns="2" data-options='[
       {"value":"open","label":"pi.browse_folder_open","icon":"folderOpen"},
       {"value":"play","label":"pi.browse_folder_play","icon":"playNow"}
@@ -43,14 +43,16 @@
     <pi-range setting="timeout" min="5" max="120" step="5" default="20" unit=" s" label="pi.browse_timeout"></pi-range>
   </pi-section>
 
-  <pi-section title="pi.background">
+  <pi-section class="pi-win" title="pi.background">
     <mac-effect-settings allow-none></mac-effect-settings>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-i18n="pi.background_hint"></div>
+  <div class="pi-hint mac-cmd-hint pi-win" data-i18n="pi.background_hint"></div>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

@@ -28,20 +28,22 @@
   </pi-section>
   <div class="pi-hint mac-cmd-hint" data-i18n="pi.overlay_hint"></div>
 
-  <pi-section title="pi.overlay_lyrics" data-show-when="text=lyrics" data-show-default="off">
+  <pi-section class="pi-win" title="pi.overlay_lyrics" data-show-when="text=lyrics" data-show-default="off">
     <pi-range setting="lyricsOffset" min="-10" max="5" step="0.1" default="0.5" unit=" s" label="pi.lyrics_offset" data-fn-icon="timing"></pi-range>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-show-when="text=lyrics" data-show-default="off" data-i18n="pi.lyrics_hint"></div>
+  <div class="pi-hint mac-cmd-hint pi-win" data-show-when="text=lyrics" data-show-default="off" data-i18n="pi.lyrics_hint"></div>
 
-  <pi-section title="pi.audio_source" data-audio-source hidden>
+  <pi-section class="pi-win" title="pi.audio_source" data-audio-source hidden>
     <pi-select setting="audioSource" source="audio-sources" with="audio-source" label-setting="audioSourceName" placeholder="pi.audio_none"></pi-select>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-audio-source hidden data-i18n="pi.audio_hint"></div>
+  <div class="pi-hint mac-cmd-hint pi-win" data-audio-source hidden data-i18n="pi.audio_hint"></div>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
   <div class="pi-hint mac-cmd-hint" data-i18n="pi.panorama_player_hint"></div>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

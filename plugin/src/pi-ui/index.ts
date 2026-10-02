@@ -1,5 +1,7 @@
 // Entry of the property inspector bundle (ui/pi.js): shared core components + MAC components.
-import { definePiComponents, initConditionalVisibility, sd, translateDom } from "@rocklobster42195/streamdeck-kit/pi";
+// The same page runs as the short PI and, with "?window", as the settings window (the kit's
+// src/pi/window.ts): sections with class "pi-win" show only there.
+import { definePiComponents, initConditionalVisibility, initSettingsWindow, sd, settingsWindowShown, translateDom } from "@rocklobster42195/streamdeck-kit/pi";
 import { initChoiceOptions } from "./choice-icons";
 import { MacConnectionCard } from "./connection-card";
 import { MacEffectSettings } from "./effect-settings";
@@ -12,6 +14,7 @@ import { functionIcon } from "../render/function-icons";
 import { initAudioSource } from "./audio-source";
 import { initPiState } from "./state";
 
+initSettingsWindow({ name: "MA-C" });
 initPiState();
 
 // Components render translated text, so wait until Stream Deck told us the language.
@@ -40,4 +43,5 @@ sd.onReady(() => {
         }),
     );
     document.body.hidden = false;
+    settingsWindowShown();
 });

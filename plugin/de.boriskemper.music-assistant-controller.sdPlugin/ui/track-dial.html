@@ -16,7 +16,7 @@
 
   <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.dial_track_rotate"></div>
 
-  <pi-section title="pi.dial_controls">
+  <pi-section class="pi-win" title="pi.dial_controls">
     <pi-range setting="seekStep" min="1" max="60" step="1" default="10" unit=" s" label="pi.dial_seek_step"></pi-range>
   </pi-section>
 
@@ -24,14 +24,16 @@
     <pi-toggle setting="showProvider" label="pi.show_provider" hint="pi.show_provider_hint"></pi-toggle>
   </pi-section>
 
-  <pi-section title="pi.background">
+  <pi-section class="pi-win" title="pi.background">
     <mac-effect-settings allow-none></mac-effect-settings>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-i18n="pi.background_hint"></div>
+  <div class="pi-hint mac-cmd-hint pi-win" data-i18n="pi.background_hint"></div>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

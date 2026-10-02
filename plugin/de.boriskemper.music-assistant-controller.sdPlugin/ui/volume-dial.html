@@ -27,7 +27,7 @@
     <pi-toggle setting="showText" label="pi.show_volume_text" hint="pi.show_volume_text_hint" data-default="true"></pi-toggle>
     <pi-toggle setting="ringCoverColor" label="pi.ring_cover_color" hint="pi.ring_cover_color_hint"></pi-toggle>
   </pi-section>
-  <pi-section title="pi.align">
+  <pi-section class="pi-win" title="pi.align">
     <pi-choice setting="align" default="left" columns="3" data-options='[
       {"value":"left","label":"pi.align_left","icon":"alignLeft"},
       {"value":"center","label":"pi.align_center","icon":"alignCenter"},
@@ -35,23 +35,25 @@
     ]'></pi-choice>
   </pi-section>
 
-  <pi-section title="pi.dial_controls">
+  <pi-section class="pi-win" title="pi.dial_controls">
     <pi-range setting="step" min="1" max="10" step="1" default="2" unit="%" label="pi.dial_step"></pi-range>
     <pi-range setting="preset" min="0" max="100" step="1" default="20" unit="%" label="pi.vol_preset_value"></pi-range>
   </pi-section>
 
-  <pi-section title="pi.background">
+  <pi-section class="pi-win" title="pi.background">
     <mac-effect-settings allow-none></mac-effect-settings>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint" data-i18n="pi.background_hint"></div>
+  <div class="pi-hint mac-cmd-hint pi-win" data-i18n="pi.background_hint"></div>
 
-  <pi-section title="pi.marker">
+  <pi-section class="pi-win" title="pi.marker">
     <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint_dial"></pi-icon-picker>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

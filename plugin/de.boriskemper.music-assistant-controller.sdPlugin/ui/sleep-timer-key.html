@@ -19,22 +19,24 @@
     <pi-field setting="steps" label="pi.sleep_steps_label" placeholder="pi.sleep_steps_placeholder" hint="pi.sleep_steps_hint"></pi-field>
   </pi-section>
 
-  <pi-section title="pi.sleep_fade">
+  <pi-section class="pi-win" title="pi.sleep_fade">
     <pi-range setting="fadeOut" min="0" max="120" step="5" default="30" unit=" s" label="pi.sleep_fade_label"></pi-range>
     <div class="pi-hint" data-i18n="pi.sleep_fade_hint"></div>
   </pi-section>
 
-  <pi-section title="pi.icon_color">
+  <pi-section class="pi-win" title="pi.icon_color">
     <pi-toggle setting="iconCoverColor" label="pi.icon_cover_color" hint="pi.icon_cover_color_hint"></pi-toggle>
   </pi-section>
 
-  <pi-section title="pi.marker">
+  <pi-section class="pi-win" title="pi.marker">
     <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></pi-icon-picker>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-more></pi-more>
 
   <mac-connection-card></mac-connection-card>
 

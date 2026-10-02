@@ -1,7 +1,8 @@
 // <mac-connection-card> — Music Assistant connection, shared by all MAC actions (global settings).
 // Modes: setup (not configured) · connected (collapsed summary, "Change" expands) ·
 //        auth error (server ok, token rejected) · offline (server not reachable) · connecting.
-import { escapeHtml, icon, sd, t, type PiField } from "@rocklobster42195/streamdeck-kit/pi";
+// In the short PI of an action with a settings window, "Change" opens the window at the card.
+import { escapeHtml, icon, isSettingsWindow, openSettingsWindow, sd, t, type PiField } from "@rocklobster42195/streamdeck-kit/pi";
 import { onPiState, piState } from "./state";
 
 type Mode = "setup" | "connected" | "auth" | "offline" | "connecting";
@@ -35,7 +36,12 @@ export class MacConnectionCard extends HTMLElement {
                     <div class="mac-conn-actions"><button type="button" class="pi-button pi-button-primary mac-conn-connect"></button></div>
                 </div>
             </div>`;
+        // The window's menu lists the card; "#connection" opens the window at it
+        this.id = "connection";
+        this.dataset.windowSection = "pi.connection";
         this.querySelector(".mac-conn-toggle")!.addEventListener("click", () => {
+            const hasWindow = !!document.querySelector("pi-more") && !isSettingsWindow();
+            if (!this.expanded && hasWindow && openSettingsWindow("connection")) return;
             this.expanded = !this.expanded;
             this.render();
         });
