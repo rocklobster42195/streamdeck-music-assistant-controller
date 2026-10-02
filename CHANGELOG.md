@@ -5,6 +5,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **One Panorama per row** (from the kit): every dial's Panorama section chooses the effect for the whole row of dials, also over other plugins' dials, with a checkbox per dial and the effect's settings once for the row; turning the Panorama dial tunes the row. Replaces "Like the neighbour", "Spread to connected displays" and the effect choice per dial; "Cover colour" has its own small section. Old settings are taken over (an effect becomes the row's, "None" unchecks the dial).
 - **Short settings panels with a settings window** (as in HA-C, from the kit): the panel keeps what the action controls and how it looks; background, marker, icon colour, dial controls and other details are in the window behind "More settings …", with a menu. The Music Assistant connection is one line while connected; "Change" opens the window at it. The Like and Play/Pause keys keep their short panels as they are.
 - **Background "Like the neighbour"** on the dials with a background (Volume, Group Volume, Track, Player, Queue, Browser), as in HA-C and XR-C: the dial takes the effect of the dial next to it, also another plugin's, and joins its Panorama. A newly placed dial with no MA-C dial next to it starts with it. The cover colour counts as a live value now: it wins over picked colours in the whole Panorama, also over other plugins' dials.
 - `music-assistant-client` moved to its own repository and is published on npm (0.1.0); the plugin uses it from there.

@@ -2,7 +2,7 @@
 // Assistant is connected, shares the Panorama with other plugins' dials next to MA-C's, and lists
 // the level streams other plugins offer (XR-C's channels, later SA-C's system audio) for the
 // Panorama's "Audio source".
-import { effectsChanged, panorama, setEffectPeers } from "../render/panorama";
+import { panorama, panoramaRows } from "../render/panorama";
 import streamDeck from "@elgato/streamdeck";
 import { piBridge, trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
 import { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
@@ -37,11 +37,10 @@ export async function startMacBus(): Promise<void> {
     const b = bus;
     shareActionsTo((key, value) => b.setState(key, value));
     b.setState("actions", macActions.list());
-    // One Panorama with other plugins' dials next to MA-C's (stays local while nobody is there);
-    // "like the neighbour" dials follow other plugins' dials
+    // One Panorama with other plugins' dials next to MA-C's (stays local while nobody is there),
+    // one effect per row agreed with them
     panorama.connect(b);
-    setEffectPeers(() => b.peers());
-    b.onPeers(() => effectsChanged());
+    panoramaRows.connect(b);
     if (!(await bus.start())) return;
     streamDeck.logger.info(`[deckbus] MA-C in slot ${bus.slot}`);
     maConnection.onChange(shareStatus);

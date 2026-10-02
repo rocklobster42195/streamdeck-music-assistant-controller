@@ -13,24 +13,10 @@ import type { MusicAssistantClient, PlayerMedia } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
-import { BACKGROUND_AUTO, ColorFader, CoverFader, BLANK_EFFECT_ID, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
+import { ColorFader, CoverFader, mdi, rowStateFromSettings, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS } from "../render/key-image";
 import { coverAccent } from "../render/cover-color";
-import {
-    effectLiveFor,
-    effectSettingsFor,
-    effectsChanged,
-    isFresh,
-    neighbourEffectSettings,
-    onEffectsChanged,
-    panorama,
-    registerEffectTarget,
-    resolveEffect,
-    SCRIM,
-    spreadEffect,
-    unregisterEffectTarget,
-    type EffectSettings,
-} from "../render/panorama";
+import { effectLiveFor, isFresh, panorama, panoramaRows, SCRIM, type EffectSettings } from "../render/panorama";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type StripRender = { image: string; preview?: Partial<Pick<KeyPreview, "track" | "state">> };
@@ -50,8 +36,6 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     constructor() {
         super();
         maConnection.onChange(() => this.renderAll());
-        // "Like the neighbour" follows when a dial next to it changes (also another plugin's)
-        onEffectsChanged(() => this.renderAll());
     }
 
     protected abstract renderPlayer(ctx: PlayerContext<S>): StripRender;
@@ -67,53 +51,49 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         if (!ev.action.isDial()) return;
         const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
-        registerEffectTarget(ev.action.id, {
-            deviceId: ev.action.device.id,
-            column,
-            settings: () => (this.instances.get(ev.action.id)?.settings ?? {}) as EffectSettings,
-            apply: (effectId) => {
-                const inst = this.instances.get(ev.action.id);
-                if (!inst || (inst.settings as EffectSettings).background === effectId) return;
-                inst.settings = { ...inst.settings, background: effectId };
-                void inst.action.setSettings(inst.settings);
-                inst.lastRender = undefined;
-                this.render(ev.action.id);
-            },
-        });
-        // A freshly placed dial joins the scene next to it (the Panorama dial does the same in its own class)
-        // (else "like the neighbour", as in the family's other plugins)
+        const id = ev.action.id;
+        // A freshly placed dial takes part in its row's Panorama; old dials without a background
+        // setting keep showing none (unset meant "no effect" before rows)
         if (isFresh(ev.payload.settings)) {
-            const neighbour = neighbourEffectSettings(ev.action.id);
-            const inst = this.instances.get(ev.action.id)!;
-            inst.settings = neighbour
-                ? { ...inst.settings, background: neighbour.background, ...(neighbour.coverColor !== undefined ? { coverColor: neighbour.coverColor } : {}) }
-                : { ...inst.settings, background: BACKGROUND_AUTO };
+            const inst = this.instances.get(id)!;
+            inst.settings = { ...inst.settings, panoramaMember: true };
             void inst.action.setSettings(inst.settings);
         }
-        this.render(ev.action.id);
-        effectsChanged();
+        panoramaRows.add(id, {
+            device: ev.action.device.id,
+            column,
+            label: () => {
+                const inst = this.instances.get(id);
+                const player = inst && maConnection.player(this.followsActivePlayer ? maConnection.resolvePlayerId(inst.settings.playerId) : inst.settings.playerId || undefined);
+                return player ? (player.display_name ?? player.name) : "";
+            },
+            state: () => rowStateFromSettings(this.instances.get(id)?.settings ?? {}, "silent"),
+            save: (patch) => {
+                const inst = this.instances.get(id);
+                if (!inst) return;
+                inst.settings = { ...inst.settings, ...patch } as S;
+                void inst.action.setSettings(inst.settings);
+            },
+            redraw: () => this.render(id),
+        });
+        this.render(id);
     }
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
         this.instances.delete(ev.action.id);
         this.covers.forget(ev.action.id);
         this.ringColors.forget(ev.action.id);
-        unregisterEffectTarget(ev.action.id);
-        panorama.leave(ev.action.id);
+        panoramaRows.remove(ev.action.id);
         piBridge.forget(ev.action.id);
-        effectsChanged();
     }
 
     override onDidReceiveSettings(ev: DidReceiveSettingsEvent<S>): void {
         const inst = this.instances.get(ev.action.id);
         if (!inst) return;
-        const before = (inst.settings as EffectSettings).background;
         inst.settings = ev.payload.settings;
-        const next = inst.settings as EffectSettings;
-        spreadEffect(ev.action.id, before, next.background, next.syncEffect);
+        panoramaRows.changed(ev.action.id);
         inst.lastRender = undefined;
         this.render(ev.action.id);
-        if (before !== next.background) effectsChanged();
     }
 
     override async onDialRotate(ev: DialRotateEvent<S>): Promise<void> {
@@ -129,30 +109,19 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     }
 
     /**
-     * Panorama background for dials that offer one (`background` setting): joins/updates/leaves
-     * the shared effect and returns the SVG to draw under the content ('' when none).
-     */
-    /**
-     * The panorama effect under this dial, plus a darkening layer so text stays readable: the whole
-     * strip by default, or only `scrim` (e.g. behind the text) when the dial passes one.
+     * The panorama effect of the dial's row under this dial, plus a darkening layer so text stays
+     * readable: the whole strip by default, or only `scrim` (e.g. behind the text) when the dial
+     * passes one. '' when the row has no effect or the dial doesn't take part (it stays a silent
+     * member: the effect runs on behind its neighbours).
      */
     protected backdrop(ctx: PlayerContext<S>, scrim?: string): string {
-        const inst = this.instances.get(ctx.id);
-        const settings = ctx.settings as EffectSettings;
-        // "" (no effect, chosen on purpose) keeps the dial in its group as an invisible member;
-        // "like the neighbour" takes the effect of the dial next to it
-        const auto = settings.background === BACKGROUND_AUTO;
-        const effectId = auto ? resolveEffect(ctx.id) : settings.background === "" ? BLANK_EFFECT_ID : settings.background;
-        if (!inst || !effectId) {
-            panorama.leave(ctx.id);
+        const effectId = panoramaRows.effectOf(ctx.id);
+        if (!effectId || !panoramaRows.isMember(ctx.id)) {
+            panorama.updateLive(ctx.id, {});
             return "";
         }
-        // A borrowed effect keeps the neighbour's tuning (no defaults of our own that would win)
-        const effectSettings = auto ? {} : effectSettingsFor(settings, effectId);
-        panorama.join(ctx.id, inst.deviceId, inst.column, effectId, effectSettings, () => this.render(ctx.id));
-        panorama.updateSettings(ctx.id, effectSettings);
-        panorama.updateLive(ctx.id, effectLiveFor(settings, effectId, ctx.player.current_media));
-        const slice = panorama.renderSlice(ctx.id);
+        panorama.updateLive(ctx.id, effectLiveFor(ctx.settings as EffectSettings, effectId, ctx.player.current_media));
+        const slice = panorama.isActive(ctx.id) ? panorama.renderSlice(ctx.id) : "";
         return slice ? slice + (scrim ?? SCRIM) : "";
     }
 

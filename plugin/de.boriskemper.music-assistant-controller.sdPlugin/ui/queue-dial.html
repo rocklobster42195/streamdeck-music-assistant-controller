@@ -19,14 +19,17 @@
     <pi-range setting="timeout" min="3" max="60" step="1" default="10" unit=" s" label="pi.queue_timeout"></pi-range>
   </pi-section>
 
-  <pi-section class="pi-win" title="pi.background">
-    <mac-effect-settings allow-none></mac-effect-settings>
+  <pi-panorama class="pi-win"></pi-panorama>
+
+  <pi-section class="pi-win" title="pi.panorama_colour">
+    <pi-toggle setting="coverColor" label="pi.cover_color" hint="pi.cover_color_hint" data-default="true"></pi-toggle>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint pi-win" data-i18n="pi.background_hint"></div>
 
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-panorama class="pi-pi-only" summary></pi-panorama>
 
   <pi-more></pi-more>
 

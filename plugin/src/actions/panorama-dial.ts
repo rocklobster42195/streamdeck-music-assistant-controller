@@ -10,11 +10,11 @@ import streamDeck, {
     type WillDisappearEvent,
 } from "@elgato/streamdeck";
 import type { JsonObject } from "@elgato/utils";
-import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID, STRIP_W, stripImage } from "@rocklobster42195/streamdeck-kit";
+import { BLANK_EFFECT_ID, rowStateFromSettings, STRIP_W, stripImage } from "@rocklobster42195/streamdeck-kit";
 import { watchLevel } from "../bus/audio-level";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
-import { effectLiveFor, effectSettingsFor, effectsChanged, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
+import { effectLiveFor, isFresh, panorama, panoramaRows, type EffectSettings } from "../render/panorama";
 import { functionIcon } from "../render/function-icons";
 import { functionOverlay, noticeOverlay, timingOverlay } from "../render/panorama-text";
 import { PanoramaOverlay, type OverlayMode } from "./panorama-overlay";
@@ -49,8 +49,9 @@ const FUNCTION_SHOW_MS = 1500;
 
 /**
  * An ambient effect across neighbouring dials (particles, matrix rain, boing ball, boing globe) —
- * the sonos-controller panorama effects. Rotate/push/touch are handed to the effect; values it
- * changes itself (e.g. speed) are saved. Tinted with the active player's cover color when on.
+ * the sonos-controller panorama effects; the effect is the row's (the kit's panorama/rows.ts).
+ * Rotate/push/touch are handed to the effect; values it changes itself (e.g. speed) become the
+ * row's. Tinted with the active player's cover color when on.
  * Optionally shows title & artist or synced lyrics across neighbouring Panorama dials.
  */
 @action({ UUID: "de.boriskemper.music-assistant-controller.panorama-dial" })
@@ -82,33 +83,43 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!ev.action.isDial()) return;
         const column = "coordinates" in ev.payload && ev.payload.coordinates ? ev.payload.coordinates.column : 0;
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings, deviceId: ev.action.device.id, column });
-        registerEffectTarget(ev.action.id, {
-            deviceId: ev.action.device.id,
-            column,
-            settings: () => this.instances.get(ev.action.id)?.settings ?? {},
-            unsetEffect: DEFAULT_EFFECT_ID,
-            apply: (effectId) => {
-                const inst = this.instances.get(ev.action.id);
-                if (!inst || inst.settings.background === effectId || (effectId && this.effectId(inst) === effectId)) return;
-                inst.settings = { ...inst.settings, background: effectId };
-                void inst.action.setSettings(inst.settings);
-                this.join(ev.action.id);
-                this.pushSettings(ev.action.id);
-            },
-        });
-        // A freshly placed Panorama dial joins the scene next to it: effect, color and (from another
-        // Panorama dial) the text line — title or lyrics, timing and player
-        const neighbour = isFresh(ev.payload.settings) ? (neighbourEffectSettings(ev.action.id) as PanoramaDialSettings | undefined) : undefined;
+        const id = ev.action.id;
+        // A freshly placed Panorama dial next to another one takes over its text line (title or
+        // lyrics, timing, player), colour and audio source; the effect is the row's anyway
+        const neighbour = isFresh(ev.payload.settings) ? this.neighbour(id) : undefined;
         if (neighbour) {
-            const inst = this.instances.get(ev.action.id)!;
+            const inst = this.instances.get(id)!;
             const pick = <K extends keyof PanoramaDialSettings>(k: K) => (neighbour[k] !== undefined ? { [k]: neighbour[k] } : {});
-            inst.settings = { ...inst.settings, background: neighbour.background, ...pick("coverColor"), ...pick("text"), ...pick("lyricsOffset"), ...pick("playerId"), ...pick("audioSource"), ...pick("audioSourceName") };
+            inst.settings = { ...inst.settings, ...pick("coverColor"), ...pick("text"), ...pick("lyricsOffset"), ...pick("playerId"), ...pick("audioSource"), ...pick("audioSourceName") };
             void inst.action.setSettings(inst.settings);
         }
-        this.join(ev.action.id);
-        this.pushSettings(ev.action.id);
-        this.followAudio(ev.action.id);
-        effectsChanged();
+        panoramaRows.add(id, {
+            device: ev.action.device.id,
+            column,
+            label: () => streamDeck.i18n.t("key.panorama_label"),
+            state: () => rowStateFromSettings(this.instances.get(id)?.settings ?? {}),
+            save: (patch) => {
+                const inst = this.instances.get(id);
+                if (!inst) return;
+                inst.settings = { ...inst.settings, ...patch } as PanoramaDialSettings;
+                void inst.action.setSettings(inst.settings);
+            },
+            redraw: () => this.render(id),
+            // Without an effect the dial stays in a blank group, so title and lyrics span its neighbours
+            whenNone: BLANK_EFFECT_ID,
+        });
+        this.pushSettings(id);
+        this.followAudio(id);
+    }
+
+    /** The settings of a Panorama dial right next to this one (left first). */
+    private neighbour(id: string): PanoramaDialSettings | undefined {
+        const me = this.instances.get(id);
+        if (!me) return undefined;
+        for (const side of [-1, 1]) {
+            for (const [other, inst] of this.instances) if (other !== id && inst.deviceId === me.deviceId && inst.column === me.column + side) return inst.settings;
+        }
+        return undefined;
     }
 
     override onWillDisappear(ev: WillDisappearEvent<PanoramaDialSettings>): void {
@@ -116,10 +127,8 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         this.audio.delete(ev.action.id);
         this.instances.delete(ev.action.id);
         this.overlay.forget(ev.action.id);
-        unregisterEffectTarget(ev.action.id);
-        panorama.leave(ev.action.id);
+        panoramaRows.remove(ev.action.id);
         piBridge.forget(ev.action.id);
-        effectsChanged();
     }
 
     override onDidReceiveSettings(ev: DidReceiveSettingsEvent<PanoramaDialSettings>): void {
@@ -127,14 +136,10 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         if (!inst) return;
         const before = inst.settings;
         inst.settings = ev.payload.settings;
-        // "No effect" spreads as "" (connected Track/Volume dials drop their background too)
-        const choice = (s: PanoramaDialSettings) => (s.background === "" ? "" : this.effectId({ ...inst, settings: s }));
-        spreadEffect(ev.action.id, choice(before), choice(inst.settings), inst.settings.syncEffect);
         if (before.text !== inst.settings.text || before.lyricsOffset !== inst.settings.lyricsOffset || before.playerId !== inst.settings.playerId) this.shareText(ev.action.id);
-        this.join(ev.action.id);
+        panoramaRows.changed(ev.action.id);
         this.pushSettings(ev.action.id);
         this.followAudio(ev.action.id);
-        if (before.background !== inst.settings.background) effectsChanged();
     }
 
     override onDialRotate(ev: DialRotateEvent<PanoramaDialSettings>): void {
@@ -260,37 +265,19 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         return "";
     }
 
-    /** "" = no effect: the dial still joins a (blank) group, so text spans its neighbours. Unset = default. */
-    private effectId(inst: Instance): string {
-        return inst.settings.background === "" ? BLANK_EFFECT_ID : inst.settings.background || DEFAULT_EFFECT_ID;
-    }
-
     /** The chosen player, or the active one. */
     private playerId(inst: Instance): string | undefined {
         return maConnection.resolvePlayerId(inst.settings.playerId);
     }
 
-    private effectSettings(inst: Instance): Record<string, unknown> {
-        return effectSettingsFor(inst.settings, this.effectId(inst));
-    }
-
-    /** The cover's colour (a live setting: it wins in the whole group). */
-    private effectLive(inst: Instance): Record<string, unknown> {
-        const player = maConnection.player(this.playerId(inst));
-        return effectLiveFor(inst.settings, this.effectId(inst), player?.current_media);
-    }
-
-    private join(id: string): void {
-        const inst = this.instances.get(id);
-        if (!inst) return;
-        panorama.join(id, inst.deviceId, inst.column, this.effectId(inst), this.effectSettings(inst), () => this.render(id));
-    }
-
+    /** The cover's colour into the row's effect (a live setting: it wins in the whole group); nothing from a dial that doesn't take part. */
     private pushSettings(id: string): void {
         const inst = this.instances.get(id);
+        const effect = panoramaRows.effectOf(id);
         if (!inst) return;
-        panorama.updateSettings(id, this.effectSettings(inst));
-        panorama.updateLive(id, this.effectLive(inst));
+        if (!effect || !panoramaRows.isMember(id)) return panorama.updateLive(id, {});
+        const player = maConnection.player(this.playerId(inst));
+        panorama.updateLive(id, effectLiveFor(inst.settings, effect, player?.current_media));
     }
 
     private render(id: string): void {
@@ -303,7 +290,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const offset = Number(lead?.lyricsOffset ?? LYRICS_LEAD_S);
         let text = lead ? this.overlay.render(run.ids[0], geometry, lead.text!, offset, maConnection.resolvePlayerId(lead.playerId)) : "";
         text += this.topOverlay(id, run.ids[0], geometry, offset, lead);
-        const image = stripImage([text], "#000", panorama.renderSlice(id));
+        const image = stripImage([text], "#000", panoramaRows.isMember(id) ? panorama.renderSlice(id) : "");
         void inst.action.setFeedback({ "full-canvas": image });
         // The PI preview doesn't need every frame
         const now = Date.now();
@@ -354,7 +341,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         }
     }
 
-    /** Save values the effect changed itself (e.g. speed after turning), debounced. */
+    /** Values the effect changed itself (e.g. speed after turning) become the row's, debounced. */
     private persistRuntime(id: string): void {
         clearTimeout(this.persistTimers.get(id));
         this.persistTimers.set(
@@ -362,9 +349,8 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             setTimeout(() => {
                 const inst = this.instances.get(id);
                 const runtime = panorama.runtimeSettings(id);
-                if (!inst || !runtime) return;
-                inst.settings = { ...inst.settings, ...(runtime as JsonObject) };
-                inst.action.setSettings(inst.settings).catch((e) => streamDeck.logger.warn("[panorama] save failed", e));
+                // Turning tunes the row's effect: stored with every dial of the row, in every plugin
+                if (inst && runtime) panoramaRows.setRow(inst.deviceId, { settings: runtime });
             }, 800),
         );
     }

@@ -40,10 +40,11 @@
     <pi-range setting="preset" min="0" max="100" step="1" default="20" unit="%" label="pi.vol_preset_value"></pi-range>
   </pi-section>
 
-  <pi-section class="pi-win" title="pi.background">
-    <mac-effect-settings allow-none></mac-effect-settings>
+  <pi-panorama class="pi-win"></pi-panorama>
+
+  <pi-section class="pi-win" title="pi.panorama_colour">
+    <pi-toggle setting="coverColor" label="pi.cover_color" hint="pi.cover_color_hint" data-default="true"></pi-toggle>
   </pi-section>
-  <div class="pi-hint mac-cmd-hint pi-win" data-i18n="pi.background_hint"></div>
 
   <pi-section class="pi-win" title="pi.marker">
     <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint_dial"></pi-icon-picker>
@@ -52,6 +53,8 @@
   <pi-section title="pi.player" class="pi-needs-connection">
     <mac-player-picker setting="playerId"></mac-player-picker>
   </pi-section>
+
+  <pi-panorama class="pi-pi-only" summary></pi-panorama>
 
   <pi-more></pi-more>
 

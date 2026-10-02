@@ -4,7 +4,6 @@
 import { definePiComponents, initConditionalVisibility, initSettingsWindow, sd, settingsWindowShown, translateDom } from "@rocklobster42195/streamdeck-kit/pi";
 import { initChoiceOptions } from "./choice-icons";
 import { MacConnectionCard } from "./connection-card";
-import { MacEffectSettings } from "./effect-settings";
 import { MacFlowMode } from "./flow-mode";
 import { MacItemPicker } from "./item-picker";
 import { MacKeyPreview } from "./key-preview";
@@ -27,7 +26,6 @@ sd.onReady(() => {
     customElements.define("mac-key-preview", MacKeyPreview);
     customElements.define("mac-connection-card", MacConnectionCard);
     customElements.define("mac-item-picker", MacItemPicker);
-    customElements.define("mac-effect-settings", MacEffectSettings);
     customElements.define("mac-flow-mode", MacFlowMode);
     customElements.define("mac-provider-filter", MacProviderFilter);
     initChoiceOptions();

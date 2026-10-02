@@ -7,6 +7,7 @@ import { maConnection } from "../ma/connection";
 import { flowModePlayerId, getFlowMode, setFlowMode } from "../ma/flow-mode";
 import { searchLibrary } from "../ma/library";
 import type { ConnectionStatus, LibraryFilter, PiPush, PlayerOption, PlayerState } from "./protocol";
+import { panoramaRows } from "../render/panorama";
 
 /**
  * MA-C's part of the kit's PI bridge: connection status, player list and effects for the open PI,
@@ -14,6 +15,8 @@ import type { ConnectionStatus, LibraryFilter, PiPush, PlayerOption, PlayerState
  */
 export function initPiBridge(): void {
     piBridge.init();
+    // The dials' Panorama section (<pi-panorama>): the row's effect, dials and settings
+    panoramaRows.attachPi(piBridge);
     piBridge.handle("reconnect", () => maConnection.reconnectNow());
     piBridge.handle("library-search", (msg) => librarySearch(msg.requestId as number, msg.query as string, msg.filter as LibraryFilter));
     piBridge.handle("flow-mode", (msg) => flowMode(msg.requestId as number, msg.playerId as string | undefined, msg.set as boolean | undefined));
