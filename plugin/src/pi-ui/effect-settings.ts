@@ -7,6 +7,8 @@ import { functionIcon } from "../render/function-icons";
 import { onPiState, piState } from "./state";
 
 const NONE = "";
+/** "Like the neighbour" (the kit's BACKGROUND_AUTO; the PI bundle doesn't load the kit's plugin side). */
+const AUTO = "auto";
 
 /** Translation with a fallback (effect names/labels come from the effect as English text). */
 function tr(key: string, fallback: string): string {
@@ -48,7 +50,11 @@ export class MacEffectSettings extends HTMLElement {
         if (key === this.shownFor) return; // fields keep their own state; only rebuild on effect change
         this.shownFor = key;
 
-        const options = [...(this.allowNone ? [{ id: NONE, name: t("pi.effect_none") }] : []), ...effects.map((e) => ({ id: e.id, name: tr(`effect.${e.id}.name`, e.displayName) }))];
+        // Dials with a background (not the Panorama dial) can also take the neighbour's, as in the family
+        const options = [
+            ...(this.allowNone ? [{ id: AUTO, name: t("pi.background_auto") }, { id: NONE, name: t("pi.effect_none") }] : []),
+            ...effects.map((e) => ({ id: e.id, name: tr(`effect.${e.id}.name`, e.displayName) })),
+        ];
         const effect = effects.find((e) => e.id === value);
         this.innerHTML = `
             <div class="pi-choice" style="--pi-choice-columns: ${Math.min(3, options.length)}">
@@ -59,14 +65,17 @@ export class MacEffectSettings extends HTMLElement {
 
         const fields = this.querySelector<HTMLElement>(".mac-effect-fields")!;
         const sync = `<pi-toggle setting="syncEffect" label="pi.sync_effect" hint="pi.sync_effect_hint" data-default="true"></pi-toggle>`;
+        const coverColor = `<pi-toggle setting="coverColor" label="pi.cover_color" hint="pi.cover_color_hint" data-default="true"></pi-toggle>`;
         if (!effect) {
-            // "No effect" spreads to connected displays too, so the switch stays available
+            // "No effect" spreads to connected displays too, so the switch stays available; a
+            // borrowed effect is tuned where it was chosen, only the cover's colour comes from here
             if (value === NONE) fields.innerHTML = sync;
+            if (value === AUTO) fields.innerHTML = coverColor;
             return;
         }
         fields.innerHTML = [
             sync,
-            `<pi-toggle setting="coverColor" label="pi.cover_color" hint="pi.cover_color_hint" data-default="true"></pi-toggle>`,
+            coverColor,
             ...effect.settingsSchema.map((f) => fieldHtml(effect, f)),
         ].join("");
     }

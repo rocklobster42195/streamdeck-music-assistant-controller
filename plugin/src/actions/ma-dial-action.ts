@@ -13,10 +13,24 @@ import type { MusicAssistantClient, PlayerMedia } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
-import { ColorFader, CoverFader, BLANK_EFFECT_ID, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
+import { BACKGROUND_AUTO, ColorFader, CoverFader, BLANK_EFFECT_ID, mdi, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS } from "../render/key-image";
 import { coverAccent } from "../render/cover-color";
-import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, SCRIM, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
+import {
+    effectLiveFor,
+    effectSettingsFor,
+    effectsChanged,
+    isFresh,
+    neighbourEffectSettings,
+    onEffectsChanged,
+    panorama,
+    registerEffectTarget,
+    resolveEffect,
+    SCRIM,
+    spreadEffect,
+    unregisterEffectTarget,
+    type EffectSettings,
+} from "../render/panorama";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type StripRender = { image: string; preview?: Partial<Pick<KeyPreview, "track" | "state">> };
@@ -36,6 +50,8 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     constructor() {
         super();
         maConnection.onChange(() => this.renderAll());
+        // "Like the neighbour" follows when a dial next to it changes (also another plugin's)
+        onEffectsChanged(() => this.renderAll());
     }
 
     protected abstract renderPlayer(ctx: PlayerContext<S>): StripRender;
@@ -65,13 +81,17 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
             },
         });
         // A freshly placed dial joins the scene next to it (the Panorama dial does the same in its own class)
-        const neighbour = isFresh(ev.payload.settings) ? neighbourEffectSettings(ev.action.id) : undefined;
-        if (neighbour) {
+        // (else "like the neighbour", as in the family's other plugins)
+        if (isFresh(ev.payload.settings)) {
+            const neighbour = neighbourEffectSettings(ev.action.id);
             const inst = this.instances.get(ev.action.id)!;
-            inst.settings = { ...inst.settings, background: neighbour.background, ...(neighbour.coverColor !== undefined ? { coverColor: neighbour.coverColor } : {}) };
+            inst.settings = neighbour
+                ? { ...inst.settings, background: neighbour.background, ...(neighbour.coverColor !== undefined ? { coverColor: neighbour.coverColor } : {}) }
+                : { ...inst.settings, background: BACKGROUND_AUTO };
             void inst.action.setSettings(inst.settings);
         }
         this.render(ev.action.id);
+        effectsChanged();
     }
 
     override onWillDisappear(ev: WillDisappearEvent<S>): void {
@@ -81,6 +101,7 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         unregisterEffectTarget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
+        effectsChanged();
     }
 
     override onDidReceiveSettings(ev: DidReceiveSettingsEvent<S>): void {
@@ -92,6 +113,7 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         spreadEffect(ev.action.id, before, next.background, next.syncEffect);
         inst.lastRender = undefined;
         this.render(ev.action.id);
+        if (before !== next.background) effectsChanged();
     }
 
     override async onDialRotate(ev: DialRotateEvent<S>): Promise<void> {
@@ -117,15 +139,19 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     protected backdrop(ctx: PlayerContext<S>, scrim?: string): string {
         const inst = this.instances.get(ctx.id);
         const settings = ctx.settings as EffectSettings;
-        // "" (no effect, chosen on purpose) keeps the dial in its group as an invisible member
-        const effectId = settings.background === "" ? BLANK_EFFECT_ID : settings.background;
+        // "" (no effect, chosen on purpose) keeps the dial in its group as an invisible member;
+        // "like the neighbour" takes the effect of the dial next to it
+        const auto = settings.background === BACKGROUND_AUTO;
+        const effectId = auto ? resolveEffect(ctx.id) : settings.background === "" ? BLANK_EFFECT_ID : settings.background;
         if (!inst || !effectId) {
             panorama.leave(ctx.id);
             return "";
         }
-        const effectSettings = effectSettingsFor(settings, effectId, ctx.player.current_media);
+        // A borrowed effect keeps the neighbour's tuning (no defaults of our own that would win)
+        const effectSettings = auto ? {} : effectSettingsFor(settings, effectId);
         panorama.join(ctx.id, inst.deviceId, inst.column, effectId, effectSettings, () => this.render(ctx.id));
         panorama.updateSettings(ctx.id, effectSettings);
+        panorama.updateLive(ctx.id, effectLiveFor(settings, effectId, ctx.player.current_media));
         const slice = panorama.renderSlice(ctx.id);
         return slice ? slice + (scrim ?? SCRIM) : "";
     }

@@ -14,7 +14,7 @@ import { BLANK_EFFECT_ID, DEFAULT_EFFECT_ID, STRIP_W, stripImage } from "@rocklo
 import { watchLevel } from "../bus/audio-level";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
-import { effectSettingsFor, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
+import { effectLiveFor, effectSettingsFor, effectsChanged, isFresh, neighbourEffectSettings, panorama, registerEffectTarget, spreadEffect, unregisterEffectTarget, type EffectSettings } from "../render/panorama";
 import { functionIcon } from "../render/function-icons";
 import { functionOverlay, noticeOverlay, timingOverlay } from "../render/panorama-text";
 import { PanoramaOverlay, type OverlayMode } from "./panorama-overlay";
@@ -86,6 +86,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             deviceId: ev.action.device.id,
             column,
             settings: () => this.instances.get(ev.action.id)?.settings ?? {},
+            unsetEffect: DEFAULT_EFFECT_ID,
             apply: (effectId) => {
                 const inst = this.instances.get(ev.action.id);
                 if (!inst || inst.settings.background === effectId || (effectId && this.effectId(inst) === effectId)) return;
@@ -105,7 +106,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             void inst.action.setSettings(inst.settings);
         }
         this.join(ev.action.id);
+        this.pushSettings(ev.action.id);
         this.followAudio(ev.action.id);
+        effectsChanged();
     }
 
     override onWillDisappear(ev: WillDisappearEvent<PanoramaDialSettings>): void {
@@ -116,6 +119,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         unregisterEffectTarget(ev.action.id);
         panorama.leave(ev.action.id);
         piBridge.forget(ev.action.id);
+        effectsChanged();
     }
 
     override onDidReceiveSettings(ev: DidReceiveSettingsEvent<PanoramaDialSettings>): void {
@@ -130,6 +134,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         this.join(ev.action.id);
         this.pushSettings(ev.action.id);
         this.followAudio(ev.action.id);
+        if (before.background !== inst.settings.background) effectsChanged();
     }
 
     override onDialRotate(ev: DialRotateEvent<PanoramaDialSettings>): void {
@@ -266,8 +271,13 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     }
 
     private effectSettings(inst: Instance): Record<string, unknown> {
+        return effectSettingsFor(inst.settings, this.effectId(inst));
+    }
+
+    /** The cover's colour (a live setting: it wins in the whole group). */
+    private effectLive(inst: Instance): Record<string, unknown> {
         const player = maConnection.player(this.playerId(inst));
-        return effectSettingsFor(inst.settings, this.effectId(inst), player?.current_media);
+        return effectLiveFor(inst.settings, this.effectId(inst), player?.current_media);
     }
 
     private join(id: string): void {
@@ -278,7 +288,9 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
 
     private pushSettings(id: string): void {
         const inst = this.instances.get(id);
-        if (inst) panorama.updateSettings(id, this.effectSettings(inst));
+        if (!inst) return;
+        panorama.updateSettings(id, this.effectSettings(inst));
+        panorama.updateLive(id, this.effectLive(inst));
     }
 
     private render(id: string): void {

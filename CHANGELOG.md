@@ -5,6 +5,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Background "Like the neighbour"** on the Volume, Group Volume, Track and Player dials, as in HA-C and XR-C: the dial takes the effect of the dial next to it, also another plugin's, and joins its Panorama. A newly placed dial with no MA-C dial next to it starts with it. The cover colour counts as a live value now: it wins over picked colours in the whole Panorama, also over other plugins' dials.
 - `music-assistant-client` moved to its own repository and is published on npm (0.1.0); the plugin uses it from there.
 - `streamdeck-core` moved to its own repository as `@rocklobster42195/streamdeck-kit` (rendering helpers, animation, Panorama effects, the settings panel kit), to be shared with Sonos Controller and the plugins that follow. Since then the settings panels' dropdown and icon picker and the plugin's PI bridge come from the kit too. Nothing changes for users.
 - **Marker** for all keys: a Material Design Icon of your choice (e.g. a pot for the kitchen) in the top-right corner, so keys of different rooms can be told apart. On the mute key without a number it sits in the ring; on the Player key it replaces the speaker as the room's icon. The Volume and Group Volume dials have it too, in front of their second line.

@@ -267,8 +267,9 @@
     "pi.show_title": "Titel",
     "pi.show_title_hint": "Titel und Interpret laufen über die Taste",
     "pi.background": "Hintergrund",
-    "pi.background_hint": "Benachbarte Dials mit demselben Effekt teilen sich eine durchgehende Szene.",
+    "pi.background_hint": "Benachbarte Dials mit demselben Effekt teilen sich eine durchgehende Szene, auch mit HA-C und XR-C. „Wie der Nachbar“ übernimmt den Effekt des Dials daneben.",
     "pi.effect": "Effekt",
+    "pi.background_auto": "Wie der Nachbar",
     "pi.effect_none": "Keiner",
     "pi.sync_effect": "Auf verbundene Displays übertragen",
     "pi.sync_effect_hint": "Ein Effektwechsel hier – auch „Kein Effekt“ – gilt auch für die benachbarten Displays mit demselben Effekt. Ausschalten, um nur dieses Display zu ändern.",
@@ -606,8 +607,9 @@
     "pi.show_title": "Title",
     "pi.show_title_hint": "Title and artist scroll along the key",
     "pi.background": "Background",
-    "pi.background_hint": "Neighbouring dials with the same effect share one continuous scene.",
+    "pi.background_hint": "Neighbouring dials with the same effect share one continuous scene, also with HA-C and XR-C. “Like the neighbour” takes the effect of the dial next to it.",
     "pi.effect": "Effect",
+    "pi.background_auto": "Like the neighbour",
     "pi.effect_none": "None",
     "pi.sync_effect": "Apply to connected displays",
     "pi.sync_effect_hint": "Changing the effect here, or turning it off, also switches the neighboring displays that run the same effect. Turn this off to change only this display.",
@@ -4239,6 +4241,17 @@
      "label": "Panorama",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.background_auto",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "plugin/src/pi-ui/effect-settings.ts"
     }
    ]
   },
