@@ -1,4 +1,4 @@
-// <mac-effect-settings [allow-none] [default-effect="particles"]> — choose a panorama effect (setting "background") and tune it.
+// <mac-effect-settings [allow-none] [no-auto] [default-effect="particles"]> — choose a panorama effect (setting "background") and tune it.
 // The fields come from the effect's own settingsSchema (range → <pi-range>, color → <pi-color>),
 // so a new effect brings its controls along without PI changes.
 import { escapeHtml, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
@@ -52,7 +52,8 @@ export class MacEffectSettings extends HTMLElement {
 
         // Dials with a background (not the Panorama dial) can also take the neighbour's, as in the family
         const options = [
-            ...(this.allowNone ? [{ id: AUTO, name: t("pi.background_auto") }, { id: NONE, name: t("pi.effect_none") }] : []),
+            ...(this.allowNone && !this.hasAttribute("no-auto") ? [{ id: AUTO, name: t("pi.background_auto") }] : []),
+            ...(this.allowNone ? [{ id: NONE, name: t("pi.effect_none") }] : []),
             ...effects.map((e) => ({ id: e.id, name: tr(`effect.${e.id}.name`, e.displayName) })),
         ];
         const effect = effects.find((e) => e.id === value);
