@@ -92,16 +92,12 @@
     "key.browse_favorites": "Favoriten",
     "key.browse_in_progress": "Weiterhören",
     "key.browse_hint": "Drehen zum Stöbern",
-    "key.browse_loading": "Lädt…",
     "key.browse_empty": "Leer",
     "key.browse_unavailable": "Nicht durchsuchbar",
     "key.active_player": "Aktiver Player",
     "key.music_here": "Musik ist jetzt hier",
     "key.queue": "Warteschlange",
     "key.queue_empty": "Warteschlange leer",
-    "key.queue_now": "Läuft gerade",
-    "key.queue_next": "Als Nächstes",
-    "key.queue_played": "Gespielt",
     "key.group": "Gruppe · {count} Räume",
     "key.group_single": "Keine Gruppe",
     "key.announce_setup": "Text?",
@@ -269,6 +265,8 @@
     "pi.show_title_hint": "Titel und Interpret laufen über die Taste",
     "pi.panorama_colour": "Panorama-Farbe",
     "pi.cover_color": "Cover-Farbe",
+    "pi.show_covers": "Cover anzeigen",
+    "pi.list": "Liste",
     "pi.icon_color": "Symbolfarbe",
     "pi.icon_cover_color": "Cover-Farbe",
     "pi.icon_cover_color_hint": "Symbole in der Farbe dessen, was gerade läuft. Aus: hellgrau (und blau, wenn eingeschaltet).",
@@ -427,16 +425,12 @@
     "key.browse_favorites": "Favorites",
     "key.browse_in_progress": "Continue listening",
     "key.browse_hint": "Turn to browse",
-    "key.browse_loading": "Loading…",
     "key.browse_empty": "Empty",
     "key.browse_unavailable": "Can't be browsed",
     "key.active_player": "Active player",
     "key.music_here": "Music moved here",
     "key.queue": "Queue",
     "key.queue_empty": "Queue is empty",
-    "key.queue_now": "Now playing",
-    "key.queue_next": "Up next",
-    "key.queue_played": "Played",
     "key.group": "Group · {count} rooms",
     "key.group_single": "Not grouped",
     "key.announce_setup": "Text?",
@@ -604,6 +598,8 @@
     "pi.show_title_hint": "Title and artist scroll along the key",
     "pi.panorama_colour": "Panorama colour",
     "pi.cover_color": "Cover color",
+    "pi.show_covers": "Show covers",
+    "pi.list": "List",
     "pi.icon_color": "Icon color",
     "pi.icon_cover_color": "Cover color",
     "pi.icon_cover_color_hint": "Icons take the color of what is playing. Off, they stay light grey (and blue when on).",
@@ -1543,22 +1539,6 @@
    ]
   },
   {
-   "key": "key.browse_loading",
-   "group": "key",
-   "usedIn": [
-    {
-     "label": "Browser",
-     "where": "dial",
-     "file": "plugin/src/actions/browser-dial.ts"
-    },
-    {
-     "label": "Queue",
-     "where": "dial",
-     "file": "plugin/src/actions/queue-dial.ts"
-    }
-   ]
-  },
-  {
    "key": "key.browse_empty",
    "group": "key",
    "usedIn": [
@@ -1615,39 +1595,6 @@
   },
   {
    "key": "key.queue_empty",
-   "group": "key",
-   "usedIn": [
-    {
-     "label": "Queue",
-     "where": "dial",
-     "file": "plugin/src/actions/queue-dial.ts"
-    }
-   ]
-  },
-  {
-   "key": "key.queue_now",
-   "group": "key",
-   "usedIn": [
-    {
-     "label": "Queue",
-     "where": "dial",
-     "file": "plugin/src/actions/queue-dial.ts"
-    }
-   ]
-  },
-  {
-   "key": "key.queue_next",
-   "group": "key",
-   "usedIn": [
-    {
-     "label": "Queue",
-     "where": "dial",
-     "file": "plugin/src/actions/queue-dial.ts"
-    }
-   ]
-  },
-  {
-   "key": "key.queue_played",
    "group": "key",
    "usedIn": [
     {
@@ -4241,6 +4188,38 @@
      "label": "Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.show_covers",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.list",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Browser",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
+    },
+    {
+     "label": "Queue",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
     }
    ]
   },
