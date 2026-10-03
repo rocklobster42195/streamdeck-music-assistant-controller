@@ -1,8 +1,8 @@
 import { action } from "@elgato/streamdeck";
 import { type BrowseEntry, BrowserModel, LIBRARY_ROOT, MaBrowseSource, PROVIDERS_ROOT } from "../ma/browser";
 import { maConnection } from "../ma/connection";
-import { getCachedCover, ListController, type ListRow, loadCover } from "@rocklobster42195/streamdeck-kit";
-import { browserIdleStrip, entryIcon, messageStrip } from "../render/browser-strip";
+import { getCachedCover, ListController, type ListRow, loadCover, nowPlayingCard } from "@rocklobster42195/streamdeck-kit";
+import { entryIcon, messageStrip } from "../render/browser-strip";
 import { ACCENT } from "../render/key-image";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -188,7 +188,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
             ? { kind, name: from.name, track: [media?.title, media?.artist].filter(Boolean).join(" · ") }
             : undefined;
         const sourceCover = source && from?.image?.proxy_id ? this.thumbFor(id, from.image.proxy_id) : undefined;
-        return browserIdleStrip({
+        return nowPlayingCard({
             cover: sourceCover ?? this.cover(id, ma, media),
             title: media?.title ?? this.t("key.nothing_playing"),
             artist: media?.artist ?? undefined,
