@@ -334,20 +334,23 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     }
 
     /**
-     * The neighbouring Panorama dials in this dial's effect group, left to right, that share one
-     * text line (other dials in the group, e.g. a Track dial with a background, break the run).
+     * The Panorama dials right next to this one on the same device, left to right, that share one
+     * text line (any other dial in between breaks the run). Not from the effect group: while
+     * another plugin leads the row's effect, MA-C has no local group, and the title still has to
+     * span its own dials (hardware 2026-10-03).
      */
     private run(id: string): { ids: string[]; index: number } {
-        const members = panorama.members(id);
-        const at = members.findIndex((m) => m.context === id);
-        if (at < 0) return { ids: [id], index: 0 };
-        const joins = (from: number, to: number) => this.instances.has(members[to].context) && Math.abs(members[to].column - members[from].column) === 1;
-        let first = at;
-        while (first > 0 && joins(first, first - 1)) first--;
-        let last = at;
-        while (last < members.length - 1 && joins(last, last + 1)) last++;
-        const ids = members.slice(first, last + 1).map((m) => m.context);
-        return { ids, index: at - first };
+        const me = this.instances.get(id);
+        if (!me) return { ids: [id], index: 0 };
+        const byColumn = new Map<number, string>();
+        for (const [other, inst] of this.instances) if (inst.deviceId === me.deviceId) byColumn.set(inst.column, other);
+        let first = me.column;
+        while (byColumn.has(first - 1)) first--;
+        let last = me.column;
+        while (byColumn.has(last + 1)) last++;
+        const ids: string[] = [];
+        for (let c = first; c <= last; c++) ids.push(byColumn.get(c)!);
+        return { ids, index: me.column - first };
     }
 
     /** A text or player setting changed on one dial: the rest of its run follows. */
