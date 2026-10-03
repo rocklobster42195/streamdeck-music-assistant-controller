@@ -19,6 +19,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 - Sleep Timer: fades the whole group out at the end (30 s by default, adjustable), stops, and restores every speaker's own volume. Music Assistant itself stops without fading.
 
 ### Changed
+- **Panorama colour per row:** the Panorama section has a **Colour** for the whole row — **Cover** (the active player, or one player), **fixed** or the effect's own — instead of the "Cover color" switch on each dial. Your setting is taken over (switch off → the effect's own colour; a Panorama dial's fixed player → that player's cover). MA-C shares its players' cover colours on deckbus, so a row without any MA-C dial (e.g. only System Audio and X-Air dials) follows the cover too.
 - **Panorama dial: turning the effect also works when another plugin's dial leads the row** (e.g. an XR-C dial further left): the value changes in the row, which every plugin follows. The badge at the top shows the row's value.
 - **Covers load more robustly** (kit cover cache, with Sonos Controller's hardware lessons): one request per cover however many dials ask, at most two at once per server, a hanging request is cut off after 8 s, and a cover that failed rests 5 s instead of being retried on every redraw.
 - **Scrolling text** on the Track dial and in the lists moves in counted whole-pixel steps (from the kit): no more occasional hitch when a frame reaches the device late.

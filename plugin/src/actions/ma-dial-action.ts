@@ -16,7 +16,7 @@ import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { ColorFader, CoverFader, mdi, rowStateFromSettings, stripImage, text } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS } from "../render/key-image";
 import { coverAccent } from "../render/cover-color";
-import { effectLiveFor, isFresh, panorama, panoramaRows, SCRIM, type EffectSettings } from "../render/panorama";
+import { isFresh, migrateCoverColor, panorama, panoramaRows, SCRIM } from "../render/panorama";
 import { COVER_SIZE, type MaKeySettings, type PlayerContext } from "./ma-key-action";
 
 export type StripRender = { image: string; preview?: Partial<Pick<KeyPreview, "track" | "state">> };
@@ -57,6 +57,12 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
         if (isFresh(ev.payload.settings)) {
             const inst = this.instances.get(id)!;
             inst.settings = { ...inst.settings, panoramaMember: true };
+            void inst.action.setSettings(inst.settings);
+        }
+        const migrated = migrateCoverColor(ev.payload.settings, ev.action.device.id);
+        if (migrated) {
+            const inst = this.instances.get(id)!;
+            inst.settings = migrated as S;
             void inst.action.setSettings(inst.settings);
         }
         panoramaRows.add(id, {
@@ -116,11 +122,7 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
      */
     protected backdrop(ctx: PlayerContext<S>, scrim?: string): string {
         const effectId = panoramaRows.effectOf(ctx.id);
-        if (!effectId || !panoramaRows.isMember(ctx.id)) {
-            panorama.updateLive(ctx.id, {});
-            return "";
-        }
-        panorama.updateLive(ctx.id, effectLiveFor(ctx.settings as EffectSettings, effectId, ctx.player.current_media));
+        if (!effectId || !panoramaRows.isMember(ctx.id)) return "";
         const slice = panorama.isActive(ctx.id) ? panorama.renderSlice(ctx.id) : "";
         return slice ? slice + (scrim ?? SCRIM) : "";
     }

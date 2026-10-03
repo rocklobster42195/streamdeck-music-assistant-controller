@@ -6,10 +6,9 @@ import { coverAccent, rgb } from "../render/cover-color";
 import { playingProvider, providerLogo } from "../ma/provider-icons";
 import { providerBadge } from "../render/provider-badge";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
-import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
-type TrackDialSettings = MaKeySettings & EffectSettings & {
+type TrackDialSettings = MaKeySettings & {
     /** Seconds per tick when seeking. */
     seekStep?: number;
     /** Logo of the music service that is playing, on the cover. */

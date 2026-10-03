@@ -263,14 +263,11 @@
     "pi.queue_timeout": "Zurück zum aktuellen Titel nach",
     "pi.show_title": "Titel",
     "pi.show_title_hint": "Titel und Interpret laufen über die Taste",
-    "pi.panorama_colour": "Panorama-Farbe",
-    "pi.cover_color": "Cover-Farbe",
     "pi.show_covers": "Cover anzeigen",
     "pi.list": "Liste",
     "pi.icon_color": "Symbolfarbe",
     "pi.icon_cover_color": "Cover-Farbe",
     "pi.icon_cover_color_hint": "Symbole in der Farbe dessen, was gerade läuft. Aus: hellgrau (und blau, wenn eingeschaltet).",
-    "pi.cover_color_hint": "Färbt den Effekt in den Farben dessen, was gerade läuft",
     "pi.panorama_help": "Drehen verändert den gewählten Wert (z. B. Tempo), Drücken wechselt ihn – oben auf dem Display erscheint ein Symbol. Tippen synchronisiert die Lyrics neu. Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
     "pi.overlay": "Text",
     "pi.overlay_off": "Aus",
@@ -596,14 +593,11 @@
     "pi.queue_timeout": "Back to the current track after",
     "pi.show_title": "Title",
     "pi.show_title_hint": "Title and artist scroll along the key",
-    "pi.panorama_colour": "Panorama colour",
-    "pi.cover_color": "Cover color",
     "pi.show_covers": "Show covers",
     "pi.list": "List",
     "pi.icon_color": "Icon color",
     "pi.icon_cover_color": "Cover color",
     "pi.icon_cover_color_hint": "Icons take the color of what is playing. Off, they stay light grey (and blue when on).",
-    "pi.cover_color_hint": "Tint the effect with the colors of what is playing",
     "pi.panorama_help": "Rotate changes the chosen value (e.g. speed), push switches it — a small icon shows at the top of the display. Tap to re-sync the lyrics. Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
     "pi.overlay": "Text",
     "pi.overlay_off": "Off",
@@ -4110,88 +4104,6 @@
    ]
   },
   {
-   "key": "pi.panorama_colour",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "Browser",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
-    },
-    {
-     "label": "Group Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
-    },
-    {
-     "label": "Panorama",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
-    },
-    {
-     "label": "Active Player",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
-    },
-    {
-     "label": "Queue",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
-    },
-    {
-     "label": "Track",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
-    },
-    {
-     "label": "Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
-    }
-   ]
-  },
-  {
-   "key": "pi.cover_color",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "Browser",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
-    },
-    {
-     "label": "Group Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
-    },
-    {
-     "label": "Panorama",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
-    },
-    {
-     "label": "Active Player",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
-    },
-    {
-     "label": "Queue",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
-    },
-    {
-     "label": "Track",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
-    },
-    {
-     "label": "Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
-    }
-   ]
-  },
-  {
    "key": "pi.show_covers",
    "group": "pi",
    "usedIn": [
@@ -4388,47 +4300,6 @@
      "label": "Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
-    }
-   ]
-  },
-  {
-   "key": "pi.cover_color_hint",
-   "group": "pi",
-   "usedIn": [
-    {
-     "label": "Browser",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/browser-dial.html"
-    },
-    {
-     "label": "Group Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
-    },
-    {
-     "label": "Panorama",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/panorama-dial.html"
-    },
-    {
-     "label": "Active Player",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/player-dial.html"
-    },
-    {
-     "label": "Queue",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/queue-dial.html"
-    },
-    {
-     "label": "Track",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
-    },
-    {
-     "label": "Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     }
    ]
   },

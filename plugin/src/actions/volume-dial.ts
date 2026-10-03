@@ -7,10 +7,9 @@ import { markedText } from "../render/marked-text";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import { volumeIcon } from "./volume-key";
-import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
-type VolumeDialSettings = MaKeySettings & EffectSettings & {
+type VolumeDialSettings = MaKeySettings & {
     /** Ring in the cover's accent color instead of MAC's blue. */
     ringCoverColor?: boolean;
     /** Percent per tick. */

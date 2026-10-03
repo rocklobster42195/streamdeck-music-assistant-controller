@@ -8,10 +8,9 @@ import { volumeGauge } from "../render/volume-gauge";
 import { markedText } from "../render/marked-text";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
-import type { EffectSettings } from "../render/panorama";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
-type GroupVolumeDialSettings = MaKeySettings & EffectSettings & {
+type GroupVolumeDialSettings = MaKeySettings & {
     /** Ring in the cover's accent color instead of MAC's blue. */
     ringCoverColor?: boolean;
     step?: number;

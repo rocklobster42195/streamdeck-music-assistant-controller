@@ -8,6 +8,7 @@ import { piBridge, trackActions } from "@rocklobster42195/streamdeck-kit/bridge"
 import { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import { maConnection } from "../ma/connection";
 import { macActions, shareActionsTo } from "./mac-actions";
+import { startMacCovers } from "./mac-covers";
 
 /** A level stream some peer offers in its `streams` state. */
 export type OfferedStream = { topic: string; label: string; stereo?: boolean; /** A mic or other input: not music, so not offered. */ input?: boolean };
@@ -41,6 +42,8 @@ export async function startMacBus(): Promise<void> {
     // one effect per row agreed with them
     panorama.connect(b);
     panoramaRows.connect(b);
+    // The players' cover colours for every plugin's Panorama rows (and later keys)
+    startMacCovers(b);
     if (!(await bus.start())) return;
     streamDeck.logger.info(`[deckbus] MA-C in slot ${bus.slot}`);
     maConnection.onChange(shareStatus);

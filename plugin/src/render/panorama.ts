@@ -1,8 +1,8 @@
-import { effectRegistry, PanoramaEngine, PanoramaRows, SharedPanorama } from "@rocklobster42195/streamdeck-kit";
-import type { PlayerMedia } from "music-assistant-client";
+import { PanoramaEngine, PanoramaRows, ROW_COLOR_KEY, SharedPanorama } from "@rocklobster42195/streamdeck-kit";
 import { macActions } from "../bus/mac-actions";
+import { macCovers } from "../bus/mac-covers";
 import { ACCENT } from "./key-image";
-import { coverAccent, rgb } from "./cover-color";
+import { rgb } from "./cover-color";
 
 /**
  * The plugin's one panorama: effects spanning neighbouring dials, shared over deckbus with other
@@ -13,32 +13,25 @@ export const panorama = new SharedPanorama(new PanoramaEngine({ defaultColor: AC
 
 /**
  * One effect per row of dials, agreed with the other plugins (the kit's panorama/rows.ts): the
- * dials register here, the PI's Panorama section chooses the effect and the dials taking part.
+ * dials register here, the PI's Panorama section chooses the effect, the dials taking part and the
+ * row's colour (the cover of a player from MA-C's or another plugin's "covers" on deckbus).
  */
-export const panoramaRows = new PanoramaRows(panorama, { name: "MA-C", actions: macActions });
-
-/** Dial settings around the Panorama (the row itself is stored by the kit: `panorama`, `panoramaMember`). */
-export type EffectSettings = {
-    /** Tint the effect with the cover's accent color (default on). */
-    coverColor?: boolean;
-    [field: string]: unknown;
-};
+export const panoramaRows = new PanoramaRows(panorama, { name: "MA-C", actions: macActions, covers: macCovers });
 
 /**
- * The cover's colour while `coverColor` is on: a live setting, so it wins over picked colours in
- * the whole group, also on other plugins' dials (as HA-C's colour from a lamp does).
+ * Before the row had a colour, each dial had "Cover color" (default on) and followed its own
+ * player. Taken over once into the row (it is the latest choice then): off → the effect's own
+ * colour; a Panorama dial's fixed player (`withPlayer`) → that player's cover (other dials have a
+ * player of their own, which isn't a choice for the row). Returns the settings without the old key.
  */
-export function effectLiveFor(settings: EffectSettings, effectId: string, media: PlayerMedia | null | undefined): Record<string, unknown> {
-    const accent = coverAccent(media);
-    if (settings.coverColor === false || !accent) return {};
-    const color = rgbToHex(accent);
-    const fields = new Set((effectRegistry.get(effectId)?.settingsSchema ?? []).map((f) => f.key));
-    // Effects with their own color fields follow the cover too
-    return { color, ...(fields.has("primaryColor") ? { primaryColor: color } : {}), ...(fields.has("landColor") ? { landColor: color } : {}) };
-}
-
-function rgbToHex([r, g, b]: [number, number, number]): string {
-    return `#${[r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
+export function migrateCoverColor<S extends Record<string, unknown>>(settings: S, device: string, withPlayer = false): S | undefined {
+    if (settings.rowColorTaken === true || Object.keys(settings).length === 0) return undefined;
+    const player = typeof settings.playerId === "string" ? settings.playerId : "";
+    if (settings.coverColor === false) panoramaRows.setRow(device, { settings: { [ROW_COLOR_KEY]: "default" } });
+    else if (withPlayer && player) panoramaRows.setRow(device, { settings: { [ROW_COLOR_KEY]: `cover:MA-C/${player}` } });
+    const rest: Record<string, unknown> = { ...settings };
+    delete rest.coverColor;
+    return { ...rest, rowColorTaken: true } as unknown as S;
 }
 
 /** Stream Deck sends {} for a dial that was just placed and never configured. */
