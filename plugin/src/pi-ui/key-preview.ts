@@ -14,7 +14,8 @@ export class MacKeyPreview extends HTMLElement {
                 <span class="mac-preview-title">${escapeHtml(t(this.getAttribute("label") ?? ""))}</span>
                 <span class="mac-preview-state"></span>
             </div>
-            <div class="mac-preview-line"></div>`;
+            <div class="mac-preview-line"></div>
+            <div class="mac-preview-pick"></div>`;
         this.off = onPiState(() => this.render());
         this.render();
     }
@@ -28,6 +29,7 @@ export class MacKeyPreview extends HTMLElement {
         const line = this.querySelector<HTMLElement>(".mac-preview-line")!;
         const state = this.querySelector<HTMLElement>(".mac-preview-state")!;
 
+        this.renderPicker(p?.state === "no_player");
         const name = p?.playerName ?? "";
         switch (p?.state) {
             case "playing":
@@ -66,5 +68,19 @@ export class MacKeyPreview extends HTMLElement {
                 line.textContent = "";
                 state.textContent = "";
         }
+    }
+
+    /** No player: offer the action's player picker right here (a twin of the one further down, same setting). */
+    private renderPicker(show: boolean): void {
+        const slot = this.querySelector<HTMLElement>(".mac-preview-pick")!;
+        const source = document.querySelector("mac-player-picker:not([global])");
+        if (!show || !source) {
+            slot.replaceChildren();
+            return;
+        }
+        if (slot.firstElementChild) return;
+        const picker = document.createElement("mac-player-picker");
+        for (const a of source.getAttributeNames()) picker.setAttribute(a, source.getAttribute(a) ?? "");
+        slot.append(picker);
     }
 }

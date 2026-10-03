@@ -70,6 +70,12 @@ const scenarios = {
         ...connectedScenario(),
         settings: { audioSource: "de.boriskemper.xair-controller|meters/ch:9", audioSourceName: "Sonos" },
     },
+    // Connected, but the action has no player (no active player yet): the header offers the picker
+    noplayer: {
+        ...connectedScenario(),
+        global: { ...connectedScenario().global, activePlayerId: undefined },
+        preview: { image: iconKey("#777"), state: "no_player" },
+    },
     setup: {
         global: {},
         status: { configured: false, state: "stopped", reachable: false, playerCount: 0 },

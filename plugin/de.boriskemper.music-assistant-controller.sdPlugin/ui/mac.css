@@ -7,6 +7,8 @@
 .mac-preview-state { display: flex; gap: 5px; align-items: center; flex-shrink: 0; font-size: 11px; color: var(--pi-text-3); white-space: nowrap; }
 .mac-preview-line { font-size: 12px; color: var(--pi-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mac-preview-line:empty { display: none; }
+.mac-preview-pick { margin-top: 6px; }
+.mac-preview-pick:empty { display: none; }
 .mac-preview-state[data-tone="ok"] { color: #8fd97a; }
 .mac-preview-state[data-tone="ok"] svg { fill: currentColor; stroke: none; }
 .mac-preview-state[data-tone="error"] { color: var(--pi-error-text); }
