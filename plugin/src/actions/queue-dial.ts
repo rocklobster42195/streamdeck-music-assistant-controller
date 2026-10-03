@@ -106,7 +106,9 @@ export class QueueDial extends MaDialAction<QueueDialSettings> {
         const item = st.items?.get(i);
         if (!item) return { title: "…", icon: ICONS.note };
         const artists = (item.media_item?.artists as { name: string }[] | undefined)?.map((a) => a.name).join(", ");
-        return { title: item.name, subtitle: artists || undefined, image: this.thumb(id, item), icon: ICONS.note, active: i === current };
+        // A queue item's name is "Artist - Title"; with the artists below, show the track's own name
+        const title = artists && item.media_item?.name ? item.media_item.name : item.name;
+        return { title, subtitle: artists || undefined, image: this.thumb(id, item), icon: ICONS.note, active: i === current };
     }
 
     private state(ctx: PlayerContext<QueueDialSettings>): State {
