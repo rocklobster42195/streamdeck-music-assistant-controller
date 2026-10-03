@@ -27,6 +27,7 @@
         "sim:extras": "node tools/sd-sim/extras.mjs sim-out",
         "sim:lyrics": "node tools/sd-sim/lyrics.mjs sim-out",
         "sim:continue": "node tools/sd-sim/continue.mjs sim-out",
+        "sim:list": "node tools/sd-sim/list.mjs sim-out",
         "sim:announce-timer": "node tools/sd-sim/announce-timer.mjs sim-out",
         "showcase": "node tools/sd-sim/showcase.mjs sim-out",
         "pi-shots": "node tools/pi-shots.mjs",

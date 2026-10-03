@@ -142,7 +142,7 @@ The **Active Player** dial does the same with a turn. Rotate to choose the activ
 
 ### Queue dial *(Stream Deck + only)*
 
-Rotate to scroll through the queue, starting at the current track. Each entry shows its cover, title and artist, plus **Now playing**, **Up next** or **Played**. **Push** plays the selected track, and **touch** jumps back to the current one. After a few seconds without input, the dial returns to the current track on its own.
+The queue as a list that scrolls smoothly, one track per click of the dial: cover, title and artist, with the selected track in the middle. The track that is playing has its title in blue and a small wave next to it. **Push** plays the selected track, and **touch** jumps back to the current one. After a few seconds without input, the list glides back to the current track on its own. **Show covers** can be switched off (icons only).
 
 ### Group Volume dial *(Stream Deck + only)*
 
@@ -163,7 +163,7 @@ The **Track**, **Volume**, **Group Volume**, **Queue**, **Browser** and **Player
 
 ### Browser dial *(Stream Deck + only)*
 
-Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The first folder, **Continue listening**, holds the audiobooks and podcast episodes you started. The display shows where you are ("… › By tag › Jazz"), the current entry with its cover, and the position ("3 / 24"). Under **Services** you choose which music services show up (for example only Spotify): the provider list and your library folders then leave the others out.
+Browse **every provider** in Music Assistant (radio directories, streaming services, your files) or your **library**, right on the dial. The first folder, **Continue listening**, holds the audiobooks and podcast episodes you started. The entries are a list that scrolls smoothly, one entry per click of the dial, with the selected one in the middle; when you open a folder, the display shows briefly where you are ("… › By tag › Jazz"). What is playing (the track, or the playlist or album it was started from) has its title in blue and a small wave next to it, and a folder opens on it. After playing something, the list stays open. Under **Services** you choose which music services show up (for example only Spotify): the provider list and your library folders then leave the others out.
 
 | Input | Effect |
 |---|---|
@@ -179,6 +179,7 @@ Settings:
 - **When pressed**: play now, play next or add to queue
 - **Playable folders**: open them or play them
 - **Timeout**: seconds without input before returning to "now playing"
+- **Show covers**: off shows icons only
 
 Providers that can't be browsed are hidden automatically.
 
@@ -292,6 +293,7 @@ npm run sim:deckbus       # Panorama audio source: a fake level source on deckbu
 npm run sim:browser       # Browser dial: RadioBrowser → By tag → Jazz → play a station, library start
 npm run sim:players       # Player key/dial: switch the active player; with MA_TRANSFER_PLAYER also music-follows-me
 npm run sim:queue-group   # Queue dial (jump to a track) and Group Volume dial (temporary group, restored afterwards)
+npm run sim:list          # Browser and Queue dial lists: library, Albums, scrolling, back — read-only, no playback
 node tools/sd-sim/motion.mjs sim-out   # frames over time: marquee on key and dial, gliding volume ring
 node tools/sd-sim/panorama.mjs sim-out # panorama effects across dials and as dial backgrounds
 npm run sim:all           # all of the above

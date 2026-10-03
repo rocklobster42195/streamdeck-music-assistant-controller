@@ -1,8 +1,8 @@
 import { action } from "@elgato/streamdeck";
 import { type BrowseEntry, BrowserModel, LIBRARY_ROOT, MaBrowseSource, PROVIDERS_ROOT } from "../ma/browser";
 import { maConnection } from "../ma/connection";
-import { getCachedCover, loadCover } from "@rocklobster42195/streamdeck-kit";
-import { browserIdleStrip, browserStrip } from "../render/browser-strip";
+import { getCachedCover, ListController, type ListRow, loadCover } from "@rocklobster42195/streamdeck-kit";
+import { browserIdleStrip, entryIcon, messageStrip } from "../render/browser-strip";
 import { ACCENT } from "../render/key-image";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
@@ -16,6 +16,8 @@ type BrowserDialSettings = MaKeySettings & {
     option?: "replace" | "next" | "add";
     /** Music provider instances to show (e.g. only Spotify); unset = all. */
     providers?: string[];
+    /** false: icons only in the list. */
+    showCovers?: boolean;
 };
 
 type State = {
@@ -24,9 +26,17 @@ type State = {
     idleTimer?: ReturnType<typeof setTimeout>;
     flash?: { text: string; color: string; until: number };
     startKey?: string;
+    /** The scrolling list of the current level (kit). */
+    list: ListController;
+    /** The level the list was set up for (a new one resets it). */
+    level?: unknown;
+    /** Just started from the dial: shown as playing until MA reports it. */
+    pending?: { uri: string; until: number };
 };
 
 const THUMB = 160;
+/** List rows draw covers at 32 px; 80 is MA's smallest proxy size above that. */
+const ROW_THUMB = 80;
 
 /**
  * Browse every provider (or your library) with the dial.
@@ -54,7 +64,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         const st = this.state(ctx.id);
         const flash = st.flash && st.flash.until > Date.now() ? st.flash : undefined;
         if (!st.browsing) return { image: this.renderIdle(ctx, flash) };
-        return { image: this.renderBrowse(ctx.id, st, flash, this.backdrop(ctx)), preview: { track: st.model.breadcrumb.join(" › ") } };
+        return { image: this.renderBrowse(ctx, st, flash, this.backdrop(ctx)), preview: { track: st.model.breadcrumb.join(" › ") } };
     }
 
     protected override async rotate(ctx: PlayerContext<BrowserDialSettings>, ticks: number): Promise<void> {
@@ -64,13 +74,14 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
             await this.beginBrowsing(ctx);
             return;
         }
-        st.model.rotate(ticks);
+        st.list.rotate(ticks);
     }
 
     protected override async push(ctx: PlayerContext<BrowserDialSettings>): Promise<void> {
         const st = this.state(ctx.id);
         this.touchIdleTimer(ctx);
         if (!st.browsing) return this.beginBrowsing(ctx);
+        this.syncCursor(st);
         const entry = st.model.current;
         if (!entry) return;
         const play = entry.playable && (!entry.isFolder || ctx.settings.folderAction === "play");
@@ -81,8 +92,9 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         }
         if (!entry.uri) throw new Error("entry has no uri");
         await ctx.ma.playMedia(ctx.queue?.queue_id ?? ctx.player.player_id, entry.uri, ctx.settings.option ?? "replace");
-        this.flash(ctx.id, `▶ ${entry.name}`, ACCENT);
-        this.stopBrowsing(ctx.id, 1500);
+        // The list stays open; the row shows as playing right away (MA confirms it a moment later)
+        st.pending = { uri: entry.uri, until: Date.now() + 8000 };
+        this.render(ctx.id);
     }
 
     protected override async touch(ctx: PlayerContext<BrowserDialSettings>, hold: boolean): Promise<void> {
@@ -93,7 +105,15 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
             await this.beginBrowsing(ctx, true);
             return;
         }
+        this.syncCursor(st);
         if (!st.model.back()) this.stopBrowsing(ctx.id);
+    }
+
+    /** The model's cursor follows the list's marked row (push and back read it). */
+    private syncCursor(st: State): void {
+        const l = st.model.level;
+        const marked = st.list.marked;
+        if (l && marked >= 0 && marked !== l.index) st.model.rotate(marked - l.index);
     }
 
     // ---- state ----------------------------------------------------------------------------------
@@ -105,7 +125,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
                 const list = this.instances.get(id)?.settings.providers;
                 return Array.isArray(list) ? new Set(list) : undefined;
             };
-            st = { model: new BrowserModel(this.source.filtered(filter), () => this.render(id)), browsing: false };
+            st = { model: new BrowserModel(this.source.filtered(filter), () => this.render(id)), browsing: false, list: new ListController({ id, redraw: () => this.render(id) }) };
             this.states.set(id, st);
         }
         return st;
@@ -129,6 +149,8 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         clearTimeout(st.idleTimer);
         const stop = () => {
             st.browsing = false;
+            st.level = undefined;
+            st.list.dispose();
             this.render(id);
         };
         if (afterMs) st.idleTimer = setTimeout(stop, afterMs);
@@ -177,32 +199,57 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
         });
     }
 
-    private renderBrowse(id: string, st: State, flash: State["flash"], backdrop: string): string {
+    private renderBrowse(ctx: PlayerContext<BrowserDialSettings>, st: State, flash: State["flash"], backdrop: string): string {
         const m = st.model;
-        const entry = m.current;
-        const typeLabel = entry && !entry.isFolder ? this.t(`pi.type_${entry.mediaType}`) : "";
-        return browserStrip({
-            breadcrumb: m.breadcrumb,
-            flash,
-            loading: m.loading,
-            entry,
-            thumb: entry ? this.thumb(id, entry) : undefined,
-            position: m.position,
-            // Unknown media types have no translation — then show nothing rather than the raw key
-            subtitle: typeLabel.startsWith("pi.") ? undefined : typeLabel,
-            texts: { loading: this.t("key.browse_loading"), empty: this.t("key.browse_empty") },
-            backdrop,
-        });
+        const level = m.level;
+        if (flash) return messageStrip(flash.text, flash.color, backdrop);
+        const base = { row: () => undefined, accent: ACCENT, backdrop };
+        if (m.loading || !level) return st.list.render({ ...base, state: "loading" });
+        const playing = this.playingUris(ctx, st);
+        if (st.level !== level) {
+            st.level = level;
+            st.list.reset(level.items.length, this.startIndex(level, playing), m.breadcrumb.join(" › "));
+        }
+        if (!level.items.length) return st.list.render({ ...base, state: { message: this.t("key.browse_empty") } });
+        return st.list.render({ ...base, row: (i) => this.row(ctx.id, level.items[i], playing), showImages: ctx.settings.showCovers !== false });
     }
 
-    private thumb(id: string, entry: BrowseEntry): string | undefined {
-        return entry.imageProxyId ? this.thumbFor(id, entry.imageProxyId) : undefined;
+    private row(id: string, entry: BrowseEntry | undefined, playing: Set<string>): ListRow | undefined {
+        if (!entry) return undefined;
+        // Unknown media types have no translation — then show nothing rather than the raw key
+        const type = entry.isFolder ? "" : this.t(`pi.type_${entry.mediaType}`);
+        return {
+            title: entry.name,
+            subtitle: entry.subtitle ?? (type && !type.startsWith("pi.") ? type : undefined),
+            image: entry.imageProxyId ? this.thumbFor(id, entry.imageProxyId, ROW_THUMB) : undefined,
+            icon: entryIcon(entry),
+            folder: entry.isFolder,
+            // Playable entries only (a playlist, an album); plain navigation folders never count
+            active: entry.playable && !!entry.uri && playing.has(entry.uri),
+        };
     }
 
-    private thumbFor(id: string, proxyId: string): string | undefined {
+    /** What counts as playing: the current track, the source the queue was started from, a fresh push. */
+    private playingUris(ctx: PlayerContext<BrowserDialSettings>, st: State): Set<string> {
+        const uris = new Set<string>();
+        const add = (uri: unknown) => typeof uri === "string" && uri && uris.add(uri);
+        add(ctx.player.current_media?.uri);
+        add((ctx.queue?.sources as { uri?: string }[] | undefined)?.[0]?.uri);
+        if (st.pending && st.pending.until > Date.now()) add(st.pending.uri);
+        return uris;
+    }
+
+    /** A level opens on its playing entry; going back keeps where you were. */
+    private startIndex(level: { items: BrowseEntry[]; index: number }, playing: Set<string>): number {
+        if (level.index > 0) return level.index;
+        const i = level.items.findIndex((e) => e.playable && !!e.uri && playing.has(e.uri));
+        return Math.max(0, i);
+    }
+
+    private thumbFor(id: string, proxyId: string, size = THUMB): string | undefined {
         const ma = maConnection.ma;
         if (!ma) return undefined;
-        const url = ma.imageProxyUrl(proxyId, THUMB);
+        const url = ma.imageProxyUrl(proxyId, size);
         const hit = getCachedCover(url);
         if (!hit) void loadCover(url).then((c) => c && this.render(id));
         return hit;
