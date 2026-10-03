@@ -1,7 +1,7 @@
 // <mac-key-preview label="Play/Pause"> — compact header: action name, player status and what plays.
 // No key image: the Stream Deck app already shows keys and dial displays live (hardware test
 // 2026-09-24), and the image took up a lot of room — dials most of all.
-import { escapeHtml, icon, t } from "@rocklobster42195/streamdeck-kit/pi";
+import { escapeHtml, icon, sd, t } from "@rocklobster42195/streamdeck-kit/pi";
 import { onPiState, piState } from "./state";
 
 export class MacKeyPreview extends HTMLElement {
@@ -70,7 +70,11 @@ export class MacKeyPreview extends HTMLElement {
         }
     }
 
-    /** No player: offer the action's player picker right here (a twin of the one further down, same setting). */
+    /**
+     * No player: offer a player choice right here. An action that follows the active player gets the
+     * global active-player choice (one pick serves every following action); an action bound to a
+     * player that is gone gets a twin of its own picker further down (same setting, stays in sync).
+     */
     private renderPicker(show: boolean): void {
         const slot = this.querySelector<HTMLElement>(".mac-preview-pick")!;
         const source = document.querySelector("mac-player-picker:not([global])");
@@ -78,9 +82,19 @@ export class MacKeyPreview extends HTMLElement {
             slot.replaceChildren();
             return;
         }
-        if (slot.firstElementChild) return;
+        const key = source.getAttribute("setting") ?? "playerId";
+        const following = !source.hasAttribute("no-follow") && !sd.settings[key];
+        const mode = following ? "global" : "own";
+        if (slot.dataset.mode === mode && slot.firstElementChild) return;
+        slot.dataset.mode = mode;
         const picker = document.createElement("mac-player-picker");
-        for (const a of source.getAttributeNames()) picker.setAttribute(a, source.getAttribute(a) ?? "");
-        slot.append(picker);
+        if (following) {
+            picker.setAttribute("setting", "activePlayerId");
+            picker.setAttribute("global", "");
+            picker.setAttribute("no-follow", "");
+        } else {
+            for (const a of source.getAttributeNames()) picker.setAttribute(a, source.getAttribute(a) ?? "");
+        }
+        slot.replaceChildren(picker);
     }
 }
