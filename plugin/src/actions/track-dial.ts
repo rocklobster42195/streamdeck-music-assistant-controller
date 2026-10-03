@@ -1,6 +1,6 @@
 import streamDeck, { action } from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
-import { LatestSender, marqueeNeeded, marqueeSvg, frames, formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
+import { LatestSender, MarqueeStepper, marqueeNeeded, marqueeSvg, measureArialWidth, frames, formatTime, image, mdi, progressBar, stripImage, text, scrimBox, textWidth } from "@rocklobster42195/streamdeck-kit";
 import { ICONS } from "../render/key-image";
 import { coverAccent, rgb } from "../render/cover-color";
 import { playingProvider, providerLogo } from "../ma/provider-icons";
@@ -20,12 +20,16 @@ type TrackDialSettings = MaKeySettings & EffectSettings & {
  * Cover, title, artist and progress on the touch strip.
  * Rotate: seek · Push: next track · Touch: play/pause.
  */
+/** Title and artist scroll in counted steps; the artist starts a few ticks later (400 ms). */
+type MarqueeState = { key: string; title: MarqueeStepper; artist: MarqueeStepper; artistDelay: number };
+const ARTIST_DELAY_TICKS = 5;
+
 @action({ UUID: "de.boriskemper.music-assistant-controller.track-dial" })
 export class TrackDial extends MaDialAction<TrackDialSettings> {
     private readonly seekers = new Map<string, LatestSender<number>>();
     private ticker: ReturnType<typeof setInterval> | undefined;
     /** When the current title started scrolling, per dial (reset when the title changes). */
-    private readonly marquee = new Map<string, { key: string; startedAt: number }>();
+    private readonly marquee = new Map<string, MarqueeState>();
 
     constructor() {
         super();
@@ -61,13 +65,16 @@ export class TrackDial extends MaDialAction<TrackDialSettings> {
         const artist = media.artist ?? media.album ?? "";
         const m = this.marqueeState(id, `${title}
 ${artist}`);
-        const now = Date.now();
-        parts.push(marqueeSvg({ id: `t${id}`, text: title, x, y: 28, width: w, fontSize: 14, weight: "bold", startedAt: m.startedAt, now, speed: 25 }));
-        parts.push(marqueeSvg({ id: `a${id}`, text: artist, x, y: 47, width: w, fontSize: 11, color: "#a4a4aa", startedAt: m.startedAt + 400, now, speed: 25 }));
+        // Counted steps (kit MarqueeStepper): a late frame shows the next step instead of jumping
+        parts.push(marqueeSvg({ id: `t${id}`, text: title, x, y: 28, width: w, fontSize: 14, weight: "bold", startedAt: 0, now: 0, offset: m.title.offset(measureArialWidth(title, 14)) }));
+        parts.push(marqueeSvg({ id: `a${id}`, text: artist, x, y: 47, width: w, fontSize: 11, color: "#a4a4aa", startedAt: 0, now: 0, offset: m.artist.offset(measureArialWidth(artist, 11)) }));
         if (marqueeNeeded(title, 14, w) || marqueeNeeded(artist, 11, w)) {
             // Keep redrawing while the text scrolls and this dial still shows this media
             frames.run(`track-${id}`, () => {
                 if (!this.instances.has(id) || this.marquee.get(id)?.key !== m.key) return false;
+                m.title.tick();
+                if (m.artistDelay > 0) m.artistDelay--;
+                else m.artist.tick();
                 this.render(id);
                 return true;
             });
@@ -92,10 +99,10 @@ ${artist}`);
         return { image: stripImage(parts, undefined, this.backdrop(ctx, scrim)) };
     }
 
-    private marqueeState(id: string, key: string): { key: string; startedAt: number } {
+    private marqueeState(id: string, key: string): MarqueeState {
         const cur = this.marquee.get(id);
         if (cur?.key === key) return cur;
-        const next = { key, startedAt: Date.now() };
+        const next = { key, title: new MarqueeStepper(25), artist: new MarqueeStepper(25), artistDelay: ARTIST_DELAY_TICKS };
         this.marquee.set(id, next);
         return next;
     }
