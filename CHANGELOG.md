@@ -19,6 +19,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 - Sleep Timer: fades the whole group out at the end (30 s by default, adjustable), stops, and restores every speaker's own volume. Music Assistant itself stops without fading.
 
 ### Changed
+- **Covers load more robustly** (kit cover cache, with Sonos Controller's hardware lessons): one request per cover however many dials ask, at most two at once per server, a hanging request is cut off after 8 s, and a cover that failed rests 5 s instead of being retried on every redraw.
 - **Scrolling text** on the Track dial and in the lists moves in counted whole-pixel steps (from the kit): no more occasional hitch when a frame reaches the device late.
 - Requires Stream Deck **7.1** or later and runs on Node.js 24 (Node 20 is out of support). The plugin now uses Node's built-in WebSocket.
 - Sleep Timer: the key counts down in minutes and seconds ("29:59", from an hour on "1h05").
