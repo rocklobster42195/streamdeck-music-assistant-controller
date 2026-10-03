@@ -45,6 +45,8 @@ const TIMING_SHOW_MS = 2500;
 const NOTICE_MS = 1500;
 const OVERLAY_FADE_MS = 400;
 const FUNCTION_SHOW_MS = 1500;
+/** Turning an effect value: ticks are batched and sent to the row this often. */
+const TUNE_MS = 100;
 
 
 /**
@@ -58,6 +60,8 @@ const FUNCTION_SHOW_MS = 1500;
 export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
     private readonly instances = new Map<string, Instance>();
     private readonly persistTimers = new Map<string, ReturnType<typeof setTimeout>>();
+    private readonly tuneTimers = new Map<string, ReturnType<typeof setTimeout>>();
+    private readonly pendingTicks = new Map<string, { key: string; ticks: number }>();
     private readonly overlay = new PanoramaOverlay();
     /** Per run (key = its first dial): until when the timing scale shows, and a short notice. */
     private readonly timingUntil = new Map<string, number>();
@@ -157,10 +161,28 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             this.saveOffset(run.ids);
             return;
         }
-        if (current) panorama.setControl(ev.action.id, current);
-        panorama.rotate(ev.action.id, ev.payload.ticks);
-        if (current) this.show(run.ids[0], this.fnShownUntil, FUNCTION_SHOW_MS);
-        this.persistRuntime(ev.action.id);
+        // An effect value turns through the row (the kit's PanoramaRows.tune), so it works also while
+        // another plugin's dial runs the effect and this one follows; ticks go out every TUNE_MS
+        const field = this.tunable(ev.action.id, current);
+        if (!field) return;
+        const pending = this.pendingTicks.get(ev.action.id) ?? { key: field.key, ticks: 0 };
+        pending.ticks += ev.payload.ticks;
+        this.pendingTicks.set(ev.action.id, pending);
+        if (!this.tuneTimers.has(ev.action.id)) {
+            this.tuneTimers.set(ev.action.id, setTimeout(() => {
+                this.tuneTimers.delete(ev.action.id);
+                const p = this.pendingTicks.get(ev.action.id);
+                this.pendingTicks.delete(ev.action.id);
+                if (p?.ticks) panoramaRows.tune(ev.action.id, p.key, p.ticks);
+                this.render(ev.action.id);
+            }, TUNE_MS));
+        }
+        this.show(run.ids[0], this.fnShownUntil, FUNCTION_SHOW_MS);
+    }
+
+    /** The row's effect value behind a function id (its control id, e.g. "count", or its key). */
+    private tunable(id: string, fn: string | undefined) {
+        return fn ? panoramaRows.tunables(id).find((f) => (f.control ?? f.key) === fn) : undefined;
     }
 
     override onDialDown(ev: DialDownEvent<PanoramaDialSettings>): void {
@@ -173,7 +195,6 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             const current = this.currentFunction(ev.action.id, key, lead);
             const next = list[(list.indexOf(current ?? list[0]) + 1) % list.length];
             this.fn.set(key, next);
-            if (next !== "timing") panorama.setControl(ev.action.id, next);
             this.timingUntil.delete(key);
             this.show(key, this.fnShownUntil, FUNCTION_SHOW_MS);
             return;
@@ -202,7 +223,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
 
     /** What turning can change on this dial: lyrics timing (lyrics on), then the effect's values. */
     private functions(id: string, lead: PanoramaDialSettings | undefined): string[] {
-        return [...(lead?.text === "lyrics" ? ["timing"] : []), ...panorama.controls(id)];
+        return [...(lead?.text === "lyrics" ? ["timing"] : []), ...panoramaRows.tunables(id).map((f) => f.control ?? f.key)];
     }
 
     private currentFunction(id: string, runKey: string, lead: PanoramaDialSettings | undefined): string | undefined {
@@ -257,7 +278,8 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const fnUntil = this.fnShownUntil.get(runKey) ?? 0;
         const fn = this.currentFunction(id, runKey, lead);
         if (fn && fnUntil > now) {
-            const level = fn === "timing" ? undefined : panorama.indicator(id);
+            const f = fn === "timing" ? undefined : this.tunable(id, fn);
+            const level = f ? ((f.value - f.min) / Math.max(1e-9, f.max - f.min)) * 100 : undefined;
             return functionOverlay(geometry, functionIcon(fn), streamDeck.i18n.t(`key.fn_${fn}`), level, fade(fnUntil));
         }
         const n = this.notice.get(runKey);
