@@ -34,7 +34,7 @@ import {
     mdiTimerOutline,
     mdiSpeakerWireless,
 } from "@mdi/js";
-import type { PiChoice, PiChoiceOption } from "@rocklobster42195/streamdeck-kit/pi";
+import { initChoiceOptions as kitInitChoiceOptions } from "@rocklobster42195/streamdeck-kit/pi";
 
 const ICONS: Record<string, string> = {
     timer: mdiTimerOutline,
@@ -72,10 +72,7 @@ const ICONS: Record<string, string> = {
     podcast: mdiPodcast,
 };
 
-/** Read each <pi-choice data-options> and hand the parsed options (with icon paths) to the element. */
+/** Hand the tiles' icons to the kit's <pi-choice data-options> reader. */
 export function initChoiceOptions(): void {
-    document.querySelectorAll<PiChoice & HTMLElement>("pi-choice[data-options]").forEach((el) => {
-        const raw = JSON.parse(el.dataset.options ?? "[]") as PiChoiceOption[];
-        el.options = raw.map((o) => ({ ...o, icon: o.icon ? ICONS[o.icon] : undefined }));
-    });
+    kitInitChoiceOptions(ICONS);
 }
