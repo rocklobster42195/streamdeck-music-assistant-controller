@@ -33,6 +33,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 
 ### Fixed
 - Announcement key with a timer: the announcement no longer gets lost when the key is not on screen (another page or profile) or is moved while the countdown runs. The timer runs plugin-wide; if the plugin was down or Music Assistant unreachable at the end, it is announced up to 5 minutes late (before: 1 minute, and no retry).
+- Announcement key with a timer: a timed announcement is played once. Before, it could repeat up to several times, because Music Assistant answers only after the announcement has played and the plugin took the long wait for a failure and tried again.
 - Announcement settings: a chosen icon shows again when the settings are reopened. Before, the voice list's answer could overwrite it and the panel showed "Default icon".
 - Key colors are consistent: blue = on, grey = off (shuffle, repeat, crossfade, "Don't stop the music", sleep timer, inactive player/source/screen), dark = not available right now (e.g. skip on a radio stream).
 - Play/Pause and other keys show the right state when playback was started outside Music Assistant (e.g. in the Sonos app); Play/Pause then controls the player directly.

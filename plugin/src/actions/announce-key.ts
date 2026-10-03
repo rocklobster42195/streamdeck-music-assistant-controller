@@ -129,13 +129,14 @@ export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
             const current = (id && this.instances.get(id)?.settings) || this.timerSettings.get(timerId);
             const ctx = current && this.playerContext(id ?? timerId, current);
             if (!ctx) return false; // not connected yet: try again
+            // Once the announcement went out the timer is done, also when an error comes back:
+            // retrying a sent one repeated it (hardware 2026-10-02, three times a minute apart)
             try {
                 await this.announce(ctx);
-                return true;
             } catch (e) {
                 streamDeck.logger.warn("[announce] timer announcement failed", e);
-                return false;
             }
+            return true;
         });
     }
 
@@ -168,9 +169,21 @@ export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
                   ? groupMembers(groupLeader(player)).filter((p) => p.available)
                   : [player];
         const volume = settings.volume && settings.volume > 0 ? settings.volume : undefined;
+        // MA answers only once the announcement has played (chime, speech, music back) — far longer
+        // than the client's default 10 s, so wait for it instead of reporting a false failure
         await Promise.all(
             targets.map((p) =>
-                ma.playAnnouncement(p.player_id, { message, ttsEngine: settings.ttsEngine || undefined, volume, preAnnounce: settings.preAnnounce !== false }),
+                ma.send(
+                    "players/cmd/play_announcement",
+                    {
+                        player_id: p.player_id,
+                        message,
+                        ...(settings.ttsEngine ? { tts_engine: settings.ttsEngine } : {}),
+                        ...(volume !== undefined ? { volume_level: Math.round(volume) } : {}),
+                        pre_announce: settings.preAnnounce !== false,
+                    },
+                    { timeoutMs: ANNOUNCE_TIMEOUT_MS },
+                ),
             ),
         );
         this.doneUntil.set(id, Date.now() + DONE_FLASH_MS);
@@ -206,6 +219,9 @@ export class AnnounceKey extends MaKeyAction<AnnounceSettings> {
         void inst.action.setSettings(next);
     }
 }
+
+/** How long MA may take to play an announcement before we give up waiting for its answer. */
+const ANNOUNCE_TIMEOUT_MS = 180_000;
 
 function minutesOf(s: AnnounceSettings): number {
     return Math.min(180, Math.max(1, Math.round(s.minutes ?? 10)));
