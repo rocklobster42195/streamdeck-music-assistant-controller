@@ -8,7 +8,7 @@ import { CoverBoard, PlayerBoard, positionNow, readableCoverColor, type CoverEnt
 import type { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import type { Player, PlayerQueue } from "music-assistant-client";
 import { maConnection } from "../ma/connection";
-import { coverAccent } from "../render/cover-color";
+import type { PlayerMedia } from "music-assistant-client";
 
 export const macCovers = new CoverBoard("MA-C");
 export const macPlayers = new PlayerBoard("MA-C");
@@ -62,14 +62,30 @@ function publish(): void {
         if (now && !playing.has(p.player_id)) since.set(p.player_id, Date.now());
         if (now) playing.add(p.player_id);
         else playing.delete(p.player_id);
-        const accent = coverAccent(p.current_media);
-        const color = accent ? readableCoverColor(accent) : undefined;
+        const vivid = vividPaletteColor(p.current_media);
+        const color = vivid ? readableCoverColor(vivid) : undefined;
         const name = groupName(p);
-        if (color) covers.push({ player: p.player_id, name, color, playing: now, since: since.get(p.player_id) ?? 0 });
+        if (color) covers.push({ player: p.player_id, name, color, playing: now, since: since.get(p.player_id) ?? 0, ...(p.provider === "sonos" ? { device: p.player_id } : {}) });
         players.push(entryOf(p, queue, name, now, color));
     }
     macCovers.publish(covers);
     macPlayers.publish(players);
+}
+
+/**
+ * The colour shared on deckbus: the most colourful of MA's palette colours, made readable by the
+ * kit (brightened). Not MA-C's own ring colour (coverAccent: the accent when it is bright enough),
+ * because a pale accent next to a coloured primary gave a washed-out colour, e.g. a light beige
+ * for a dark teal cover, where SO-C shows the teal (seen 2026-10-04).
+ */
+function vividPaletteColor(media: PlayerMedia | null | undefined): [number, number, number] | undefined {
+    const p = media?.palette;
+    const saturation = ([r, g, b]: [number, number, number]) => {
+        const max = Math.max(r, g, b);
+        return max ? (max - Math.min(r, g, b)) / max : 0;
+    };
+    const all = [p?.accent, p?.primary, p?.on_dark, p?.background_dark].filter((c): c is [number, number, number] => Array.isArray(c) && c.length === 3);
+    return all.reduce<[number, number, number] | undefined>((best, c) => (!best || saturation(c) > saturation(best) ? c : best), undefined);
 }
 
 /** "Küche", or "Küche + 2" for a group of three. */
@@ -81,7 +97,8 @@ function groupName(p: Player): string {
 
 function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlaying: boolean, color: string | undefined): PlayerEntry {
     const media = p.current_media;
-    const features = new Set(p.supported_features ?? []);
+    // Not in the client's Player type (an extra field of MA's)
+    const features = new Set(Array.isArray(p.supported_features) ? (p.supported_features as string[]) : []);
     const group = (p.group_members?.length ?? 0) > 1;
     const duration = media?.duration || queue?.current_item?.duration || undefined;
     const can: TransportCommand[] = ["play-pause", "play", "pause"];
