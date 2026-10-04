@@ -1,6 +1,6 @@
 import { PanoramaEngine, PanoramaRows, ROW_COLOR_KEY, SharedPanorama } from "@rocklobster42195/streamdeck-kit";
 import { macActions } from "../bus/mac-actions";
-import { macCovers } from "../bus/mac-covers";
+import { macCovers } from "../bus/mac-players";
 import { ACCENT } from "./key-image";
 import { rgb } from "./cover-color";
 

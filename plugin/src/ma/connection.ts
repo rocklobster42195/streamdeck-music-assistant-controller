@@ -9,6 +9,8 @@ export type GlobalSettings = {
     maToken?: string;
     /** Target of every action whose player setting is "Active player". */
     activePlayerId?: string;
+    /** Other plugins' keys may control MA-C's players over deckbus (default on). */
+    othersMayControlPlayers?: boolean;
 };
 
 /** Value of an action's `playerId` setting that means "follow the active player". */

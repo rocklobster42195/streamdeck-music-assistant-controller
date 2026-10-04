@@ -200,7 +200,7 @@ When a key can't do its job, it tells you: **Setup** means connection details ar
 
 MA-C talks to other Stream Deck plugins on your computer through **deckbus**, a small open bus between plugins. You don't need to set anything up: when the plugins run, they find each other.
 
-**Offers:** whether MA-C is connected to Music Assistant.
+**Offers:** whether MA-C is connected to Music Assistant, and its **players**: what each one plays (title, cover, position, volume), so other plugins' keys can show and control them, for example a Sonos Controller key that you point at your TV's player in Music Assistant. Controlling them is on by default. A Sonos speaker that both plugins know counts once: commands go through Sonos Controller (directly to the speaker), title and cover come from MA-C while Music Assistant plays on it.
 
 **Uses:** audio levels for the Panorama's **Moves with**, for example the channels of your mixer from XR-C (X-Air Controller). MA-C subscribes to a level only while a Panorama dial that uses it is visible.
 
