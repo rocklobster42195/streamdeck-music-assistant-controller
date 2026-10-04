@@ -266,8 +266,8 @@
     "pi.show_covers": "Cover anzeigen",
     "pi.list": "Liste",
     "pi.icon_color": "Symbolfarbe",
-    "pi.icon_cover_color": "Cover-Farbe",
-    "pi.icon_cover_color_hint": "Symbole in der Farbe dessen, was gerade läuft. Aus: hellgrau (und blau, wenn eingeschaltet).",
+    "pi.key_color_default": "Standard",
+    "pi.key_color_default_hint": "Hellgrau, blau wenn eingeschaltet, wie bisher.",
     "pi.panorama_help": "Drehen verändert den gewählten Wert (z. B. Tempo), Drücken wechselt ihn – oben auf dem Display erscheint ein Symbol. Tippen synchronisiert die Lyrics neu. Mehrere Panorama-Dials – oder Track-/Lautstärke-Dials mit demselben Hintergrund – nebeneinander ergeben eine Szene über den ganzen Touchstreifen.",
     "pi.overlay": "Text",
     "pi.overlay_off": "Aus",
@@ -596,8 +596,8 @@
     "pi.show_covers": "Show covers",
     "pi.list": "List",
     "pi.icon_color": "Icon color",
-    "pi.icon_cover_color": "Cover color",
-    "pi.icon_cover_color_hint": "Icons take the color of what is playing. Off, they stay light grey (and blue when on).",
+    "pi.key_color_default": "Default",
+    "pi.key_color_default_hint": "Light grey, blue when on, as before.",
     "pi.panorama_help": "Rotate changes the chosen value (e.g. speed), push switches it — a small icon shows at the top of the display. Tap to re-sync the lyrics. Put several Panorama dials — or Track/Volume dials with the same background — next to each other for one scene across the whole touch strip.",
     "pi.overlay": "Text",
     "pi.overlay_off": "Off",
@@ -4192,9 +4192,14 @@
    ]
   },
   {
-   "key": "pi.icon_cover_color",
+   "key": "pi.key_color_default",
    "group": "pi",
    "usedIn": [
+    {
+     "label": "*",
+     "where": "settings",
+     "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/key-color.js"
+    },
     {
      "label": "Announcement",
      "where": "settings",
@@ -4248,7 +4253,7 @@
    ]
   },
   {
-   "key": "pi.icon_cover_color_hint",
+   "key": "pi.key_color_default_hint",
    "group": "pi",
    "usedIn": [
     {
