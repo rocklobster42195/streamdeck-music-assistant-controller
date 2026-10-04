@@ -14,12 +14,21 @@ import type { KeyPreview, KeyPreviewState } from "../pi/protocol";
 import { CoverFader, type CoverFrame } from "@rocklobster42195/streamdeck-kit";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { ICONS, renderKeyImage, withIconTint, withKeyMarker } from "../render/key-image";
-import { coverAccent, rgb } from "../render/cover-color";
+import { coverAccent } from "../render/cover-color";
+import { readableCoverColor, resolveKeyColor } from "@rocklobster42195/streamdeck-kit";
+import { macPlayers } from "../bus/mac-players";
+import { panoramaRows } from "../render/panorama";
 
 /** Every MAC key has a player target; "" / undefined = follow the active player. */
 export type MaKeySettings = {
     playerId?: string;
-    /** Icons in the cover's color instead of light grey / blue (off: as usual). */
+    /**
+     * The icons' colour (grill 2026-10-04, the kit's <pi-key-color>): "grey" (default: light grey,
+     * blue when on, as before), "cover" (what the player plays), "row" (the Panorama row colour of
+     * the key's Stream Deck) or "#RRGGBB".
+     */
+    keyColor?: string;
+    /** Before keyColor: true = "cover" (taken over on appear). */
     iconCoverColor?: boolean;
     /** Marker icon (MDI name, e.g. "mdiPot") to tell keys apart; shown in the top-right corner. */
     marker?: string;
@@ -64,6 +73,9 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
     constructor() {
         super();
         maConnection.onChange(() => this.renderAll());
+        // A key colour may follow a cover (also another plugin's, for a Sonos speaker) or a row
+        macPlayers.onChange(() => this.renderAll());
+        panoramaRows.onRowColor(() => this.renderAll());
     }
 
     /** Render the key for a connected player. */
@@ -79,6 +91,11 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
 
     override onWillAppear(ev: WillAppearEvent<S>): void {
         if (!ev.action.isKey()) return;
+        // The old "Cover color" switch becomes the colour choice "Cover"
+        if (ev.payload.settings.keyColor === undefined && ev.payload.settings.iconCoverColor === true) {
+            ev.payload.settings = { ...ev.payload.settings, keyColor: "cover" };
+            void ev.action.setSettings(ev.payload.settings);
+        }
         this.instances.set(ev.action.id, { action: ev.action, settings: ev.payload.settings });
         this.render(ev.action.id);
     }
@@ -111,6 +128,22 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
         }
     }
 
+    /** The key colour (undefined: MA-C's own light grey and blue, as before). */
+    private tintOf(inst: Instance<S>, player: Player): string | undefined {
+        const choice = inst.settings.keyColor;
+        if (!choice || choice === "grey") return undefined;
+        if (choice === "cover") {
+            // The player as the deck shows it (a Sonos speaker in SO-C's colour, see mac-players.ts);
+            // a group member follows its leader
+            const leader = player.synced_to ? maConnection.player(player.synced_to) ?? player : player;
+            const shared = macPlayers.resolve(leader.provider === "sonos" ? `device:${leader.player_id}` : `MA-C/${leader.player_id}`)?.color;
+            const own = coverAccent(leader.current_media);
+            return shared ?? (own ? readableCoverColor(own) : undefined);
+        }
+        if (choice === "row") return panoramaRows.rowColor(inst.action.device.id);
+        return resolveKeyColor(choice);
+    }
+
     protected renderAll(): void {
         for (const id of this.instances.keys()) this.render(id);
     }
@@ -125,9 +158,7 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
         // The marker also shows while MA is offline, so the key stays recognisable
         const marker = mdiPath(inst.settings.marker);
         if (ctx) {
-            // "Cover color" option: icons take the color of what is playing
-            const tint = inst.settings.iconCoverColor === true ? coverAccent(ctx.player.current_media) : undefined;
-            out = withKeyMarker(marker, () => withIconTint(tint && rgb(tint, ""), () => this.renderPlayer(ctx)));
+            out = withKeyMarker(marker, () => withIconTint(this.tintOf(inst, ctx.player), () => this.renderPlayer(ctx)));
             const s = ctx.queue?.state ?? ctx.player.playback_state;
             previewState = s === "playing" ? "playing" : s === "paused" ? "paused" : "idle";
         } else {

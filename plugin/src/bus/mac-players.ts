@@ -7,6 +7,7 @@
 import { CoverBoard, PlayerBoard, positionNow, readableCoverColor, type CoverEntry, type PlayerEntry, type Transport, type TransportCommand } from "@rocklobster42195/streamdeck-kit";
 import type { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import type { Player, PlayerQueue } from "music-assistant-client";
+import streamDeck from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import type { PlayerMedia } from "music-assistant-client";
 
@@ -59,7 +60,7 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
         case "shuffle": return void (q ? await ma.setShuffle(q, value as boolean) : await ma.call("players/cmd/shuffle", { player_id: id, shuffle_enabled: value as boolean }));
         case "repeat": return void (q ? await ma.setRepeat(q, value as "off" | "all" | "one") : await ma.call("players/cmd/repeat", { player_id: id, repeat_mode: value as "off" | "all" | "one" }));
     }
-});
+}, { failed: (t, e) => streamDeck.logger.warn(`[deckbus] ${t.command} on ${t.player} for another plugin failed`, e) });
 
 function publish(): void {
     const covers: CoverEntry[] = [];

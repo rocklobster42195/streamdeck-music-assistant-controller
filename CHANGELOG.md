@@ -5,6 +5,8 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **Colour for every key:** **Default** (as before), **Cover**, **Like Panorama** (the row colour of the Stream Deck) or a **fixed** colour, instead of the "Cover color" switch (switched-on keys take **Cover** over). For a Sonos speaker, Cover is the same colour Sonos Controller shows.
+- **Seek with Next/Previous:** hold the key to switch it to seeking; every tap then jumps by 5, 10, 15 or 30 seconds, quick taps add up to one jump. Next/Previous now act on release.
 - **Cover colour for other plugins:** the most colourful colour of Music Assistant's palette, brightened (before: the pale accent, which could turn salmon on a teal cover). MA-C's own rings keep their colour.
 - **Players on deckbus:** MA-C shares its players with other plugins (title, cover, position, volume, what each can do) and carries out their commands (play/pause, next, seek, volume, shuffle, repeat …), on by default. A Sonos speaker that Sonos Controller also knows is one player: commands go through Sonos Controller, title and cover come from MA-C while Music Assistant plays on it.
 - **Browser and Queue dials as a scrolling list** (from the kit): entries stacked with the selected one in the middle, gliding smoothly one entry per click of the dial (two on a fast spin), the neighbours dimmed above and below. What is playing has its title in blue with a small wave; a folder opens on it. The breadcrumb shows briefly when you open a folder, the position number is gone (a thin scrollbar instead), long titles of the selected entry scroll. After playing from the Browser the list stays open. New switch **Show covers** (off: icons only).

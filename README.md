@@ -47,7 +47,7 @@ The screenshots are rendered by the simulator against a stand-in Music Assistant
 
 ## Actions
 
-All keys can show their icons in the **cover color** of what is playing (option **Cover color**). A **marker** (any Material Design Icon, e.g. a pot for the kitchen) tells keys apart: it sits in the top-right corner, in the center of the mute key's ring when that shows no number, and on the Player key it replaces the speaker as the room's icon. The Volume and Group Volume dials show it in front of their second line.
+All keys have a **Colour** for their icons: **Default** (light grey, blue when on, as before), **Cover** (the colour of what is playing; for a Sonos speaker the same colour Sonos Controller shows), **Like Panorama** (the row colour of this Stream Deck, so keys and dials match) or a **fixed** colour. Keys that had **Cover color** switched on take **Cover** over. A **marker** (any Material Design Icon, e.g. a pot for the kitchen) tells keys apart: it sits in the top-right corner, in the center of the mute key's ring when that shows no number, and on the Player key it replaces the speaker as the room's icon. The Volume and Group Volume dials show it in front of their second line.
 
 | Action | Controller |
 |---|---|
@@ -100,6 +100,8 @@ Audiobooks and podcasts come from Music Assistant's providers (for example Audio
 ### Playback Control
 
 One key per function: **previous, next, shuffle, repeat, crossfade** or **"Don't stop the music"**. Toggles show their state: blue with a frame means on. Repeat cycles through off, all and one. Next and previous are dimmed while a live radio stream plays, because there is nothing to skip.
+
+**Seek:** hold Next or Previous to switch the key to seeking. Every tap then jumps forward or back by the seek step (5, 10, 15 or 30 seconds); quick taps add up and go out as one jump, so six quick taps of 10 seconds jump a minute at once. The key shows the jump (`+1:00`) and otherwise where the track is. It switches back by itself after 3 seconds without a tap, or when you hold it again. Next and previous act when you let go of the key.
 
 **Crossfade** only works when the player runs in Music Assistant's **flow mode**. Without it, Sonos speakers play the tracks one by one and the crossfade setting has no effect. The crossfade key's settings show whether flow mode is on for its player and can switch it; switching briefly restarts what is playing. Music Assistant never crossfades tracks from the same album unless that is allowed in its settings, and with Spotify some tracks may fail to play in flow mode.
 
