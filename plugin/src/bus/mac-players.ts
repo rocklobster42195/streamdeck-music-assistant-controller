@@ -40,7 +40,16 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
         case "pause": return void (q ? await ma.pause(q) : await ma.call("players/cmd/pause", { player_id: id }));
         case "next": return void (q ? await ma.next(q) : await ma.call("players/cmd/next", { player_id: id }));
         case "previous": return void (q ? await ma.previous(q) : await ma.call("players/cmd/previous", { player_id: id }));
-        case "seek": return void (q ? await ma.seek(q, Math.max(0, value as number)) : await ma.call("players/cmd/seek", { player_id: id, position: Math.max(0, value as number) }));
+        case "seek": {
+            const target = Math.max(0, value as number);
+            if (!q) return void (await ma.call("players/cmd/seek", { player_id: id, position: target }));
+            // As the Track dial does: the new position at once (lyrics, progress), then measured
+            // again once the speaker restarted MA's stream, so the lyrics stay in time
+            maConnection.patchQueue(q, { elapsed_time: target, elapsed_time_last_updated: Date.now() / 1000 }, 2500);
+            await ma.seek(q, target);
+            setTimeout(() => void maConnection.resync(id).catch(() => {}), 2000);
+            return;
+        }
         case "volume": return void (group ? await ma.setGroupVolume(id, value as number) : await ma.setVolume(id, value as number));
         case "volume-by": {
             const now = (group ? player.group_volume : player.volume_level) ?? 0;
