@@ -1,14 +1,19 @@
 // MA-C on deckbus (see the kit's docs/deckbus-protocol.md): tells the other plugins whether Music
 // Assistant is connected, shares the Panorama with other plugins' dials next to MA-C's, and lists
 // the level streams other plugins offer (XR-C's channels, later SA-C's system audio) for the
-// Panorama's "Audio source".
+// Panorama's "Audio source". Pauses or lowers chosen players during a call on the computer (state
+// "call" from SA-C; the kit's CallReaction).
 import { panorama, panoramaRows } from "../render/panorama";
 import streamDeck from "@elgato/streamdeck";
 import { piBridge, trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
+import { CALL_SETTING, CallReaction } from "@rocklobster42195/streamdeck-kit";
 import { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import { maConnection } from "../ma/connection";
 import { macActions, shareActionsTo } from "./mac-actions";
-import { startMacPlayers } from "./mac-players";
+import { macPlayers, startMacPlayers } from "./mac-players";
+
+/** "When a call starts on this computer": per player nothing / pause / lower (global setting callReaction). */
+const macCalls = new CallReaction(macPlayers, streamDeck.logger, () => piBridge.schedulePush());
 
 /** A level stream some peer offers in its `streams` state. */
 export type OfferedStream = { topic: string; label: string; stereo?: boolean; /** A mic or other input: not music, so not offered. */ input?: boolean };
@@ -45,6 +50,12 @@ export async function startMacBus(): Promise<void> {
     // The players for every plugin: cover colours for Panorama rows, players for keys (other
     // plugins may control them unless the user switched it off)
     startMacPlayers(b, { allow: () => maConnection.globalSettings.othersMayControlPlayers !== false });
+    macCalls.connect(b);
+    const readCallChoices = () => macCalls.setChoices(maConnection.globalSettings[CALL_SETTING]);
+    maConnection.onChange(readCallChoices);
+    readCallChoices();
+    piBridge.addPusher(() => [macCalls.piMessage()]);
+    macPlayers.onChange(() => piBridge.schedulePush());
     if (!(await bus.start())) return;
     streamDeck.logger.info(`[deckbus] MA-C in slot ${bus.slot}`);
     maConnection.onChange(shareStatus);

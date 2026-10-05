@@ -5,6 +5,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Added
+- **When a call starts on this computer:** per player **Nothing**, **Pause** or **Lower** (to a quarter), in the settings window of the Play/Pause, Volume and Player keys and the Volume dial (the same everywhere); afterwards it plays again and the volume comes back, unless you changed it. The call comes from System Audio Controller (Teams, Discord, Zoom …); the section shows while it runs. Off by default.
 - **Colour for every key:** **Default** (as before), **Cover**, **Like Panorama** (the row colour of the Stream Deck) or a **fixed** colour, instead of the "Cover color" switch (switched-on keys take **Cover** over). For a Sonos speaker, Cover is the same colour Sonos Controller shows.
 - **Seek with Next/Previous:** hold the key to switch it to seeking; every tap then jumps by 5, 10, 15 or 30 seconds, quick taps add up to one jump. Next/Previous now act on release.
 - **Cover colour for other plugins:** the most colourful colour of Music Assistant's palette, brightened (before: the pale accent, which could turn salmon on a teal cover). MA-C's own rings keep their colour.

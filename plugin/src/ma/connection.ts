@@ -11,6 +11,8 @@ export type GlobalSettings = {
     activePlayerId?: string;
     /** Other plugins' keys may control MA-C's players over deckbus (default on). */
     othersMayControlPlayers?: boolean;
+    /** "When a call starts on this computer", per player (the kit's CallReaction). */
+    callReaction?: Record<string, string>;
 };
 
 /** Value of an action's `playerId` setting that means "follow the active player". */
