@@ -39,7 +39,8 @@ export function macBus(): DeckBus | undefined {
  * dials can subscribe while it still starts (subscriptions reach every peer that connects later).
  */
 export async function startMacBus(): Promise<void> {
-    bus = new DeckBus({ id: "de.boriskemper.music-assistant-controller", name: "MA-C", version: streamDeck.info.plugin.version, caps: [] });
+    // DECKBUS_NAMESPACE: simulator runs keep to their own bus, away from the plugins on the real deck
+    bus = new DeckBus({ id: "de.boriskemper.music-assistant-controller", name: "MA-C", version: streamDeck.info.plugin.version, caps: [], namespace: process.env.DECKBUS_NAMESPACE || undefined });
     const b = bus;
     shareActionsTo((key, value) => b.setState(key, value));
     b.setState("actions", macActions.list());

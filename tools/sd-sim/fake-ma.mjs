@@ -25,7 +25,7 @@ export const ALBUMS = {
 };
 
 /** An abstract cover: gradient, soft circles and a wave — no text, nothing real. */
-function coverSvg([a, b, c]) {
+export function coverSvg([a, b, c]) {
     return `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
 <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>
 <radialGradient id="r" cx="0.7" cy="0.3" r="0.6"><stop offset="0" stop-color="#ffffff" stop-opacity="0.45"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>

@@ -124,5 +124,7 @@ describe("TrackAdvance while paused", () => {
         const v = t.view(q(A, 5, 1016, { state: "paused" }), 1020);
         expect(v.current_item).toBe(B);
         expect(v.elapsed_time).toBe(5);
+        // also right after the change, under the 3 s a real "previous" restarts at
+        expect(t.view(q(A, 1.5, 1016, { state: "paused" }), 1020).current_item).toBe(B);
     });
 });
