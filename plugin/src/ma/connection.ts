@@ -1,7 +1,8 @@
 import streamDeck from "@elgato/streamdeck";
-import { MusicAssistantClient, type ConnectionState, type MaEvent, type PlaybackState, type Player, type PlayerQueue, currentElapsed } from "music-assistant-client";
+import { MusicAssistantClient, type ConnectionState, type MaEvent, type MediaPalette, type PlaybackState, type Player, type PlayerMedia, type PlayerQueue, type QueueItem, currentElapsed } from "music-assistant-client";
 import { OptimisticStore } from "@rocklobster42195/streamdeck-kit";
 import { PlayingHold } from "./playing-hold";
+import { TrackAdvance } from "./track-advance";
 
 /** Plugin-wide settings, shared by all actions (Stream Deck global settings). */
 export type GlobalSettings = {
@@ -36,6 +37,11 @@ class MaConnection {
     private readonly playingHold = new PlayingHold();
     private holdTimer: ReturnType<typeof setTimeout> | undefined;
     private readonly optimisticPlayers = new OptimisticStore<Player>();
+    /** The track that really plays, ahead of MA's late reports (see TrackAdvance). */
+    private readonly advance = new TrackAdvance();
+    private readonly advanceTimers = new Map<string, ReturnType<typeof setTimeout>>();
+    /** Palettes of upcoming tracks (by image proxy id), fetched ahead so a predicted track has its colour. */
+    private readonly palettes = new Map<string, MediaPalette | null>();
 
     /** False until the global settings arrived — render a neutral "loading" state until then. */
     get loaded(): boolean {
@@ -99,10 +105,18 @@ class MaConnection {
         return currentElapsed(queue, this.client?.serverNow() ?? Date.now() / 1000);
     }
 
-    /** A player as the keys should show it (with optimistic overrides applied). */
+    /**
+     * A player as the keys should show it (with optimistic overrides applied). While its queue is
+     * known to play another track than MA still reports (see TrackAdvance), that track is its media.
+     */
     player(playerId: string | undefined): Player | undefined {
-        const p = playerId ? this.client?.players.get(playerId) : undefined;
-        return p && this.optimisticPlayers.apply(p.player_id, p);
+        const raw = playerId ? this.client?.players.get(playerId) : undefined;
+        const p = raw && this.optimisticPlayers.apply(raw.player_id, raw);
+        const media = p?.current_media;
+        if (!p || !media?.queue_item_id) return p;
+        const shown = this.queueFor(p)?.current_item;
+        if (!shown || shown.queue_item_id === media.queue_item_id) return p;
+        return { ...p, current_media: this.mediaOf(shown, media) };
     }
 
     /**
@@ -118,9 +132,52 @@ class MaConnection {
         if (source && source !== player.player_id && !queues.has(source)) return undefined;
         for (const id of [player.active_source, player.synced_to, player.active_group, player.player_id]) {
             const q = id ? queues.get(id) : undefined;
-            if (q) return this.bridged(this.optimisticQueues.apply(q.queue_id, q));
+            if (q) return this.bridged(this.advanced(this.optimisticQueues.apply(q.queue_id, q)));
         }
         return undefined;
+    }
+
+    /** The queue with the track that really plays (see TrackAdvance), re-rendered at its predicted end. */
+    private advanced(queue: PlayerQueue): PlayerQueue {
+        const now = this.client?.serverNow() ?? Date.now() / 1000;
+        const view = this.advance.view(queue, now);
+        this.prefetchPalette(view.next_item ?? undefined);
+        const left = this.advance.nextChangeIn(queue, now);
+        clearTimeout(this.advanceTimers.get(queue.queue_id));
+        if (left !== undefined) this.advanceTimers.set(queue.queue_id, setTimeout(() => this.emit(), left * 1000 + 50));
+        return view;
+    }
+
+    /** A queue item as a player's media (for a track MA hasn't reported yet). */
+    private mediaOf(item: QueueItem, before: PlayerMedia): PlayerMedia {
+        const m = item.media_item as { name?: string; uri?: string; artists?: { name?: string }[]; album?: { name?: string } | null } | null | undefined;
+        const proxy = item.image?.proxy_id;
+        return {
+            uri: m?.uri ?? before.uri,
+            media_type: before.media_type,
+            title: m?.name ?? item.name,
+            artist: m?.artists?.map((a) => a.name).filter(Boolean).join("/") || null,
+            album: m?.album?.name ?? null,
+            image_url: proxy && this.client ? this.client.imageProxyUrl(proxy, 512) : null,
+            palette: (proxy && this.palettes.get(proxy)) || null,
+            duration: item.duration ?? null,
+            queue_item_id: item.queue_item_id,
+            source_id: before.source_id,
+        };
+    }
+
+    /** Fetches the palette of an upcoming track's cover once (MA computes it the same way for players). */
+    private prefetchPalette(item: QueueItem | undefined): void {
+        const proxy = item?.image?.proxy_id;
+        if (!proxy || this.palettes.has(proxy) || !this.client) return;
+        this.palettes.set(proxy, null);
+        while (this.palettes.size > 50) this.palettes.delete(this.palettes.keys().next().value!);
+        this.client
+            .call("metadata/get_image_palette", { image_id: proxy })
+            .then((palette) => {
+                if (palette) this.palettes.set(proxy, palette as MediaPalette);
+            })
+            .catch(() => this.palettes.delete(proxy));
     }
 
     /** Shows a queue that stopped playing only a moment ago as still playing (see PlayingHold). */
