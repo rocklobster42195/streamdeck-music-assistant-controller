@@ -27,7 +27,11 @@ export function startMacPlayers(bus: DeckBus, o: { allow: () => boolean }): void
     maConnection.onChange(publish);
     // The speaker's real play state from the plugin that talks to it (SO-C for Sonos): MA learns
     // of a pause there late or never (see MaConnection.real)
-    const direct = (device: string) => macPlayers.players().find((p) => p.device === device)?.routes.find((r) => r.peer && r.entry.direct)?.entry.playing;
+    // Only while it plays MA's stream: with its own media (a radio from the Sonos app) MA's queue isn't what plays
+    const direct = (device: string) => {
+        const route = macPlayers.players().find((p) => p.device === device)?.routes.find((r) => r.peer && r.entry.direct);
+        return route && !route.entry.media ? route.entry.playing : undefined;
+    };
     maConnection.setDirectPlaying(direct);
     let lastDirect = "";
     macPlayers.onChange(() => {
