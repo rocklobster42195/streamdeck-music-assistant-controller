@@ -1927,11 +1927,6 @@
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
     },
     {
-     "label": "Play/Pause",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
-    },
-    {
      "label": "Playback Control",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
@@ -2009,11 +2004,6 @@
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
     },
     {
-     "label": "Play/Pause",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
-    },
-    {
      "label": "Playback Control",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
@@ -2080,11 +2070,6 @@
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
     },
     {
-     "label": "Play/Pause",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
-    },
-    {
      "label": "Playback Control",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/playback-control-key.html"
@@ -2144,11 +2129,6 @@
      "label": "Play Item",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-item-key.html"
-    },
-    {
-     "label": "Play/Pause",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
     },
     {
      "label": "Playback Control",
