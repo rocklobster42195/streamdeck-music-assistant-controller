@@ -3,9 +3,13 @@ import { offeredStreams } from "../bus/mac-bus";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
 import { mdiOptions } from "@rocklobster42195/streamdeck-kit/mdi";
+import { playerOptions } from "@rocklobster42195/streamdeck-kit";
+import { macPlayers } from "../bus/mac-players";
 
 /** Lists the property inspectors can ask for via <pi-select source="…"> (and the icon picker). */
 export function registerOptionSources(): void {
+    // The universal transport keys' player: every player on the deck (MA's, Sonos Controller's, the PC's)
+    piBridge.registerOptions("players", () => playerOptions(macPlayers.players()));
     piBridge.registerOptions("tts-engines", async () => {
         const ma = maConnection.ma;
         if (!ma?.isConnected) return [];

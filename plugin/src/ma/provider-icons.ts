@@ -7,6 +7,8 @@ import { maConnection } from "./connection";
 type Logo = { viewBox: [number, number, number, number]; attrs: string; inner: string };
 
 const cache = new Map<string, Logo | null>();
+/** The logos as MA sends them (SVG data URIs), for other plugins' keys on deckbus (`sourceIcon`). */
+const raw = new Map<string, string>();
 const loading = new Set<string>();
 
 /** The provider instance or domain that is playing (e.g. "spotify--k5kUkxwG"); undefined = unknown. */
@@ -15,6 +17,18 @@ export function playingProvider(media: PlayerMedia | null | undefined, queue: Pl
     if (stream) return stream;
     const scheme = media?.uri?.split("://")[0];
     return scheme && scheme !== "library" && scheme !== media?.uri ? scheme : undefined;
+}
+
+/** The provider's logo as MA's SVG data URI, or undefined while it loads (then `redraw`) or when there is none. */
+export function providerIconUri(provider: string, redraw: () => void): string | undefined {
+    if (!cache.has(provider)) void load(provider, redraw);
+    return raw.get(provider);
+}
+
+/** A provider's name for people: "spotify--k5kUkxwG" → "Spotify", "filesystem_smb" → "Filesystem smb". */
+export function providerName(provider: string): string {
+    const domain = provider.split("--")[0].replace(/_/g, " ");
+    return domain.charAt(0).toUpperCase() + domain.slice(1);
 }
 
 /**
@@ -42,7 +56,9 @@ async function load(provider: string, redraw: () => void): Promise<void> {
     loading.add(provider);
     try {
         const uri = await ma.call("providers/icon", { provider, variant: "monochrome" });
-        cache.set(provider, typeof uri === "string" && uri.startsWith("data:image/svg+xml") ? parseLogo(uri) : null);
+        const svg = typeof uri === "string" && uri.startsWith("data:image/svg+xml") ? uri : undefined;
+        cache.set(provider, svg ? parseLogo(svg) : null);
+        if (svg) raw.set(provider, svg);
         redraw();
     } catch {
         cache.set(provider, null);

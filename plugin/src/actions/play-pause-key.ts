@@ -1,112 +1,100 @@
-import { action } from "@elgato/streamdeck";
-import type { PlayerMedia, PlayerQueue } from "music-assistant-client";
+import streamDeck, { action, SingletonAction, type DidReceiveSettingsEvent, type KeyAction, type KeyDownEvent, type WillAppearEvent, type WillDisappearEvent } from "@elgato/streamdeck";
+import { PlayPauseKeys } from "@rocklobster42195/streamdeck-kit";
+import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
+import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
+import { macPlayers } from "../bus/mac-players";
 import { maConnection } from "../ma/connection";
-import { upcomingCrossfade } from "../ma/crossfade-predict";
-import { playingProvider, providerLogo } from "../ma/provider-icons";
-import { providerBadge } from "../render/provider-badge";
-import { getCachedCover, loadCover, frames } from "@rocklobster42195/streamdeck-kit";
-import { ICONS, renderKeyImage } from "../render/key-image";
-import { coverAccent, rgb } from "../render/cover-color";
-import { KeyTitleFader } from "../render/key-title";
-import { COVER_SIZE, type KeyRender, MaKeyAction, type MaKeySettings, type PlayerContext } from "./ma-key-action";
+import type { KeyPreview } from "../pi/protocol";
+import { panoramaRows } from "../render/panorama";
+import { notReadyRender } from "./ma-key-action";
+import { migratePlayPause, type PlayPauseSettings as Settings } from "./play-pause-migrate";
 
-type PlayPauseSettings = MaKeySettings & {
-    showPlayerName?: boolean;
-    showProgress?: boolean;
-    /** Scrolling "title [artist]" at the bottom of the key (as in sonos-controller). */
-    showTitle?: boolean;
-    /** Logo of the music service that is playing, top left. */
-    showProvider?: boolean;
-};
+const PREVIEW_EVERY_MS = 1000;
 
+/** The universal Play/Pause key (the kit's), on the deck's players: MA's, Sonos Controller's, the PC's. */
 @action({ UUID: "de.boriskemper.music-assistant-controller.play-pause-key" })
-export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
-    private readonly title = new KeyTitleFader();
-    /** The next item whose cover a predicted crossfade already faded in, and how far. */
-    private readonly predicted = new Map<string, { itemId: string; mix: number }>();
-    /** Keys whose predicted fade is running right now (drives the redraw ticks). */
-    private readonly fading = new Set<string>();
+export class PlayPauseKey extends SingletonAction<Settings> {
+    private readonly shown = new Map<string, { action: KeyAction<Settings>; settings: Settings; image?: string; title?: string; previewAt?: number; previewKey?: string }>();
+    private readonly keys = new PlayPauseKeys({
+        board: macPlayers,
+        draw: (id, image, title) => this.draw(id, image, title),
+        rowColor: (id) => {
+            const s = this.shown.get(id);
+            return s ? panoramaRows.rowColor(s.action.device.id) : undefined;
+        },
+        markerPath: (name) => mdiPath(name),
+    });
 
-    protected override renderPlayer({ id, ma, player, queue, settings, playerName }: PlayerContext<PlayPauseSettings>): KeyRender {
-        const playing = (queue?.state ?? player.playback_state) === "playing";
-        const media = player.current_media;
-        const accent = rgb(coverAccent(media), "#e0e0e0");
-        // Once MA reports the predicted track, its cover continues from where the prediction left off.
-        const pred = this.predicted.get(id);
-        const current = queue?.current_item?.queue_item_id;
-        const startMix = pred && pred.itemId === current ? pred.mix : 0;
-        if (pred && pred.itemId === current) this.predicted.delete(id);
-        let { cover, previous, mix } = this.coverFrame(id, ma, media, startMix);
-
-        // In flow mode, fade the next cover in along with MA's audio crossfade (see crossfade-predict.ts).
-        const xf = playing && queue ? upcomingCrossfade(queue, maConnection.elapsed(queue)) : undefined;
-        this.fading.delete(id);
-        const nextUrl = xf?.next.image?.proxy_id ? ma.imageProxyUrl(xf.next.image.proxy_id, COVER_SIZE) : undefined;
-        if (xf && nextUrl && cover) {
-            const next = getCachedCover(nextUrl);
-            if (!next) void loadCover(nextUrl).then((c) => c && this.render(id));
-            else {
-                previous = cover;
-                cover = next;
-                mix = xf.mix;
-                this.predicted.set(id, { itemId: xf.next.queue_item_id, mix: xf.mix });
-                if (xf.mix < 1) {
-                    this.fading.add(id);
-                    // Keys otherwise only redraw on events — tick while the fade runs.
-                    frames.run(`xfade-${id}`, () => {
-                        if (!this.fading.has(id) || !this.instances.has(id)) return false;
-                        this.render(id);
-                        return this.fading.has(id);
-                    });
-                }
-            }
-        }
-
-        let progress: number | undefined;
-        if (settings.showProgress && queue && media?.duration) progress = maConnection.elapsed(queue) / media.duration;
-
-        return {
-            image: renderKeyImage({
-                cover,
-                previousCover: previous,
-                coverMix: mix,
-                icon: playing ? (cover ? undefined : ICONS.note) : ICONS.play,
-                color: accent,
-                dimmed: !playing,
-                progress,
-                progressColor: accent,
-                cornerBadge: this.badge(id, settings, media, queue),
-                overlay:
-                    settings.showTitle && media
-                        ? this.title.overlay(id, media.title ? `${media.title}${media.artist ? ` [${media.artist}]` : ""}` : (media.artist ?? ""), () => !!this.instances.get(id)?.settings.showTitle, () => this.render(id))
-                        : undefined,
-            }),
-            title: settings.showPlayerName ? playerName : "",
-        };
+    constructor() {
+        super();
+        // Setting up or reconnecting to MA: a key without a player shows where that stands
+        maConnection.onChange(() => {
+            for (const [id, s] of this.shown) if (!this.keys.player(id)) this.keys.show(id, s.settings);
+        });
     }
 
-    private badge(id: string, settings: PlayPauseSettings, media: PlayerMedia | null | undefined, queue: PlayerQueue | undefined): string | undefined {
-        const provider = settings.showProvider ? playingProvider(media, queue) : undefined;
-        const logo = provider && providerLogo(provider, 13, 13, 22, () => this.render(id));
-        return logo ? providerBadge(24, 24, 18, logo) : undefined;
+    override onWillAppear(ev: WillAppearEvent<Settings>): void {
+        if (!ev.action.isKey()) return;
+        let settings = ev.payload.settings;
+        const migrated = migratePlayPause(settings);
+        if (migrated) {
+            settings = migrated;
+            void ev.action.setSettings(migrated);
+        }
+        this.shown.set(ev.action.id, { action: ev.action, settings });
+        this.keys.show(ev.action.id, settings);
     }
 
-    protected override async press({ ma, player, queue }: PlayerContext<PlayPauseSettings>): Promise<void> {
-        // Playing from a source outside MA (e.g. started in the Sonos app): control the player itself
-        if (!queue) {
-            await ma.call("players/cmd/play_pause", { player_id: player.player_id });
-            return;
-        }
-        // Flip immediately on every key of this queue; the server confirms via events.
-        // Play or pause by what the keys show, not MA's toggle: MA learns of a pause on a Sonos
-        // speaker ~30 s late, and its toggle would pause again meanwhile (seen 2026-10-09)
-        const play = queue.state !== "playing";
-        maConnection.showPlaying(queue.queue_id, play);
+    override onWillDisappear(ev: WillDisappearEvent<Settings>): void {
+        this.shown.delete(ev.action.id);
+        this.keys.hide(ev.action.id);
+        piBridge.forget(ev.action.id);
+    }
+
+    override onDidReceiveSettings(ev: DidReceiveSettingsEvent<Settings>): void {
+        const s = this.shown.get(ev.action.id);
+        if (!s) return;
+        s.settings = ev.payload.settings;
+        this.keys.show(ev.action.id, s.settings);
+    }
+
+    override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         try {
-            await (play ? ma.play(queue.queue_id) : ma.pause(queue.queue_id));
+            await this.keys.press(ev.action.id);
         } catch (e) {
-            maConnection.unpatch(queue.queue_id);
-            throw e;
+            streamDeck.logger.warn("[play-pause] press failed", e);
+            await ev.action.showAlert();
+        }
+    }
+
+    private draw(id: string, image: string, title: string): void {
+        const s = this.shown.get(id);
+        if (!s) return;
+        const player = this.keys.player(id);
+        let state: KeyPreview["state"] = player ? (this.keys.playing(id) ? "playing" : "paused") : "no_player";
+        // No player because MA isn't set up or reachable: say so, as MA-C's other keys do
+        if (!player && !maConnection.ma?.isConnected) {
+            const [out, notReady] = notReadyRender();
+            image = out.image;
+            title = out.title ?? "";
+            state = notReady;
+        }
+        if (image !== s.image) {
+            s.image = image;
+            void s.action.setImage(image);
+        }
+        if (title !== s.title) {
+            s.title = title;
+            void s.action.setTitle(title);
+        }
+        // The settings panel's header: state and track at once, picture changes at most once a second
+        const preview: KeyPreview = { image, state, track: [player?.title, player?.artist].filter(Boolean).join(" · ") || undefined, playerName: player?.name, following: !s.settings.player };
+        const key = `${preview.state}\n${preview.track ?? ""}\n${preview.playerName ?? ""}`;
+        const now = Date.now();
+        if (key !== s.previewKey || !s.previewAt || now - s.previewAt >= PREVIEW_EVERY_MS) {
+            s.previewAt = now;
+            s.previewKey = key;
+            piBridge.updatePreview(id, preview);
         }
     }
 }

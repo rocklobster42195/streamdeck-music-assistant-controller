@@ -223,7 +223,7 @@ export abstract class MaKeyAction<S extends MaKeySettings> extends SingletonActi
 }
 
 /** Key image/title and PI state for the states where no player can be controlled. */
-function notReadyRender(): [KeyRender, KeyPreviewState] {
+export function notReadyRender(): [KeyRender, KeyPreviewState] {
     const t = (key: string) => streamDeck.i18n.t(key);
     const g = maConnection.globalSettings;
     if (!maConnection.loaded) return [{ image: renderKeyImage({ icon: ICONS.connecting, dimmed: true }) }, "offline"];

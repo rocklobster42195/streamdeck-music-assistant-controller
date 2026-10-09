@@ -9,6 +9,7 @@ import type { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import type { Player, PlayerQueue } from "music-assistant-client";
 import streamDeck from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
+import { playingProvider, providerIconUri, providerName } from "../ma/provider-icons";
 import type { PlayerMedia } from "music-assistant-client";
 
 export const macCovers = new CoverBoard("MA-C");
@@ -139,6 +140,8 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
     if (features.has("volume_mute") || group) can.push("mute");
     if (queue) can.push("shuffle", "repeat");
     const repeat = queue?.repeat_mode;
+    // Where it comes from (the universal keys' "source" corner): the music service and its logo
+    const provider = media ? playingProvider(media, queue) : undefined;
     return clean({
         player: p.player_id,
         // MA uses the speaker's own id for Sonos (RINCON_…): the same device SO-C publishes
@@ -161,6 +164,8 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
         shuffle: queue?.shuffle_enabled,
         repeat: repeat === "off" || repeat === "all" || repeat === "one" ? repeat : undefined,
         can,
+        source: provider ? providerName(provider) : undefined,
+        sourceIcon: provider ? providerIconUri(provider, () => maConnection.refresh()) : undefined,
     });
 }
 

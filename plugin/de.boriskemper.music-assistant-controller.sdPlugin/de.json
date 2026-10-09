@@ -99,6 +99,7 @@
 			"gauge_ring": "Ring",
 			"gauge_pie": "Torte",
 			"marker": "Kennzeichnung",
+			"corners": "Ecken",
 			"marker_none": "Keine",
 			"marker_remove": "Entfernen",
 			"marker_hint": "Kleines Icon oben rechts, um Tasten auseinanderzuhalten, z. B. ein Topf für die Küche",
