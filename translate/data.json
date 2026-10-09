@@ -111,6 +111,7 @@
     "pi.gauge_ring": "Ring",
     "pi.gauge_pie": "Torte",
     "pi.marker": "Kennzeichnung",
+    "pi.corners": "Ecken",
     "pi.marker_none": "Keine",
     "pi.marker_remove": "Entfernen",
     "pi.marker_hint": "Kleines Icon oben rechts, um Tasten auseinanderzuhalten, z. B. ein Topf für die Küche",
@@ -441,6 +442,7 @@
     "pi.gauge_ring": "Ring",
     "pi.gauge_pie": "Pie",
     "pi.marker": "Marker",
+    "pi.corners": "Corners",
     "pi.marker_none": "None",
     "pi.marker_remove": "Remove",
     "pi.marker_hint": "A small icon in the top-right corner to tell keys apart, e.g. a pot for the kitchen",
@@ -1962,6 +1964,17 @@
    ]
   },
   {
+   "key": "pi.corners",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
    "key": "pi.marker_none",
    "group": "pi",
    "usedIn": [
@@ -2255,11 +2268,6 @@
    "group": "pi",
    "usedIn": [
     {
-     "label": "Play/Pause",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
-    },
-    {
      "label": "Track",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
@@ -2270,11 +2278,6 @@
    "key": "pi.show_provider_hint",
    "group": "pi",
    "usedIn": [
-    {
-     "label": "Play/Pause",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
-    },
     {
      "label": "Track",
      "where": "settings",
