@@ -146,6 +146,8 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
         player: p.player_id,
         // MA uses the speaker's own id for Sonos (RINCON_…): the same device SO-C publishes
         device: p.provider === "sonos" ? p.player_id : undefined,
+        // A Sonos group's speakers (RINCON_… as well): a key bound to one of them finds the group
+        members: p.provider === "sonos" && group ? p.group_members : undefined,
         name,
         kind: "speaker",
         // What plays comes from MA's queue (not from the Sonos app, a radio, line-in)
