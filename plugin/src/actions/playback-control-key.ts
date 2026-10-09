@@ -166,10 +166,10 @@ export class PlaybackControlKey extends MaKeyAction<PlaybackControlSettings> {
         }
         switch (command) {
             case "next":
-                await ma.next(q);
+                await maConnection.skip(q, "next");
                 return;
             case "previous":
-                await ma.previous(q);
+                await maConnection.skip(q, "previous");
                 return;
             case "shuffle":
                 return toggle(q, { shuffle_enabled: !queue.shuffle_enabled }, () => ma.setShuffle(q, !queue.shuffle_enabled));

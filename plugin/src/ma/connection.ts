@@ -2,7 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import { MusicAssistantClient, type ConnectionState, type MaEvent, type MediaPalette, type PlaybackState, type Player, type PlayerMedia, type PlayerQueue, type QueueItem, currentElapsed } from "music-assistant-client";
 import { OptimisticStore } from "@rocklobster42195/streamdeck-kit";
 import { PlayingHold } from "./playing-hold";
-import { TrackAdvance } from "./track-advance";
+import { skipIndex, TrackAdvance } from "./track-advance";
 
 /** Plugin-wide settings, shared by all actions (Stream Deck global settings). */
 export type GlobalSettings = {
@@ -146,6 +146,17 @@ class MaConnection {
         clearTimeout(this.advanceTimers.get(queue.queue_id));
         if (left !== undefined) this.advanceTimers.set(queue.queue_id, setTimeout(() => this.emit(), left * 1000 + 50));
         return view;
+    }
+
+    /** Next/Previous from the track that really plays, not from the one MA still reports (see skipIndex). */
+    async skip(queueId: string, command: "next" | "previous"): Promise<void> {
+        const client = this.client;
+        if (!client) throw new Error("not connected");
+        const reported = client.queues.get(queueId);
+        const index = reported ? skipIndex(reported, this.advanced(this.optimisticQueues.apply(queueId, reported)), command) : undefined;
+        if (index !== undefined) await client.playIndex(queueId, index);
+        else if (command === "next") await client.next(queueId);
+        else await client.previous(queueId);
     }
 
     /** A queue item as a player's media (for a track MA hasn't reported yet). */

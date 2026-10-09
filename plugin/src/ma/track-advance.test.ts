@@ -95,3 +95,22 @@ describe("TrackAdvance", () => {
         expect(t.nextChangeIn(q(A, 90, 1000), 1001)).toBeUndefined();
     });
 });
+
+describe("skipIndex", async () => {
+    const { skipIndex } = await import("./track-advance");
+    const reported = (index: number) => ({ queue_id: "q", current_index: index, items: 3 }) as PlayerQueue;
+
+    it("leaves Next/Previous to MA while its index is the shown one", () => {
+        expect(skipIndex(reported(1), reported(1), "next")).toBeUndefined();
+    });
+
+    it("counts from the shown track while MA still reports the one before (the late report)", () => {
+        expect(skipIndex(reported(0), reported(1), "next")).toBe(2);
+        expect(skipIndex(reported(0), reported(1), "previous")).toBe(0);
+    });
+
+    it("doesn't run past the queue's ends", () => {
+        expect(skipIndex(reported(1), reported(2), "next")).toBeUndefined();
+        expect(skipIndex(reported(1), reported(0), "previous")).toBeUndefined();
+    });
+});

@@ -39,8 +39,8 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
         case "play-pause": return void (q ? await ma.playPause(q) : await ma.call("players/cmd/play_pause", { player_id: id }));
         case "play": return void (q ? await ma.play(q) : await ma.call("players/cmd/play", { player_id: id }));
         case "pause": return void (q ? await ma.pause(q) : await ma.call("players/cmd/pause", { player_id: id }));
-        case "next": return void (q ? await ma.next(q) : await ma.call("players/cmd/next", { player_id: id }));
-        case "previous": return void (q ? await ma.previous(q) : await ma.call("players/cmd/previous", { player_id: id }));
+        case "next": return void (q ? await maConnection.skip(q, "next") : await ma.call("players/cmd/next", { player_id: id }));
+        case "previous": return void (q ? await maConnection.skip(q, "previous") : await ma.call("players/cmd/previous", { player_id: id }));
         case "seek": {
             const target = Math.max(0, value as number);
             if (!q) return void (await ma.call("players/cmd/seek", { player_id: id, position: target }));

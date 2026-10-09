@@ -78,6 +78,18 @@ export class TrackAdvance {
     }
 }
 
+/**
+ * Where Next/Previous should go when MA's own index lags the shown track (the late report after a
+ * skip): MA counts from its index, so a second Next within ~12 s of the first only restarted the
+ * same track (seen 2026-10-09). Undefined: MA's own next/previous is right.
+ */
+export function skipIndex(reported: PlayerQueue, shown: PlayerQueue, command: "next" | "previous"): number | undefined {
+    const at = shown.current_index;
+    if (at === null || at === undefined || at === reported.current_index) return undefined;
+    const to = command === "next" ? at + 1 : at - 1;
+    return to >= 0 && (!reported.items || to < reported.items) ? to : undefined;
+}
+
 type Shown = {
     itemId: string;
     index: number;

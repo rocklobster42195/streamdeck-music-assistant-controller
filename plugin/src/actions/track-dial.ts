@@ -118,7 +118,7 @@ ${artist}`);
     protected override async push({ ma, player, queue }: PlayerContext<TrackDialSettings>): Promise<void> {
         if (!queue) throw new Error("player has no queue");
         if (player.current_media?.media_type === "radio") throw new Error("nothing to skip on a live stream");
-        await ma.next(queue.queue_id);
+        await maConnection.skip(queue.queue_id, "next");
     }
 
     protected override async touch({ ma, queue }: PlayerContext<TrackDialSettings>): Promise<void> {
