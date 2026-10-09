@@ -224,6 +224,8 @@ class MaConnection {
     selectablePlayers(): Player[] {
         return [...(this.client?.players.values() ?? [])]
             .filter((p) => p.enabled !== false && !p.hide_in_ui)
+            // As the keys show them (optimistic values, the track that really plays)
+            .map((p) => this.player(p.player_id) ?? p)
             .sort((a, b) => (a.display_name ?? a.name).localeCompare(b.display_name ?? b.name));
     }
 
