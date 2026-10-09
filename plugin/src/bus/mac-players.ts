@@ -36,9 +36,15 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
     const q = queue?.queue_id;
     const group = (player.group_members?.length ?? 0) > 1;
     switch (command) {
-        case "play-pause": return void (q ? await ma.playPause(q) : await ma.call("players/cmd/play_pause", { player_id: id }));
-        case "play": return void (q ? await ma.play(q) : await ma.call("players/cmd/play", { player_id: id }));
-        case "pause": return void (q ? await ma.pause(q) : await ma.call("players/cmd/pause", { player_id: id }));
+        case "play-pause":
+            if (q) maConnection.showPlaying(q, queue.state !== "playing");
+            return void (q ? await ma.playPause(q) : await ma.call("players/cmd/play_pause", { player_id: id }));
+        case "play":
+            if (q) maConnection.showPlaying(q, true);
+            return void (q ? await ma.play(q) : await ma.call("players/cmd/play", { player_id: id }));
+        case "pause":
+            if (q) maConnection.showPlaying(q, false);
+            return void (q ? await ma.pause(q) : await ma.call("players/cmd/pause", { player_id: id }));
         case "next": return void (q ? await maConnection.skip(q, "next") : await ma.call("players/cmd/next", { player_id: id }));
         case "previous": return void (q ? await maConnection.skip(q, "previous") : await ma.call("players/cmd/previous", { player_id: id }));
         case "seek": {

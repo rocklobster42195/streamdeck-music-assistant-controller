@@ -98,7 +98,7 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
             return;
         }
         // Flip immediately on every key of this queue; the server confirms via events.
-        maConnection.patchQueue(queue.queue_id, { state: queue.state === "playing" ? "paused" : "playing" });
+        maConnection.showPlaying(queue.queue_id, queue.state !== "playing");
         try {
             await ma.playPause(queue.queue_id);
         } catch (e) {

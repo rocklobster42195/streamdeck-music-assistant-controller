@@ -148,6 +148,24 @@ class MaConnection {
         return view;
     }
 
+    /**
+     * Play/pause as the keys should show it while MA catches up. MA learns of a pause on a Sonos
+     * speaker ~30 s late and counts the time on meanwhile, so the track seemed to end early and the
+     * next cover came far too soon (seen 2026-10-09). A pause holds the time where it was until MA
+     * reports it (or 40 s); play lets MA's time count again.
+     */
+    showPlaying(queueId: string, playing: boolean): void {
+        const reported = this.client?.queues.get(queueId);
+        if (!reported) return;
+        if (playing) {
+            this.optimisticQueues.clear(queueId, ["elapsed_time", "elapsed_time_last_updated"]);
+            this.patchQueue(queueId, { state: "playing" });
+            return;
+        }
+        const at = this.elapsed(this.advanced(this.optimisticQueues.apply(queueId, reported)));
+        this.patchQueue(queueId, { state: "paused", elapsed_time: at, elapsed_time_last_updated: this.client?.serverNow() ?? Date.now() / 1000 }, 40_000);
+    }
+
     /** Next/Previous from the track that really plays, not from the one MA still reports (see skipIndex). */
     async skip(queueId: string, command: "next" | "previous"): Promise<void> {
         const client = this.client;
