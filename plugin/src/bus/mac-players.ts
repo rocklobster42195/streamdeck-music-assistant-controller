@@ -85,6 +85,14 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
         case "mute": return void (group ? await ma.setGroupMute(id, value as boolean) : await ma.setMute(id, value as boolean));
         case "shuffle": return void (q ? await ma.setShuffle(q, value as boolean) : await ma.call("players/cmd/shuffle", { player_id: id, shuffle_enabled: value as boolean }));
         case "repeat": return void (q ? await ma.setRepeat(q, value as "off" | "all" | "one") : await ma.call("players/cmd/repeat", { player_id: id, repeat_mode: value as "off" | "all" | "one" }));
+        case "crossfade":
+            if (!q) throw new Error("transport: crossfade needs MA's queue");
+            maConnection.patchQueue(q, { crossfade_enabled: value as boolean });
+            return void (await ma.setCrossfade(q, value as boolean));
+        case "autoplay":
+            if (!q) throw new Error("transport: Don't stop the music needs MA's queue");
+            maConnection.patchQueue(q, { autoplay_enabled: value as boolean });
+            return void (await ma.setAutoplay(q, value as boolean));
     }
 }, { failed: (t, e) => streamDeck.logger.warn(`[deckbus] ${t.command} on ${t.player} for another plugin failed`, e) });
 
@@ -142,7 +150,7 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
     if (duration && (queue || features.has("seek"))) can.push("seek");
     if (features.has("volume_set") || group) can.push("volume", "volume-by");
     if (features.has("volume_mute") || group) can.push("mute");
-    if (queue) can.push("shuffle", "repeat");
+    if (queue) can.push("shuffle", "repeat", "crossfade", "autoplay");
     const repeat = queue?.repeat_mode;
     // Where it comes from (the universal keys' "source" corner): the music service and its logo
     const provider = media ? playingProvider(media, queue) : undefined;
@@ -169,6 +177,8 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
         muted: (group ? p.group_volume_muted : p.volume_muted) ?? undefined,
         shuffle: queue?.shuffle_enabled,
         repeat: repeat === "off" || repeat === "all" || repeat === "one" ? repeat : undefined,
+        crossfade: queue?.crossfade_enabled,
+        autoplay: queue?.autoplay_enabled,
         can,
         source: provider ? providerName(provider) : undefined,
         sourceIcon: provider ? providerIconUri(provider, () => maConnection.refresh()) : undefined,
