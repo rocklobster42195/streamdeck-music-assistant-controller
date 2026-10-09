@@ -35,14 +35,10 @@ export class TrackAdvance {
         }
         const elapsed = currentElapsed(queue, now);
         let s = this.shown.get(queue.queue_id);
-        // The track before the one shown, its time running on: the speaker's late report
-        if (
-            s &&
-            queue.state === "playing" &&
-            current.queue_item_id === s.previousId &&
-            now < s.holdUntil &&
-            elapsed > this.restartS
-        ) {
+        // The track before the one shown, its time running on: the speaker's late report. Also while
+        // paused: a pause right after a change showed the old cover again (seen 2026-10-09)
+        if (s && current.queue_item_id === s.previousId && now < s.holdUntil && elapsed > this.restartS) {
+            if (queue.state !== "playing") return { ...queue, current_item: s.item, current_index: s.index, next_item: s.next ?? null };
             return this.predictFrom(queue, s, now) ?? held(queue, s, now);
         }
         if (!s || s.itemId !== current.queue_item_id) {

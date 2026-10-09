@@ -41,6 +41,10 @@ class MaConnection {
     private readonly advance = new TrackAdvance();
     private readonly advanceTimers = new Map<string, ReturnType<typeof setTimeout>>();
     /** Palettes of upcoming tracks (by image proxy id), fetched ahead so a predicted track has its colour. */
+    /** Whether a speaker really plays (SO-C on deckbus); undefined: nobody knows better than MA. */
+    private directPlaying: (deviceId: string) => boolean | undefined = () => undefined;
+    /** When a speaker's real play state last parted from MA's report, per queue (server seconds). */
+    private readonly partedAt = new Map<string, number>();
     private readonly palettes = new Map<string, MediaPalette | null>();
 
     /** False until the global settings arrived — render a neutral "loading" state until then. */
@@ -132,9 +136,43 @@ class MaConnection {
         if (source && source !== player.player_id && !queues.has(source)) return undefined;
         for (const id of [player.active_source, player.synced_to, player.active_group, player.player_id]) {
             const q = id ? queues.get(id) : undefined;
-            if (q) return this.bridged(this.advanced(this.optimisticQueues.apply(q.queue_id, q)));
+            if (q) return this.bridged(this.shown(q));
         }
         return undefined;
+    }
+
+    /** A queue as the keys show it: the speaker's real play state, our overrides, the track that really plays. */
+    private shown(queue: PlayerQueue): PlayerQueue {
+        return this.advanced(this.optimisticQueues.apply(queue.queue_id, this.real(queue)));
+    }
+
+    /** Whether a speaker really plays, by its device id, from the plugin that talks to it directly. */
+    setDirectPlaying(fn: (deviceId: string) => boolean | undefined): void {
+        this.directPlaying = fn;
+    }
+
+    /** Re-render: something the keys show changed outside MA (another plugin's view of a speaker). */
+    refresh(): void {
+        this.emit();
+    }
+
+    /**
+     * The queue's play state as the speaker really has it. MA learns of a pause on a Sonos speaker
+     * ~30 s late or never (seen 2026-10-09: "playing" all through a pause), so keys showed it
+     * playing while it stood, and the next press paused it again. SO-C reports the speaker's own
+     * state within 1–3 s; the time stops (or counts) from when the two parted.
+     */
+    private real(queue: PlayerQueue): PlayerQueue {
+        const playing = this.directPlaying(queue.queue_id);
+        if (playing === undefined || playing === (queue.state === "playing")) {
+            this.partedAt.delete(queue.queue_id);
+            return queue;
+        }
+        let at = this.partedAt.get(queue.queue_id);
+        if (at === undefined) this.partedAt.set(queue.queue_id, (at = this.client?.serverNow() ?? Date.now() / 1000));
+        return playing
+            ? { ...queue, state: "playing", elapsed_time_last_updated: at }
+            : { ...queue, state: "paused", elapsed_time: currentElapsed(queue, at), elapsed_time_last_updated: at };
     }
 
     /** The queue with the track that really plays (see TrackAdvance), re-rendered at its predicted end. */
@@ -159,10 +197,11 @@ class MaConnection {
         if (!reported) return;
         if (playing) {
             this.optimisticQueues.clear(queueId, ["elapsed_time", "elapsed_time_last_updated"]);
-            this.patchQueue(queueId, { state: "playing" });
+            // Until the speaker plays (MA restarts its stream: ~4 s), then the speaker's state confirms
+            this.patchQueue(queueId, { state: "playing" }, 8000);
             return;
         }
-        const at = this.elapsed(this.advanced(this.optimisticQueues.apply(queueId, reported)));
+        const at = this.elapsed(this.shown(reported));
         this.patchQueue(queueId, { state: "paused", elapsed_time: at, elapsed_time_last_updated: this.client?.serverNow() ?? Date.now() / 1000 }, 40_000);
     }
 
@@ -171,7 +210,7 @@ class MaConnection {
         const client = this.client;
         if (!client) throw new Error("not connected");
         const reported = client.queues.get(queueId);
-        const index = reported ? skipIndex(reported, this.advanced(this.optimisticQueues.apply(queueId, reported)), command) : undefined;
+        const index = reported ? skipIndex(reported, this.shown(reported), command) : undefined;
         if (index !== undefined) await client.playIndex(queueId, index);
         else if (command === "next") await client.next(queueId);
         else await client.previous(queueId);

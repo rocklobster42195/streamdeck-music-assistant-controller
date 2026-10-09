@@ -24,6 +24,17 @@ export function startMacPlayers(bus: DeckBus, o: { allow: () => boolean }): void
     macCovers.connect(bus);
     macPlayers.connect(bus, { allow: o.allow });
     maConnection.onChange(publish);
+    // The speaker's real play state from the plugin that talks to it (SO-C for Sonos): MA learns
+    // of a pause there late or never (see MaConnection.real)
+    const direct = (device: string) => macPlayers.players().find((p) => p.device === device)?.routes.find((r) => r.peer && r.entry.direct)?.entry.playing;
+    maConnection.setDirectPlaying(direct);
+    let lastDirect = "";
+    macPlayers.onChange(() => {
+        const now = JSON.stringify(macPlayers.players().map((p) => [p.device, p.device && direct(p.device)]));
+        if (now === lastDirect) return;
+        lastDirect = now;
+        maConnection.refresh();
+    });
     publish();
 }
 

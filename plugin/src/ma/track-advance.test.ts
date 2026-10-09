@@ -114,3 +114,15 @@ describe("skipIndex", async () => {
         expect(skipIndex(reported(1), reported(0), "previous")).toBeUndefined();
     });
 });
+
+describe("TrackAdvance while paused", () => {
+    it("keeps the track that really plays when paused during MA's late report", () => {
+        const t = new TrackAdvance();
+        t.view(q(A, 90, 1000), 1000);
+        expect(t.view(q(A, 90, 1000), 1015).current_item).toBe(B);
+        // paused at 5 s into B (the keys froze B's time); MA still names A
+        const v = t.view(q(A, 5, 1016, { state: "paused" }), 1020);
+        expect(v.current_item).toBe(B);
+        expect(v.elapsed_time).toBe(5);
+    });
+});
