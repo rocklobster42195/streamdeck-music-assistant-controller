@@ -36,9 +36,13 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
     const q = queue?.queue_id;
     const group = (player.group_members?.length ?? 0) > 1;
     switch (command) {
-        case "play-pause":
-            if (q) maConnection.showPlaying(q, queue.state !== "playing");
-            return void (q ? await ma.playPause(q) : await ma.call("players/cmd/play_pause", { player_id: id }));
+        case "play-pause": {
+            if (!q) return void (await ma.call("players/cmd/play_pause", { player_id: id }));
+            // As the Play/Pause key: by what the keys show, not MA's late toggle
+            const play = queue.state !== "playing";
+            maConnection.showPlaying(q, play);
+            return void (await (play ? ma.play(q) : ma.pause(q)));
+        }
         case "play":
             if (q) maConnection.showPlaying(q, true);
             return void (q ? await ma.play(q) : await ma.call("players/cmd/play", { player_id: id }));

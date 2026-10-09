@@ -98,9 +98,12 @@ export class PlayPauseKey extends MaKeyAction<PlayPauseSettings> {
             return;
         }
         // Flip immediately on every key of this queue; the server confirms via events.
-        maConnection.showPlaying(queue.queue_id, queue.state !== "playing");
+        // Play or pause by what the keys show, not MA's toggle: MA learns of a pause on a Sonos
+        // speaker ~30 s late, and its toggle would pause again meanwhile (seen 2026-10-09)
+        const play = queue.state !== "playing";
+        maConnection.showPlaying(queue.queue_id, play);
         try {
-            await ma.playPause(queue.queue_id);
+            await (play ? ma.play(queue.queue_id) : ma.pause(queue.queue_id));
         } catch (e) {
             maConnection.unpatch(queue.queue_id);
             throw e;
