@@ -110,6 +110,7 @@
     "pi.gauge": "Lautstärke als",
     "pi.gauge_ring": "Ring",
     "pi.gauge_pie": "Torte",
+    "pi.gauge_open": "Hufeisen",
     "pi.marker": "Kennzeichnung",
     "pi.marker_none": "Keine",
     "pi.marker_remove": "Entfernen",
@@ -440,6 +441,7 @@
     "pi.gauge": "Volume shown as",
     "pi.gauge_ring": "Ring",
     "pi.gauge_pie": "Pie",
+    "pi.gauge_open": "Open ring",
     "pi.marker": "Marker",
     "pi.marker_none": "None",
     "pi.marker_remove": "Remove",
@@ -1883,6 +1885,17 @@
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.gauge_open",
+   "group": "pi",
+   "usedIn": [
     {
      "label": "Volume",
      "where": "settings",

@@ -29,9 +29,10 @@
   </pi-section>
 
   <pi-section title="pi.gauge" data-show-when="command=mute" data-show-default="up">
-    <pi-choice setting="gauge" default="ring" columns="2" data-options='[
+    <pi-choice setting="gauge" default="ring" columns="3" data-options='[
       {"value":"ring","label":"pi.gauge_ring","icon":"gaugeRing"},
-      {"value":"pie","label":"pi.gauge_pie","icon":"gaugePie"}
+      {"value":"pie","label":"pi.gauge_pie","icon":"gaugePie"},
+      {"value":"open","label":"pi.gauge_open","icon":"gaugeOpen"}
     ]'></pi-choice>
   </pi-section>
 
@@ -47,8 +48,8 @@
     <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint"></pi-icon-picker>
   </pi-section>
 
-  <pi-section title="pi.player" class="pi-needs-connection">
-    <mac-player-picker setting="playerId"></mac-player-picker>
+  <pi-section title="pi.player">
+    <pi-select setting="player" source="players" placeholder="kit.player_active"></pi-select>
   </pi-section>
 
   <pi-section class="pi-win" title="kit.call_title">

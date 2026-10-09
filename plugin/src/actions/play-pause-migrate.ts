@@ -1,4 +1,4 @@
-import type { PlaybackKeySettings, PlayPauseKeySettings } from "@rocklobster42195/streamdeck-kit";
+import type { PlaybackKeySettings, PlayPauseKeySettings, VolumeKeySettings } from "@rocklobster42195/streamdeck-kit";
 
 /** MA-C's Play/Pause key settings before the universal key (kit grill 2026-10-09). */
 type LegacySettings = {
@@ -40,6 +40,17 @@ export type PlaybackSettings = PlaybackKeySettings & { playerId?: string; iconCo
 
 /** Old settings onto the universal key's, once: the MA player becomes a deck player choice. */
 export function migratePlayback(s: PlaybackSettings): PlaybackSettings | undefined {
+    if (s.playerId === undefined && s.iconCoverColor === undefined) return undefined;
+    const { playerId, iconCoverColor, ...rest } = s;
+    const player = playerChoice(playerId);
+    return { ...rest, ...(player ? { player } : {}), ...(s.keyColor ?? iconCoverColor ? { keyColor: s.keyColor ?? "cover" } : {}) };
+}
+
+/** MA-C's Volume key settings, with the older ones. */
+export type VolumeSettings = VolumeKeySettings & { playerId?: string; iconCoverColor?: boolean };
+
+/** Old settings onto the universal key's, once: the MA player becomes a deck player choice; the rest stays (MA-C's keys had a ring by default). */
+export function migrateVolume(s: VolumeSettings): VolumeSettings | undefined {
     if (s.playerId === undefined && s.iconCoverColor === undefined) return undefined;
     const { playerId, iconCoverColor, ...rest } = s;
     const player = playerChoice(playerId);

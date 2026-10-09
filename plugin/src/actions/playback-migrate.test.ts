@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-const { migratePlayback } = await import("./play-pause-migrate");
+const { migratePlayback, migrateVolume } = await import("./play-pause-migrate");
 
 describe("Playback Control settings onto the universal key", () => {
     it("the MA player becomes a deck player; command, seek step and marker stay", () => {
@@ -8,5 +8,12 @@ describe("Playback Control settings onto the universal key", () => {
         expect(migratePlayback({ playerId: "", command: "next" })).toEqual({ command: "next" });
         expect(migratePlayback({ iconCoverColor: true, command: "repeat" })).toEqual({ command: "repeat", keyColor: "cover" });
         expect(migratePlayback({ player: "active", command: "next" })).toBeUndefined();
+    });
+});
+
+describe("Volume settings onto the universal key", () => {
+    it("the MA player becomes a deck player; command, step, preset and gauge stay", () => {
+        expect(migrateVolume({ playerId: "up5c4d4aaf", command: "preset", preset: 25, gauge: "pie", showVolume: false })).toEqual({ player: "MA-C/up5c4d4aaf", command: "preset", preset: 25, gauge: "pie", showVolume: false });
+        expect(migrateVolume({ player: "active", command: "up" })).toBeUndefined();
     });
 });

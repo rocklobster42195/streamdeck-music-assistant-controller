@@ -98,6 +98,7 @@
 			"gauge": "Volume shown as",
 			"gauge_ring": "Ring",
 			"gauge_pie": "Pie",
+			"gauge_open": "Open ring",
 			"marker": "Marker",
 			"marker_none": "None",
 			"marker_remove": "Remove",

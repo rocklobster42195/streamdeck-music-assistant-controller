@@ -6,7 +6,7 @@ import { volumeGauge } from "../render/volume-gauge";
 import { markedText } from "../render/marked-text";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { MaDialAction, type StripRender } from "./ma-dial-action";
-import { volumeIcon } from "./volume-key";
+import { volumeIcon } from "@rocklobster42195/streamdeck-kit";
 import type { MaKeySettings, PlayerContext } from "./ma-key-action";
 
 type VolumeDialSettings = MaKeySettings & {

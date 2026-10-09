@@ -1,39 +1,5 @@
 // MDI paths for <pi-choice data-options='[{"icon":"next",…}]'> tiles (same icons as on the keys).
-import {
-    mdiAllInclusive,
-    mdiHelpCircleOutline,
-    mdiSpeaker,
-    mdiSpeakerMultiple,
-    mdiBookOpenPageVariant,
-    mdiBookshelf,
-    mdiHistory,
-    mdiPodcast,
-    mdiCardTextOutline,
-    mdiEyeOffOutline,
-    mdiMicrophoneVariant,
-    mdiFolderOpenOutline,
-    mdiServerNetwork,
-    mdiChartDonut,
-    mdiCircleSlice3,
-    mdiFormatAlignCenter,
-    mdiFormatAlignLeft,
-    mdiFormatAlignRight,
-    mdiPlay,
-    mdiPlaylistPlus,
-    mdiSkipNextCircleOutline,
-    mdiHeart,
-    mdiRepeat,
-    mdiShuffleVariant,
-    mdiSkipNext,
-    mdiSkipPrevious,
-    mdiTransition,
-    mdiVolumeMedium,
-    mdiVolumeMinus,
-    mdiVolumeOff,
-    mdiVolumePlus,
-    mdiTimerOutline,
-    mdiSpeakerWireless,
-} from "@mdi/js";
+import { mdiAllInclusive, mdiBookOpenPageVariant, mdiBookshelf, mdiCardTextOutline, mdiChartDonut, mdiCircleSlice3, mdiEyeOffOutline, mdiFolderOpenOutline, mdiFormatAlignCenter, mdiFormatAlignLeft, mdiFormatAlignRight, mdiGauge, mdiHeart, mdiHelpCircleOutline, mdiHistory, mdiMicrophoneVariant, mdiPlay, mdiPlaylistPlus, mdiPodcast, mdiRepeat, mdiServerNetwork, mdiShuffleVariant, mdiSkipNext, mdiSkipNextCircleOutline, mdiSkipPrevious, mdiSpeaker, mdiSpeakerMultiple, mdiSpeakerWireless, mdiTimerOutline, mdiTransition, mdiVolumeMedium, mdiVolumeMinus, mdiVolumeOff, mdiVolumePlus } from "@mdi/js";
 import { initChoiceOptions as kitInitChoiceOptions } from "@rocklobster42195/streamdeck-kit/pi";
 
 const ICONS: Record<string, string> = {
@@ -54,6 +20,7 @@ const ICONS: Record<string, string> = {
     addToQueue: mdiPlaylistPlus,
     gaugeRing: mdiChartDonut,
     gaugePie: mdiCircleSlice3,
+    gaugeOpen: mdiGauge,
     alignLeft: mdiFormatAlignLeft,
     alignCenter: mdiFormatAlignCenter,
     alignRight: mdiFormatAlignRight,
