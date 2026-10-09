@@ -39,6 +39,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 - Volume key: the mute key shows the volume as a ring (like the Volume dial); muted, the ring turns grey with a red muted speaker inside. The volume number can be turned off ("Show volume").
 
 ### Fixed
+- **Fixed: a dial in a shared Panorama stayed black** after its plugin (or another one in the row) restarted, until the plugin leading the row restarted too (kit 0.1.0-alpha.7).
 - Announcement key with a timer: the announcement no longer gets lost when the key is not on screen (another page or profile) or is moved while the countdown runs. The timer runs plugin-wide; if the plugin was down or Music Assistant unreachable at the end, it is announced up to 5 minutes late (before: 1 minute, and no retry).
 - Panorama dials side by side share one title line again while another plugin (e.g. X-Air Controller or System Audio Controller) runs the row's effect. Before, each dial showed the title on its own.
 - Announcement key with a timer: a timed announcement is played once. Before, it could repeat up to several times, because Music Assistant answers only after the announcement has played and the plugin took the long wait for a failure and tried again.
