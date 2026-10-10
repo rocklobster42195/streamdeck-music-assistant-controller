@@ -20,6 +20,20 @@
     <pi-range setting="seekStep" min="1" max="60" step="1" default="10" unit=" s" label="pi.dial_seek_step"></pi-range>
   </pi-section>
 
+  <pi-section title="pi.look">
+    <pi-choice setting="look" default="info" columns="2" data-options='[
+      {"value":"info","label":"pi.look_track_info","icon":"trackInfo"},
+      {"value":"eq","label":"pi.look_eq","icon":"eq"}
+    ]'></pi-choice>
+  </pi-section>
+
+  <pi-section class="pi-win" title="pi.cover_side">
+    <pi-choice setting="coverSide" default="left" columns="2" data-options='[
+      {"value":"left","label":"pi.cover_left","icon":"alignLeft"},
+      {"value":"right","label":"pi.cover_right","icon":"alignRight"}
+    ]'></pi-choice>
+  </pi-section>
+
   <pi-section title="pi.display">
     <pi-toggle setting="showProvider" label="pi.show_provider" hint="pi.show_provider_hint"></pi-toggle>
   </pi-section>
@@ -28,7 +42,7 @@
 
 
   <pi-section title="pi.player" class="pi-needs-connection">
-    <mac-player-picker setting="playerId"></mac-player-picker>
+    <pi-select setting="player" source="players" placeholder="kit.player_active"></pi-select>
   </pi-section>
 
   <pi-panorama class="pi-pi-only" summary></pi-panorama>

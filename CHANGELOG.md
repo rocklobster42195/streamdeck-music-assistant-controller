@@ -5,6 +5,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Changed
+- **Track dial: the family's dial** (the same in Sonos Controller, from the kit): it shows and controls any player on the deck, not only Music Assistant's: pick one or follow the active player. The cover stays on the left (you can move it to the right); new: the Equalizer look. Rotate to seek (seconds per tick), push for the next track, tap to play or pause, as before.
 - **Volume dial: the family's dial** (the same in Sonos Controller, from the kit): it controls any player on the deck, not only Music Assistant's: pick one or follow the active player. The look stays (ring or pie, number and name beside it); new: the open ring, an icon in the ring or its opening (the old marker), and the ring colour as on the keys (blue, cover, like the Panorama or fixed). Rotate, push for mute, tap for the preset, hold to save it, as before.
 
 ### Added

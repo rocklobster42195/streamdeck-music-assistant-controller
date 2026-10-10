@@ -42,3 +42,12 @@ describe("Volume dial settings onto the universal dial", () => {
         expect(migrateVolumeDial({})).toBeUndefined();
     });
 });
+
+describe("Track dial settings onto the universal dial", () => {
+    it("the player becomes a deck choice and the cover stays on the left", async () => {
+        const { migrateTrackDial } = await import("./play-pause-migrate");
+        expect(migrateTrackDial({ playerId: "up1234", seekStep: 15, showProvider: true })).toEqual({ player: "MA-C/up1234", look: "info", coverSide: "left", seekStep: 15, showProvider: true });
+        expect(migrateTrackDial({ player: "device:RINCON_A", coverSide: "right" })).toBeUndefined();
+        expect(migrateTrackDial({})).toBeUndefined();
+    });
+});

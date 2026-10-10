@@ -1,5 +1,5 @@
 import type { JsonObject } from "@elgato/utils";
-import type { PlaybackKeySettings, PlayPauseKeySettings, VolumeDialSettings as KitVolumeDialSettings, VolumeKeySettings } from "@rocklobster42195/streamdeck-kit";
+import type { PlaybackKeySettings, PlayPauseKeySettings, TrackDialSettings as KitTrackDialSettings, VolumeDialSettings as KitVolumeDialSettings, VolumeKeySettings } from "@rocklobster42195/streamdeck-kit";
 
 /** MA-C's Play/Pause key settings before the universal key (kit grill 2026-10-09). */
 type LegacySettings = {
@@ -75,4 +75,19 @@ export function migrateVolumeDial(s: VolumeDialSettings): VolumeDialSettings | u
         ...(ringCoverColor && s.keyColor === undefined ? { keyColor: "cover" } : {}),
         ...(marker && s.icon === undefined ? { icon: marker } : {}),
     };
+}
+
+/** MA-C's Track dial settings, with the older ones. */
+export type TrackDialSettings = KitTrackDialSettings & { playerId?: string; showProvider?: boolean } & JsonObject;
+
+/**
+ * Old settings onto the universal dial's, once: the MA player becomes a deck player choice, the
+ * cover stays on the left (as MA-C always drew it), the service logo stays an option.
+ */
+export function migrateTrackDial(s: TrackDialSettings): TrackDialSettings | undefined {
+    if (s.playerId === undefined && s.coverSide !== undefined) return undefined;
+    if (s.playerId === undefined && Object.keys(s).length === 0) return undefined;
+    const { playerId, ...rest } = s;
+    const player = playerChoice(playerId);
+    return { ...rest, ...(player ? { player } : {}), look: s.look ?? "info", coverSide: s.coverSide ?? "left" };
 }
