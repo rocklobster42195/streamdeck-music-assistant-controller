@@ -42,3 +42,33 @@ describe("acknowledged", () => {
         expect(l.warn).toHaveBeenCalled();
     });
 });
+
+describe("acknowledged hooks", () => {
+    it("onSlow after 700 ms of waiting, onSettled once when it answers, however late", async () => {
+        vi.useFakeTimers();
+        const l = log();
+        const onSlow = vi.fn();
+        const onSettled = vi.fn();
+        let answer!: () => void;
+        const call = new Promise<void>((r) => (answer = r));
+        const waited = acknowledged(call, "play_index", l, 2500, { onSlow, onSettled });
+        await vi.advanceTimersByTimeAsync(600);
+        expect(onSlow).not.toHaveBeenCalled();
+        await vi.advanceTimersByTimeAsync(200);
+        expect(onSlow).toHaveBeenCalledTimes(1);
+        await vi.advanceTimersByTimeAsync(2000);
+        await waited;
+        expect(onSettled).not.toHaveBeenCalled();
+        answer();
+        await vi.advanceTimersByTimeAsync(0);
+        expect(onSettled).toHaveBeenCalledTimes(1);
+    });
+
+    it("a quick answer never calls onSlow", async () => {
+        const onSlow = vi.fn();
+        const onSettled = vi.fn();
+        await acknowledged(Promise.resolve(), "next", log(), 2500, { onSlow, onSettled });
+        expect(onSlow).not.toHaveBeenCalled();
+        expect(onSettled).toHaveBeenCalledTimes(1);
+    });
+});

@@ -5,8 +5,22 @@
  * waits a short while, which still surfaces a quick refusal, and a slow answer is left to finish
  * in the background instead of showing an error for a command that works.
  */
-export async function acknowledged(call: Promise<unknown>, what: string, log: { info(...a: unknown[]): void; warn(...a: unknown[]): void }, ms = 2500): Promise<void> {
+export type AcknowledgedHooks = {
+    /** Called when the call is still unanswered after `slowAfterMs` (default 700): show "loading". */
+    onSlow?: () => void;
+    slowAfterMs?: number;
+    /** Called once the call is answered or has failed, however late. */
+    onSettled?: () => void;
+};
+
+export async function acknowledged(call: Promise<unknown>, what: string, log: { info(...a: unknown[]): void; warn(...a: unknown[]): void }, ms = 2500, hooks: AcknowledgedHooks = {}): Promise<void> {
     const started = Date.now();
+    const slowTimer = hooks.onSlow ? setTimeout(hooks.onSlow, hooks.slowAfterMs ?? 700) : undefined;
+    const settled = () => {
+        clearTimeout(slowTimer);
+        hooks.onSettled?.();
+    };
+    void call.then(settled, settled);
     let timer: ReturnType<typeof setTimeout> | undefined;
     const slow = new Promise<"slow">((resolve) => {
         timer = setTimeout(() => resolve("slow"), ms);

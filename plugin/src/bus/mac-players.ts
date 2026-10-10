@@ -16,6 +16,22 @@ import type { PlayerMedia } from "music-assistant-client";
 export const macCovers = new CoverBoard("MA-C");
 export const macPlayers = new PlayerBoard("MA-C");
 
+/** Players with a command that takes a while (a skip with Spotify): published as `busy`, shown on every key. */
+const busyPlayers = new Set<string>();
+
+/** The hooks that mark a player busy while a slow command runs. */
+function busyWhile(id: string): { onSlow: () => void; onSettled: () => void } {
+    return {
+        onSlow: () => {
+            busyPlayers.add(id);
+            publish();
+        },
+        onSettled: () => {
+            if (busyPlayers.delete(id)) publish();
+        },
+    };
+}
+
 /** When each player last started playing, and whether it played at the last look. */
 const since = new Map<string, number>();
 const playing = new Set<string>();
@@ -58,23 +74,23 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
             // As the Play/Pause key: by what the keys show, not MA's late toggle
             const play = queue.state !== "playing";
             maConnection.showPlaying(q, play);
-            return acknowledged(play ? ma.play(q) : ma.pause(q), play ? "play" : "pause", streamDeck.logger);
+            return acknowledged(play ? ma.play(q) : ma.pause(q), play ? "play" : "pause", streamDeck.logger, 2500, busyWhile(id));
         }
         case "play":
             if (q) maConnection.showPlaying(q, true);
-            return q ? acknowledged(ma.play(q), "play", streamDeck.logger) : void (await ma.call("players/cmd/play", { player_id: id }));
+            return q ? acknowledged(ma.play(q), "play", streamDeck.logger, 2500, busyWhile(id)) : void (await ma.call("players/cmd/play", { player_id: id }));
         case "pause":
             if (q) maConnection.showPlaying(q, false);
-            return q ? acknowledged(ma.pause(q), "pause", streamDeck.logger) : void (await ma.call("players/cmd/pause", { player_id: id }));
-        case "next": return q ? acknowledged(maConnection.skip(q, "next"), "next", streamDeck.logger) : void (await ma.call("players/cmd/next", { player_id: id }));
-        case "previous": return q ? acknowledged(maConnection.skip(q, "previous"), "previous", streamDeck.logger) : void (await ma.call("players/cmd/previous", { player_id: id }));
+            return q ? acknowledged(ma.pause(q), "pause", streamDeck.logger, 2500, busyWhile(id)) : void (await ma.call("players/cmd/pause", { player_id: id }));
+        case "next": return q ? acknowledged(maConnection.skip(q, "next"), "next", streamDeck.logger, 2500, busyWhile(id)) : void (await ma.call("players/cmd/next", { player_id: id }));
+        case "previous": return q ? acknowledged(maConnection.skip(q, "previous"), "previous", streamDeck.logger, 2500, busyWhile(id)) : void (await ma.call("players/cmd/previous", { player_id: id }));
         case "seek": {
             const target = Math.max(0, value as number);
             if (!q) return void (await ma.call("players/cmd/seek", { player_id: id, position: target }));
             // As the Track dial does: the new position at once (lyrics, progress), then measured
             // again once the speaker restarted MA's stream, so the lyrics stay in time
             maConnection.patchQueue(q, { elapsed_time: target, elapsed_time_last_updated: Date.now() / 1000 }, 2500);
-            await acknowledged(ma.seek(q, target), "seek", streamDeck.logger);
+            await acknowledged(ma.seek(q, target), "seek", streamDeck.logger, 2500, busyWhile(id));
             setTimeout(() => void maConnection.resync(id).catch(() => {}), 2000);
             return;
         }
@@ -165,6 +181,7 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
         kind: "speaker",
         // What plays comes from MA's queue (not from the Sonos app, a radio, line-in)
         media: !!queue,
+        busy: busyPlayers.has(p.player_id) || undefined,
         playing: isPlaying,
         since: since.get(p.player_id) ?? 0,
         color,
