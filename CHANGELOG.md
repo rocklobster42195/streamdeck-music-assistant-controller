@@ -4,6 +4,9 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- **Fixed: a Next that showed an error although it worked.** With a slow provider (Spotify) Music Assistant answers a skip, play or seek only when the next item is ready, sometimes after more than ten seconds; the key then showed an error (and a second press skipped again). Commands now wait 2.5 s, which still shows a quick refusal, and a slower answer finishes in the background (it is logged).
+
 ### Changed
 - **Track dial: the family's dial** (the same in Sonos Controller, from the kit): it shows and controls any player on the deck, not only Music Assistant's: pick one or follow the active player. The cover stays on the left (you can move it to the right); new: the Equalizer look. Rotate to seek (seconds per tick), push for the next track, tap to play or pause, as before.
 - **Volume dial: the family's dial** (the same in Sonos Controller, from the kit): it controls any player on the deck, not only Music Assistant's: pick one or follow the active player. The look stays (ring or pie, number and name beside it); new: the open ring, an icon in the ring or its opening (the old marker), and the ring colour as on the keys (blue, cover, like the Panorama or fixed). Rotate, push for mute, tap for the preset, hold to save it, as before.

@@ -7,6 +7,7 @@
 import { CoverBoard, PlayerBoard, positionNow, readableCoverColor, type CoverEntry, type PlayerEntry, type Transport, type TransportCommand } from "@rocklobster42195/streamdeck-kit";
 import type { DeckBus } from "@rocklobster42195/streamdeck-kit/bus";
 import type { Player, PlayerQueue } from "music-assistant-client";
+import { acknowledged } from "../ma/acknowledged";
 import streamDeck from "@elgato/streamdeck";
 import { maConnection } from "../ma/connection";
 import { playingProvider, providerIconUri, providerName } from "../ma/provider-icons";
@@ -57,23 +58,23 @@ macPlayers.serve(async ({ player: id, command, value }: Transport) => {
             // As the Play/Pause key: by what the keys show, not MA's late toggle
             const play = queue.state !== "playing";
             maConnection.showPlaying(q, play);
-            return void (await (play ? ma.play(q) : ma.pause(q)));
+            return acknowledged(play ? ma.play(q) : ma.pause(q), play ? "play" : "pause", streamDeck.logger);
         }
         case "play":
             if (q) maConnection.showPlaying(q, true);
-            return void (q ? await ma.play(q) : await ma.call("players/cmd/play", { player_id: id }));
+            return q ? acknowledged(ma.play(q), "play", streamDeck.logger) : void (await ma.call("players/cmd/play", { player_id: id }));
         case "pause":
             if (q) maConnection.showPlaying(q, false);
-            return void (q ? await ma.pause(q) : await ma.call("players/cmd/pause", { player_id: id }));
-        case "next": return void (q ? await maConnection.skip(q, "next") : await ma.call("players/cmd/next", { player_id: id }));
-        case "previous": return void (q ? await maConnection.skip(q, "previous") : await ma.call("players/cmd/previous", { player_id: id }));
+            return q ? acknowledged(ma.pause(q), "pause", streamDeck.logger) : void (await ma.call("players/cmd/pause", { player_id: id }));
+        case "next": return q ? acknowledged(maConnection.skip(q, "next"), "next", streamDeck.logger) : void (await ma.call("players/cmd/next", { player_id: id }));
+        case "previous": return q ? acknowledged(maConnection.skip(q, "previous"), "previous", streamDeck.logger) : void (await ma.call("players/cmd/previous", { player_id: id }));
         case "seek": {
             const target = Math.max(0, value as number);
             if (!q) return void (await ma.call("players/cmd/seek", { player_id: id, position: target }));
             // As the Track dial does: the new position at once (lyrics, progress), then measured
             // again once the speaker restarted MA's stream, so the lyrics stay in time
             maConnection.patchQueue(q, { elapsed_time: target, elapsed_time_last_updated: Date.now() / 1000 }, 2500);
-            await ma.seek(q, target);
+            await acknowledged(ma.seek(q, target), "seek", streamDeck.logger);
             setTimeout(() => void maConnection.resync(id).catch(() => {}), 2000);
             return;
         }
