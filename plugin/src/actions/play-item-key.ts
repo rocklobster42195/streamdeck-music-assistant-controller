@@ -1,3 +1,4 @@
+import { maConnection } from "../ma/connection";
 import { action } from "@elgato/streamdeck";
 import { getCachedCover, loadCover } from "@rocklobster42195/streamdeck-kit";
 import { ACCENT, ICONS, renderKeyImage } from "../render/key-image";
@@ -48,7 +49,7 @@ export class PlayItemKey extends MaKeyAction<PlayItemSettings> {
 
     protected override async press({ ma, player, queue, settings }: PlayerContext<PlayItemSettings>): Promise<"ok"> {
         if (!settings.uri) throw new Error("no item chosen");
-        await ma.playMedia(queue?.queue_id ?? player.player_id, settings.uri, settings.option ?? "replace");
+        await ma.playMedia(queue?.queue_id ?? maConnection.leaderId(player), settings.uri, settings.option ?? "replace");
         return "ok";
     }
 }

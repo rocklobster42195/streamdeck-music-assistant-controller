@@ -5,6 +5,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Fixed
+- **Fixed: playing on a speaker that belongs to a group took it out of the group.** Music Assistant removes a member from its group when something is played to it directly (the Browser dial, the Play item and Continue keys on a member, or "Active player" resolving to one). They play on the group's leader now.
 - **Fixed: A new cover's colour reached the Panorama late: the colour fade took four seconds instead of one (kit 0.1.0-alpha.23).**
 - **Fixed: a Next that showed an error although it worked.** With a slow provider (Spotify) Music Assistant answers a skip, play or seek only when the next item is ready, sometimes after more than ten seconds; the key then showed an error (and a second press skipped again). Commands now wait 2.5 s, which still shows a quick refusal, and a slower answer finishes in the background (it is logged).
 

@@ -91,7 +91,7 @@ export class BrowserDial extends MaDialAction<BrowserDialSettings> {
             return;
         }
         if (!entry.uri) throw new Error("entry has no uri");
-        await ctx.ma.playMedia(ctx.queue?.queue_id ?? ctx.player.player_id, entry.uri, ctx.settings.option ?? "replace");
+        await ctx.ma.playMedia(ctx.queue?.queue_id ?? maConnection.leaderId(ctx.player), entry.uri, ctx.settings.option ?? "replace");
         // The list stays open; the row shows as playing right away (MA confirms it a moment later)
         st.pending = { uri: entry.uri, until: Date.now() + 8000 };
         this.render(ctx.id);

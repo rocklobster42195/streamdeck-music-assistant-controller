@@ -63,7 +63,7 @@ export class ContinueKey extends MaKeyAction<ContinueSettings> {
 
     protected override async press({ ma, player, queue, settings }: PlayerContext<ContinueSettings>): Promise<void> {
         const kind = settings.kind ?? "any";
-        const queueId = queue?.queue_id ?? player.player_id;
+        const queueId = queue?.queue_id ?? maConnection.leaderId(player);
         // Already loaded on this player: toggle, so a second press pauses
         if (this.currentItem(queue, kind)) {
             await ma.playPause(queueId);

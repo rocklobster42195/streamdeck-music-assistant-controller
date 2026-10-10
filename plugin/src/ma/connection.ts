@@ -104,6 +104,17 @@ class MaConnection {
         return playerSetting || this.settings.activePlayerId || undefined;
     }
 
+    /**
+     * Where something is played to: the leader of a synced group, never a member. Music Assistant
+     * takes a member that is told to play out of its group (measured 2026-10-10: a play_media on
+     * the Badezimmer's queue left the group Herrenzimmer + 3 about 17 s later, and failed), so
+     * "play on the Badezimmer" while it belongs to a group means the group's leader.
+     */
+    leaderId(player: Player): string {
+        const leader = player.synced_to;
+        return leader && this.client?.players.has(leader) ? leader : player.player_id;
+    }
+
     /** Current position of a queue in seconds, extrapolated on the server's clock. */
     elapsed(queue: PlayerQueue): number {
         return currentElapsed(queue, this.client?.serverNow() ?? Date.now() / 1000);
