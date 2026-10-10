@@ -3,7 +3,7 @@
 // the level streams other plugins offer (XR-C's channels, later SA-C's system audio) for the
 // Panorama's "Audio source". Pauses or lowers chosen players during a call on the computer (state
 // "call" from SA-C; the kit's CallReaction).
-import { panorama, panoramaRows } from "../render/panorama";
+import { panorama, panoramaRows, textRuns } from "../render/panorama";
 import streamDeck from "@elgato/streamdeck";
 import { piBridge, trackActions } from "@rocklobster42195/streamdeck-kit/bridge";
 import { CALL_SETTING, CallReaction } from "@rocklobster42195/streamdeck-kit";
@@ -48,6 +48,7 @@ export async function startMacBus(): Promise<void> {
     // one effect per row agreed with them
     panorama.connect(b);
     panoramaRows.connect(b);
+    textRuns.connect(b);
     // The players for every plugin: cover colours for Panorama rows, players for keys (other
     // plugins may control them unless the user switched it off)
     startMacPlayers(b, { allow: () => maConnection.globalSettings.othersMayControlPlayers !== false });

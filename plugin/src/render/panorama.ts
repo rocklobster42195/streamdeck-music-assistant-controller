@@ -1,4 +1,4 @@
-import { PanoramaEngine, PanoramaRows, ROW_COLOR_KEY, SharedPanorama } from "@rocklobster42195/streamdeck-kit";
+import { PanoramaEngine, PanoramaRows, ROW_COLOR_KEY, SharedPanorama, TextRuns } from "@rocklobster42195/streamdeck-kit";
 import { macActions } from "../bus/mac-actions";
 import { macCovers } from "../bus/mac-players";
 import { ACCENT } from "./key-image";
@@ -16,6 +16,9 @@ export const panorama = new SharedPanorama(new PanoramaEngine({ defaultColor: AC
  * dials register here, the PI's Panorama section chooses the effect, the dials taking part and the
  * row's colour (the cover of a player from MA-C's or another plugin's "covers" on deckbus).
  */
+/** Text over the Panorama across plugin borders (one run of canvas dials, whichever plugin they belong to). */
+export const textRuns = new TextRuns(macActions);
+
 export const panoramaRows = new PanoramaRows(panorama, { name: "MA-C", actions: macActions, covers: macCovers });
 
 /**

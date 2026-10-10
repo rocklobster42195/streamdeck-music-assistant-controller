@@ -10,13 +10,12 @@ import streamDeck, {
     type WillDisappearEvent,
 } from "@elgato/streamdeck";
 import type { JsonObject } from "@elgato/utils";
-import { BLANK_EFFECT_ID, rowStateFromSettings, STRIP_W, stripImage } from "@rocklobster42195/streamdeck-kit";
+import { BLANK_EFFECT_ID, functionOverlay, noticeOverlay, rowStateFromSettings, STRIP_W, stripImage, timingOverlay } from "@rocklobster42195/streamdeck-kit";
 import { watchLevel } from "../bus/audio-level";
 import { maConnection } from "../ma/connection";
 import { piBridge } from "@rocklobster42195/streamdeck-kit/bridge";
-import { isFresh, migrateCoverColor, panorama, panoramaRows } from "../render/panorama";
+import { isFresh, migrateCoverColor, panorama, panoramaRows, textRuns } from "../render/panorama";
 import { functionIcon } from "../render/function-icons";
-import { functionOverlay, noticeOverlay, timingOverlay } from "../render/panorama-text";
 import { PanoramaOverlay, type OverlayMode } from "./panorama-overlay";
 
 type PanoramaDialSettings = JsonObject & {
@@ -109,6 +108,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
             // Without an effect the dial stays in a blank group, so title and lyrics span its neighbours
             whenNone: BLANK_EFFECT_ID,
         });
+        textRuns.set(id, { device: ev.action.device.id, column }, undefined, () => this.render(id));
         this.followAudio(id);
     }
 
@@ -127,6 +127,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         this.audio.delete(ev.action.id);
         this.instances.delete(ev.action.id);
         this.overlay.forget(ev.action.id);
+        textRuns.remove(ev.action.id);
         panoramaRows.remove(ev.action.id);
         piBridge.forget(ev.action.id);
     }
@@ -295,7 +296,12 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const lead = run.ids.map((i) => this.instances.get(i)?.settings).find((s) => s?.text && s.text !== "off");
         const geometry = { width: run.ids.length * STRIP_W, offset: run.index * STRIP_W };
         const offset = Number(lead?.lyricsOffset ?? LYRICS_LEAD_S);
-        let text = lead ? this.overlay.render(run.ids[0], geometry, lead.text!, offset, maConnection.resolvePlayerId(lead.playerId)) : "";
+        // The text goes over plugin borders: what this dial shows is published, and the run (with the
+        // leftmost text of any plugin) comes back from the bus with its own width and window.
+        const own = inst.settings.text && inst.settings.text !== "off" ? this.overlay.describe(inst.settings.text, Number(inst.settings.lyricsOffset ?? LYRICS_LEAD_S), this.playerId(inst)) : undefined;
+        textRuns.setText(id, own);
+        const view = textRuns.run(id);
+        let text = view ? this.overlay.render(view.key, { width: view.width, offset: view.offset }, view.text) : "";
         text += this.topOverlay(id, run.ids[0], geometry, offset, lead);
         const image = stripImage([text], "#000", panoramaRows.isMember(id) ? panorama.renderSlice(id) : "");
         void inst.action.setFeedback({ "full-canvas": image });
