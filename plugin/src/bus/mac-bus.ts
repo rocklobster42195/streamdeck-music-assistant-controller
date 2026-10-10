@@ -91,3 +91,8 @@ export function offeredStreams(): { id: string; label: string; peer: string }[] 
         return streams.filter((s) => typeof s?.topic === "string" && s.topic.startsWith("meters/") && s.input !== true).map((s) => ({ id: sourceId(peer.id, s.topic), label: String(s.label ?? s.topic), peer: peer.name }));
     });
 }
+
+/** The other plugins on deckbus (name and version), for the diagnostics report. */
+export function deckPeers(): { name: string; version: string }[] {
+    return (bus ?? { peers: () => [] }).peers().map((p) => ({ name: p.name, version: p.version }));
+}

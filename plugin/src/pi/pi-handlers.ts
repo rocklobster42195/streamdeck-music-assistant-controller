@@ -1,6 +1,7 @@
 import streamDeck from "@elgato/streamdeck";
 import { listEffects } from "@rocklobster42195/streamdeck-kit";
-import { piBridge, type PiPushMessage } from "@rocklobster42195/streamdeck-kit/bridge";
+import { deckPeers } from "../bus/mac-bus";
+import { registerDiagnostics, piBridge, type PiPushMessage } from "@rocklobster42195/streamdeck-kit/bridge";
 import type { Player } from "music-assistant-client";
 import { offeredStreams } from "../bus/mac-bus";
 import { maConnection } from "../ma/connection";
@@ -15,6 +16,8 @@ import { panoramaRows } from "../render/panorama";
  */
 export function initPiBridge(): void {
     piBridge.init();
+    // "Diagnostics" in the settings window: the log, a report to copy, the issue page
+    registerDiagnostics(piBridge, { issueUrl: "https://github.com/rocklobster42195/streamdeck-music-assistant-controller/issues", peers: deckPeers });
     // The dials' Panorama section (<pi-panorama>): the row's effect, dials and settings
     panoramaRows.attachPi(piBridge);
     piBridge.handle("reconnect", () => maConnection.reconnectNow());
