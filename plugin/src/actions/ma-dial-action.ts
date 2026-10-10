@@ -208,12 +208,26 @@ export abstract class MaDialAction<S extends MaKeySettings> extends SingletonAct
     }
 
     private notReady(): [StripRender, KeyPreviewState] {
-        const g = maConnection.globalSettings;
-        const msg = (icon: string, color: string, label: string) => stripImage([mdi(icon, 20, 26, 48, color), ...(label ? [text(84, 57, label, { size: 17, weight: "bold", color, maxWidth: 110 })] : [])]);
-        if (!maConnection.loaded) return [{ image: msg(ICONS.connecting, "#777", "") }, "offline"];
-        if (!g.maUrl || !g.maToken) return [{ image: msg(ICONS.connecting, "#9a9aa0", this.t("key.setup")) }, "setup"];
-        if (maConnection.state === "auth_failed") return [{ image: msg(ICONS.offline, "#e57373", this.t("key.auth_failed")) }, "auth_failed"];
-        if (maConnection.state !== "connected") return [{ image: msg(ICONS.offline, "#9a9aa0", this.t("key.offline")) }, "offline"];
-        return [{ image: msg(ICONS.noPlayer, "#9a9aa0", this.t("key.no_player")) }, "no_player"];
+        return [notReadyStrip(this.t.bind(this)), notReadyState()];
     }
+}
+
+/** The dial's picture while MA-C isn't ready: connecting, set up, auth failed, offline or no player. */
+export function notReadyStrip(t: (key: string) => string): StripRender {
+    const g = maConnection.globalSettings;
+    const msg = (icon: string, color: string, label: string) => ({ image: stripImage([mdi(icon, 20, 26, 48, color), ...(label ? [text(84, 57, label, { size: 17, weight: "bold", color, maxWidth: 110 })] : [])]) });
+    if (!maConnection.loaded) return msg(ICONS.connecting, "#777", "");
+    if (!g.maUrl || !g.maToken) return msg(ICONS.connecting, "#9a9aa0", t("key.setup"));
+    if (maConnection.state === "auth_failed") return msg(ICONS.offline, "#e57373", t("key.auth_failed"));
+    if (maConnection.state !== "connected") return msg(ICONS.offline, "#9a9aa0", t("key.offline"));
+    return msg(ICONS.noPlayer, "#9a9aa0", t("key.no_player"));
+}
+
+function notReadyState(): KeyPreviewState {
+    const g = maConnection.globalSettings;
+    if (!maConnection.loaded) return "offline";
+    if (!g.maUrl || !g.maToken) return "setup";
+    if (maConnection.state === "auth_failed") return "auth_failed";
+    if (maConnection.state !== "connected") return "offline";
+    return "no_player";
 }

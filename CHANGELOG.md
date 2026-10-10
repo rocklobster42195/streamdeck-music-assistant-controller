@@ -4,6 +4,9 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 
 ## [Unreleased]
 
+### Changed
+- **Volume dial: the family's dial** (the same in Sonos Controller, from the kit): it controls any player on the deck, not only Music Assistant's: pick one or follow the active player. The look stays (ring or pie, number and name beside it); new: the open ring, an icon in the ring or its opening (the old marker), and the ring colour as on the keys (blue, cover, like the Panorama or fixed). Rotate, push for mute, tap for the preset, hold to save it, as before.
+
 ### Added
 - **When a call starts on this computer:** per player **Nothing**, **Pause** or **Lower** (to a quarter), in the settings window of the Play/Pause, Volume and Player keys and the Volume dial (the same everywhere); afterwards it plays again and the volume comes back, unless you changed it. The call comes from System Audio Controller (Teams, Discord, Zoom …); the section shows while it runs. Off by default.
 - **Colour for every key:** **Default** (as before), **Cover**, **Like Panorama** (the row colour of the Stream Deck) or a **fixed** colour, instead of the "Cover color" switch (switched-on keys take **Cover** over). For a Sonos speaker, Cover is the same colour Sonos Controller shows.

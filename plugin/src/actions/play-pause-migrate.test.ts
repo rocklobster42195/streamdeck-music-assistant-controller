@@ -26,3 +26,19 @@ describe("Play/Pause settings onto the universal key", () => {
         expect(migratePlayPause({ topLeft: "marker", topRight: "source" })).toBeUndefined();
     });
 });
+
+describe("Volume dial settings onto the universal dial", () => {
+    it("the player becomes a deck choice, the cover ring a key colour, the marker the icon", async () => {
+        const { migrateVolumeDial } = await import("./play-pause-migrate");
+        expect(migrateVolumeDial({ playerId: "up1234", ringCoverColor: true, marker: "mdiSofa", step: 3, align: "right" })).toEqual({
+            player: "MA-C/up1234",
+            keyColor: "cover",
+            icon: "mdiSofa",
+            step: 3,
+            align: "right",
+        });
+        expect(migrateVolumeDial({ playerId: "RINCON_ABC" })?.player).toBe("device:RINCON_ABC");
+        expect(migrateVolumeDial({ player: "device:RINCON_ABC", gauge: "pie" })).toBeUndefined();
+        expect(migrateVolumeDial({})).toBeUndefined();
+    });
+});

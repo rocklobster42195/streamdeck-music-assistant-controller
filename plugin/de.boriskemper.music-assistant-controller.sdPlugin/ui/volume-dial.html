@@ -17,15 +17,18 @@
   <div class="pi-hint mac-cmd-hint mac-dial-help" data-i18n="pi.dial_volume_rotate"></div>
 
   <pi-section title="pi.gauge">
-    <pi-choice setting="gauge" default="ring" columns="2" data-options='[
+    <pi-choice setting="gauge" default="ring" columns="3" data-options='[
       {"value":"ring","label":"pi.gauge_ring","icon":"gaugeRing"},
-      {"value":"pie","label":"pi.gauge_pie","icon":"gaugePie"}
+      {"value":"pie","label":"pi.gauge_pie","icon":"gaugePie"},
+      {"value":"open","label":"pi.gauge_open","icon":"gaugeOpen"}
     ]'></pi-choice>
+    <div data-show-when="gauge=ring,open">
+      <pi-icon-picker setting="icon" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint_dial"></pi-icon-picker>
+    </div>
   </pi-section>
 
   <pi-section title="pi.display">
     <pi-toggle setting="showText" label="pi.show_volume_text" hint="pi.show_volume_text_hint" data-default="true"></pi-toggle>
-    <pi-toggle setting="ringCoverColor" label="pi.ring_cover_color" hint="pi.ring_cover_color_hint"></pi-toggle>
   </pi-section>
   <pi-section class="pi-win" title="pi.align">
     <pi-choice setting="align" default="left" columns="3" data-options='[
@@ -43,12 +46,12 @@
   <pi-panorama class="pi-win"></pi-panorama>
 
 
-  <pi-section class="pi-win" title="pi.marker">
-    <pi-icon-picker setting="marker" none-label="pi.marker_none" reset-label="pi.marker_remove" hint="pi.marker_hint_dial"></pi-icon-picker>
+  <pi-section class="pi-win" title="pi.icon_color">
+    <pi-key-color setting="keyColor" grey-label="pi.key_color_default" grey-hint="pi.key_color_default_hint"></pi-key-color>
   </pi-section>
 
   <pi-section title="pi.player" class="pi-needs-connection">
-    <mac-player-picker setting="playerId"></mac-player-picker>
+    <pi-select setting="player" source="players" placeholder="kit.player_active"></pi-select>
   </pi-section>
 
   <pi-panorama class="pi-pi-only" summary></pi-panorama>

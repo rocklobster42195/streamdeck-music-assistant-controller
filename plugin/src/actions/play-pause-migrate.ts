@@ -1,4 +1,5 @@
-import type { PlaybackKeySettings, PlayPauseKeySettings, VolumeKeySettings } from "@rocklobster42195/streamdeck-kit";
+import type { JsonObject } from "@elgato/utils";
+import type { PlaybackKeySettings, PlayPauseKeySettings, VolumeDialSettings as KitVolumeDialSettings, VolumeKeySettings } from "@rocklobster42195/streamdeck-kit";
 
 /** MA-C's Play/Pause key settings before the universal key (kit grill 2026-10-09). */
 type LegacySettings = {
@@ -55,4 +56,23 @@ export function migrateVolume(s: VolumeSettings): VolumeSettings | undefined {
     const { playerId, iconCoverColor, ...rest } = s;
     const player = playerChoice(playerId);
     return { ...rest, ...(player ? { player } : {}), ...(s.keyColor ?? iconCoverColor ? { keyColor: s.keyColor ?? "cover" } : {}) };
+}
+
+/** MA-C's Volume dial settings, with the older ones. */
+export type VolumeDialSettings = KitVolumeDialSettings & { playerId?: string; ringCoverColor?: boolean; marker?: string } & JsonObject;
+
+/**
+ * Old settings onto the universal dial's, once: the MA player becomes a deck player choice, the
+ * ring in the cover's colour a key colour, the marker the dial's icon (it sits in the ring now).
+ */
+export function migrateVolumeDial(s: VolumeDialSettings): VolumeDialSettings | undefined {
+    if (s.playerId === undefined && s.ringCoverColor === undefined && s.marker === undefined) return undefined;
+    const { playerId, ringCoverColor, marker, ...rest } = s;
+    const player = playerChoice(playerId);
+    return {
+        ...rest,
+        ...(player ? { player } : {}),
+        ...(ringCoverColor && s.keyColor === undefined ? { keyColor: "cover" } : {}),
+        ...(marker && s.icon === undefined ? { icon: marker } : {}),
+    };
 }
