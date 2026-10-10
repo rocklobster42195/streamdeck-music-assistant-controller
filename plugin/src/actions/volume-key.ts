@@ -3,7 +3,6 @@ import { VolumeKeyAction } from "@rocklobster42195/streamdeck-kit/keys";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { macPlayers } from "../bus/mac-players";
 import { maConnection } from "../ma/connection";
-import { ACCENT } from "../render/key-image";
 import { panoramaRows } from "../render/panorama";
 import { notReadyRender } from "./ma-key-action";
 import { migrateVolume, type VolumeSettings } from "./play-pause-migrate";
@@ -14,7 +13,6 @@ export class VolumeKey extends VolumeKeyAction<VolumeSettings> {
     constructor() {
         super({
             board: macPlayers,
-            accent: ACCENT,
             markerPath: (name) => mdiPath(name),
             rowColor: (deviceId) => panoramaRows.rowColor(deviceId),
             migrate: migrateVolume,

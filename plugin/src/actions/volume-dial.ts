@@ -4,7 +4,6 @@ import { rowStateFromSettings } from "@rocklobster42195/streamdeck-kit";
 import { mdiPath } from "@rocklobster42195/streamdeck-kit/mdi";
 import { macPlayers } from "../bus/mac-players";
 import { maConnection } from "../ma/connection";
-import { ACCENT } from "../render/key-image";
 import { isFresh, migrateCoverColor, panorama, panoramaRows } from "../render/panorama";
 import { notReadyStrip } from "./ma-dial-action";
 import { migrateVolumeDial, type VolumeDialSettings } from "./play-pause-migrate";
@@ -26,7 +25,6 @@ export class VolumeDial extends VolumeDialAction<VolumeDialSettings> {
             defaultStep: 2,
             iconPath: (name) => mdiPath(name),
             rowColor: (deviceId) => panoramaRows.rowColor(deviceId),
-            accent: ACCENT,
             underlay: (id) => (panoramaRows.effectOf(id) && panoramaRows.isMember(id) && panorama.isActive(id) ? panorama.renderSlice(id) : undefined),
             mutedLabel: () => streamDeck.i18n.t("key.muted").toUpperCase(),
             noPlayerLabel: () => streamDeck.i18n.t("key.volume"),
