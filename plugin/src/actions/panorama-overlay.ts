@@ -1,5 +1,6 @@
 import { lyricsOverlay, trackOverlay, fadeProgress, type RunText, type TextRun } from "@rocklobster42195/streamdeck-kit";
 import { lyricIndexAt } from "music-assistant-client";
+import { macPlayers } from "../bus/mac-players";
 import { maConnection } from "../ma/connection";
 import { lyrics } from "../ma/lyrics";
 
@@ -20,11 +21,22 @@ const keyOf = (t: RunText): string => (t.kind === "track" ? `t:${t.title}\n${t.a
 export class PanoramaOverlay {
     private readonly runs = new Map<string, RunState>();
 
-    /** What a player's text is right now (undefined: nothing to show). */
+    /**
+     * What a player's text is right now (undefined: nothing to show). `playerId` is a player chosen
+     * for the dial; without one the text follows the deck's active player, as every other plugin's
+     * dial does (also while it is paused: the one that was playing, not MA-C's own "active" choice).
+     */
     describe(mode: OverlayMode, lyricsOffset: number, playerId: string | undefined): RunText | undefined {
         if (mode === "off") return undefined;
-        const player = maConnection.player(playerId);
+        const deck = playerId ? undefined : macPlayers.active(false);
+        const maId = playerId ?? deck?.routes.find((r) => !r.peer)?.entry.player ?? maConnection.resolvePlayerId(undefined);
+        const player = maConnection.player(maId);
         const media = player?.current_media;
+        // The deck's player knows its title best (a speaker's own radio, or MA's stream through SO-C)
+        if (deck?.title) {
+            const same = media?.title === deck.title;
+            if (!same || mode !== "lyrics") return { kind: "track", title: deck.title, artist: deck.artist ?? deck.album ?? "" };
+        }
         if (!media) return undefined;
         const queue = maConnection.queueFor(player);
         const state = mode === "lyrics" && queue?.current_item?.media_item?.uri === media.uri ? lyrics.forQueue(queue) : undefined;

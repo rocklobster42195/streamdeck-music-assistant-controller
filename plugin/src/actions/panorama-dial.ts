@@ -298,7 +298,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const offset = Number(lead?.lyricsOffset ?? LYRICS_LEAD_S);
         // The text goes over plugin borders: what this dial shows is published, and the run (with the
         // leftmost text of any plugin) comes back from the bus with its own width and window.
-        const own = inst.settings.text && inst.settings.text !== "off" ? this.overlay.describe(inst.settings.text, Number(inst.settings.lyricsOffset ?? LYRICS_LEAD_S), this.playerId(inst)) : undefined;
+        const own = inst.settings.text && inst.settings.text !== "off" ? this.overlay.describe(inst.settings.text, Number(inst.settings.lyricsOffset ?? LYRICS_LEAD_S), inst.settings.playerId || undefined) : undefined;
         textRuns.setText(id, own);
         const view = textRuns.run(id);
         let text = view ? this.overlay.render(view.key, { width: view.width, offset: view.offset }, view.text) : "";
