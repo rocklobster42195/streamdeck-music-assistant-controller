@@ -122,6 +122,12 @@
     "pi.show_progress": "Fortschritt",
     "pi.show_progress_hint": "Balken in der Farbe des Covers",
     "pi.show_provider": "Dienst anzeigen",
+    "pi.look": "Darstellung",
+    "pi.look_track_info": "Titelinfo",
+    "pi.look_eq": "Equalizer",
+    "pi.cover_side": "Cover",
+    "pi.cover_left": "Links",
+    "pi.cover_right": "Rechts",
     "pi.show_provider_hint": "Ein kleines Logo auf dem Cover: Spotify, deine Dateien, Radio …",
     "pi.help": "Hilfe & Feedback",
     "pi.state_playing_on": "spielt auf {player}",
@@ -453,6 +459,12 @@
     "pi.show_progress": "Progress",
     "pi.show_progress_hint": "Bar in the color of the cover",
     "pi.show_provider": "Show the service",
+    "pi.look": "Look",
+    "pi.look_track_info": "Track info",
+    "pi.look_eq": "Equalizer",
+    "pi.cover_side": "Cover",
+    "pi.cover_left": "Left",
+    "pi.cover_right": "Right",
     "pi.show_provider_hint": "A small logo on the cover: Spotify, your files, radio, …",
     "pi.help": "Help & feedback",
     "pi.state_playing_on": "playing on {player}",
@@ -1378,13 +1390,7 @@
   {
    "key": "key.preset_saved",
    "group": "key",
-   "usedIn": [
-    {
-     "label": "Volume",
-     "where": "dial",
-     "file": "plugin/src/actions/volume-dial.ts"
-    }
-   ]
+   "usedIn": []
   },
   {
    "key": "key.panorama_label",
@@ -1899,6 +1905,11 @@
     {
      "label": "Volume",
      "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
     }
    ]
@@ -1956,11 +1967,6 @@
      "label": "Source",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
-    },
-    {
-     "label": "Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     },
     {
      "label": "Volume",
@@ -2245,6 +2251,72 @@
   },
   {
    "key": "pi.show_provider",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.look",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.look_track_info",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.look_eq",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cover_side",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cover_left",
+   "group": "pi",
+   "usedIn": [
+    {
+     "label": "Track",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/track-dial.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.cover_right",
    "group": "pi",
    "usedIn": [
     {
@@ -3765,11 +3837,6 @@
      "label": "Group Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
-    },
-    {
-     "label": "Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     }
    ]
   },
@@ -3781,11 +3848,6 @@
      "label": "Group Volume",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/group-volume-dial.html"
-    },
-    {
-     "label": "Volume",
-     "where": "settings",
-     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     }
    ]
   },
@@ -4170,6 +4232,11 @@
     {
      "label": "Volume",
      "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
     }
    ]
@@ -4231,6 +4298,11 @@
     {
      "label": "Volume",
      "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-key.html"
     }
    ]
@@ -4283,6 +4355,11 @@
      "label": "Source",
      "where": "settings",
      "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/source-key.html"
+    },
+    {
+     "label": "Volume",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/volume-dial.html"
     },
     {
      "label": "Volume",
