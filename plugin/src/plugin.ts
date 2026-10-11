@@ -1,5 +1,5 @@
 import streamDeck from "@elgato/streamdeck";
-import { setKitLogger } from "@rocklobster42195/streamdeck-kit";
+import { configureCoverCache, coverResizer, setKitLogger } from "@rocklobster42195/streamdeck-kit";
 import { AnnounceKey } from "./actions/announce-key";
 import { BrowserDial } from "./actions/browser-dial";
 import { DashboardKey } from "./actions/dashboard-key";
@@ -26,6 +26,8 @@ import { initPiBridge } from "./pi/pi-handlers";
 streamDeck.logger.setLevel("info");
 // Kit problems (covers that fail to load, a throwing effect) go to the plugin log.
 setKitLogger(streamDeck.logger);
+// A cover as served may be 640 px and 200 KB; keys and strips need a quarter of that
+configureCoverCache({ resize: coverResizer(256) });
 
 streamDeck.actions.registerAction(new PlayPauseKey());
 streamDeck.actions.registerAction(new PlaybackControlKey());
