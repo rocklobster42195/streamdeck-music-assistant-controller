@@ -132,8 +132,8 @@ function browse(pathArg) {
 }
 
 /**
- * Invented lyrics for the invented "Midnight Tram" (never real song lyrics in screenshots — see
- * CLAUDE.md), timed around the staged position (71 s plus the few seconds a scene takes).
+ * Invented lyrics for the invented "Midnight Tram" (never real song lyrics in screenshots), timed around the
+ * staged position (71 s plus the few seconds a scene takes).
  */
 const DEMO_LRC = [
     "Neon rivers on the window",
