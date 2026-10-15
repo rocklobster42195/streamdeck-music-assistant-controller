@@ -120,6 +120,7 @@
     "pi.show_player_name": "Playername",
     "pi.show_player_name_hint": "Name des Players auf der Taste",
     "pi.show_progress": "Fortschritt",
+    "pi.tapping": "Tippen",
     "pi.show_progress_hint": "Balken in der Farbe des Covers",
     "pi.show_provider": "Dienst anzeigen",
     "pi.look": "Darstellung",
@@ -283,7 +284,7 @@
     "pi.overlay_hint": "Zeigt, was der gewählte Player spielt. Benachbarte Panorama-Dials teilen sich eine Zeile über alle ihre Displays.",
     "pi.audio_source": "Bewegt sich mit",
     "pi.audio_none": "Nichts",
-    "pi.audio_hint": "Der Effekt bewegt sich mit einem Pegel aus einem anderen Plugin, z. B. einem Mischpult-Kanal in XR-C oder dem Ton deines Computers in SA-C: schneller, höher, größer, wenn es laut ist. Bild und Farben kommen weiter vom Player darunter.",
+    "pi.audio_hint": "Der Effekt bewegt sich mit einem Pegel aus einem anderen Plugin, z. B. einem Mischpult-Kanal im X-Air Controller oder dem Ton deines Computers im System Audio Controller: schneller, höher, größer, wenn es laut ist. Bild und Farben kommen weiter vom Player darunter.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synchronisierte Lyrics kommen von den Metadaten-Anbietern in Music Assistant (z. B. LRCLIB). Ohne Lyrics werden Titel und Interpret angezeigt. Die Zeile erscheint eine halbe Sekunde, bevor sie gesungen wird. Zu früh oder zu spät? Timing verschieben oder am Dial drehen (oben erscheint die Skala). Hängen die Lyrics nach einer Weile hinterher? Aufs Display tippen, dann wird neu synchronisiert.",
     "pi.sleep_help": "Jeder Druck setzt die nächste Dauer; nach der letzten schaltet der Timer aus. Die Taste zählt die verbleibende Zeit herunter.",
@@ -457,6 +458,7 @@
     "pi.show_player_name": "Player name",
     "pi.show_player_name_hint": "Player name on the key",
     "pi.show_progress": "Progress",
+    "pi.tapping": "Tapping",
     "pi.show_progress_hint": "Bar in the color of the cover",
     "pi.show_provider": "Show the service",
     "pi.look": "Look",
@@ -620,7 +622,7 @@
     "pi.overlay_hint": "Shows what the chosen player plays. Neighbouring Panorama dials share one line across their displays.",
     "pi.audio_source": "Moves with",
     "pi.audio_none": "Nothing",
-    "pi.audio_hint": "The effect moves with a level from another plugin, e.g. a mixer channel in XR-C or your computer's sound in SA-C: faster, higher, bigger when it is loud. The picture and colours still come from the player below.",
+    "pi.audio_hint": "The effect moves with a level from another plugin, e.g. a mixer channel in X-Air Controller or your computer's sound in System Audio Controller: faster, higher, bigger when it is loud. The picture and colours still come from the player below.",
     "pi.lyrics_offset": "Timing",
     "pi.lyrics_hint": "Synced lyrics come from Music Assistant's metadata providers (e.g. LRCLIB). Without lyrics, title and artist are shown. The line shows up half a second before it is sung. Lyrics too early or too late? Move the timing, or turn the dial (the scale at the top shows it). Lyrics lagging after a while? Tap the display to re-sync.",
     "pi.sleep_help": "Each press sets the next duration; after the last one the timer switches off. The key counts down the time left.",
@@ -2221,6 +2223,17 @@
      "where": "settings",
      "file": "node_modules/@rocklobster42195/streamdeck-kit/dist/pi/components/toggle.js"
     },
+    {
+     "label": "Play/Pause",
+     "where": "settings",
+     "file": "plugin/de.boriskemper.music-assistant-controller.sdPlugin/ui/play-pause-key.html"
+    }
+   ]
+  },
+  {
+   "key": "pi.tapping",
+   "group": "pi",
+   "usedIn": [
     {
      "label": "Play/Pause",
      "where": "settings",

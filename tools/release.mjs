@@ -58,7 +58,12 @@ if (!notes) {
         .map((l) => `- ${l}`)
         .join("\n");
 }
-if (isBeta) {
+// Curated beta notes (notes/beta-notes.md) replace the commit list and carry their own intro
+const betaNotes = path.join(root, "notes", "beta-notes.md");
+if (isBeta && fs.existsSync(betaNotes)) {
+    notes = fs.readFileSync(betaNotes, "utf8").replace(/\r\n/g, "\n").trim();
+    console.log("  ✅ Curated beta notes (notes/beta-notes.md)");
+} else if (isBeta) {
     notes = `**Beta build**: for testing. Install the attached \`.streamDeckPlugin\` by double-clicking it; it replaces the Marketplace version until the next stable release.\n\n${notes}`;
 }
 
