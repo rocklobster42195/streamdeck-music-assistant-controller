@@ -77,7 +77,7 @@ body:
     attributes:
       label: Plugin log
       description: |
-        Easiest: open the plugin's settings window ("More settings …" in the settings of a key or dial) and use **Diagnostics** at the end. The copy icon copies a report with the versions and the end of the log (tokens, passwords and e-mail addresses are hidden), "Report an issue" copies it and opens this page.
+        Easiest: click **Log** at the bottom of the plugin's settings (next to "Help & feedback"). It opens the Diagnostics field: the copy icon copies a report with the versions and the end of the log (tokens, passwords and e-mail addresses are hidden), "Report an issue" copies it and opens this page.
         Or the files:
         Windows: `%APPDATA%\Elgato\StreamDeck\Plugins\de.boriskemper.music-assistant-controller.sdPlugin\logs\`
         macOS: `~/Library/Application Support/com.elgato.StreamDeck/Plugins/de.boriskemper.music-assistant-controller.sdPlugin/logs/`
