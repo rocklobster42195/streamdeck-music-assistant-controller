@@ -82,6 +82,7 @@ The settings panel shows a **live preview of the key** together with what is pla
 | Player name | Show the player's name as the key title |
 | Title | Title and artist scroll along the bottom of the key |
 | Progress | Thin progress bar at the bottom, tinted with the cover's accent color |
+| Double and triple tap | Off by default. Two taps skip to the next track, three go back to the previous one; the key shows the skip symbol for a moment. A single tap then waits a moment before it plays or pauses (**Tap speed**: `Fast`, `Normal`, `Slow`) |
 
 ### Play Item
 
