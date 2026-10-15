@@ -32,16 +32,27 @@ MA-C is the sister project of **[Sonos Controller](https://github.com/rocklobste
 
 ## Screenshots
 
-| | |
-|---|---|
-| ![Panorama: one effect across all four dials, with the title](docs/screenshots/02-panorama.png) | ![Matrix rain behind the Track and Group Volume dials](docs/screenshots/03-matrix.png) |
-| **Panorama:** one scene across neighbouring dials, with the title or synced lyrics on top | **Effect backgrounds** behind any dial, here Matrix Rain |
-| ![Synced lyrics across four Panorama dials](docs/screenshots/05-lyrics.png) | ![Browser, Queue, Active Player and Volume dials](docs/screenshots/04-browser.png) |
-| **Synced lyrics** across the Panorama dials, in time with the music (invented lyrics here) | **Browser, Queue, Active Player** and **Volume** on the dials |
-| ![Keys and dials](docs/screenshots/01-overview.png) | |
-| Everyday keys: previous, play/pause with cover, next, shuffle, volume down/mute/up, a pasta timer | |
+Everyday keys and dials:
 
-The screenshots are rendered by the simulator against a stand-in Music Assistant with invented music and generated covers (`node tools/sd-sim/showcase.mjs`).
+![Keys and dials on a Stream Deck +](docs/screenshots/01-overview.png)
+
+**Panorama:** one scene across neighbouring dials, with the title or synced lyrics on top.
+
+<img src="docs/screenshots/strip-panorama.png" width="800" alt="Panorama: one effect across all four dials, with the title"/>
+
+**Synced lyrics** across the Panorama dials, in time with the music (invented lyrics here).
+
+<img src="docs/screenshots/strip-lyrics.png" width="800" alt="Synced lyrics across four Panorama dials"/>
+
+**Effect backgrounds** behind any dial, here Matrix Rain behind the Track, Panorama and Group Volume dials.
+
+<img src="docs/screenshots/strip-matrix.png" width="800" alt="Matrix rain behind the Track and Group Volume dials"/>
+
+**Browser, Queue, Active Player** and **Volume** on the dials: the Browser walks through providers and playlists, the Queue follows the playing track.
+
+<img src="docs/screenshots/strip-browser.png" width="800" alt="Browser, Queue, Active Player and Volume dials"/>
+
+The screenshots are rendered by the simulator against a stand-in Music Assistant with invented music and generated covers (`node tools/sd-sim/showcase.mjs` for the deck, `node tools/sd-sim/readme-strips.mjs` for the dial rows).
 
 ---
 
