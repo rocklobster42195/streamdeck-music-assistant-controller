@@ -1,6 +1,6 @@
 {
     "name": "mac-plugin",
-    "version": "0.1.0",
+    "version": "0.1.0-beta.1",
     "private": true,
     "description": "MAC — Music Assistant Controller: the Stream Deck plugin",
     "license": "MIT",
