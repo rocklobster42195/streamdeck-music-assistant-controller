@@ -1,11 +1,11 @@
 name: Bug report
-description: Something in MAC doesn't work as expected
+description: Something in MA-C doesn't work as expected
 labels: [bug]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report this! MAC is an independent project, so please report MAC problems here, not to Music Assistant.
+        Thanks for taking the time to report this! MA-C is an independent project, so please report MA-C problems here, not to Music Assistant.
         ⚠️ **Never post your Music Assistant token.** Remove it, along with private IPs and names, from logs and screenshots.
 
   - type: checkboxes
@@ -13,11 +13,11 @@ body:
     attributes:
       label: Before you start
       options:
-        - label: I'm using the latest MAC version.
+        - label: I'm using the latest MA-C version.
           required: true
         - label: I searched the existing issues and this isn't a duplicate.
           required: true
-        - label: The same thing works in the Music Assistant web UI (so it's likely a MAC problem).
+        - label: The same thing works in the Music Assistant web UI (so it's likely a MA-C problem).
 
   - type: dropdown
     id: action
@@ -87,7 +87,7 @@ body:
     attributes:
       label: Environment
       value: |
-        - MAC version:
+        - MA-C version:
         - Stream Deck app version:
         - Stream Deck model (e.g. Stream Deck +, MK.2, XL):
         - Music Assistant version (and Home Assistant add-on or standalone):

@@ -14,7 +14,7 @@ body:
     id: idea
     attributes:
       label: Your idea
-      description: How could MAC help? Which key or dial, what should it show, what should pressing or rotating do?
+      description: How could MA-C help? Which key or dial, what should it show, what should pressing or rotating do?
     validations:
       required: true
 
