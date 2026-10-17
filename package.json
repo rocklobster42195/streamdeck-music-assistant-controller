@@ -34,6 +34,7 @@
         "store-assets": "node tools/generate-store-assets.mjs",
         "sim:deckbus": "node tools/sd-sim/deckbus.mjs sim-out",
         "sim:late-ma": "node tools/sd-sim/late-ma.mjs sim-out",
+        "sim:multi-tap": "node tools/sd-sim/multi-tap.mjs sim-out",
         "sim:effect-sync": "node tools/sd-sim/effect-sync.mjs sim-out",
         "translate": "node tools/serve-translate.mjs",
         "translate:build": "node tools/build-translator.mjs",
