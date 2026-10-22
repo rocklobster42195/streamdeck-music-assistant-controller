@@ -1,4 +1,4 @@
-import { arc, pie } from "@rocklobster42195/streamdeck-kit";
+import { arc, KEY_ICON, pie } from "@rocklobster42195/streamdeck-kit";
 import {
     mdiAlbum,
     mdiAllInclusive,
@@ -17,7 +17,7 @@ import {
     mdiRepeatOff,
     mdiRepeatOnce,
     mdiShuffleDisabled,
-    mdiShuffleVariant,
+    mdiShuffle,
     mdiSkipNext,
     mdiSkipPrevious,
     mdiSpeaker,
@@ -43,7 +43,7 @@ export const ICONS = {
     noPlayer: mdiSpeakerOff,
     next: mdiSkipNext,
     previous: mdiSkipPrevious,
-    shuffle: mdiShuffleVariant,
+    shuffle: mdiShuffle,
     shuffleOff: mdiShuffleDisabled,
     repeat: mdiRepeat,
     repeatOne: mdiRepeatOnce,
@@ -109,11 +109,11 @@ export type KeyImageOptions = {
     ring?: { value: number; color: string; style?: GaugeStyle; center?: { icon?: string; text?: string; color: string; size?: number; /** The key's marker may take this spot. */ markerSpot?: boolean } };
 };
 
-// Icon sizes without cover art: as large as sonos-controller's full-bleed MDI glyphs, a bit
-// smaller when a caption sits underneath.
-const ICON = { size: 112, xy: 16 };
-const ICON_WITH_BADGE = { size: 92, x: 26, y: 6 };
-const ICON_BESIDE_MARKER = { size: 100, xy: 22 };
+// Icon sizes without cover art: the suite's one symbol size (kit KEY_ICON), a smaller one when a
+// caption sits underneath.
+const ICON = { size: KEY_ICON.full.size, xy: KEY_ICON.full.x };
+const ICON_WITH_BADGE = KEY_ICON.withCaption;
+const ICON_BESIDE_MARKER = ICON;
 
 /** Cover color that replaces the light default and the blue "on" color while a key renders (see withIconTint). */
 let iconTint: string | undefined;
@@ -174,11 +174,11 @@ export function renderKeyImage(input: KeyImageOptions): string {
         const mix = opts.previousCover ? Math.min(1, Math.max(0, opts.coverMix ?? 1)) : 1;
         if (mix < 1) parts.push(`<image href="${opts.previousCover}" width="${SIZE}" height="${SIZE}" preserveAspectRatio="xMidYMid slice"/>`);
         parts.push(`<image href="${opts.cover}" width="${SIZE}" height="${SIZE}" preserveAspectRatio="xMidYMid slice"${mix < 1 ? ` opacity="${mix.toFixed(2)}"` : ""}/>`);
-        if (opts.dimmed) parts.push(`<rect width="${SIZE}" height="${SIZE}" fill="#000" opacity="0.55"/>`);
+        // A symbol on the cover always dims it (no disc), so it reads on any cover
+        if (opts.dimmed || opts.icon) parts.push(`<rect width="${SIZE}" height="${SIZE}" fill="#000" opacity="0.55"/>`);
         if (opts.icon) {
-            // Centered badge on top of the cover
-            parts.push(`<circle cx="72" cy="72" r="30" fill="#000" opacity="0.55"/>`);
-            parts.push(icon(opts.icon, 48, 48, 48, color));
+            // The symbol straight on the (dimmed) cover, the one key symbol size, no disc
+            parts.push(icon(opts.icon, ICON.xy, ICON.xy, ICON.size, color));
         }
     } else if (opts.ring) {
         parts.push(...ringParts(opts.ring));
