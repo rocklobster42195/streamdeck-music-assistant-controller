@@ -188,7 +188,8 @@ function entryOf(p: Player, queue: PlayerQueue | undefined, name: string, isPlay
         title: media?.title ?? undefined,
         artist: media?.artist ?? undefined,
         album: media?.album ?? undefined,
-        cover: media?.image_url ?? undefined,
+        // Other plugins and the universal keys load it as it is: an address of its own, not "/imageproxy/…" of the server
+        cover: media?.image_url ? maConnection.ma?.resolveImageUrl(media.image_url, 256) ?? media.image_url : undefined,
         ...position(p, queue, duration, isPlaying),
         duration,
         volume: (group ? p.group_volume : p.volume_level) ?? undefined,

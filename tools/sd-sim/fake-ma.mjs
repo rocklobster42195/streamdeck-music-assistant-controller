@@ -76,6 +76,7 @@ function household(now) {
         playback_state: state === "offline" ? "idle" : state,
         volume_level: volume,
         volume_muted: false,
+        supported_features: ["pause", "next_previous", "seek", "volume_set", "volume_mute", "play_media"],
         group_members: [],
         synced_to: null,
         active_source: id,
