@@ -5,7 +5,7 @@ node_modules/
 docs/ma-api/fixtures/
 
 # Local assistant context (not part of the repo)
-CLAUDE.md
+CLAUDE.local.md
 
 # Build output
 **/dist/
