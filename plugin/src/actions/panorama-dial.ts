@@ -301,7 +301,7 @@ export class PanoramaDial extends SingletonAction<PanoramaDialSettings> {
         const own = inst.settings.text && inst.settings.text !== "off" ? this.overlay.describe(inst.settings.text, Number(inst.settings.lyricsOffset ?? LYRICS_LEAD_S), inst.settings.playerId || undefined) : undefined;
         textRuns.setText(id, own);
         const view = textRuns.run(id);
-        let text = view ? this.overlay.render(view.key, { width: view.width, offset: view.offset }, view.text) : "";
+        let text = view ? this.overlay.render(view.key, { width: view.width, offset: view.offset }, view.text, view.at) : "";
         text += this.topOverlay(id, run.ids[0], geometry, offset, lead);
         const image = stripImage([text], "#000", panoramaRows.isMember(id) ? panorama.renderSlice(id) : "");
         void inst.action.setFeedback({ "full-canvas": image });

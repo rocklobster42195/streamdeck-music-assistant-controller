@@ -5,6 +5,7 @@ All notable changes to MA-C (Music Assistant Controller) are documented here.
 ## [Unreleased]
 
 ### Fixed
+- **Fixed: a lyrics line changed on Sonos Controller's Panorama dial at once but faded in on this plugin's a moment later,** so a line across both displays looked torn. Both dials use the kit's crossfade now (kit 0.1.0-alpha.43), in step with each other.
 - **One look for all keys (kit 0.1.0-alpha.36): one symbol size, no discs behind symbols, the hourglass replaces the symbol, shuffle is the thin crossed arrows (on) or the parallel arrows (off), and every error is the same red badge in the top left corner of a key.** (From a beta tester's remark that the keys looked like they belong to different plugins.)
 - **Fixed: playing on a speaker that belongs to a group took it out of the group.** Music Assistant removes a member from its group when something is played to it directly (the Browser dial, the Play item and Continue keys on a member, or "Active player" resolving to one). They play on the group's leader now.
 - **Fixed: A new cover's colour reached the Panorama late: the colour fade took four seconds instead of one (kit 0.1.0-alpha.23).**
