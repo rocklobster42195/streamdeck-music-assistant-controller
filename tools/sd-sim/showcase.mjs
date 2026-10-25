@@ -1,6 +1,7 @@
 // Staged screenshots for the README and the Marketplace: the real plugin against the stand-in
 // Music Assistant (fake-ma.mjs) — invented rooms and tracks, generated covers, no lyrics. Plays
 // nothing anywhere. Writes deck overviews to sim-out/showcase/.
+// Run it with DECKBUS_NAMESPACE=showcase, so the plugin does not meet the plugins running on this computer.
 //   node tools/sd-sim/showcase.mjs [outDir]
 import path from "node:path";
 import { startFakeMa } from "./fake-ma.mjs";
